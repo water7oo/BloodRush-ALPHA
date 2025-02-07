@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://calkwg7q3s3vk"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_llgo8"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jhd5i"]
+blend_mode = 3
+
+[sub_resource type="QuadMesh" id="QuadMesh_pxkic"]
+
+[node name="PAUSEMENU" type="Node2D"]
+visible = false
+
+[node name="Button" type="Button" parent="."]
+offset_left = 405.0
+offset_top = 231.0
+offset_right = 752.0
+offset_bottom = 343.0
+theme_override_font_sizes/font_size = 51
+theme_override_styles/normal = SubResource("StyleBoxTexture_llgo8")
+text = "BUTTON
+"
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+z_index = -1
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_jhd5i")
+position = Vector2(580.25, 327.25)
+scale = Vector2(1161.5, 655.5)
+mesh = SubResource("QuadMesh_pxkic")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="MeshInstance2D"]
+use_parent_material = true
+color = Color(0.584314, 0.584314, 0.584314, 1)

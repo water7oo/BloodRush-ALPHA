@@ -1,0 +1,32 @@
+[gd_resource type="Environment" load_steps=2 format=3 uid="uid://cadv2uehcxqkc"]
+
+[ext_resource type="Sky" uid="uid://btm7cnvle7iqe" path="res://Game/SKY_Chill.tres" id="1_p7a88"]
+
+[resource]
+background_mode = 1
+background_color = Color(1, 1, 1, 1)
+sky = ExtResource("1_p7a88")
+ambient_light_source = 2
+ambient_light_color = Color(0.529412, 0.529412, 0.529412, 1)
+ambient_light_sky_contribution = 0.0
+tonemap_mode = 3
+ssr_fade_in = 0.0111488
+ssr_fade_out = 0.00680117
+ssr_depth_tolerance = 0.01
+ssao_radius = 16.0
+ssao_intensity = 0.0
+ssao_power = 19.4941
+ssao_detail = 0.0
+ssil_radius = 50.4
+ssil_intensity = 13.88
+ssil_sharpness = 0.0
+fog_light_energy = 0.76
+volumetric_fog_density = 0.001
+volumetric_fog_albedo = Color(0.886275, 0.454902, 0, 1)
+volumetric_fog_emission = Color(0.811765, 0.454902, 0, 1)
+volumetric_fog_emission_energy = 34.17
+volumetric_fog_anisotropy = -0.33
+volumetric_fog_ambient_inject = 1.57
+volumetric_fog_sky_affect = 0.0
+volumetric_fog_temporal_reprojection_enabled = false
+adjustment_enabled = true

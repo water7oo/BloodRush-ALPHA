@@ -1,0 +1,14 @@
+[gd_resource type="Environment" format=3 uid="uid://cs5cd8vkuj7hr"]
+
+[resource]
+background_energy_multiplier = 16.0
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.82
+tonemap_mode = 3
+ssil_intensity = 16.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.006
+volumetric_fog_emission = Color(1, 1, 1, 1)
+volumetric_fog_anisotropy = 0.9
+adjustment_enabled = true

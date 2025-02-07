@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://1b5arno23rm5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mdfhj"]
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_hb416"]
+_data = [Vector2(0.0666667, 0.923077), 0.0, 0.0, 0, 0, Vector2(0.788889, 0.703297), -1.29743, -1.29743, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vrli0"]
+curve = SubResource("Curve_hb416")
+
+[sub_resource type="Curve" id="Curve_n0e8q"]
+max_value = 3.0
+_data = [Vector2(0.0666667, 2.01099), 0.0, 0.0, 0, 0, Vector2(1, 0.758242), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_q3xk7"]
+curve = SubResource("Curve_n0e8q")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hshep"]
+spread = 180.0
+initial_velocity_max = 15.0
+angular_velocity_min = -720.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -100.0
+linear_accel_max = 22.03
+scale_min = 0.1
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_vrli0")
+scale_over_velocity_curve = SubResource("CurveTexture_q3xk7")
+
+[sub_resource type="QuadMesh" id="QuadMesh_cgq8r"]
+
+[node name="PunchDust" type="Node3D"]
+
+[node name="punch_burst" type="GPUParticles3D" parent="." groups=["punch_dust"]]
+transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_mdfhj")
+emitting = false
+amount = 30
+lifetime = 0.36
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+trail_lifetime = 2.76
+process_material = SubResource("ParticleProcessMaterial_hshep")
+draw_pass_1 = SubResource("QuadMesh_cgq8r")

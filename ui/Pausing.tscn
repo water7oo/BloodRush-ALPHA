@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://brejidgy2nq2j"]
+
+[ext_resource type="Script" path="res://Scripts/Pausing.gd" id="1_u37fi"]
+[ext_resource type="PackedScene" uid="uid://calkwg7q3s3vk" path="res://ui/pausemenu.tscn" id="2_toa1l"]
+
+[node name="Pausing" type="Node3D"]
+process_mode = 3
+script = ExtResource("1_u37fi")
+
+[node name="PAUSEMENU" parent="." instance=ExtResource("2_toa1l")]

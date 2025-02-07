@@ -1,0 +1,176 @@
+[gd_scene load_steps=17 format=3 uid="uid://dcfrtjlyu7745"]
+
+[ext_resource type="Script" path="res://Scripts/COWBOY.gd" id="2_sw84i"]
+[ext_resource type="Script" path="res://Scripts/playerHealthManager.gd" id="4_ly1eo"]
+[ext_resource type="StyleBox" uid="uid://b7b3hqmwfdjgv" path="res://MaterialTextures/UI_COOLDOWN_BACK.tres" id="5_lqx3u"]
+[ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="6_2j4di"]
+[ext_resource type="FontFile" uid="uid://cg2l5vxyisqd1" path="res://ui/mario-kart-ds-oultine-font/mario-kart-ds-oultine-font.ttf" id="6_qbcoq"]
+[ext_resource type="StyleBox" uid="uid://djj55b17fblr1" path="res://MaterialTextures/Sprint_Fill_Green.tres" id="7_e8pf0"]
+[ext_resource type="AudioStream" uid="uid://cytlh7sh0m7pl" path="res://Sounds/punch-3-166696.mp3" id="8_b8ni8"]
+[ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://ui/GameStartANIM.tscn" id="9_cvihx"]
+[ext_resource type="AudioStream" uid="uid://q6udxs3hkfpd" path="res://Sounds/714258__qubodup__cloud-poof.wav" id="9_fsck3"]
+[ext_resource type="AudioStream" uid="uid://bvxhnl6dkh3ek" path="res://Sounds/footstep_carpet_003.ogg" id="9_oc5oe"]
+[ext_resource type="AudioStream" uid="uid://cnmrvupfaedd3" path="res://Sounds/350905__cabled_mess__jump_c_05.wav" id="10_ra7tj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eyoil"]
+height = 1.71689
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ffps1"]
+bg_color = Color(1, 0.113725, 0.0509804, 1)
+border_width_left = 1
+border_width_top = 4
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_bottom_right = 335
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3joit"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b5b6w"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4u28"]
+bg_color = Color(0.6, 1, 0.945098, 1)
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+script = ExtResource("2_sw84i")
+BASE_SPEED = 10
+RUNJUMP_MULTIPLIER = 1.2
+armature_turn = 0.05
+ACCELERATION = 30.0
+BASE_ACCELERATION = 25
+momentum_deceleration = 100
+sprinting_deplete_rate = 5
+SECOND_DASH_ACCELERATION = 50
+SECOND_DASH_DECELERATION = 15
+
+[node name="HurtBox" type="Area3D" parent="."]
+transform = Transform3D(-2.5, 0, 2.18557e-07, 0, 2.5, 0, -2.18557e-07, 0, -2.5, 0, 0, 0)
+script = ExtResource("4_ly1eo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox"]
+transform = Transform3D(-1.01, 0, -1.52506e-07, 0, 1.01, 0, 1.52506e-07, 0, -1.01, 0.00308571, 0.747108, -0.021626)
+shape = SubResource("CapsuleShape3D_eyoil")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+process_mode = 3
+transform = Transform3D(2.2, 0, 1.42109e-14, 0, 2.2, 0, -1.42109e-14, 0, 2.2, -0.00771429, 1.86777, 0.0540649)
+shape = SubResource("CapsuleShape3D_eyoil")
+
+[node name="Refill_Cooldown" type="Timer" parent="."]
+process_callback = 0
+wait_time = 5.0
+autostart = true
+
+[node name="Dodge_Cooldown_Label" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+scale = Vector2(1, 1.00156)
+
+[node name="player_health_label" type="ProgressBar" parent="."]
+z_index = 2
+texture_filter = 3
+offset_left = -24.0
+offset_top = 592.0
+offset_right = 124.0
+offset_bottom = 619.0
+scale = Vector2(4.50153, 1.20149)
+theme_override_styles/background = ExtResource("5_lqx3u")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ffps1")
+max_value = 10.0
+value = 10.0
+show_percentage = false
+
+[node name="UI Cooldowns" parent="." instance=ExtResource("6_2j4di")]
+z_index = 2
+texture_filter = 1
+offset_left = -16.0
+offset_top = 584.0
+offset_right = 648.0
+offset_bottom = 600.0
+theme_override_styles/background = ExtResource("5_lqx3u")
+theme_override_styles/fill = ExtResource("7_e8pf0")
+
+[node name="CurrentSpeedDebug" parent="." instance=ExtResource("6_2j4di")]
+z_index = 2
+texture_filter = 1
+offset_left = -16.0
+offset_top = 568.0
+offset_right = 656.0
+offset_bottom = 584.0
+theme_override_styles/background = ExtResource("5_lqx3u")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3joit")
+max_value = 50.0
+value = 50.0
+
+[node name="ControllerDebug" type="Label" parent="."]
+visible = false
+z_index = 2
+texture_filter = 5
+offset_left = 712.0
+offset_top = 600.0
+offset_right = 1144.0
+offset_bottom = 657.0
+scale = Vector2(1.62, 1.62)
+theme_override_fonts/font = ExtResource("6_qbcoq")
+theme_override_font_sizes/font_size = 18
+text = "Player Input Debug
+"
+uppercase = true
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("8_b8ni8")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("9_fsck3")
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("10_ra7tj")
+
+[node name="AudioStreamPlayer4" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("9_oc5oe")
+
+[node name="AirWavePos" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -1.50914e-07, 1.11191, 1.72625)
+
+[node name="Opener" parent="." instance=ExtResource("9_cvihx")]
+visible = false
+
+[node name="FPS_LABEL" type="Label" parent="."]
+visible = false
+texture_filter = 1
+offset_left = 976.0
+offset_top = 8.0
+offset_right = 1224.0
+offset_bottom = 56.0
+scale = Vector2(1.015, 1.015)
+theme_override_fonts/font = ExtResource("6_qbcoq")
+theme_override_font_sizes/font_size = 33
+text = "FPS: 0"
+
+[node name="SpinDodgeDebug" type="ProgressBar" parent="."]
+offset_left = -16.0
+offset_top = 544.0
+offset_right = 672.0
+offset_bottom = 563.0
+theme_override_styles/background = SubResource("StyleBoxFlat_b5b6w")
+theme_override_styles/fill = SubResource("StyleBoxFlat_v4u28")
+max_value = 0.8
+value = 0.8
+show_percentage = false
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

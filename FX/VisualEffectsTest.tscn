@@ -1,0 +1,196 @@
+[gd_scene load_steps=9 format=3 uid="uid://dhd2amiuh43lt"]
+
+[ext_resource type="PackedScene" uid="uid://4iahkgvtqe5w" path="res://FX/Dust_Wave.fbx" id="1_ru88j"]
+
+[sub_resource type="Animation" id="Animation_mrki0"]
+resource_name = "Dust"
+length = 0.4732
+loop_mode = 1
+step = 0.0025
+tracks/0/type = "scale_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RootNode/Cylinder")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 38.75, 38.75, 38.75, 0.473178, 1, 100, 100, 100)
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RootNode/Cylinder:material_override:uv1_scale:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.55, -0.25, 0, 0.25, 0, 0.395, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.472053)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RootNode/Cylinder:material_override:uv1_scale:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.55, -0.25, 0, 0.25, 0, 0.395, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.472053)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RootNode/Cylinder:material_override:uv1_scale:z")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0.55, -0.25, 0, 0.25, 0, 0.395, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.472053)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RootNode/Cylinder:material_override:uv1_offset:x")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.472053)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RootNode/Cylinder:material_override:uv1_offset:y")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(1.02, -0.25, 0, 0.25, 0, 2.06, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.472053)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("RootNode/Cylinder:material_override:uv1_offset:z")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.472053)
+}
+
+[sub_resource type="Animation" id="Animation_i8s8b"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RootNode/Cylinder:material_override:uv1_scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.55, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RootNode/Cylinder:material_override:uv1_scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.55, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RootNode/Cylinder:material_override:uv1_scale:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.55, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RootNode/Cylinder:material_override:uv1_offset:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RootNode/Cylinder:material_override:uv1_offset:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1.02, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RootNode/Cylinder:material_override:uv1_offset:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qyg83"]
+_data = {
+"Dust": SubResource("Animation_mrki0"),
+"RESET": SubResource("Animation_i8s8b")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7fqbl"]
+animation = &"RESET"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_olebh"]
+animation = &"Dust"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_vs46r"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_aj5tq"]
+graph_offset = Vector2(-410, 27)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_olebh")
+nodes/Animation/position = Vector2(-200, 240)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_7fqbl")
+"nodes/Animation 2/position" = Vector2(-220, 100)
+nodes/Blend2/node = SubResource("AnimationNodeBlend2_vs46r")
+nodes/Blend2/position = Vector2(80, 120)
+node_connections = [&"Blend2", 0, &"Animation 2", &"Blend2", 1, &"Animation"]
+
+[node name="Root Scene" instance=ExtResource("1_ru88j")]
+
+[node name="RootNode" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.75104, 0, 0)
+
+[node name="Cylinder" parent="RootNode" index="0"]
+transform = Transform3D(47.8111, 0, 0, 0, -2.08989e-06, 47.8111, 0, -47.8111, -2.08989e-06, 1.77465, 0.0751149, -0.107896)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_qyg83")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_qyg83")
+}
+tree_root = SubResource("AnimationNodeBlendTree_aj5tq")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Blend2/blend_amount = 0.0

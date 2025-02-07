@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://crvqwy70jsrhl"]
+
+[ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="1_0ycto"]
+[ext_resource type="Shader" path="res://Shaders/PS1VertexWobble.gdshader" id="2_ef2i2"]
+[ext_resource type="Texture2D" uid="uid://bdkrvec3wh6qh" path="res://My Textures/TextureGrid_32_devLight.png" id="3_k8u4r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w36hw"]
+render_priority = 0
+shader = ExtResource("1_0ycto")
+shader_parameter/outline_color = null
+shader_parameter/outline_width = 1.0
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_w36hw")
+shader = ExtResource("2_ef2i2")
+shader_parameter/affine_mapping = false
+shader_parameter/alpha_scissor = 0.0
+shader_parameter/jitter = 0.59
+shader_parameter/resolution = Vector2i(320, 240)
+shader_parameter/albedo = ExtResource("3_k8u4r")
