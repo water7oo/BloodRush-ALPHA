@@ -1,12 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://dcfrtjlyu7745"]
+[gd_scene load_steps=17 format=3 uid="uid://t1fgeaac44tc"]
 
-[ext_resource type="Script" path="res://Scripts/COWBOY.gd" id="2_sw84i"]
-[ext_resource type="Script" path="res://Scripts/playerHealthManager.gd" id="4_ly1eo"]
-[ext_resource type="StyleBox" uid="uid://b7b3hqmwfdjgv" path="res://MaterialTextures/UI_COOLDOWN_BACK.tres" id="5_lqx3u"]
-[ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="6_2j4di"]
-[ext_resource type="FontFile" uid="uid://cg2l5vxyisqd1" path="res://ui/mario-kart-ds-oultine-font/mario-kart-ds-oultine-font.ttf" id="6_qbcoq"]
-[ext_resource type="StyleBox" uid="uid://djj55b17fblr1" path="res://MaterialTextures/Sprint_Fill_Green.tres" id="7_e8pf0"]
-[ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://ui/GameStartANIM.tscn" id="9_cvihx"]
+[ext_resource type="Script" path="res://Scripts/COWBOY.gd" id="1_m3aa7"]
+[ext_resource type="Script" path="res://Scripts/playerHealthManager.gd" id="2_218gs"]
+[ext_resource type="StyleBox" uid="uid://b7b3hqmwfdjgv" path="res://MaterialTextures/UI_COOLDOWN_BACK.tres" id="3_6yrxh"]
+[ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="4_r33aj"]
+[ext_resource type="StyleBox" uid="uid://djj55b17fblr1" path="res://MaterialTextures/Sprint_Fill_Green.tres" id="5_c5xn1"]
+[ext_resource type="FontFile" uid="uid://cg2l5vxyisqd1" path="res://ui/mario-kart-ds-oultine-font/mario-kart-ds-oultine-font.ttf" id="6_73inm"]
+[ext_resource type="AudioStream" uid="uid://cytlh7sh0m7pl" path="res://Sounds/punch-3-166696.mp3" id="7_gaal4"]
+[ext_resource type="AudioStream" uid="uid://q6udxs3hkfpd" path="res://Sounds/714258__qubodup__cloud-poof.wav" id="8_q7bsv"]
+[ext_resource type="AudioStream" uid="uid://cnmrvupfaedd3" path="res://Sounds/350905__cabled_mess__jump_c_05.wav" id="9_cc1r3"]
+[ext_resource type="AudioStream" uid="uid://bvxhnl6dkh3ek" path="res://Sounds/footstep_carpet_003.ogg" id="10_o781g"]
+[ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://ui/GameStartANIM.tscn" id="11_o6f17"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eyoil"]
 height = 1.71689
@@ -36,7 +40,7 @@ bg_color = Color(0, 0, 0, 1)
 bg_color = Color(0.6, 1, 0.945098, 1)
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
-script = ExtResource("2_sw84i")
+script = ExtResource("1_m3aa7")
 BASE_SPEED = 10
 RUNJUMP_MULTIPLIER = 1.2
 armature_default_rot_speed = 0.8
@@ -50,7 +54,7 @@ SECOND_DASH_DECELERATION = 15
 
 [node name="HurtBox" type="Area3D" parent="."]
 transform = Transform3D(-2.5, 0, 2.18557e-07, 0, 2.5, 0, -2.18557e-07, 0, -2.5, 0, 0, 0)
-script = ExtResource("4_ly1eo")
+script = ExtResource("2_218gs")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox"]
 transform = Transform3D(-1.01, 0, -1.52506e-07, 0, 1.01, 0, 1.52506e-07, 0, -1.01, 0.00308571, 0.747108, -0.021626)
@@ -80,30 +84,30 @@ offset_top = 712.0
 offset_right = 124.0
 offset_bottom = 739.0
 scale = Vector2(4.50153, 1.20149)
-theme_override_styles/background = ExtResource("5_lqx3u")
+theme_override_styles/background = ExtResource("3_6yrxh")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ffps1")
 max_value = 10.0
 value = 10.0
 show_percentage = false
 
-[node name="UI Cooldowns" parent="." instance=ExtResource("6_2j4di")]
+[node name="UI Cooldowns" parent="." instance=ExtResource("4_r33aj")]
 z_index = 2
 texture_filter = 1
 offset_left = -16.0
 offset_top = 704.0
 offset_right = 648.0
 offset_bottom = 720.0
-theme_override_styles/background = ExtResource("5_lqx3u")
-theme_override_styles/fill = ExtResource("7_e8pf0")
+theme_override_styles/background = ExtResource("3_6yrxh")
+theme_override_styles/fill = ExtResource("5_c5xn1")
 
-[node name="CurrentSpeedDebug" parent="." instance=ExtResource("6_2j4di")]
+[node name="CurrentSpeedDebug" parent="." instance=ExtResource("4_r33aj")]
 z_index = 2
 texture_filter = 1
 offset_left = -16.0
 offset_top = 688.0
 offset_right = 656.0
 offset_bottom = 704.0
-theme_override_styles/background = ExtResource("5_lqx3u")
+theme_override_styles/background = ExtResource("3_6yrxh")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3joit")
 max_value = 50.0
 value = 50.0
@@ -117,7 +121,7 @@ offset_top = 600.0
 offset_right = 1144.0
 offset_bottom = 657.0
 scale = Vector2(1.62, 1.62)
-theme_override_fonts/font = ExtResource("6_qbcoq")
+theme_override_fonts/font = ExtResource("6_73inm")
 theme_override_font_sizes/font_size = 18
 text = "Player Input Debug
 "
@@ -125,18 +129,37 @@ uppercase = true
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="Opener" parent="." instance=ExtResource("9_cvihx")]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("7_gaal4")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("8_q7bsv")
+
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("9_cc1r3")
+
+[node name="AudioStreamPlayer4" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("10_o781g")
+
+[node name="AirWavePos" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -1.50914e-07, 1.11191, 1.72625)
+
+[node name="Opener" parent="." instance=ExtResource("11_o6f17")]
 visible = false
 
 [node name="FPS_LABEL" type="Label" parent="."]
 visible = false
 texture_filter = 1
-offset_left = 856.0
+offset_left = 976.0
 offset_top = 8.0
-offset_right = 1104.0
+offset_right = 1224.0
 offset_bottom = 56.0
 scale = Vector2(1.015, 1.015)
-theme_override_fonts/font = ExtResource("6_qbcoq")
+theme_override_fonts/font = ExtResource("6_73inm")
 theme_override_font_sizes/font_size = 33
 text = "FPS: 0"
 

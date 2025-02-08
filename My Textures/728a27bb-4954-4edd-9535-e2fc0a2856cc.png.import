@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdcj26xars0y2"
-path.s3tc="res://.godot/imported/hp_bar_albedo.png-899adc88123965a729ae6268302e7653.s3tc.ctex"
+uid="uid://edx0nfhnpbgt"
+path.s3tc="res://.godot/imported/728a27bb-4954-4edd-9535-e2fc0a2856cc.png-fdf5c1e8cf216824ca0f833b0cef231d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://hp_bar_albedo.png"
-dest_files=["res://.godot/imported/hp_bar_albedo.png-899adc88123965a729ae6268302e7653.s3tc.ctex"]
+source_file="res://My Textures/728a27bb-4954-4edd-9535-e2fc0a2856cc.png"
+dest_files=["res://.godot/imported/728a27bb-4954-4edd-9535-e2fc0a2856cc.png-fdf5c1e8cf216824ca0f833b0cef231d.s3tc.ctex"]
 
 [params]
 

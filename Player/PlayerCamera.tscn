@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://7l5yih8w56c3"]
 
-[ext_resource type="Script" path="res://Scripts/follow_cam.gd" id="1_dcdjk"]
+[ext_resource type="Script" path="res://Scripts/States/CowboyPlayer.gd" id="1_b5ijt"]
 [ext_resource type="Shader" path="res://Game/EdgeDetection.gdshader" id="2_vd1nw"]
 [ext_resource type="Script" path="res://Scripts/gameJuice.gd" id="3_sswrb"]
 
@@ -8,7 +8,7 @@
 render_priority = 0
 shader = ExtResource("2_vd1nw")
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/shadow_thickness = 1.8
+shader_parameter/shadow_thickness = 1.999
 
 [sub_resource type="QuadMesh" id="QuadMesh_n1m7q"]
 size = Vector2(2, 2)
@@ -33,27 +33,25 @@ _data = {
 "cam_shake": SubResource("Animation_xr2s2")
 }
 
-[node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
+[node name="CameraSet" type="Node3D" groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0591612)
-script = ExtResource("1_dcdjk")
-enabled = true
-spring_arm_pivot = NodePath("SpringArmPivot")
+script = ExtResource("1_b5ijt")
 
 [node name="SpringArmPivot" type="Node3D" parent="." groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0353532, 0.005)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.946006, 0.735815, 0, -0.324148, 2.14743, 0.00799954, 0.0505664, 0.100976)
+transform = Transform3D(0.978867, -0.0662398, 0.439178, 0.0413154, 0.990635, 0.295404, -0.200279, -0.119391, 2.20743, 0.00799954, 0.0505664, 0.100976)
 collision_mask = 255
-spring_length = 2.145
+spring_length = 0.0
 
 [node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D"]
-transform = Transform3D(1, 0, 0, -8.18316e-16, 1.00393, 0.0147458, -6.9647e-15, -0.0949428, 0.994697, 3.58559e-07, 3.25808, -2.69453)
+transform = Transform3D(0.978867, 0.142361, -0.396031, -0.0662398, 0.934818, 0.484424, 0.0852295, -0.176307, 0.955765, 1.41582, 1.90612, -2.86817)
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin"]
-transform = Transform3D(0.996503, 0.00439824, 0.0834448, 0.0249132, 0.932026, -0.34664, -0.0329995, 0.240969, 0.381381, 0.295072, -4.49632, 4.92706)
+transform = Transform3D(0.996503, 0.0043978, 0.0834446, 0.0249132, 0.932026, -0.346639, -0.0329995, 0.240969, 0.38138, 0.600389, -4.4909, 6.01924)
 current = true
-fov = 30.1
+fov = 41.4
 size = 5.762
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D"]
@@ -64,10 +62,10 @@ skeleton = NodePath("../../../../..")
 
 [node name="Marker3D" type="Marker3D" parent="SpringArmPivot"]
 transform = Transform3D(1, 0, 0, 9.31323e-10, 1, 1.49012e-08, 7.45058e-09, -1.49012e-08, 1, -2.79397e-08, 4.47035e-08, 9.68575e-08)
+visible = false
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="SpringArmPivot"]
 transform = Transform3D(0.443524, 0.00488081, 0.0358868, 1.65775e-09, 0.44094, -0.0599704, -0.0362172, 0.0597715, 0.439478, 0, 0.338, 0.232)
-visible = false
 material_override = SubResource("ShaderMaterial_wivcw")
 mesh = SubResource("CapsuleMesh_a8st2")
 skeleton = NodePath("../SpringArm3D/Margin/Camera3D")

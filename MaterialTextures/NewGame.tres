@@ -4,10 +4,10 @@
 
 [resource]
 background_mode = 1
-background_color = Color(1, 1, 1, 1)
+background_color = Color(0.720467, 0.720468, 0.720467, 1)
 sky = ExtResource("1_p7a88")
 ambient_light_source = 2
-ambient_light_color = Color(0.529412, 0.529412, 0.529412, 1)
+ambient_light_color = Color(0.93408, 0.93408, 0.93408, 1)
 ambient_light_sky_contribution = 0.0
 tonemap_mode = 3
 ssr_fade_in = 0.0111488

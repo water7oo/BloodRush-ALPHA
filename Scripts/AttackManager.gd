@@ -38,5 +38,3 @@ func _on_area_entered(area):
 		#await get_tree().create_timer(1).timeout
 		#Attack_Box.monitoring = false
 		
-
-

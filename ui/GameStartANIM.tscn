@@ -93,6 +93,8 @@ light_mode = 1
 [sub_resource type="QuadMesh" id="QuadMesh_bp5hn"]
 
 [node name="Opener" type="Node2D"]
+position = Vector2(0, -32)
+scale = Vector2(1.08, 1.253)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

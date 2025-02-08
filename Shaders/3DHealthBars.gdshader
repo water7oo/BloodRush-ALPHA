@@ -29,8 +29,8 @@ void fragment() {
     float progress_texture = smoothstep(-normalized_progress, -normalized_progress + 0.001, -UV.x);
 
     // Calculate the color of the bar based on progress
-    vec3 bar_final_color = texture(bar_texture_base, UV).rgb 
-                           * mix(bar_color, bar_empty_color, clamp(1.5 + -normalized_progress * 2.5, 0, 1)) 
+    vec3 bar_final_color = texture(bar_texture_base, UV).rgb
+                           * mix(bar_color, bar_empty_color, clamp(1.5 + -normalized_progress * 2.5, 0, 1))
                            * progress_texture;
 
     // Set final color and alpha

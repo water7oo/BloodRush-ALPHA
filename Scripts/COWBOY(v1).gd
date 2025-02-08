@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody3D
 
 @onready var combatScript = get_node("/root/Combat")
@@ -5,36 +6,31 @@ extends CharacterBody3D
 @onready var gameJuice = get_node("/root/GameJuice")
 @onready var followcam = get_node("/root/FollowCam")
 
-
-#var waveEffect = preload("res://FX/DustWave2.tscn")
-#var AirWave = preload("res://FX/AirDustWave2.tscn")
-#var GroundSpark = preload("res://FX/GroundSPark.tscn")
-
-@onready var playerHealthMan = get_node("/root/PlayerHealthManager")
-@onready var enemyHealthMan = get_node("/root/EnemyHealthManager")
-
-var camera = preload("res://Player/PlayerCamera.tscn").instantiate()
-var spring_arm_pivot = camera.get_node("SpringArmPivot")
-var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
-
-
 @onready var fps_label = $FPS_LABEL
 var FPS = Engine.get_frames_per_second()
 
 var last_ground_position = Vector3()
 var last_ground_rotation = Basis()
 
+var waveEffect = preload("res://FX/DustWave2.tscn")
+var AirWave = preload("res://FX/AirDustWave2.tscn")
+var GroundSpark = preload("res://FX/GroundSPark.tscn")
 
 @onready var AirWavePos = $AirWavePos
 
-
+@onready var playerHealthMan = get_node("/root/PlayerHealthManager")
+@onready var enemyHealthMan = get_node("/root/EnemyHealthManager")
 @onready var speedDebug = $CurrentSpeedDebug
 @onready var spinDodgeDebug = $SpinDodgeDebug
 
 
+var camera = preload("res://Player/PlayerCamera.tscn").instantiate()
+var spring_arm_pivot = camera.get_node("SpringArmPivot")
+var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
 @onready var dodge_node_timer = $Dodge_Cooldown
 @onready var dodge_cooldown_label = $Dodge_Cooldown_Label
-
+#@onready var blend_space = Animationtree.get('parameters/Combat/Ground_Blend/blend_position')
+#@onready var blend_space2 = Animationtree.get('parameters/Combat/MoveStrafe/blend_position')
 @onready var Stamina_bar = $"UI Cooldowns"
 @onready var health_bar = $player_health
 @onready var controllerDebug = $ControllerDebug
@@ -206,9 +202,9 @@ func _ready():
 	armature = playerEditInstance.get_node("Armature")
 	Animationtree = playerEditInstance.get_node("AnimationTree")
 	armature_rot_speed = armature_default_rot_speed
-	#controllerDebug.text = "Keyboard Connected"
+	controllerDebug.text = "Keyboard Connected"
 	playerHealthLabel.value = playerHealthMan.max_health
-	#spinDodgeDebug.value = spinDodge_timer_cooldown
+	spinDodgeDebug.value = spinDodge_timer_cooldown
 	
 	var animation_player = playerEditInstance.get_node("$AnimationPlayer")
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -257,7 +253,7 @@ func _input(event):
 	elif event is InputEventKey || event is InputEventMouseMotion:
 		is_controller = false
 		is_key = true
-		#controllerDebug.text = "Keyboard Connected"
+		controllerDebug.text = "Keyboard Connected"
 
 func _proccess_controller_movement(delta):
 	if not can_process_input:
@@ -308,7 +304,7 @@ func _proccess_controller_movement(delta):
 		Animationtree.set("parameters/Jump_Blend/blend_amount", -1)
 		Animationtree.set("parameters/Blend3/blend_amount", -1)
 
-	#particle_emitt(input_dir)
+	particle_emitt(input_dir)
 
 func _proccess_movement(delta):
 	if not can_process_input:
@@ -375,7 +371,7 @@ func _proccess_movement(delta):
 		Animationtree.set("parameters/Jump_Blend/blend_amount", -1)
 		Animationtree.set("parameters/Blend3/blend_amount", -1)
 
-	#particle_emitt(input_dir)
+	particle_emitt(input_dir)
 
 	if !is_on_floor():
 		armature_rot_speed = armature_default_rot_speed
@@ -389,78 +385,78 @@ func enable_inputs():
 	can_process_input = true
 	#print("can move")
 	
-#func particle_emitt(input_dir):
-	#for node in dust_trail:
-			#var particle_emitter = node.get_node("Dust")
-			#if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
-				#var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED || is_dodging
-				#particle_emitter.set_emitting(should_emit_particles)
-				#
-			#if jumping || velocity.y > 0:
-				#particle_emitter.set_emitting(false)
-				#
-	#for node in jump_dust:
-		#var particle_emitter = node.get_node("jump_dust")
-		#if particle_emitter && Input.is_action_just_pressed("move_jump"):
-			#particle_emitter.set_emitting(true)
-		#else:
-			#particle_emitter.set_emitting(false)
-#
-	#for node in move_dust:
-		#var particle_emitter = node.get_node("move_dust")
-		#if particle_emitter && is_on_floor() && direction && !sprinting:
-			#particle_emitter.set_emitting(true)
-		#else:
-			#particle_emitter.set_emitting(false)
-			#
-			#
-	#for node in burst_dust:
-		#var particle_emitter = node.get_node("burst_dust")
-		#if particle_emitter && is_on_floor() && dodging && Stamina_bar.value >= 20 && direction:
-			#particle_emitter.set_emitting(true)
-		#else:
-			#particle_emitter.set_emitting(false)
+func particle_emitt(input_dir):
+	for node in dust_trail:
+			var particle_emitter = node.get_node("Dust")
+			if particle_emitter && input_dir != Vector2.ZERO && is_on_floor():
+				var should_emit_particles = is_sprinting && !is_in_air && current_speed >= MAX_SPEED || is_dodging
+				particle_emitter.set_emitting(should_emit_particles)
+				
+			if jumping || velocity.y > 0:
+				particle_emitter.set_emitting(false)
+				
+	for node in jump_dust:
+		var particle_emitter = node.get_node("jump_dust")
+		if particle_emitter && Input.is_action_just_pressed("move_jump"):
+			particle_emitter.set_emitting(true)
+		else:
+			particle_emitter.set_emitting(false)
+
+	for node in move_dust:
+		var particle_emitter = node.get_node("move_dust")
+		if particle_emitter && is_on_floor() && direction && !sprinting:
+			particle_emitter.set_emitting(true)
+		else:
+			particle_emitter.set_emitting(false)
+			
+			
+	for node in burst_dust:
+		var particle_emitter = node.get_node("burst_dust")
+		if particle_emitter && is_on_floor() && dodging && Stamina_bar.value >= 20 && direction:
+			particle_emitter.set_emitting(true)
+		else:
+			particle_emitter.set_emitting(false)
 			
 
-#func GroundSParkEffect():
-		#var GroundSpark = GroundSpark.instantiate()
-		#get_parent().add_child(GroundSpark)
-		#GroundSpark.global_transform.origin = last_ground_position
-		#GroundSpark.global_transform.basis = global_transform.basis
-		#await get_tree().create_timer(.4).timeout
-		#GroundSpark.queue_free()
-		#
-#
-#func AirWaveEffect():
-		#var AirWave = AirWave.instantiate()
-		#get_parent().add_child(AirWave)
-		#AirWave.global_transform.origin = last_ground_position + Vector3(0,1,0)
-		#AirWave.global_transform.basis = last_ground_rotation.basis
-		#await get_tree().create_timer(.6).timeout
-		#AirWave.queue_free()
-		#
-#func GeneralwaveEffect():
-		## Instantiate the wind shockwave at the last ground position
-		#var waveEffect = waveEffect.instantiate()
-		#get_parent().add_child(waveEffect)
-		#waveEffect.global_transform.origin = last_ground_position
-		#await get_tree().create_timer(.7).timeout
-		#waveEffect.queue_free()
+func GroundSParkEffect():
+		var GroundSpark = GroundSpark.instantiate()
+		get_parent().add_child(GroundSpark)
+		GroundSpark.global_transform.origin = last_ground_position
+		GroundSpark.global_transform.basis = global_transform.basis
+		await get_tree().create_timer(.4).timeout
+		GroundSpark.queue_free()
+		
 
-#func LandingGroundEffect(delta):
-	#if is_on_floor():
-		#if (is_in_air == true):
-			#is_in_air = false
-			#if air_timer >= 0.2:
-				#var waveEffect = waveEffect.instantiate()
-				#$AudioStreamPlayer4.play()
-				#get_parent().add_child(waveEffect)
-				#waveEffect.global_transform.origin = last_ground_position
-				#await get_tree().create_timer(.7).timeout
-				#waveEffect.queue_free()
-		#air_timer = 0.0
-	#else:
-		#is_in_air = true
+func AirWaveEffect():
+		var AirWave = AirWave.instantiate()
+		get_parent().add_child(AirWave)
+		AirWave.global_transform.origin = last_ground_position + Vector3(0,1,0)
+		AirWave.global_transform.basis = last_ground_rotation.basis
+		await get_tree().create_timer(.6).timeout
+		AirWave.queue_free()
+		
+func GeneralwaveEffect():
+		# Instantiate the wind shockwave at the last ground position
+		var waveEffect = waveEffect.instantiate()
+		get_parent().add_child(waveEffect)
+		waveEffect.global_transform.origin = last_ground_position
+		await get_tree().create_timer(.7).timeout
+		waveEffect.queue_free()
+
+func LandingGroundEffect(delta):
+	if is_on_floor():
+		if (is_in_air == true):
+			is_in_air = false
+			if air_timer >= 0.2:
+				var waveEffect = waveEffect.instantiate()
+				$AudioStreamPlayer4.play()
+				get_parent().add_child(waveEffect)
+				waveEffect.global_transform.origin = last_ground_position
+				await get_tree().create_timer(.7).timeout
+				waveEffect.queue_free()
+		air_timer = 0.0
+	else:
+		is_in_air = true
 
 func _proccess_sprinting(delta):
 	if sprinting:
@@ -499,7 +495,7 @@ func _proccess_sprinting(delta):
 			DECELERATION = BASE_DECELERATION
 			sprint_timer = 0.0
 			Animationtree.set("parameters/Jump_Blend/blend_amount", 1)
-			#GroundSParkEffect()
+			GroundSParkEffect()
 
 		if Stamina_bar.value <= 0:
 			is_sprinting = false
@@ -549,8 +545,8 @@ func _proccess_dodge(delta):
 		dodge_cooldown_timer = dodge_cooldown  
 		can_dodge = false  # Disable dodging until cooldown finishes
 		#disable_inputs()
-		#AirWaveEffect()
-		#GroundSParkEffect()
+		AirWaveEffect()
+		GroundSParkEffect()
 		Animationtree.set("parameters/Ground_Blend3/blend_amount", 0)
 		
 	if Stamina_bar.value <= 0 && is_dodging:
@@ -656,13 +652,13 @@ func _proccess_jump(delta):
 		jump_counter = 0  # Reset jump counter when landing on the ground
 		last_ground_position = global_transform.origin 
 		
-		#if air_timer >= 0.2:
-			#var waveEffect = waveEffect.instantiate()
-			#$AudioStreamPlayer4.play()
-			#get_parent().add_child(waveEffect)
-			#waveEffect.global_transform.origin = last_ground_position
-			#await get_tree().create_timer(.7).timeout
-			#waveEffect.queue_free()
+		if air_timer >= 0.2:
+			var waveEffect = waveEffect.instantiate()
+			$AudioStreamPlayer4.play()
+			get_parent().add_child(waveEffect)
+			waveEffect.global_transform.origin = last_ground_position
+			await get_tree().create_timer(.7).timeout
+			waveEffect.queue_free()
 
 	if velocity.y > 0 && jump_timer >= 0.01:
 		Animationtree.set("parameters/Jump_Blend/blend_amount", 1)
@@ -671,7 +667,7 @@ func _proccess_jump(delta):
 		jump_timer += delta
 		air_timer += delta
 		$AudioStreamPlayer3.play()
-		#LandingGroundEffect(delta)
+		LandingGroundEffect(delta)
 
 		if jump_timer <= 0.4:
 			velocity.y = JUMP_VELOCITY
@@ -750,10 +746,10 @@ func _physics_process(delta):
 	#jump(delta)
 	
 	controller_switch(delta)
-	#LandingGroundEffect(delta)
+	LandingGroundEffect(delta)
 	
 			
-	#fps_label.text = ("FPS: " + str(Engine.get_frames_per_second()))
+	fps_label.text = ("FPS: " + str(Engine.get_frames_per_second()))
 	
 	if is_on_floor():
 		if is_in_air:
@@ -769,7 +765,7 @@ func _physics_process(delta):
 		last_ground_position = global_transform.origin
 		last_ground_rotation = global_transform
 		
-	#speedDebug.value = current_speed
+	speedDebug.value = current_speed
 	playerHealthLabel.value = playerHealthMan.max_health
 	
 	if Input.is_action_just_pressed("mouse_left"):

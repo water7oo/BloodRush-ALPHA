@@ -11,6 +11,7 @@ blend_mode = 3
 visible = false
 
 [node name="Button" type="Button" parent="."]
+visible = false
 offset_left = 405.0
 offset_top = 231.0
 offset_right = 752.0
@@ -24,8 +25,8 @@ text = "BUTTON
 z_index = -1
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_jhd5i")
-position = Vector2(580.25, 327.25)
-scale = Vector2(1161.5, 655.5)
+position = Vector2(679.25, 475.25)
+scale = Vector2(1359.5, 951.5)
 mesh = SubResource("QuadMesh_pxkic")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="MeshInstance2D"]

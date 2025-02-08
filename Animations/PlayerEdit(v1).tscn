@@ -1,39 +1,39 @@
-[gd_scene load_steps=32 format=3 uid="uid://tx0l2fe8fvib"]
+[gd_scene load_steps=32 format=3 uid="uid://c3owx67dwj557"]
 
-[ext_resource type="Script" path="res://Scripts/AttackManager.gd" id="1_5pw75"]
-[ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="1_6p5pg"]
-[ext_resource type="PackedScene" uid="uid://fef5qj7ubepe" path="res://Blender/3rdPassAnimations.blend" id="1_fgp7y"]
-[ext_resource type="Shader" path="res://Shaders/PS1VertexWobble.gdshader" id="2_bnfof"]
-[ext_resource type="Texture2D" uid="uid://caatibvojcios" path="res://addons/kenney_prototype_textures/orange/texture_12.png" id="3_3drlu"]
-[ext_resource type="Texture2D" uid="uid://dx0vwoe766a8c" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="3_s6v01"]
-[ext_resource type="Texture2D" uid="uid://dvaph6bi0yida" path="res://FX/Slashing_Texture2.png" id="7_5380s"]
+[ext_resource type="PackedScene" uid="uid://fef5qj7ubepe" path="res://Blender/3rdPassAnimations.blend" id="1_flipp"]
+[ext_resource type="Shader" path="res://Shaders/PS1VertexWobble.gdshader" id="2_ok433"]
+[ext_resource type="Texture2D" uid="uid://dx0vwoe766a8c" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="3_idaut"]
+[ext_resource type="Texture2D" uid="uid://caatibvojcios" path="res://addons/kenney_prototype_textures/orange/texture_12.png" id="4_c54n0"]
+[ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="5_yeain"]
+[ext_resource type="Script" path="res://Scripts/AttackManager.gd" id="6_rrah7"]
+[ext_resource type="Texture2D" uid="uid://dvaph6bi0yida" path="res://FX/Slashing_Texture2.png" id="7_ypued"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w36hw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4d6vf"]
 render_priority = 0
 next_pass = SubResource("ShaderMaterial_w36hw")
-shader = ExtResource("2_bnfof")
+shader = ExtResource("2_ok433")
 shader_parameter/affine_mapping = false
 shader_parameter/alpha_scissor = 0.0
 shader_parameter/jitter = 0.59
 shader_parameter/resolution = Vector2i(320, 240)
-shader_parameter/albedo = ExtResource("3_s6v01")
+shader_parameter/albedo = ExtResource("3_idaut")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cjqha"]
 render_priority = 0
 next_pass = SubResource("ShaderMaterial_w36hw")
-shader = ExtResource("2_bnfof")
+shader = ExtResource("2_ok433")
 shader_parameter/affine_mapping = false
 shader_parameter/alpha_scissor = 0.0
 shader_parameter/jitter = 0.59
 shader_parameter/resolution = Vector2i(320, 240)
-shader_parameter/albedo = ExtResource("3_3drlu")
+shader_parameter/albedo = ExtResource("4_c54n0")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g8sxb"]
 render_priority = 0
 next_pass = SubResource("ShaderMaterial_w36hw")
-shader = ExtResource("2_bnfof")
+shader = ExtResource("2_ok433")
 shader_parameter/affine_mapping = true
 shader_parameter/alpha_scissor = 0.0
 shader_parameter/jitter = 0.234
@@ -134,11 +134,10 @@ node_connections = [&"Attack_Shot", 2, &"Animation 11", &"Ground_Blend", 0, &"An
 transparency = 2
 alpha_scissor_threshold = 0.023
 alpha_antialiasing_mode = 0
-albedo_texture = ExtResource("7_5380s")
+albedo_texture = ExtResource("7_ypued")
 uv1_scale = Vector3(3.445, 3.445, 3.445)
 
-[node name="3rdPassAnimations" instance=ExtResource("1_fgp7y")]
-visible = false
+[node name="3rdPassAnimations" instance=ExtResource("1_flipp")]
 
 [node name="Skeleton3D" parent="Armature" index="0"]
 bones/0/position = Vector3(0.0012095, 4.21836, -70.5902)
@@ -173,21 +172,21 @@ bones/25/rotation = Quaternion(-0.0599857, 0.797559, -0.548493, -0.243837)
 bones/25/scale = Vector3(1, 1, 1)
 
 [node name="Cylinder" parent="Armature/Skeleton3D" index="0"]
-transform = Transform3D(13.5535, -2.69378, 16.9274, -0.189352, 36.7517, 2.17795, -17.0004, -2.55695, 13.471, -70.1272, -73.9279, -74.9938)
+transform = Transform3D(13.5659, -3.07388, 16.895, 0.0801761, 36.7401, 2.25158, -16.9915, -2.28081, 13.4995, -68.8963, -74.8646, -75.4152)
 visible = false
 
 [node name="Cylinder" parent="Armature/Skeleton3D/Cylinder" index="0"]
 surface_material_override/0 = SubResource("ShaderMaterial_4d6vf")
 
 [node name="Cube" parent="Armature/Skeleton3D" index="1"]
-transform = Transform3D(7.92111, -1.18226, 9.89289, -0.110663, 16.1298, 1.27286, -9.93558, -1.12221, 7.87289, -70.1272, -73.9279, -74.9938)
+transform = Transform3D(7.92832, -1.34909, 9.87398, 0.0468574, 16.1247, 1.31589, -9.93033, -1.00102, 7.88954, -68.8963, -74.8646, -75.4152)
 visible = false
 
 [node name="Cube" parent="Armature/Skeleton3D/Cube" index="0"]
 surface_material_override/0 = SubResource("ShaderMaterial_cjqha")
 
 [node name="Plane" parent="Armature/Skeleton3D" index="2"]
-transform = Transform3D(122.735, -153.287, -14.3585, -1.71469, -19.7226, 195.895, -153.949, -121.988, -13.6292, -74.7585, -41.2983, -79.0496)
+transform = Transform3D(122.847, -152.994, -16.3845, 0.726041, -20.3894, 195.833, -153.868, -122.246, -12.1573, -73.8638, -42.2551, -79.2274)
 visible = false
 
 [node name="Plane" parent="Armature/Skeleton3D/Plane" index="0"]
@@ -196,22 +195,22 @@ surface_material_override/0 = SubResource("ShaderMaterial_g8sxb")
 
 [node name="BELT" parent="Armature/Skeleton3D" index="3"]
 visible = false
-surface_material_override/0 = ExtResource("1_6p5pg")
+surface_material_override/0 = ExtResource("5_yeain")
 
 [node name="BELT_BUCK" parent="Armature/Skeleton3D" index="4"]
 visible = false
-surface_material_override/0 = ExtResource("1_6p5pg")
+surface_material_override/0 = ExtResource("5_yeain")
 
 [node name="HAT" parent="Armature/Skeleton3D" index="5"]
 visible = false
-surface_material_override/0 = ExtResource("1_6p5pg")
+surface_material_override/0 = ExtResource("5_yeain")
 
 [node name="HAT_BELT" parent="Armature/Skeleton3D" index="6"]
 visible = false
-surface_material_override/0 = ExtResource("1_6p5pg")
+surface_material_override/0 = ExtResource("5_yeain")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="7"]
-transform = Transform3D(122.735, -153.287, -14.3585, -1.71469, -19.7226, 195.895, -153.949, -121.988, -13.6292, -74.7585, -41.2983, -79.0496)
+transform = Transform3D(122.847, -152.994, -16.3845, 0.726041, -20.3894, 195.833, -153.868, -122.246, -12.1573, -73.8638, -42.2551, -79.2274)
 visible = false
 bone_name = "Plane"
 bone_idx = 17
@@ -220,7 +219,7 @@ bone_idx = 17
 transform = Transform3D(1, 0, -9.31323e-10, 0, 1, 1.11759e-08, 3.77186e-08, -3.72529e-09, 1, 0, 0, 0)
 visible = false
 monitoring = false
-script = ExtResource("1_5pw75")
+script = ExtResource("6_rrah7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Armature/Skeleton3D/BoneAttachment3D/Attack_Box" index="0"]
 transform = Transform3D(0.999543, -0.00723994, -0.0294038, 0.00603264, 0.999143, -0.0409917, 0.0296758, 0.0407942, 0.998725, 0.104287, -0.0595679, 1.6092)
@@ -229,14 +228,14 @@ shape = SubResource("BoxShape3D_mteqc")
 
 [node name="HAT_BUCK" parent="Armature/Skeleton3D" index="8"]
 visible = false
-surface_material_override/0 = ExtResource("1_6p5pg")
+surface_material_override/0 = ExtResource("5_yeain")
 
 [node name="HORNS" parent="Armature/Skeleton3D" index="9"]
 visible = false
-surface_material_override/0 = ExtResource("1_6p5pg")
+surface_material_override/0 = ExtResource("5_yeain")
 
 [node name="MORI" parent="Armature/Skeleton3D" index="10"]
-surface_material_override/0 = ExtResource("1_6p5pg")
+surface_material_override/0 = ExtResource("5_yeain")
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="1"]
 tree_root = SubResource("AnimationNodeBlendTree_meps6")

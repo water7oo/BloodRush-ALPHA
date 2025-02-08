@@ -92,6 +92,3 @@ func objectShake(target, period, magnitude):
 		await get_tree().process_frame
 
 	target.transform = initial_transform
-
-
-
