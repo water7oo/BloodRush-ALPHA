@@ -1,4 +1,4 @@
-class_name Player
+#class_name Player
 extends CharacterBody3D
 
 @onready var combatScript = get_node("/root/Combat")
