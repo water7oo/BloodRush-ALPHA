@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b2ud3ury8epgi"]
+[gd_scene load_steps=15 format=3 uid="uid://b2ud3ury8epgi"]
 
 [ext_resource type="Environment" uid="uid://cadv2uehcxqkc" path="res://MaterialTextures/NewGame.tres" id="1_c0qo6"]
 [ext_resource type="Material" uid="uid://dcuvjs33ebpe3" path="res://MaterialTextures/Room.tres" id="1_ewgn2"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://brejidgy2nq2j" path="res://ui/Pausing.tscn" id="4_x187o"]
 [ext_resource type="Shader" path="res://Shaders/uhhhhh.gdshader" id="7_kt4n2"]
 [ext_resource type="PackedScene" uid="uid://bl275sfu3mmds" path="res://Enemy/Enemy2.tscn" id="9_38om4"]
-[ext_resource type="Script" path="res://Scripts/follow_cam.gd" id="10_54x43"]
 [ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Player/cowboy_3rd_pass.tscn" id="10_tkxv2"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Player/PlayerCamera.tscn" id="11_hq17w"]
 [ext_resource type="PackedScene" uid="uid://rlcylvhdacih" path="res://FX/Move_Dust.tscn" id="14_xyb0d"]
@@ -127,14 +126,9 @@ transform = Transform3D(0.7, 0, 1.22391e-07, 0, 0.7, 0, -1.22391e-07, 0, 0.7, -0
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("11_hq17w")]
 transform = Transform3D(1, 0, 0, 0, 0.984793, 0.173734, 0, -0.173734, 0.984793, 1.35539, 4.5083, 13.061)
-script = ExtResource("10_54x43")
 target = NodePath("../Cowboy")
 speed = 6.0
 enabled = true
-mouse_sensitivity = 0.005
-joystick_sensitivity = 0.005
-period = 0.04
-magnitude = 0.08
 
 [node name="CamTarget2" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport"]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.53036, 3.74131, 8.49949)

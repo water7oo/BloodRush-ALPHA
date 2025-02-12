@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://7l5yih8w56c3"]
 
-[ext_resource type="Script" path="res://Scripts/States/CowboyPlayer.gd" id="1_b5ijt"]
+[ext_resource type="Script" path="res://Scripts/follow_cam.gd" id="1_hwm0y"]
 [ext_resource type="Shader" path="res://Game/EdgeDetection.gdshader" id="2_vd1nw"]
 [ext_resource type="Script" path="res://Scripts/gameJuice.gd" id="3_sswrb"]
 
@@ -35,7 +35,7 @@ _data = {
 
 [node name="CameraSet" type="Node3D" groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0591612)
-script = ExtResource("1_b5ijt")
+script = ExtResource("1_hwm0y")
 
 [node name="SpringArmPivot" type="Node3D" parent="." groups=["camera"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0353532, 0.005)

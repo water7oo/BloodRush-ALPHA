@@ -1,8 +1,19 @@
 extends CharacterBody3D
 class_name Player
 
+@export var stats : PlayerStats
+@export var player_actions : PlayerActions
+
 @onready var animations = $animations
-@onready var state_machine = $StateMachine
+#@onready var state_machine = $StateMachine
+#
+#@onready var state_machine: LimboHSM = $LimboHSM
+#@export var state_machine = LimboHSM
+
+@onready var idle_state = $LimboHSM/IdleState
+@onready var run_state = $LimboHSM/RunState
+@onready var walk_state = $LimboHSM/WalkState
+@onready var jump_state = $LimboHSM/JumpState
 
 @onready var followcam = get_node("/root/FollowCam")
 @onready var armature = $RootNode
@@ -10,15 +21,10 @@ var camera = preload("res://Player/PlayerCamera.tscn").instantiate()
 var spring_arm_pivot = camera.get_node("SpringArmPivot")
 var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
 
-@export var SPEED = 5.0
-@export var JUMP_VELOCITY = 4.5
-
-@export var custom_gravity = 20.0
-
 var isPressMove := false
 var isPressJump := false
 
-var main_sm: LimboHSM
+#var main_sm: LimboHSM
 
 
 
@@ -72,16 +78,18 @@ func _physics_process(delta):
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		isPressMove = true
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
-	else:
-		isPressMove = false
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+	#var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	#var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	#
+	#
+	#if direction:
+		
+		#velocity.x = direction.x * SPEED
+		#velocity.z = direction.z * SPEED
+	#else:
+		
+		#velocity.x = move_toward(velocity.x, 0, SPEED)
+		#velocity.z = move_toward(velocity.z, 0, SPEED)
 	
 	move_and_slide()
 
