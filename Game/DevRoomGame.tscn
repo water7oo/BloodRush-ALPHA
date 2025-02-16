@@ -122,12 +122,12 @@ mouse_force_pass_scroll_events = false
 color = Color(0, 0, 0, 1)
 
 [node name="Enemy" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("9_38om4")]
-transform = Transform3D(0.7, 0, 1.22391e-07, 0, 0.7, 0, -1.22391e-07, 0, 0.7, -0.41856, 0.780326, -11.2596)
+transform = Transform3D(0.7, 0, 1.22391e-07, 0, 0.7, 0, -1.22391e-07, 0, 0.7, 8.81309, 5.94461, -7.37677)
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("11_hq17w")]
 transform = Transform3D(1, 0, 0, 0, 0.984793, 0.173734, 0, -0.173734, 0.984793, 1.35539, 4.5083, 13.061)
 target = NodePath("../Cowboy")
-speed = 6.0
+speed = 20.0
 enabled = true
 
 [node name="CamTarget2" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport"]

@@ -4,6 +4,8 @@ extends CharacterBody3D
 @onready var idle_state = $LimboHSM/IdleState
 @onready var walk_state = $LimboHSM/WalkState
 @onready var jump_state = $LimboHSM/JumpState  # Single Jump State, no jump_idle or jump_moving
+@export var CUSTOM_GRAVITY = 30.0
+
 
 func _ready():
 	initialize_state_machine()
@@ -31,5 +33,7 @@ func initialize_state_machine():
 	state_machine.set_active(true)
 
 func _physics_process(delta):
+	if !is_on_floor():
+		velocity.y -= CUSTOM_GRAVITY * delta
 	#print("Current State:", state_machine.get_active_state())  # Uncomment to see active state in console
 	pass
