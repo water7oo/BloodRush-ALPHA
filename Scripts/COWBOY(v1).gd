@@ -214,6 +214,7 @@ func _on_custom_animation_finished(anim_name):
 
 func _unhandled_input(event):
 	if Input.is_action_just_pressed("quit_game"):
+		print("leave game")
 		get_tree().quit()
 
 	if event is InputEventMouseMotion:

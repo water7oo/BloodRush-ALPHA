@@ -4,7 +4,7 @@ extends LimboState
 @export var animation: StringName
 @onready var state_machine: LimboHSM = $LimboHSM
 
-var BASE_SPEED = 6.0  
+var BASE_SPEED: float = 6.0  
 
 func _enter() -> void:
 	print("Current State:", agent.state_machine.get_active_state())

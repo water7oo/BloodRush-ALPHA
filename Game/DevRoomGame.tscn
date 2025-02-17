@@ -125,10 +125,9 @@ color = Color(0, 0, 0, 1)
 transform = Transform3D(0.7, 0, 1.22391e-07, 0, 0.7, 0, -1.22391e-07, 0, 0.7, 8.81309, 5.94461, -7.37677)
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("11_hq17w")]
-transform = Transform3D(1, 0, 0, 0, 0.984793, 0.173734, 0, -0.173734, 0.984793, 1.35539, 4.5083, 13.061)
-target = NodePath("../Cowboy")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.35539, 4.5083, 13.061)
+target = NodePath("../Cowboy/CamTarget")
 speed = 20.0
-enabled = true
 
 [node name="CamTarget2" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport"]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.53036, 3.74131, 8.49949)
@@ -146,5 +145,5 @@ transform = Transform3D(-0.7, 0, 1.05697e-07, 0, 0.7, 0, -1.05697e-07, 0, -0.7, 
 visible = false
 
 [node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Cowboy"]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -1.42403, 1.3429, 0.0283319)
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0.00380082, 1.31001, 0.0283318)
 gizmo_extents = 4.42

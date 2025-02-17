@@ -4,11 +4,18 @@ extends CharacterBody3D
 @onready var idle_state = $LimboHSM/IdleState
 @onready var walk_state = $LimboHSM/WalkState
 @onready var jump_state = $LimboHSM/JumpState  # Single Jump State, no jump_idle or jump_moving
-@export var CUSTOM_GRAVITY = 30.0
+
+#var camera = preload("res://Player/PlayerCamera.tscn").instantiate()
+#var spring_arm_pivot = camera.get_node("SpringArmPivot")
+#var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
+#@export var mouse_sensitivity: float = 0.005
+
+
 
 
 func _ready():
 	initialize_state_machine()
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func initialize_state_machine():
 	# General transitions
@@ -32,8 +39,24 @@ func initialize_state_machine():
 	state_machine.initialize(self)
 	state_machine.set_active(true)
 
-func _physics_process(delta):
-	if !is_on_floor():
-		velocity.y -= CUSTOM_GRAVITY * delta
-	#print("Current State:", state_machine.get_active_state())  # Uncomment to see active state in console
+func _physics_process(delta: float) -> void:
+	playerGravity(delta)
+	
+func playerCamera(delta: float) -> void:
 	pass
+
+func playerGravity(delta: float) -> void:
+	if !is_on_floor():
+		velocity.y -= Global.CUSTOM_GRAVITY * delta
+
+
+#func _unhandled_input(event):
+	#if event is InputEventMouseMotion:
+#
+		#var rotation_x = spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity
+		#var rotation_y = spring_arm_pivot.rotation.y - event.relative.x * mouse_sensitivity
+#
+		#rotation_x = clamp(rotation_x, deg_to_rad(-60), deg_to_rad(30))
+#
+		#spring_arm_pivot.rotation.x = rotation_x
+		#spring_arm_pivot.rotation.y = rotation_y
