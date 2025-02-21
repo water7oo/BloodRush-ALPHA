@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://ctudhwisdi64s" path="res://FX/Burst_dust.tscn" id="12_0scso"]
 [ext_resource type="PackedScene" uid="uid://rlcylvhdacih" path="res://FX/Move_Dust.tscn" id="12_bbdr3"]
 [ext_resource type="PackedScene" uid="uid://d1yu2x7osdqa5" path="res://FX/jump_dust.tscn" id="12_d51g0"]
-[ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Player/cowboy_3rd_pass.tscn" id="12_dxn1b"]
+[ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Player/COWBOYPLAYER(v4).tscn" id="12_dxn1b"]
 [ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://ui/GameStartANIM.tscn" id="13_a8nsm"]
 [ext_resource type="PackedScene" uid="uid://dordn2c1222of" path="res://Enviroment/Billboards/Billboards2.tscn" id="13_cmpb6"]
 [ext_resource type="PackedScene" uid="uid://da2icq52660iu" path="res://Buildings/BUILDINGS_2.tscn" id="13_wx5oi"]

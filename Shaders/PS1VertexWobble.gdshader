@@ -2,7 +2,7 @@ shader_type spatial;
 render_mode blend_mix,
 	cull_disabled,
 	depth_prepass_alpha,
-	diffuse_toon, unshaded,
+	diffuse_toon,
 	shadows_disabled,
 	specular_disabled,
 	vertex_lighting;

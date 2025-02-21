@@ -3,7 +3,7 @@ extends LimboState
 @onready var armature = $"../../RootNode/Armature"
 @onready var state_machine: LimboHSM = $LimboHSM
 
-@export var JUMP_VELOCITY: float = 10.0
+@export var JUMP_VELOCITY: float = 20.0
 @export var BASE_SPEED: float = 6.0
 @export var air_timer: float = 0.0
 @export var jump_timer: float = 0.0
@@ -32,17 +32,14 @@ func _enter() -> void:
 	jump_counter = 0
 
 func _update(delta: float) -> void:
-	player_jump(delta)
+	player_runjump(delta)
 	agent.move_and_slide()
 
 
-func player_jump(delta: float) -> void:
+func player_runjump(delta: float) -> void:
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
-
-	if direction != Vector3.ZERO:
-		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-direction.x, -direction.z), Global.armature_rot_speed)
 
 	if Input.is_action_pressed("move_jump") and can_jump:
 		jump_timer += delta
@@ -52,9 +49,17 @@ func player_jump(delta: float) -> void:
 			can_jump = false
 			jump_counter += 1
 
+	
+	
+	if direction != Vector3.ZERO:
+		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-direction.x, -direction.z), Global.armature_rot_speed)
+
 	if direction != Vector3.ZERO:
 		agent.velocity.x = direction.x * BASE_SPEED
 		agent.velocity.z = direction.z * BASE_SPEED
+		#armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
+	
+	
 
 	if agent.is_on_floor():
 		print("Landed!")
@@ -66,6 +71,5 @@ func player_jump(delta: float) -> void:
 			agent.state_machine.dispatch("to_walk")
 		else:
 			agent.state_machine.dispatch("to_idle")
-
 
  

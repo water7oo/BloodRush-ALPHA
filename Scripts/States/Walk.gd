@@ -27,68 +27,85 @@ var target_speed: float = MAX_SPEED
 var velocity = Vector3.ZERO
 
 func _enter() -> void:
-    print("Current State:", agent.state_machine.get_active_state())
+	print("Current State:", agent.state_machine.get_active_state())
 
 func _update(delta: float) -> void:
-    player_movement(delta)
-    player_jump(delta)
-    print(velocity.length())
-    agent.move_and_slide()
+	player_movement(delta)
+	initialize_jump(delta)
+	initialize_run(delta)
+	initialize_burst(delta)
+	print(velocity.length())
+	agent.move_and_slide()
 
 func player_movement(delta: float) -> void:
-    var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-    var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-    direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
+	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 
-    if direction != Vector3.ZERO:
-        is_moving = true
-        armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
+	if direction != Vector3.ZERO:
+		is_moving = true
+		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
 
-        # Calculate the target rotation (the direction the player should face)
-        var target_rotation = atan2(direction.x, direction.z)
-        
-        # Update speed and direction based on movement input
-        if velocity.dot(direction) < 0:
-            current_speed = move_toward(current_speed, 0, momentum_deceleration * delta)
-        
-        if current_speed < target_speed:
-            current_speed = move_toward(current_speed, target_speed, ACCELERATION * delta)
-        else:
-            current_speed = move_toward(current_speed, target_speed, DECELERATION * delta)
+		# Calculate the target rotation (the direction the player should face)
+		var target_rotation = atan2(direction.x, direction.z)
+		
+		# Update speed and direction based on movement input
+		if velocity.dot(direction) < 0:
+			print("skid")
+			current_speed = move_toward(current_speed, 0, momentum_deceleration * delta)
+		
+		if current_speed < target_speed:
+			current_speed = move_toward(current_speed, target_speed, ACCELERATION * delta)
+		else:
+			current_speed = move_toward(current_speed, target_speed, DECELERATION * delta)
 
-        velocity.x = direction.x * current_speed
-        velocity.z = direction.z * current_speed
-    else:
-        # No movement input, slow down and transition to idle
-        is_moving = false
-        current_speed = 0
-        velocity.x = move_toward(velocity.x, 0, BASE_DECELERATION * delta)
-        velocity.z = move_toward(velocity.z, 0, BASE_DECELERATION * delta)
+		velocity.x = direction.x * current_speed
+		velocity.z = direction.z * current_speed
+	else:
+		# No movement input, slow down and transition to idle
+		is_moving = false
+		current_speed = 0
+		velocity.x = move_toward(velocity.x, 0, BASE_DECELERATION * delta)
+		velocity.z = move_toward(velocity.z, 0, BASE_DECELERATION * delta)
 
-    # ✅ Preserve velocity.y so gravity still applies
-    velocity.y = agent.velocity.y  
 
-    if velocity.length() <= 0:
-        agent.state_machine.dispatch("to_idle")
+	velocity.y = agent.velocity.y  
 
-    agent.velocity = velocity
+	if velocity.length() <= 0:
+		agent.state_machine.dispatch("to_idle")
+
+	agent.velocity = velocity
 
 
 
 
 func _unhandled_input(event):
-    if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion:
 
-        var rotation_x = Global.spring_arm_pivot.rotation.x - event.relative.y * Global.mouse_sensitivity
-        var rotation_y = Global.spring_arm_pivot.rotation.y - event.relative.x * Global.mouse_sensitivity
+		var rotation_x = Global.spring_arm_pivot.rotation.x - event.relative.y * Global.mouse_sensitivity
+		var rotation_y = Global.spring_arm_pivot.rotation.y - event.relative.x * Global.mouse_sensitivity
 
-        rotation_x = clamp(rotation_x, deg_to_rad(-60), deg_to_rad(30))
+		rotation_x = clamp(rotation_x, deg_to_rad(-60), deg_to_rad(30))
 
-        Global.spring_arm_pivot.rotation.x = rotation_x
-        Global.spring_arm_pivot.rotation.y = rotation_y
+		Global.spring_arm_pivot.rotation.x = rotation_x
+		Global.spring_arm_pivot.rotation.y = rotation_y
 
 
-func player_jump(delta: float) -> void:
-    if Input.is_action_just_pressed("move_jump") and agent.is_on_floor():
-        agent.state_machine.dispatch("to_jump")
-        #agent.velocity.y = JUMP_VELOCITY
+func initialize_jump(delta: float) -> void:
+	if Input.is_action_just_pressed("move_jump") and agent.is_on_floor():
+		agent.state_machine.dispatch("to_jump")
+		#agent.velocity.y = JUMP_VELOCITY
+
+
+func initialize_run(delta: float)-> void:
+	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
+	
+	if Input.is_action_pressed("move_sprint") && direction != Vector3.ZERO:
+		agent.state_machine.dispatch("to_run")
+
+
+func initialize_burst(delta: float) -> void:
+	if Input.is_action_just_pressed("move_dodge"):
+		agent.state_machine.dispatch("to_burst")

@@ -8,7 +8,7 @@
 render_priority = 0
 shader = ExtResource("2_vd1nw")
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/shadow_thickness = 1.999
+shader_parameter/shadow_thickness = 2.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_n1m7q"]
 size = Vector2(2, 2)

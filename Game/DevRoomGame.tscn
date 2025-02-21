@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://brejidgy2nq2j" path="res://ui/Pausing.tscn" id="4_x187o"]
 [ext_resource type="Shader" path="res://Shaders/uhhhhh.gdshader" id="7_kt4n2"]
 [ext_resource type="PackedScene" uid="uid://bl275sfu3mmds" path="res://Enemy/Enemy2.tscn" id="9_38om4"]
-[ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Player/cowboy_3rd_pass.tscn" id="10_tkxv2"]
+[ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Player/COWBOYPLAYER(v4).tscn" id="10_tkxv2"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Player/PlayerCamera.tscn" id="11_hq17w"]
 [ext_resource type="PackedScene" uid="uid://rlcylvhdacih" path="res://FX/Move_Dust.tscn" id="14_xyb0d"]
 [ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="16_dgh31"]
@@ -32,10 +32,10 @@ shader_parameter/clipPosition = 0.2
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.916113, -0.373826, -0.14488, 0.130719, -0.620135, 0.773528, -0.37901, 0.6897, 0.61698, -6.46824, 61.2841, 3.0847)
+shadow_enabled = true
 shadow_bias = 0.0
 shadow_normal_bias = 2.139
 directional_shadow_mode = 0
-sky_mode = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_c0qo6")
