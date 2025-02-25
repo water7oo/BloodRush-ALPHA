@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://cb2yakhsx08bd"]
+
+[ext_resource type="PackedScene" uid="uid://ce3emrnfl1nuy" path="res://Player/COWBOYPLAYER_V4.blend" id="1_ac2oc"]
+
+[node name="COWBOYPLAYER_V4" instance=ExtResource("1_ac2oc")]
+
+[node name="BELT_BUCK" parent="." index="0"]
+visible = false
+
+[node name="BELT" parent="." index="1"]
+visible = false
+
+[node name="HAT" parent="." index="2"]
+visible = false
+
+[node name="HAT_BELT" parent="." index="3"]
+visible = false
+
+[node name="HORNS" parent="." index="4"]
+visible = false
+
+[node name="HAT_BUCK" parent="." index="5"]
+visible = false
+
+[node name="Cube" parent="." index="6"]
+visible = false
+
+[node name="Plane" parent="." index="7"]
+visible = false
+
+[node name="MORI_001" parent="." index="8"]
+visible = false
+
+[node name="Empty" parent="." index="9"]
+visible = false
+
+[node name="SAVE" parent="." index="10"]
+visible = false
+
+[node name="Armature" parent="." index="11"]
+visible = false

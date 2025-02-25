@@ -7,6 +7,10 @@ extends CharacterBody3D
 @onready var run_state = $LimboHSM/RunState
 @onready var runJump_state = $LimboHSM/RunJumpState
 @onready var burst_state = $LimboHSM/BurstState
+@onready var crouch_state = $LimboHSM/CrouchState
+@onready var groundDive_state = $LimboHSM/GroundDiveState
+@onready var airDive_state = $LimboHSM/AirDiveState
+@onready var slide_state = $LimboHSM/SlideState
 
 
 

@@ -55,7 +55,7 @@ sync = true
 sync = true
 
 [resource]
-graph_offset = Vector2(-720.219, -178.498)
+graph_offset = Vector2(-388.223, -4.18567)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_7fqlc")
 nodes/Animation/position = Vector2(-380, -80)
 "nodes/Animation 10/node" = SubResource("AnimationNodeAnimation_al0tm")
