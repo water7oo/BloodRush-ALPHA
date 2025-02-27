@@ -1,20 +1,13 @@
 extends LimboState
 
-@onready var armature = $"../../RootNode/Armature"
+@onready var armature = $"../../RootNode"
 @onready var state_machine: LimboHSM = $LimboHSM
 
+@onready var playerCharScene = $"../../RootNode/COWBOYPLAYER_V4"
+@onready var animationTree =  playerCharScene.find_child("AnimationTree", true)
 
-@export var BASE_SPEED: float = 6.0
-@export var MAX_SPEED: float = 11.0
-@export var ACCELERATION: float = 10.0 #the higher the value the faster the acceleration
-@export var DECELERATION: float = 1.0 #the lower the value the slippier the stop
-@export var BASE_DECELERATION: float = 1.0
-@export var momentum_deceleration: float = 1.0
-
-
-
-@export var JUMP_VELOCITY: float = 10.0
-const CUSTOM_GRAVITY: float = 30.0
+@export var JUMP_VELOCITY: float = 12.0  # Increased for better jump height
+const CUSTOM_GRAVITY: float = 30.0  # Keeps the character from feeling too floaty
 @export var air_timer: float = 0.0
 @export var jump_timer: float = 0.0
 @export var jump_counter: float = 0
@@ -23,7 +16,7 @@ var last_ground_position = Vector3.ZERO
 
 var current_speed: float = 0.0
 var is_moving: bool = false
-var target_speed: float = MAX_SPEED
+var target_speed: float = Global.MAX_SPEED
 var velocity = Vector3.ZERO
 
 func _enter() -> void:
@@ -45,19 +38,23 @@ func player_movement(delta: float) -> void:
 	if direction != Vector3.ZERO:
 		is_moving = true
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
-
+		
+		Global.target_blend_amount = 0.0
+		Global.current_blend_amount = lerp(Global.current_blend_amount, Global.target_blend_amount, Global.blend_lerp_speed * delta)
+		animationTree.set("parameters/Ground_Blend/blend_amount", 1)
+		
 		# Calculate the target rotation (the direction the player should face)
 		var target_rotation = atan2(direction.x, direction.z)
 		
 		# Update speed and direction based on movement input
 		if velocity.dot(direction) < 0:
 			print("skid")
-			current_speed = move_toward(current_speed, 0, momentum_deceleration * delta)
+			current_speed = move_toward(current_speed, 0, Global.momentum_deceleration * delta)
 		
 		if current_speed < target_speed:
-			current_speed = move_toward(current_speed, target_speed, ACCELERATION * delta)
+			current_speed = move_toward(current_speed, target_speed, Global.ACCELERATION * delta)
 		else:
-			current_speed = move_toward(current_speed, target_speed, DECELERATION * delta)
+			current_speed = move_toward(current_speed, target_speed, Global.DECELERATION * delta)
 
 		velocity.x = direction.x * current_speed
 		velocity.z = direction.z * current_speed
@@ -65,8 +62,8 @@ func player_movement(delta: float) -> void:
 		# No movement input, slow down and transition to idle
 		is_moving = false
 		current_speed = 0
-		velocity.x = move_toward(velocity.x, 0, BASE_DECELERATION * delta)
-		velocity.z = move_toward(velocity.z, 0, BASE_DECELERATION * delta)
+		velocity.x = move_toward(velocity.x, 0, Global.BASE_DECELERATION * delta)
+		velocity.z = move_toward(velocity.z, 0, Global.BASE_DECELERATION * delta)
 
 
 	velocity.y = agent.velocity.y  
@@ -75,9 +72,6 @@ func player_movement(delta: float) -> void:
 		agent.state_machine.dispatch("to_idle")
 
 	agent.velocity = velocity
-
-
-
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -90,12 +84,10 @@ func _unhandled_input(event):
 		Global.spring_arm_pivot.rotation.x = rotation_x
 		Global.spring_arm_pivot.rotation.y = rotation_y
 
-
 func initialize_jump(delta: float) -> void:
 	if Input.is_action_just_pressed("move_jump") and agent.is_on_floor():
 		agent.state_machine.dispatch("to_jump")
-		#agent.velocity.y = JUMP_VELOCITY
-
+		#agent.velocity.y = Global.JUMP_VELOCITY
 
 func initialize_run(delta: float)-> void:
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
@@ -104,7 +96,6 @@ func initialize_run(delta: float)-> void:
 	
 	if Input.is_action_pressed("move_sprint") && direction != Vector3.ZERO:
 		agent.state_machine.dispatch("to_run")
-
 
 func initialize_burst(delta: float) -> void:
 	if Input.is_action_just_pressed("move_dodge"):

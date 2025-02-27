@@ -1,7 +1,7 @@
 [gd_resource type="AnimationNodeBlendTree" load_steps=20 format=3 uid="uid://ccqgr0tb8ublp"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_al0tm"]
-animation = &"Armature_001|DODGE"
+animation = &"TPOSE"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2613s"]
 animation = &"Armature_001|LANDING"
@@ -10,31 +10,31 @@ animation = &"Armature_001|LANDING"
 animation = &"Armature_001|LANDING"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0phbi"]
-animation = &"Armature_001|WALKING_LOW"
+animation = &"WALK"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_s28eq"]
-animation = &"Armature_001|JUMP"
+animation = &"JUMP"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2nnqn"]
-animation = &"Armature_001|SLIDE"
+animation = &"TPOSE"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2b255"]
-animation = &"Armature_001|JUMP"
+animation = &"TPOSE"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hw7nx"]
-animation = &"Armature_001|LANDING"
+animation = &"TPOSE"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1fp1f"]
-animation = &"Armature_001|RUNNING_FASTER"
+animation = &"RUN"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tkitk"]
-animation = &"Armature_001|FALLING"
+animation = &"FALL"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_faruw"]
 animation = &"Armature_001|ATTACK"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7fqlc"]
-animation = &"Armature_001|Idle"
+animation = &"IDLE"
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_bgqhx"]
 
@@ -55,7 +55,7 @@ sync = true
 sync = true
 
 [resource]
-graph_offset = Vector2(-388.223, -4.18567)
+graph_offset = Vector2(-526.64, -105.613)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_7fqlc")
 nodes/Animation/position = Vector2(-380, -80)
 "nodes/Animation 10/node" = SubResource("AnimationNodeAnimation_al0tm")
@@ -79,7 +79,7 @@ nodes/Animation/position = Vector2(-380, -80)
 "nodes/Animation 8/node" = SubResource("AnimationNodeAnimation_tkitk")
 "nodes/Animation 8/position" = Vector2(260, 240)
 "nodes/Animation 9/node" = SubResource("AnimationNodeAnimation_faruw")
-"nodes/Animation 9/position" = Vector2(920, 220)
+"nodes/Animation 9/position" = Vector2(900, 280)
 nodes/Attack_Shot/node = SubResource("AnimationNodeOneShot_bgqhx")
 nodes/Attack_Shot/position = Vector2(1240, 120)
 nodes/Attack_Shot2/node = SubResource("AnimationNodeOneShot_i8cjd")
@@ -87,12 +87,12 @@ nodes/Attack_Shot2/position = Vector2(1480, 120)
 nodes/Blend3/node = SubResource("AnimationNodeBlend3_64jt7")
 nodes/Blend3/position = Vector2(1640, 420)
 nodes/Ground_Blend/node = SubResource("AnimationNodeBlend3_5i2sc")
-nodes/Ground_Blend/position = Vector2(80, -60)
+nodes/Ground_Blend/position = Vector2(40, -80)
 nodes/Ground_Blend2/node = SubResource("AnimationNodeBlend3_sijjl")
 nodes/Ground_Blend2/position = Vector2(320, -40)
 nodes/Ground_Blend3/node = SubResource("AnimationNodeBlend3_w35fh")
 nodes/Ground_Blend3/position = Vector2(900, 40)
 nodes/Jump_Blend/node = SubResource("AnimationNodeBlend3_fbv64")
 nodes/Jump_Blend/position = Vector2(640, 0)
-nodes/output/position = Vector2(1720, 120)
+nodes/output/position = Vector2(1760, 80)
 node_connections = [&"Attack_Shot", 0, &"Ground_Blend3", &"Attack_Shot", 1, &"Animation 9", &"Attack_Shot2", 0, &"Attack_Shot", &"Attack_Shot2", 1, &"Animation 11", &"Ground_Blend", 0, &"Animation", &"Ground_Blend", 1, &"Animation 3", &"Ground_Blend", 2, &"Animation 2", &"Ground_Blend2", 0, &"Ground_Blend", &"Ground_Blend2", 1, &"Animation 7", &"Ground_Blend2", 2, &"Animation 6", &"Ground_Blend3", 0, &"Jump_Blend", &"Ground_Blend3", 1, &"Animation 10", &"Ground_Blend3", 2, &"Animation 4", &"Jump_Blend", 0, &"Ground_Blend2", &"Jump_Blend", 1, &"Animation 8", &"Jump_Blend", 2, &"Animation 5", &"output", 0, &"Attack_Shot2"]

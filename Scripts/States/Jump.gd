@@ -1,21 +1,26 @@
 extends LimboState
 
-@onready var armature = $"../../RootNode/Armature"
+@onready var armature = $"../../RootNode"
 @onready var state_machine: LimboHSM = $LimboHSM
 
-@export var JUMP_VELOCITY: float = 10.0
-@export var BASE_SPEED: float = 6.0
+@onready var playerCharScene = $"../../RootNode/COWBOYPLAYER_V4"
+@onready var animationTree =  playerCharScene.find_child("AnimationTree", true)
+
+@export var BASE_SPEED: float = 6.0  # Retained for ground speed consistency
+
 @export var air_timer: float = 0.0
 @export var jump_timer: float = 0.0
 @export var jump_counter: int = 0
 @export var can_jump: bool = true
 var last_ground_position = Vector3.ZERO
 
-@export var MAX_SPEED: float = 11.0
-@export var ACCELERATION: float = 5.0 #the higher the value the faster the acceleration
-@export var DECELERATION: float = 1.0 #the lower the value the slippier the stop
-@export var BASE_DECELERATION: float = 1.0
-@export var momentum_deceleration: float = 1.0
+@export var MAX_SPEED: float = Global.MAX_SPEED - 3
+@export var ACCELERATION: float = Global.ACCELERATION - 5
+@export var DECELERATION: float = Global.DECELERATION + 100  # Higher deceleration for more "floaty" air control
+
+
+@export var momentum_deceleration: float = 1  # Reduced to allow smoother air momentum
+
 
 
 var current_speed: float = 0.0
@@ -25,7 +30,7 @@ var velocity = Vector3.ZERO
 
 func _enter() -> void:
 	print("Current State:", agent.state_machine.get_active_state())
-	agent.velocity.y = JUMP_VELOCITY
+	agent.velocity.y = Global.JUMP_VELOCITY
 	# Reset timers and jump counter
 	air_timer = 0.0
 	jump_timer = 0.0
@@ -48,7 +53,11 @@ func player_jump(delta: float) -> void:
 		jump_timer += delta
 		air_timer += delta
 		if jump_timer <= 0.4:  # Jump if held for a short duration
-			agent.velocity.y = JUMP_VELOCITY  # Apply jump force
+			agent.velocity.y = Global.JUMP_VELOCITY  # Apply jump force
+			Global.target_blend_amount = 0.0
+			Global.current_blend_amount = lerp(Global.current_blend_amount, Global.target_blend_amount, Global.blend_lerp_speed * delta)
+			animationTree.set("parameters/Ground_Blend/blend_amount", 0)
+			
 			can_jump = false
 			jump_counter += 1
 
@@ -58,10 +67,11 @@ func player_jump(delta: float) -> void:
 
 	if agent.is_on_floor():
 		print("Landed!")
-		jump_timer = 0.0
-		air_timer = 0.0
-		if air_timer >= 0.2:
-			pass
+		
+		# Preserve momentum and gradually slow down
+		agent.velocity.x = move_toward(agent.velocity.x, 0, 100 * delta)
+		agent.velocity.z = move_toward(agent.velocity.z, 0, 100 * delta)
+
 		if input_dir != Vector2.ZERO:
 			agent.state_machine.dispatch("to_walk")
 		else:

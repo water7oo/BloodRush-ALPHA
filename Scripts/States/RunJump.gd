@@ -1,21 +1,25 @@
 extends LimboState
 
-@onready var armature = $"../../RootNode/Armature"
 @onready var state_machine: LimboHSM = $LimboHSM
+@onready var armature = $"../../RootNode"
+@onready var playerCharScene = $"../../RootNode/COWBOYPLAYER_V4"
+@onready var animationTree =  playerCharScene.find_child("AnimationTree", true)
 
-@export var JUMP_VELOCITY: float = 20.0
-@export var BASE_SPEED: float = 6.0
+@export var runJumpMultiplier: float = 1.5
+@export var JUMP_VELOCITY: float = Global.JUMP_VELOCITY * runJumpMultiplier
+@export var BASE_SPEED: float = Global.MAX_SPEED
+
 @export var air_timer: float = 0.0
 @export var jump_timer: float = 0.0
 @export var jump_counter: int = 0
 @export var can_jump: bool = true
 var last_ground_position = Vector3.ZERO
 
-@export var MAX_SPEED: float = 11.0
-@export var ACCELERATION: float = 5.0 #the higher the value the faster the acceleration
-@export var DECELERATION: float = 1.0 #the lower the value the slippier the stop
-@export var BASE_DECELERATION: float = 1.0
-@export var momentum_deceleration: float = 1.0
+@export var MAX_SPEED: float = Global.MAX_SPEED - 3
+@export var ACCELERATION: float = Global.ACCELERATION - 5
+@export var DECELERATION: float = Global.DECELERATION + 100  # Higher deceleration for more "floaty" air control
+@export var momentum_deceleration: float = 0.7  # Slightly lower momentum deceleration for smoother control in the air
+
 
 
 var current_speed: float = 0.0
@@ -46,6 +50,10 @@ func player_runjump(delta: float) -> void:
 		air_timer += delta
 		if jump_timer <= 0.4:  # Jump if held for a short duration
 			agent.velocity.y = JUMP_VELOCITY  # Apply jump force
+			Global.target_blend_amount = 0.0
+			Global.current_blend_amount = lerp(Global.current_blend_amount, Global.target_blend_amount, Global.blend_lerp_speed * delta)
+			animationTree.set("parameters/Ground_Blend/blend_amount", 0)
+			
 			can_jump = false
 			jump_counter += 1
 
