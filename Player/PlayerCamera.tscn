@@ -8,7 +8,7 @@
 render_priority = 0
 shader = ExtResource("2_5olaf")
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/shadow_thickness = 1.0
+shader_parameter/shadow_thickness = 2.0
 shader_parameter/normal_threshold = 0.05
 shader_parameter/depth_sensitivity = 2.0
 shader_parameter/outline_start = 0.1
@@ -51,6 +51,7 @@ spring_arm_pivot = NodePath("SpringArmPivot")
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.981484, 0.191546, 0, -0.191546, 0.981484, 0, 0, 0)
 collision_mask = 255
+spring_length = 0.0
 
 [node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D"]
 

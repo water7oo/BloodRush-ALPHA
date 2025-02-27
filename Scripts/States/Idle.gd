@@ -8,7 +8,7 @@ extends LimboState
 @onready var animationTree = playerCharScene.find_child("AnimationTree", true)
 
 @export var BASE_SPEED: float = Global.BASE_SPEED - 5
-@export var DECELERATION: float = Global.DECELERATION - 5
+@export var DECELERATION: float = Global.DECELERATION - 5 
 
 var preserved_velocity: Vector3 = Vector3.ZERO
 

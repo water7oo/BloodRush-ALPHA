@@ -46,6 +46,7 @@ func player_jump(delta: float) -> void:
 	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 
+	# Rotate armature in air if moving
 	if direction != Vector3.ZERO:
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-direction.x, -direction.z), Global.armature_rot_speed)
 
@@ -57,25 +58,37 @@ func player_jump(delta: float) -> void:
 			Global.target_blend_amount = 0.0
 			Global.current_blend_amount = lerp(Global.current_blend_amount, Global.target_blend_amount, Global.blend_lerp_speed * delta)
 			animationTree.set("parameters/Ground_Blend/blend_amount", 0)
-			
+
 			can_jump = false
 			jump_counter += 1
 
+	# Preserve momentum and blend movement mid-air
 	if direction != Vector3.ZERO:
-		agent.velocity.x = direction.x * BASE_SPEED
-		agent.velocity.z = direction.z * BASE_SPEED
+		var angle_diff = agent.velocity.normalized().dot(direction)
 
+		# If changing direction sharply mid-air, slow down slightly for smoother transition
+		if angle_diff < 0 and agent.velocity.length() >= BASE_SPEED * 0.9:
+			agent.velocity.x = move_toward(agent.velocity.x, 0, Global.air_momentum_deceleration * delta)
+			agent.velocity.z = move_toward(agent.velocity.z, 0, Global.air_momentum_deceleration * delta)
+
+		# Blend smoothly towards new direction
+		agent.velocity.x = lerp(agent.velocity.x, direction.x * BASE_SPEED, Global.air_momentum_acceleration * delta)
+		agent.velocity.z = lerp(agent.velocity.z, direction.z * BASE_SPEED, Global.air_momentum_acceleration * delta)
+
+	# Landing logic
 	if agent.is_on_floor():
 		print("Landed!")
-		
-		# Preserve momentum and gradually slow down
+
+		# Gradually slow down after landing instead of an abrupt stop
 		agent.velocity.x = move_toward(agent.velocity.x, 0, 100 * delta)
 		agent.velocity.z = move_toward(agent.velocity.z, 0, 100 * delta)
 
+		# Transition to walk or idle based on input
 		if input_dir != Vector2.ZERO:
 			agent.state_machine.dispatch("to_walk")
 		else:
 			agent.state_machine.dispatch("to_idle")
+
 
 
  

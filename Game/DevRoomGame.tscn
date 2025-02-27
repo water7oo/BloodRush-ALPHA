@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://b2ud3ury8epgi"]
+[gd_scene load_steps=14 format=3 uid="uid://b2ud3ury8epgi"]
 
 [ext_resource type="Environment" uid="uid://cadv2uehcxqkc" path="res://MaterialTextures/NewGame.tres" id="1_c0qo6"]
 [ext_resource type="Material" uid="uid://dcuvjs33ebpe3" path="res://MaterialTextures/Room.tres" id="1_ewgn2"]
+[ext_resource type="Shader" path="res://Shaders/1Bit3D_Shader.gdshader" id="2_nbohg"]
 [ext_resource type="Texture2D" uid="uid://cw62ygditxxqv" path="res://addons/kenney_prototype_textures/light/texture_01.png" id="4_nf6kx"]
 [ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://ui/GameStartANIM.tscn" id="4_rsb4y"]
 [ext_resource type="PackedScene" uid="uid://brejidgy2nq2j" path="res://ui/Pausing.tscn" id="4_x187o"]
@@ -11,6 +12,13 @@
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Player/PlayerCamera.tscn" id="11_hq17w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ov31c"]
+shader = ExtResource("2_nbohg")
+shader_parameter/change_color_depth = true
+shader_parameter/target_color_depth = 4
+shader_parameter/dithering = true
+shader_parameter/scale_resolution = true
+shader_parameter/target_resolution_scale = 2
+shader_parameter/enable_recolor = false
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u5snt"]
 albedo_texture = ExtResource("4_nf6kx")
@@ -50,7 +58,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
-stretch_shrink = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Opener" parent="Preview/SubViewportContainer" instance=ExtResource("4_rsb4y")]
@@ -59,7 +66,7 @@ metadata/_edit_use_anchors_ = true
 handle_input_locally = false
 scaling_3d_mode = 0
 canvas_item_default_texture_filter = 0
-size = Vector2i(512, 384)
+size = Vector2i(1024, 768)
 render_target_update_mode = 4
 
 [node name="Floor" type="CSGCombiner3D" parent="Preview/SubViewportContainer/SubViewport"]
@@ -121,7 +128,7 @@ transform = Transform3D(0.7, 0, 1.22391e-07, 0, 0.7, 0, -1.22391e-07, 0, 0.7, 8.
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("11_hq17w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.35539, 4.5083, 13.061)
 target = NodePath("../Cowboy")
-speed = 5.0
+speed = 8.0
 
 [node name="CamTarget2" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport"]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.53036, 3.74131, 8.49949)

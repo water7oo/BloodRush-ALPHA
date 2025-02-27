@@ -54,51 +54,61 @@ func player_run(delta: float) -> void:
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
-	var velocity = agent.velocity 
-	
+	var velocity = agent.velocity
 	
 	print(current_speed)
+	
 	if direction != Vector3.ZERO && can_sprint && can_move && agent.is_on_floor():
 		sprint_timer += delta
 		is_sprinting = true
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
 
-		# Smooth acceleration (Mario-esque)
 		target_speed = MAX_SPEED
 		ACCELERATION = DASH_ACCELERATION
 		DECELERATION = DASH_DECELERATION
 
-		# Gradual speed-up, like Mario
-		current_speed = move_toward(current_speed, target_speed, ACCELERATION * delta)
+		# Calculate angle between velocity and new direction
+		var angle_diff = velocity.normalized().dot(direction)
 
-		# Apply movement velocity
-		agent.velocity.x = direction.x * current_speed
-		agent.velocity.z = direction.z * current_speed
+		# If angle is sharp (negative dot product) and player is at max speed, slow down first
+		if angle_diff < 0 && current_speed >= MAX_SPEED:
+			print("SKUUUUURRRT")
+			current_speed = move_toward(current_speed, BASE_SPEED, Global.run_momentum_deceleration * delta)
+			velocity = velocity.lerp(direction * current_speed, Global.run_inertia_blend * delta)
+		# Smoothly transition speed towards target speed
+		current_speed = move_toward(current_speed, target_speed, Global.run_momentum_acceleration * delta)
 
+		# Apply inertia-based movement blending
+		velocity = velocity.lerp(direction * current_speed, Global.inertia_blend * delta)
+		
 	else:
 		is_sprinting = false
 		target_speed = BASE_SPEED
 		ACCELERATION = BASE_ACCELERATION
 		DECELERATION = BASE_DECELERATION
-		
+
 		# Smooth deceleration when not sprinting
 		current_speed = move_toward(current_speed, target_speed, DECELERATION * delta)
 
 		# Apply deceleration
-		agent.velocity.x = move_toward(agent.velocity.x, 0, DECELERATION * delta)
-		agent.velocity.z = move_toward(agent.velocity.z, 0, DECELERATION * delta)
+		velocity.x = move_toward(velocity.x, 0, DECELERATION * delta)
+		velocity.z = move_toward(velocity.z, 0, DECELERATION * delta)
 
 		# Sliding effect when no input
 		if direction == Vector3.ZERO:
-			agent.velocity.x = move_toward(agent.velocity.x, 0, momentum_deceleration * delta)
-			agent.velocity.z = move_toward(agent.velocity.z, 0, momentum_deceleration * delta)
+			velocity.x = move_toward(velocity.x, 0, momentum_deceleration * delta)
+			velocity.z = move_toward(velocity.z, 0, momentum_deceleration * delta)
+			agent.state_machine.dispatch("to_idle")
 
 	# Transition to idle state smoothly if no movement
-	if agent.velocity.length() <= 0:
+	if velocity.length() <= 0:
 		agent.state_machine.dispatch("to_idle")
 
 	if Input.is_action_just_released("move_sprint") && direction != Vector3.ZERO:
 		agent.state_machine.dispatch("to_walk")
+
+	agent.velocity = velocity
+
 
 func initialize_runJump(delta: float) -> void:
 	if Input.is_action_just_pressed("move_jump") and agent.is_on_floor():

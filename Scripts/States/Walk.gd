@@ -38,33 +38,27 @@ func player_movement(delta: float) -> void:
 	if direction != Vector3.ZERO:
 		is_moving = true
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
-		
 		Global.target_blend_amount = 0.0
 		Global.current_blend_amount = lerp(Global.current_blend_amount, Global.target_blend_amount, Global.blend_lerp_speed * delta)
 		animationTree.set("parameters/Ground_Blend/blend_amount", 1)
-		
-		# Calculate the target rotation (the direction the player should face)
-		var target_rotation = atan2(direction.x, direction.z)
-		
-		# Update speed and direction based on movement input
-		if velocity.dot(direction) < 0:
-			print("skid")
-			current_speed = move_toward(current_speed, 0, Global.momentum_deceleration * delta)
-		
-		if current_speed < target_speed:
-			current_speed = move_toward(current_speed, target_speed, Global.ACCELERATION * delta)
-		else:
-			current_speed = move_toward(current_speed, target_speed, Global.DECELERATION * delta)
 
-		velocity.x = direction.x * current_speed
-		velocity.z = direction.z * current_speed
+		var target_rotation = atan2(direction.x, direction.z)
+
+		# **Calculate the angle between current velocity and new direction**
+		var angle_diff = velocity.normalized().dot(direction)
+		
+		# If the dot product is negative (angle > 90°), apply stronger deceleration
+		if angle_diff < 0:
+			current_speed = move_toward(current_speed, 0, Global.momentum_deceleration * delta)
+
+		# Blend movement instead of instantly switching direction
+		velocity = velocity.lerp(direction * target_speed, Global.inertia_blend * delta)
+
 	else:
-		# No movement input, slow down and transition to idle
 		is_moving = false
 		current_speed = 0
 		velocity.x = move_toward(velocity.x, 0, Global.BASE_DECELERATION * delta)
 		velocity.z = move_toward(velocity.z, 0, Global.BASE_DECELERATION * delta)
-
 
 	velocity.y = agent.velocity.y  
 
@@ -72,6 +66,7 @@ func player_movement(delta: float) -> void:
 		agent.state_machine.dispatch("to_idle")
 
 	agent.velocity = velocity
+
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:

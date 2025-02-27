@@ -20,10 +20,19 @@ var blend_lerp_speed = 10.0
 #Walk State Base movement values
 @export var BASE_SPEED: float = 6.0
 @export var MAX_SPEED: float = 10.0  # Reduce slightly for better control
-@export var ACCELERATION: float = 20.0  # Slightly higher for snappier movement
-@export var DECELERATION: float = 20.0  # Increase for quicker stopping
+@export var ACCELERATION: float = 40.0  # Slightly higher for snappier movement
+@export var DECELERATION: float = 25.0  # Increase for quicker stopping
 @export var BASE_DECELERATION: float = 20.0  # Matches normal deceleration
-@export var momentum_deceleration: float = .5  # Lower means smoother momentum shifts
+@export var momentum_deceleration: float = DECELERATION - 5
+@export var momentum_acceleration: float = ACCELERATION - 2
+@export var inertia_blend: float = 7
+
+@export var run_inertia_blend: float = inertia_blend/1.5
+
+@export var run_momentum_acceleration: float = momentum_acceleration - 2
+@export var run_momentum_deceleration: float = momentum_deceleration - 2
+@export var air_momentum_acceleration: float = momentum_acceleration - 2
+@export var air_momentum_deceleration: float = momentum_deceleration - 2
 
 #Jump State Base movement values:
 @export var JUMP_VELOCITY: float = 11.0  
