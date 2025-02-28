@@ -20,6 +20,8 @@ func _enter() -> void:
 func _update(delta: float) -> void:
 	player_idle(delta)
 	initialize_jump(delta)
+	initialize_crouch(delta)
+	initialize_attack(delta)
 	agent.move_and_slide()
 
 func player_idle(delta: float) -> void:
@@ -44,3 +46,11 @@ func player_idle(delta: float) -> void:
 func initialize_jump(delta: float) -> void:
 	if Input.is_action_just_pressed("move_jump"):
 		agent.state_machine.dispatch("to_jump")
+		
+func initialize_crouch(delta: float) -> void:
+	if Input.is_action_pressed("move_crouch"):
+		agent.state_machine.dispatch("to_crouch")
+
+func initialize_attack(delta: float) -> void:
+	if Input.is_action_just_pressed("attack_light_1"):
+		agent.state_machine.dispatch("to_attack")

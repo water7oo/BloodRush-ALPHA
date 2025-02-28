@@ -30,6 +30,7 @@ var velocity = Vector3.ZERO
 func _enter() -> void:
 	print("Current State:", agent.state_machine.get_active_state())
 	agent.velocity.y = JUMP_VELOCITY
+	animationTree.set("parameters/Jump_Blend/blend_amount", 1)
 	# Reset timers and jump counter
 	air_timer = 0.0
 	jump_timer = 0.0
@@ -57,7 +58,6 @@ func player_runjump(delta: float) -> void:
 			agent.velocity.y = Global.JUMP_VELOCITY  # Apply jump force
 			Global.target_blend_amount = 0.0
 			Global.current_blend_amount = lerp(Global.current_blend_amount, Global.target_blend_amount, Global.blend_lerp_speed * delta)
-			animationTree.set("parameters/Ground_Blend/blend_amount", 0)
 
 			can_jump = false
 			jump_counter += 1
@@ -75,12 +75,18 @@ func player_runjump(delta: float) -> void:
 		agent.velocity.x = lerp(agent.velocity.x, direction.x * BASE_SPEED, Global.air_momentum_acceleration * delta)
 		agent.velocity.z = lerp(agent.velocity.z, direction.z * BASE_SPEED, Global.air_momentum_acceleration * delta)
 
+
+	if not agent.is_on_floor() and agent.velocity.y < 0:
+		animationTree.set("parameters/Jump_Blend/blend_amount", 0)
+		print("Falling!")
+		
+		
 	# Landing logic
 	if agent.is_on_floor():
 		print("Landed!")
 		jump_timer = 0.0
 		air_timer = 0.0
-
+		animationTree.set("parameters/Jump_Blend/blend_amount", -1)
 		# Gradually slow down after landing instead of an abrupt stop
 		agent.velocity.x = move_toward(agent.velocity.x, 0, 100 * delta)
 		agent.velocity.z = move_toward(agent.velocity.z, 0, 100 * delta)

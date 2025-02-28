@@ -1,6 +1,10 @@
 extends LimboState
 
 @onready var armature = $"../../RootNode/Armature"
+@onready var playerCharScene = $"../../RootNode/COWBOYPLAYER_V4"
+@onready var animationTree = playerCharScene.find_child("AnimationTree", true)
+
+
 
 var is_dodging: bool = false
 var can_dodge: bool = true
@@ -24,6 +28,7 @@ var dodge_direction = Vector3.ZERO
 
 func _enter() -> void:
 	print("Entering Burst State")
+	animationTree.set("parameters/Ground_Blend2/blend_amount", 1)
 	is_dodging = true
 	can_dodge = false
 	last_ground_position = agent.global_transform.origin
@@ -66,6 +71,7 @@ func player_burst(delta: float) -> void:
 			agent.state_machine.dispatch("to_idle")
 
 func _exit() -> void:
+	animationTree.set("parameters/Ground_Blend2/blend_amount", -1)
 	print("Exiting Burst State")
 
 func AirWaveEffect():

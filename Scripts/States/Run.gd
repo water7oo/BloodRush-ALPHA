@@ -17,7 +17,7 @@ var current_speed: float = 0.0
 var sprint_timer: float = 0.0
 
 @export var runMultiplier: float = 1.5
-@export var runAdditive: float = 3
+@export var runAdditive: float = 7
 @export var MAX_SPEED: float = Global.MAX_SPEED + runAdditive
 @export var BASE_SPEED: float = Global.BASE_SPEED + runAdditive
 var target_speed: float = MAX_SPEED
@@ -34,7 +34,7 @@ var target_speed: float = MAX_SPEED
 
 @export var DASH_ACCELERATION: float = Global.ACCELERATION - 2
 @export var DASH_DECELERATION: float = Global.DECELERATION - 5
-var DASH_MAX_SPEED: float = Global.MAX_SPEED + 2  # Slightly above MAX_SPEED for extra burst
+var DASH_MAX_SPEED: float = Global.MAX_SPEED + 5  # Slightly above MAX_SPEED for extra burst
 
 @export var momentum_deceleration: float = 0.6  # Lowered for smoother momentum control
 @export var momentum_acceleration: float = 1.2  # Allows faster adaptation to direction changes
@@ -62,7 +62,10 @@ func player_run(delta: float) -> void:
 		sprint_timer += delta
 		is_sprinting = true
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
-
+		
+		# Set animation blend to run
+		animationTree.set("parameters/Ground_Blend2/blend_amount", 0)
+		
 		target_speed = MAX_SPEED
 		ACCELERATION = DASH_ACCELERATION
 		DECELERATION = DASH_DECELERATION
@@ -75,6 +78,7 @@ func player_run(delta: float) -> void:
 			print("SKUUUUURRRT")
 			current_speed = move_toward(current_speed, BASE_SPEED, Global.run_momentum_deceleration * delta)
 			velocity = velocity.lerp(direction * current_speed, Global.run_inertia_blend * delta)
+		
 		# Smoothly transition speed towards target speed
 		current_speed = move_toward(current_speed, target_speed, Global.run_momentum_acceleration * delta)
 
@@ -94,17 +98,23 @@ func player_run(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, DECELERATION * delta)
 		velocity.z = move_toward(velocity.z, 0, DECELERATION * delta)
 
+		# Always reset blend amount when stopping
+		animationTree.set("parameters/Ground_Blend2/blend_amount", -1)
+
 		# Sliding effect when no input
 		if direction == Vector3.ZERO:
 			velocity.x = move_toward(velocity.x, 0, momentum_deceleration * delta)
 			velocity.z = move_toward(velocity.z, 0, momentum_deceleration * delta)
+			
 			agent.state_machine.dispatch("to_idle")
 
-	# Transition to idle state smoothly if no movement
+	# Ensure transition to idle when completely stopped
 	if velocity.length() <= 0:
+		animationTree.set("parameters/Ground_Blend2/blend_amount", -1) # Ensure idle animation is set
 		agent.state_machine.dispatch("to_idle")
 
 	if Input.is_action_just_released("move_sprint") && direction != Vector3.ZERO:
+		animationTree.set("parameters/Ground_Blend2/blend_amount", -1)
 		agent.state_machine.dispatch("to_walk")
 
 	agent.velocity = velocity
@@ -112,5 +122,6 @@ func player_run(delta: float) -> void:
 
 func initialize_runJump(delta: float) -> void:
 	if Input.is_action_just_pressed("move_jump") and agent.is_on_floor():
+		animationTree.set("parameters/Ground_Blend2/blend_amount", -1)
 		agent.state_machine.dispatch("to_runJump")
 	pass

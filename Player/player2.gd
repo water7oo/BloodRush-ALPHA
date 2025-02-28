@@ -11,6 +11,7 @@ extends CharacterBody3D
 @onready var groundDive_state = $LimboHSM/GroundDiveState
 @onready var airDive_state = $LimboHSM/AirDiveState
 @onready var slide_state = $LimboHSM/SlideState
+@onready var attack_state = $LimboHSM/AttackState
 
 
 
@@ -28,6 +29,14 @@ func initialize_state_machine():
 	state_machine.add_transition(run_state, runJump_state, "to_runJump")
 	state_machine.add_transition(walk_state, burst_state, "to_burst")
 	state_machine.add_transition(run_state, burst_state, "to_burst")
+	
+	state_machine.add_transition(idle_state, crouch_state, "to_crouch")
+	state_machine.add_transition(run_state, crouch_state, "to_crouch")
+	state_machine.add_transition(walk_state, crouch_state, "to_crouch")
+	
+	state_machine.add_transition(idle_state, attack_state, "to_attack")
+	state_machine.add_transition(run_state, attack_state, "to_attack")
+	state_machine.add_transition(walk_state, attack_state, "to_attack")
 
 	state_machine.initial_state = idle_state  
 	state_machine.initialize(self)

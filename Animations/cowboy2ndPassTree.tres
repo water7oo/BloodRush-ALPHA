@@ -4,7 +4,7 @@
 animation = &"TPOSE"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2613s"]
-animation = &"Armature_001|LANDING"
+animation = &"ATTACK1"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kwsuw"]
 animation = &"Armature_001|LANDING"
@@ -13,16 +13,16 @@ animation = &"Armature_001|LANDING"
 animation = &"WALK"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_s28eq"]
-animation = &"JUMP"
+animation = &"CROUCH"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2nnqn"]
 animation = &"TPOSE"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2b255"]
-animation = &"TPOSE"
+animation = &"JUMP"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hw7nx"]
-animation = &"TPOSE"
+animation = &"DODGE"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1fp1f"]
 animation = &"RUN"
@@ -31,7 +31,7 @@ animation = &"RUN"
 animation = &"FALL"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_faruw"]
-animation = &"Armature_001|ATTACK"
+animation = &"ATTACK1"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7fqlc"]
 animation = &"IDLE"
@@ -55,13 +55,13 @@ sync = true
 sync = true
 
 [resource]
-graph_offset = Vector2(-526.64, -105.613)
+graph_offset = Vector2(-218.122, -122.863)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_7fqlc")
 nodes/Animation/position = Vector2(-380, -80)
 "nodes/Animation 10/node" = SubResource("AnimationNodeAnimation_al0tm")
 "nodes/Animation 10/position" = Vector2(580, 240)
 "nodes/Animation 11/node" = SubResource("AnimationNodeAnimation_2613s")
-"nodes/Animation 11/position" = Vector2(1140, 360)
+"nodes/Animation 11/position" = Vector2(1040, 360)
 "nodes/Animation 12/node" = SubResource("AnimationNodeAnimation_kwsuw")
 "nodes/Animation 12/position" = Vector2(1780, 420)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_0phbi")
@@ -79,7 +79,7 @@ nodes/Animation/position = Vector2(-380, -80)
 "nodes/Animation 8/node" = SubResource("AnimationNodeAnimation_tkitk")
 "nodes/Animation 8/position" = Vector2(260, 240)
 "nodes/Animation 9/node" = SubResource("AnimationNodeAnimation_faruw")
-"nodes/Animation 9/position" = Vector2(900, 280)
+"nodes/Animation 9/position" = Vector2(1020, 220)
 nodes/Attack_Shot/node = SubResource("AnimationNodeOneShot_bgqhx")
 nodes/Attack_Shot/position = Vector2(1240, 120)
 nodes/Attack_Shot2/node = SubResource("AnimationNodeOneShot_i8cjd")
