@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://brrrn3wfv6ree"]
 
-[ext_resource type="Script" path="res://Scripts/playerHealthManager.gd" id="5_7cs5x"]
+[ext_resource type="Script" uid="uid://bhem8ubmmltip" path="res://Scripts/playerHealthManager.gd" id="5_7cs5x"]
 [ext_resource type="StyleBox" uid="uid://b7b3hqmwfdjgv" path="res://MaterialTextures/UI_COOLDOWN_BACK.tres" id="6_crhng"]
 [ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="7_tsu5m"]
 [ext_resource type="StyleBox" uid="uid://djj55b17fblr1" path="res://MaterialTextures/Sprint_Fill_Green.tres" id="8_7lnbf"]

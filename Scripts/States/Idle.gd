@@ -52,5 +52,7 @@ func initialize_crouch(delta: float) -> void:
 		agent.state_machine.dispatch("to_crouch")
 
 func initialize_attack(delta: float) -> void:
+	
+	#pressing attack unsheathes katana and player is in attackmode
 	if Input.is_action_just_pressed("attack_light_1"):
 		agent.state_machine.dispatch("to_attack")

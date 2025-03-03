@@ -1,17 +1,17 @@
 [gd_scene load_steps=55 format=4 uid="uid://casuryf5wgaoi"]
 
-[ext_resource type="Script" path="res://Player/player2.gd" id="1_ad35s"]
-[ext_resource type="Script" path="res://Scripts/States/Idle.gd" id="2_yne2w"]
-[ext_resource type="Script" path="res://Scripts/States/Run.gd" id="3_bnu4g"]
-[ext_resource type="Script" path="res://Scripts/States/Walk.gd" id="4_tpc1o"]
-[ext_resource type="Script" path="res://Scripts/States/Jump.gd" id="5_0unt3"]
-[ext_resource type="Script" path="res://Scripts/States/RunJump.gd" id="6_ysnxa"]
-[ext_resource type="Script" path="res://Player/burst.gd" id="7_wewdr"]
+[ext_resource type="Script" uid="uid://cllxit7uok2xf" path="res://Player/player2.gd" id="1_ad35s"]
+[ext_resource type="Script" uid="uid://ccppxbc7l7ekv" path="res://Scripts/States/Idle.gd" id="2_yne2w"]
+[ext_resource type="Script" uid="uid://b8jrqb4iqjbm4" path="res://Scripts/States/Run.gd" id="3_bnu4g"]
+[ext_resource type="Script" uid="uid://cxsk512ivm470" path="res://Scripts/States/Walk.gd" id="4_tpc1o"]
+[ext_resource type="Script" uid="uid://5dkc0rulol1h" path="res://Scripts/States/Jump.gd" id="5_0unt3"]
+[ext_resource type="Script" uid="uid://c7wq57pjqc84x" path="res://Scripts/States/RunJump.gd" id="6_ysnxa"]
+[ext_resource type="Script" uid="uid://d02xavwj8xmcu" path="res://Player/burst.gd" id="7_wewdr"]
 [ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="8_6ak1k"]
 [ext_resource type="PackedScene" uid="uid://b883xedulu0jn" path="res://Weapons/blood_katana.tscn" id="9_ecqf1"]
-[ext_resource type="Script" path="res://Scripts/AttackManager.gd" id="10_inob5"]
+[ext_resource type="Script" uid="uid://0s3lgis3ei87" path="res://Scripts/AttackManager.gd" id="10_inob5"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://ccqgr0tb8ublp" path="res://Animations/cowboy2ndPassTree.tres" id="11_v51d4"]
-[ext_resource type="Script" path="res://Scripts/playerHealthManager.gd" id="12_jpfk8"]
+[ext_resource type="Script" uid="uid://bhem8ubmmltip" path="res://Scripts/playerHealthManager.gd" id="12_jpfk8"]
 [ext_resource type="StyleBox" uid="uid://b7b3hqmwfdjgv" path="res://MaterialTextures/UI_COOLDOWN_BACK.tres" id="13_jkcvi"]
 [ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="14_m62t1"]
 [ext_resource type="StyleBox" uid="uid://djj55b17fblr1" path="res://MaterialTextures/Sprint_Fill_Green.tres" id="15_upllu"]
@@ -2932,19 +2932,19 @@ tracks/23/keys = PackedFloat32Array(0, 1, 0.560649, -0.0800406, 0.0376668, 0.823
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ceiih"]
 _data = {
-"Armature_001|ATTACK": SubResource("Animation_674fv"),
-"Armature_001|DODGE": SubResource("Animation_ugs7m"),
-"Armature_001|FALLING": SubResource("Animation_fvdol"),
-"Armature_001|IDLE_LOW": SubResource("Animation_6ny7p"),
-"Armature_001|Idle": SubResource("Animation_ojmub"),
-"Armature_001|JUMP": SubResource("Animation_ckfh8"),
-"Armature_001|LANDING": SubResource("Animation_4ulht"),
-"Armature_001|RUNNING": SubResource("Animation_6jcmy"),
-"Armature_001|RUNNING_FASTER": SubResource("Animation_qsr6o"),
-"Armature_001|RUNNING_LOW": SubResource("Animation_6i568"),
-"Armature_001|SLIDE": SubResource("Animation_57i60"),
-"Armature_001|WALKING": SubResource("Animation_mdu4k"),
-"Armature_001|WALKING_LOW": SubResource("Animation_31jdr")
+&"Armature_001|ATTACK": SubResource("Animation_674fv"),
+&"Armature_001|DODGE": SubResource("Animation_ugs7m"),
+&"Armature_001|FALLING": SubResource("Animation_fvdol"),
+&"Armature_001|IDLE_LOW": SubResource("Animation_6ny7p"),
+&"Armature_001|Idle": SubResource("Animation_ojmub"),
+&"Armature_001|JUMP": SubResource("Animation_ckfh8"),
+&"Armature_001|LANDING": SubResource("Animation_4ulht"),
+&"Armature_001|RUNNING": SubResource("Animation_6jcmy"),
+&"Armature_001|RUNNING_FASTER": SubResource("Animation_qsr6o"),
+&"Armature_001|RUNNING_LOW": SubResource("Animation_6i568"),
+&"Armature_001|SLIDE": SubResource("Animation_57i60"),
+&"Armature_001|WALKING": SubResource("Animation_mdu4k"),
+&"Armature_001|WALKING_LOW": SubResource("Animation_31jdr")
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ybxi3"]

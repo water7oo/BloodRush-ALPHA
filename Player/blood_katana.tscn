@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqgjb8xjd76lj"]
+
+[ext_resource type="PackedScene" uid="uid://hppylynqdlmw" path="res://Blender/BloodKatana.blend" id="1_avta3"]
+[ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="2_nw226"]
+
+[node name="BloodKatana" instance=ExtResource("1_avta3")]
+
+[node name="Cylinder" parent="." index="0"]
+material_override = ExtResource("2_nw226")
+
+[node name="Cube" parent="Cylinder" index="0"]
+material_override = ExtResource("2_nw226")
+
+[node name="Plane" parent="Cylinder" index="1"]
+material_override = ExtResource("2_nw226")

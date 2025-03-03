@@ -13,7 +13,7 @@ config_version=5
 config/name="BLOOD RUSH ALPHA"
 config/tags=PackedStringArray("3d", "bloodrush", "thirdperson")
 run/main_scene="res://Game/DevRoomGame.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 run/scale=0.5
 run/stretch/scale=1.0
@@ -38,7 +38,7 @@ window/stretch/mode="viewport"
 
 [editor]
 
-movie_writer/movie_file="C:/Users/scott/OneDrive/Desktop/Desktop Stuff/Timelapses_Recordings/GODOT_GAME_RECORDINGS/GODOT_RECORD2.mp4.avi"
+movie_writer/movie_file="C:/Users/scott/Downloads/GODOT_RECORD2.mp4.avi"
 version_control/autoload_on_startup=true
 
 [input]
@@ -162,7 +162,7 @@ move_crouch={
 [physics]
 
 common/physics_ticks_per_second=120
-3d/physics_engine="GodotPhysics3D"
+3d/physics_engine="Jolt Physics"
 
 [rendering]
 

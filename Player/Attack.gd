@@ -4,10 +4,12 @@ extends LimboState
 @export var animation: StringName
 @onready var state_machine: LimboHSM = $LimboHSM
 
+@onready var swordKatana = $"../../RootNode/COWBOYPLAYER_V4/Armature_001/Skeleton3D/BoneAttachment3D/BloodKatana"
+
 @onready var playerCharScene = $"../../RootNode/COWBOYPLAYER_V4"
 @onready var animationTree = playerCharScene.find_child("AnimationTree", true)
 
-@export var attackPush = 10.0
+@export var attackPush: float = 10.0
 
 var preserved_velocity: Vector3 = Vector3.ZERO
 var is_attacking: bool = false  # Track attack state

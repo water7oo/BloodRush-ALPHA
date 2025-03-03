@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://b1wqkqqcjlwcd"]
 
-[ext_resource type="Script" path="res://FX/Slash.gd" id="1_63mno"]
+[ext_resource type="Script" uid="uid://b6y2wq2hd08aq" path="res://FX/Slash.gd" id="1_63mno"]
 [ext_resource type="ArrayMesh" uid="uid://rxvn565bxjsx" path="res://FX/SlashFX.obj" id="1_kfpsp"]
 [ext_resource type="Shader" uid="uid://meaagtt2yua8" path="res://VisualShaders/Slash1.tres" id="2_ag880"]
 
@@ -180,9 +180,9 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_66dhe"]
 _data = {
-"RESET": SubResource("Animation_bydom"),
-"Slash1": SubResource("Animation_2bduh"),
-"Slash_2": SubResource("Animation_peq85")
+&"RESET": SubResource("Animation_bydom"),
+&"Slash1": SubResource("Animation_2bduh"),
+&"Slash_2": SubResource("Animation_peq85")
 }
 
 [node name="Slash1" type="Node3D"]

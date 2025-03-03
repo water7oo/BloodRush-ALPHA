@@ -60,3 +60,9 @@ func player_jump(delta: float) -> void:
 			agent.state_machine.dispatch("to_crouch")
 		else:
 			agent.state_machine.dispatch("to_idle")
+
+
+
+	if not agent.is_on_floor() and agent.velocity.y < 0:
+		animationTree.set("parameters/Jump_Blend/blend_amount", 0)
+		print("Falling!")

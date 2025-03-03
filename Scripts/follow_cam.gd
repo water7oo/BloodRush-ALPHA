@@ -6,17 +6,18 @@ extends Node3D
 @export var speed := 1.0
 @export var enabled: bool
 @export var spring_arm_pivot: Node3D
-@export var mouse_sensitivity = 0.005
-@export var joystick_sensitivity = 0.005 
+@export var mouse_sensitivity: float = 0.005
+@export var joystick_sensitivity: float = 0.005 
 @onready var camera = $SpringArmPivot/SpringArm3D/Margin/Camera3D
-var cam_lerp_speed = .005
+var cam_lerp_speed: float = .005
 
+var is_mouse_visible: bool = true
 
-@export var period = .04
-@export var magnitude = 0.08
+@export var period: float = .04
+@export var magnitude: float = 0.08
 
-var y_cam_rot_dist = -80
-var x_cam_rot_dist = 1
+var y_cam_rot_dist: float = -80
+var x_cam_rot_dist: float = 1
 
 var original_global_transform: Transform3D
 var target_node: Node3D
@@ -31,6 +32,17 @@ func _unhandled_input(event):
 	if Input.is_action_just_pressed("quit_game"):
 		print("Quit Game")
 		get_tree().quit()
+	
+	if Input.is_action_just_pressed("mouse_show"):
+		# Toggle the visibility of the mouse
+		if is_mouse_visible:
+			Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		
+		# Update the state
+		is_mouse_visible = !is_mouse_visible
+		
 
 	if event is InputEventMouseMotion:
 		var rotation_x = spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity

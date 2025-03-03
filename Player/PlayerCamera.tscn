@@ -1,14 +1,14 @@
 [gd_scene load_steps=12 format=3 uid="uid://7l5yih8w56c3"]
 
-[ext_resource type="Script" path="res://Scripts/follow_cam.gd" id="1_hwm0y"]
-[ext_resource type="Shader" path="res://Shaders/TestingShaders3.gdshader" id="2_5olaf"]
-[ext_resource type="Script" path="res://Scripts/gameJuice.gd" id="3_sswrb"]
+[ext_resource type="Script" uid="uid://b0vlvthw3ye25" path="res://Scripts/follow_cam.gd" id="1_hwm0y"]
+[ext_resource type="Shader" uid="uid://dg0o1j78d3etb" path="res://Shaders/TestingShaders3.gdshader" id="2_5olaf"]
+[ext_resource type="Script" uid="uid://cn6f1nyulomnm" path="res://Scripts/gameJuice.gd" id="3_sswrb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_td6vy"]
 render_priority = 0
 shader = ExtResource("2_5olaf")
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/shadow_thickness = 2.0
+shader_parameter/shadow_thickness = 1.8
 shader_parameter/normal_threshold = 0.05
 shader_parameter/depth_sensitivity = 2.0
 shader_parameter/outline_start = 0.1
@@ -38,7 +38,7 @@ tracks/0/keys = PackedFloat32Array(0, 1, 0, -4.41225, 4.94835, 0.1, 1, 0, -4.223
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o2025"]
 _data = {
-"cam_shake": SubResource("Animation_xr2s2")
+&"cam_shake": SubResource("Animation_xr2s2")
 }
 
 [node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
@@ -95,7 +95,7 @@ skeleton = NodePath("../SpringArm3D/Margin/Camera3D")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../SpringArmPivot/SpringArm3D/Margin/Camera3D")
 libraries = {
-"": SubResource("AnimationLibrary_o2025")
+&"": SubResource("AnimationLibrary_o2025")
 }
 speed_scale = 1.5
 

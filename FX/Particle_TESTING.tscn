@@ -1,12 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://yvubcfwm01vp"]
+[gd_scene load_steps=10 format=3 uid="uid://yvubcfwm01vp"]
 
 [ext_resource type="Material" uid="uid://cx0dsad2my6ud" path="res://MaterialTextures/Dust.tres" id="1_ghkre"]
-[ext_resource type="Shader" path="res://Shaders/OUTLINES.gdshader" id="2_kgh3d"]
-[ext_resource type="Shader" path="res://Shaders/PS1.gdshader" id="3_bsrmy"]
+[ext_resource type="Shader" uid="uid://b1ud5q41710hr" path="res://Shaders/OUTLINES.gdshader" id="2_kgh3d"]
+[ext_resource type="Shader" uid="uid://cij0ofmfacue" path="res://Shaders/PS1.gdshader" id="3_bsrmy"]
 
 [sub_resource type="Curve" id="Curve_i0rx6"]
-min_value = 1.0
-max_value = 1.5
+_limits = [0.99, 1.5, 0.0, 1.0]
 _data = [Vector2(0, 1.40526), 0.0, 0.0, 0, 0, Vector2(0.53, 1.31579), -0.379437, -0.379437, 0, 0, Vector2(0.79, 1.01), -2.1, -2.1, 0, 0, Vector2(0.98, 0.347368), 0.0, 0.0, 0, 0]
 point_count = 4
 
@@ -17,9 +16,9 @@ curve = SubResource("Curve_i0rx6")
 lifetime_randomness = 1.0
 spread = 91.45
 flatness = 1.0
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 0.5
 initial_velocity_max = 0.5
+gravity = Vector3(0, 0, 0)
 linear_accel_min = 1.5
 linear_accel_max = 4.0
 scale_max = 3.0
@@ -30,21 +29,13 @@ turbulence_noise_scale = 4.81
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ptk51"]
 render_priority = 0
 shader = ExtResource("2_kgh3d")
-shader_parameter/outline_color = null
+shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/outline_width = 1.0
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_cv3h4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vunfn"]
 render_priority = 0
 next_pass = SubResource("ShaderMaterial_ptk51")
 shader = ExtResource("3_bsrmy")
-shader_parameter/jitter = 0.8
-shader_parameter/jitter_z_coordinate = true
-shader_parameter/jitter_depth_independent = true
-shader_parameter/affine_texture_mapping = true
-shader_parameter/alpha_scissor = 1.0
-shader_parameter/albedo = SubResource("CanvasTexture_cv3h4")
 
 [sub_resource type="SphereMesh" id="SphereMesh_ogeil"]
 lightmap_size_hint = Vector2i(8, 5)

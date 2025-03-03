@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cx1005bfhyg85"]
 
-[ext_resource type="Shader" path="res://Shaders/TOON.gdshader" id="1_tl1g6"]
+[ext_resource type="Shader" uid="uid://c2rn2eby30qwy" path="res://Shaders/TOON.gdshader" id="1_tl1g6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ssfxf"]
 render_priority = 0

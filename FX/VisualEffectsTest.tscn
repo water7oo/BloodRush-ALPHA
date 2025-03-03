@@ -152,8 +152,8 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qyg83"]
 _data = {
-"Dust": SubResource("Animation_mrki0"),
-"RESET": SubResource("Animation_i8s8b")
+&"Dust": SubResource("Animation_mrki0"),
+&"RESET": SubResource("Animation_i8s8b")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7fqbl"]

@@ -83,8 +83,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_l08jy"]
 _data = {
-"Opener": SubResource("Animation_3umi4"),
-"Opener2": SubResource("Animation_bxu6p")
+&"Opener": SubResource("Animation_3umi4"),
+&"Opener2": SubResource("Animation_bxu6p")
 }
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nhbyx"]

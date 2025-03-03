@@ -1,9 +1,9 @@
 [gd_scene load_steps=32 format=3 uid="uid://tx0l2fe8fvib"]
 
-[ext_resource type="Script" path="res://Scripts/AttackManager.gd" id="1_5pw75"]
+[ext_resource type="Script" uid="uid://0s3lgis3ei87" path="res://Scripts/AttackManager.gd" id="1_5pw75"]
 [ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="1_6p5pg"]
 [ext_resource type="PackedScene" uid="uid://fef5qj7ubepe" path="res://Blender/3rdPassAnimations.blend" id="1_fgp7y"]
-[ext_resource type="Shader" path="res://Shaders/PS1VertexWobble.gdshader" id="2_bnfof"]
+[ext_resource type="Shader" uid="uid://cji4m71ho8yn7" path="res://Shaders/PS1VertexWobble.gdshader" id="2_bnfof"]
 [ext_resource type="Texture2D" uid="uid://caatibvojcios" path="res://addons/kenney_prototype_textures/orange/texture_12.png" id="3_3drlu"]
 [ext_resource type="Texture2D" uid="uid://dx0vwoe766a8c" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="3_s6v01"]
 [ext_resource type="Texture2D" uid="uid://dvaph6bi0yida" path="res://FX/Slashing_Texture2.png" id="7_5380s"]
@@ -15,20 +15,20 @@ render_priority = 0
 next_pass = SubResource("ShaderMaterial_w36hw")
 shader = ExtResource("2_bnfof")
 shader_parameter/affine_mapping = false
+shader_parameter/albedo = ExtResource("3_s6v01")
 shader_parameter/alpha_scissor = 0.0
 shader_parameter/jitter = 0.59
 shader_parameter/resolution = Vector2i(320, 240)
-shader_parameter/albedo = ExtResource("3_s6v01")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cjqha"]
 render_priority = 0
 next_pass = SubResource("ShaderMaterial_w36hw")
 shader = ExtResource("2_bnfof")
 shader_parameter/affine_mapping = false
+shader_parameter/albedo = ExtResource("3_3drlu")
 shader_parameter/alpha_scissor = 0.0
 shader_parameter/jitter = 0.59
 shader_parameter/resolution = Vector2i(320, 240)
-shader_parameter/albedo = ExtResource("3_3drlu")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g8sxb"]
 render_priority = 0

@@ -17,9 +17,9 @@ void fragment() {
 	vec2 pixel = vec2(ivec2(world_pos / float(pixel_size)));
 	vec2 relative_pixel = pixel - screen_position / float(pixel_size);
 	vec2 pixel_uv = relative_pixel / (texture_size / float(pixel_size)) ;
-	
+
 	vec4 c = textureLod(screen_texture, pixel_uv, 0);
-	
+
 	if (c.a > 0.0001) {
 		c.rgb /= c.a;
 	}

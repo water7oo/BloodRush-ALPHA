@@ -19,7 +19,7 @@ point_count = 3
 curve = SubResource("Curve_hb416")
 
 [sub_resource type="Curve" id="Curve_n0e8q"]
-max_value = 3.0
+_limits = [0.0, 3.0, 0.0, 1.0]
 _data = [Vector2(0.0666667, 2.01099), 0.0, 0.0, 0, 0, Vector2(1, 0.758242), 0.0, 0.0, 0, 0]
 point_count = 2
 

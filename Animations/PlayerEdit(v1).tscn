@@ -1,11 +1,11 @@
 [gd_scene load_steps=32 format=3 uid="uid://c3owx67dwj557"]
 
 [ext_resource type="PackedScene" uid="uid://fef5qj7ubepe" path="res://Blender/3rdPassAnimations.blend" id="1_flipp"]
-[ext_resource type="Shader" path="res://Shaders/PS1VertexWobble.gdshader" id="2_ok433"]
+[ext_resource type="Shader" uid="uid://cji4m71ho8yn7" path="res://Shaders/PS1VertexWobble.gdshader" id="2_ok433"]
 [ext_resource type="Texture2D" uid="uid://dx0vwoe766a8c" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="3_idaut"]
 [ext_resource type="Texture2D" uid="uid://caatibvojcios" path="res://addons/kenney_prototype_textures/orange/texture_12.png" id="4_c54n0"]
 [ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="5_yeain"]
-[ext_resource type="Script" path="res://Scripts/AttackManager.gd" id="6_rrah7"]
+[ext_resource type="Script" uid="uid://0s3lgis3ei87" path="res://Scripts/AttackManager.gd" id="6_rrah7"]
 [ext_resource type="Texture2D" uid="uid://dvaph6bi0yida" path="res://FX/Slashing_Texture2.png" id="7_ypued"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w36hw"]
@@ -15,20 +15,20 @@ render_priority = 0
 next_pass = SubResource("ShaderMaterial_w36hw")
 shader = ExtResource("2_ok433")
 shader_parameter/affine_mapping = false
+shader_parameter/albedo = ExtResource("3_idaut")
 shader_parameter/alpha_scissor = 0.0
 shader_parameter/jitter = 0.59
 shader_parameter/resolution = Vector2i(320, 240)
-shader_parameter/albedo = ExtResource("3_idaut")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cjqha"]
 render_priority = 0
 next_pass = SubResource("ShaderMaterial_w36hw")
 shader = ExtResource("2_ok433")
 shader_parameter/affine_mapping = false
+shader_parameter/albedo = ExtResource("4_c54n0")
 shader_parameter/alpha_scissor = 0.0
 shader_parameter/jitter = 0.59
 shader_parameter/resolution = Vector2i(320, 240)
-shader_parameter/albedo = ExtResource("4_c54n0")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g8sxb"]
 render_priority = 0

@@ -1,21 +1,21 @@
 [gd_scene load_steps=65 format=4 uid="uid://bgkmd80vrnlao"]
 
-[ext_resource type="Script" path="res://Player/player2.gd" id="1_vkma1"]
+[ext_resource type="Script" uid="uid://cllxit7uok2xf" path="res://Player/player2.gd" id="1_vkma1"]
 [ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="2_dh6mo"]
-[ext_resource type="Script" path="res://Scripts/States/Idle.gd" id="3_e6nmv"]
+[ext_resource type="Script" uid="uid://ccppxbc7l7ekv" path="res://Scripts/States/Idle.gd" id="3_e6nmv"]
 [ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="4_2qm3m"]
-[ext_resource type="Script" path="res://Scripts/States/Walk.gd" id="4_ahlvu"]
-[ext_resource type="Script" path="res://Scripts/AttackManager.gd" id="4_e2wra"]
+[ext_resource type="Script" uid="uid://cxsk512ivm470" path="res://Scripts/States/Walk.gd" id="4_ahlvu"]
+[ext_resource type="Script" uid="uid://0s3lgis3ei87" path="res://Scripts/AttackManager.gd" id="4_e2wra"]
 [ext_resource type="PackedScene" uid="uid://b883xedulu0jn" path="res://Weapons/blood_katana.tscn" id="4_qtvmj"]
-[ext_resource type="Script" path="res://Scripts/States/Jump.gd" id="4_wae6y"]
+[ext_resource type="Script" uid="uid://5dkc0rulol1h" path="res://Scripts/States/Jump.gd" id="4_wae6y"]
 [ext_resource type="StyleBox" uid="uid://b7b3hqmwfdjgv" path="res://MaterialTextures/UI_COOLDOWN_BACK.tres" id="5_t0q8v"]
 [ext_resource type="StyleBox" uid="uid://djj55b17fblr1" path="res://MaterialTextures/Sprint_Fill_Green.tres" id="5_ucyed"]
-[ext_resource type="Script" path="res://Scripts/playerHealthManager.gd" id="5_vjco1"]
-[ext_resource type="Script" path="res://Scripts/States/Run.gd" id="5_wlkfw"]
-[ext_resource type="Script" path="res://Player/burst.gd" id="7_1mupm"]
-[ext_resource type="Script" path="res://Scripts/States/RunJump.gd" id="8_ec3d6"]
-[ext_resource type="Script" path="res://Player/Crouch.gd" id="8_gexv5"]
-[ext_resource type="Script" path="res://Player/Attack.gd" id="9_gu0nf"]
+[ext_resource type="Script" uid="uid://bhem8ubmmltip" path="res://Scripts/playerHealthManager.gd" id="5_vjco1"]
+[ext_resource type="Script" uid="uid://b8jrqb4iqjbm4" path="res://Scripts/States/Run.gd" id="5_wlkfw"]
+[ext_resource type="Script" uid="uid://d02xavwj8xmcu" path="res://Player/burst.gd" id="7_1mupm"]
+[ext_resource type="Script" uid="uid://c7wq57pjqc84x" path="res://Scripts/States/RunJump.gd" id="8_ec3d6"]
+[ext_resource type="Script" uid="uid://bw7q8jcgsl3m8" path="res://Player/Crouch.gd" id="8_gexv5"]
+[ext_resource type="Script" uid="uid://bjkhaj5omhcbw" path="res://Player/Attack.gd" id="9_gu0nf"]
 [ext_resource type="AudioStream" uid="uid://cytlh7sh0m7pl" path="res://Sounds/punch-3-166696.mp3" id="10_esln5"]
 [ext_resource type="PackedScene" uid="uid://botd2e2pvg6ce" path="res://Player/COWBOY(NEW.V4).tscn" id="11_4svr5"]
 [ext_resource type="AudioStream" uid="uid://q6udxs3hkfpd" path="res://Sounds/714258__qubodup__cloud-poof.wav" id="11_brbxa"]
@@ -2937,19 +2937,19 @@ tracks/23/keys = PackedFloat32Array(0, 1, 0.560649, -0.0800406, 0.0376668, 0.823
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ceiih"]
 _data = {
-"Armature_001|ATTACK": SubResource("Animation_674fv"),
-"Armature_001|DODGE": SubResource("Animation_ugs7m"),
-"Armature_001|FALLING": SubResource("Animation_fvdol"),
-"Armature_001|IDLE_LOW": SubResource("Animation_6ny7p"),
-"Armature_001|Idle": SubResource("Animation_ojmub"),
-"Armature_001|JUMP": SubResource("Animation_ckfh8"),
-"Armature_001|LANDING": SubResource("Animation_4ulht"),
-"Armature_001|RUNNING": SubResource("Animation_6jcmy"),
-"Armature_001|RUNNING_FASTER": SubResource("Animation_qsr6o"),
-"Armature_001|RUNNING_LOW": SubResource("Animation_6i568"),
-"Armature_001|SLIDE": SubResource("Animation_57i60"),
-"Armature_001|WALKING": SubResource("Animation_mdu4k"),
-"Armature_001|WALKING_LOW": SubResource("Animation_31jdr")
+&"Armature_001|ATTACK": SubResource("Animation_674fv"),
+&"Armature_001|DODGE": SubResource("Animation_ugs7m"),
+&"Armature_001|FALLING": SubResource("Animation_fvdol"),
+&"Armature_001|IDLE_LOW": SubResource("Animation_6ny7p"),
+&"Armature_001|Idle": SubResource("Animation_ojmub"),
+&"Armature_001|JUMP": SubResource("Animation_ckfh8"),
+&"Armature_001|LANDING": SubResource("Animation_4ulht"),
+&"Armature_001|RUNNING": SubResource("Animation_6jcmy"),
+&"Armature_001|RUNNING_FASTER": SubResource("Animation_qsr6o"),
+&"Armature_001|RUNNING_LOW": SubResource("Animation_6i568"),
+&"Armature_001|SLIDE": SubResource("Animation_57i60"),
+&"Armature_001|WALKING": SubResource("Animation_mdu4k"),
+&"Armature_001|WALKING_LOW": SubResource("Animation_31jdr")
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ybxi3"]
@@ -4160,12 +4160,12 @@ tracks/27/keys = PackedFloat32Array(0, 1, 0.00883301, -0.619702, 0.784707, 0.011
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vsafk"]
 _data = {
-"ATTACK1": SubResource("Animation_vooij"),
-"FALL": SubResource("Animation_j3mad"),
-"IDLE": SubResource("Animation_g5r11"),
-"JUMP": SubResource("Animation_ed55j"),
-"RUN": SubResource("Animation_hqdqy"),
-"WALK": SubResource("Animation_7hgkg")
+&"ATTACK1": SubResource("Animation_vooij"),
+&"FALL": SubResource("Animation_j3mad"),
+&"IDLE": SubResource("Animation_g5r11"),
+&"JUMP": SubResource("Animation_ed55j"),
+&"RUN": SubResource("Animation_hqdqy"),
+&"WALK": SubResource("Animation_7hgkg")
 }
 
 [node name="Cowboy" type="CharacterBody3D" groups=["player"]]
@@ -4513,7 +4513,7 @@ shape = SubResource("BoxShape3D_qk5tl")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_ceiih")
+&"": SubResource("AnimationLibrary_ceiih")
 }
 
 [node name="HurtBox" type="Area3D" parent="."]
@@ -4578,5 +4578,5 @@ transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -1.50914
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_vsafk")
+&"": SubResource("AnimationLibrary_vsafk")
 }

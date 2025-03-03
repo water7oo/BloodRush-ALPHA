@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://t1fgeaac44tc"]
 
-[ext_resource type="Script" path="res://Scripts/COWBOY.gd" id="1_m3aa7"]
-[ext_resource type="Script" path="res://Scripts/playerHealthManager.gd" id="2_218gs"]
+[ext_resource type="Script" uid="uid://da4yu4x6r24x8" path="res://Scripts/COWBOY.gd" id="1_m3aa7"]
+[ext_resource type="Script" uid="uid://bhem8ubmmltip" path="res://Scripts/playerHealthManager.gd" id="2_218gs"]
 [ext_resource type="StyleBox" uid="uid://b7b3hqmwfdjgv" path="res://MaterialTextures/UI_COOLDOWN_BACK.tres" id="3_6yrxh"]
 [ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="4_r33aj"]
 [ext_resource type="StyleBox" uid="uid://djj55b17fblr1" path="res://MaterialTextures/Sprint_Fill_Green.tres" id="5_c5xn1"]

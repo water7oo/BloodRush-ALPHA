@@ -2,11 +2,11 @@
 
 [ext_resource type="Environment" uid="uid://cadv2uehcxqkc" path="res://MaterialTextures/NewGame.tres" id="1_c0qo6"]
 [ext_resource type="Material" uid="uid://dcuvjs33ebpe3" path="res://MaterialTextures/Room.tres" id="1_ewgn2"]
-[ext_resource type="Shader" path="res://Shaders/1Bit3D_Shader.gdshader" id="2_nbohg"]
+[ext_resource type="Shader" uid="uid://cj820imnefddq" path="res://Shaders/1Bit3D_Shader.gdshader" id="2_nbohg"]
 [ext_resource type="Texture2D" uid="uid://cw62ygditxxqv" path="res://addons/kenney_prototype_textures/light/texture_01.png" id="4_nf6kx"]
 [ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://ui/GameStartANIM.tscn" id="4_rsb4y"]
 [ext_resource type="PackedScene" uid="uid://brejidgy2nq2j" path="res://ui/Pausing.tscn" id="4_x187o"]
-[ext_resource type="Shader" path="res://Shaders/uhhhhh.gdshader" id="7_kt4n2"]
+[ext_resource type="Shader" uid="uid://b1hg6btlggl78" path="res://Shaders/uhhhhh.gdshader" id="7_kt4n2"]
 [ext_resource type="PackedScene" uid="uid://bl275sfu3mmds" path="res://Enemy/Enemy2.tscn" id="9_38om4"]
 [ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Player/COWBOYPLAYER(v4).tscn" id="10_tkxv2"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Player/PlayerCamera.tscn" id="11_hq17w"]
@@ -97,10 +97,11 @@ transform = Transform3D(6.39158e-09, -1.77944e-07, 4.014, 0.00319167, -1.12415e-
 size = Vector3(49.6816, 1.25729, 1.82574)
 
 [node name="MeshInstance3D5" type="CSGBox3D" parent="Preview/SubViewportContainer/SubViewport/Floor"]
-transform = Transform3D(3.52785e-08, -1.85154e-06, 42.6991, 0.0176164, -1.39606e-07, -4.07393e-08, 2.11243e-09, 0.734244, 3.2353e-08, -10.6511, 0.340188, -0.0115905)
+transform = Transform3D(3.5273e-08, -1.82578e-06, 42.6991, 0.0176137, 0.0128655, -5.33243e-08, -0.000308672, 0.734131, -1.46525e-06, 8.26426, 0.732268, -0.0116049)
+size = Vector3(1, 1, 0.39801)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Preview/SubViewportContainer/SubViewport/Floor"]
-transform = Transform3D(0.355, -1.76215e-12, 1.58821e-09, -1.77991e-12, 0.354999, 0.000793077, -1.58821e-09, -0.000793077, 0.354999, 0.527902, -0.250225, -0.392755)
+transform = Transform3D(0.355, -1.64846e-12, 1.58821e-09, -1.77994e-12, 0.354999, 0.000793077, -1.58821e-09, -0.000793077, 0.354999, 0.527902, -0.240714, -0.392755)
 material_overlay = SubResource("StandardMaterial3D_u5snt")
 size = Vector3(27.8148, 0.306772, 0.229263)
 

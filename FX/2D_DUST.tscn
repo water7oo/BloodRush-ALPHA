@@ -11,12 +11,10 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dlsig"]
+particle_flag_disable_z = true
 emission_shape = 1
 emission_sphere_radius = 37.65
-particle_flag_disable_z = true
 gravity = Vector3(0, 98, 0)
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
 scale_min = 0.4
 anim_speed_min = 0.24
 anim_speed_max = 1.88

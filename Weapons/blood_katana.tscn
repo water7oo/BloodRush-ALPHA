@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://b883xedulu0jn"]
 
-[ext_resource type="PackedScene" uid="uid://b8q1sf7plg661" path="res://Blender/BloodKatana.blend" id="1_e7b85"]
-[ext_resource type="Shader" path="res://Shaders/PS1VertexWobble.gdshader" id="2_vha8e"]
+[ext_resource type="PackedScene" uid="uid://hppylynqdlmw" path="res://Blender/BloodKatana.blend" id="1_e7b85"]
+[ext_resource type="Shader" uid="uid://cji4m71ho8yn7" path="res://Shaders/PS1VertexWobble.gdshader" id="2_vha8e"]
 [ext_resource type="Texture2D" uid="uid://dx0vwoe766a8c" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="3_adf1a"]
 [ext_resource type="Texture2D" uid="uid://caatibvojcios" path="res://addons/kenney_prototype_textures/orange/texture_12.png" id="4_460fd"]
 
@@ -12,20 +12,20 @@ render_priority = 0
 next_pass = SubResource("ShaderMaterial_w36hw")
 shader = ExtResource("2_vha8e")
 shader_parameter/affine_mapping = false
+shader_parameter/albedo = ExtResource("3_adf1a")
 shader_parameter/alpha_scissor = 0.0
 shader_parameter/jitter = 0.59
 shader_parameter/resolution = Vector2i(320, 240)
-shader_parameter/albedo = ExtResource("3_adf1a")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kkfcj"]
 render_priority = 0
 next_pass = SubResource("ShaderMaterial_w36hw")
 shader = ExtResource("2_vha8e")
 shader_parameter/affine_mapping = false
+shader_parameter/albedo = ExtResource("4_460fd")
 shader_parameter/alpha_scissor = 0.0
 shader_parameter/jitter = 0.59
 shader_parameter/resolution = Vector2i(320, 240)
-shader_parameter/albedo = ExtResource("4_460fd")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2nd42"]
 render_priority = 0

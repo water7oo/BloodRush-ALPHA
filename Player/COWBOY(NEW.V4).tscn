@@ -1,11 +1,30 @@
-[gd_scene load_steps=4 format=3 uid="uid://botd2e2pvg6ce"]
+[gd_scene load_steps=5 format=3 uid="uid://botd2e2pvg6ce"]
 
 [ext_resource type="PackedScene" uid="uid://ce3emrnfl1nuy" path="res://Player/COWBOYPLAYER_V4.blend" id="1_g7xsl"]
 [ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="2_qhor5"]
+[ext_resource type="PackedScene" uid="uid://bqgjb8xjd76lj" path="res://Player/blood_katana.tscn" id="4_0ur36"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://ccqgr0tb8ublp" path="res://Animations/cowboy2ndPassTree.tres" id="11_fvafx"]
 
 [node name="COWBOYPLAYER_V4" instance=ExtResource("1_g7xsl")]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="." index="0"]
+transform = Transform3D(2.31247, 0, 0, 0, 0.019744, -2.31238, 0, 2.31238, 0.019744, -0.190479, 0.642689, -0.00548752)
+bone_name = "Bone"
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="1"]
+tree_root = ExtResource("11_fvafx")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Attack_Shot/active = false
+parameters/Attack_Shot/internal_active = false
+parameters/Attack_Shot/request = 0
+parameters/Attack_Shot2/active = false
+parameters/Attack_Shot2/internal_active = false
+parameters/Attack_Shot2/request = 0
+parameters/Blend3/blend_amount = 0
+parameters/Ground_Blend/blend_amount = -1.0
+parameters/Ground_Blend2/blend_amount = -1.0
+parameters/Ground_Blend3/blend_amount = -1.0
+parameters/Jump_Blend/blend_amount = -1.0
 
 [node name="Skeleton3D" parent="Armature_001" index="0"]
 bones/0/position = Vector3(8.80678e-15, -2.03043, -79.2757)
@@ -16,7 +35,6 @@ bones/3/rotation = Quaternion(-2.79397e-09, -2.81892e-18, 5.14379e-16, 1)
 bones/4/position = Vector3(-1.58909e-08, 22.9969, 3.23989e-07)
 bones/4/rotation = Quaternion(-0.0204772, -0.0686862, 0.0112996, 0.997364)
 bones/5/rotation = Quaternion(0.0375219, 4.07741e-10, -5.82487e-11, 0.999296)
-bones/6/rotation = Quaternion(-2.32831e-10, 1, -2.32831e-10, 7.91795e-08)
 bones/7/position = Vector3(-13.1344, 20.4255, 0.194608)
 bones/7/rotation = Quaternion(0.620015, -0.105181, 0.697457, 0.343615)
 bones/7/scale = Vector3(1, 1, 1)
@@ -35,38 +53,44 @@ bones/12/rotation = Quaternion(0.148525, -0.00746884, 0.0053295, 0.988866)
 bones/13/position = Vector3(-3.79775e-06, 6.58938, -3.00284e-06)
 bones/13/rotation = Quaternion(-2.63933e-07, 0.00354127, -5.19416e-07, 0.999994)
 bones/14/position = Vector3(-7.51019e-06, 32.0036, 8.38935e-06)
-bones/15/position = Vector3(-22.461, -8.49945, 2.17764)
-bones/15/rotation = Quaternion(-4.23734e-05, -0.0537816, 0.998549, 0.00280041)
-bones/16/position = Vector3(1.22086e-06, 30.171, -3.46401e-07)
-bones/16/rotation = Quaternion(0.178913, 0.000707548, 0.00686387, 0.983841)
-bones/17/rotation = Quaternion(0.0130168, 0.809768, -0.586521, 0.00998246)
-bones/17/scale = Vector3(1, 1, 1)
-bones/18/rotation = Quaternion(0.314447, -0.328317, 0.11692, 0.882984)
-bones/18/scale = Vector3(1, 1, 1)
-bones/19/position = Vector3(-7.74861e-07, 14.3708, -4.76836e-07)
-bones/20/position = Vector3(22.461, -8.49945, 2.47211)
-bones/20/rotation = Quaternion(-0.000149496, -0.0568797, 0.998377, -0.00277289)
+bones/15/rotation = Quaternion(0.0269766, 0.704838, 0.707276, -0.0472904)
+bones/15/scale = Vector3(43.2439, 43.2439, 43.2439)
+bones/16/rotation = Quaternion(-0.0589217, -0.299543, 0.952262, 2.24943e-08)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/position = Vector3(-22.461, -8.49945, 2.17764)
+bones/17/rotation = Quaternion(-4.23734e-05, -0.0537816, 0.998549, 0.00280041)
+bones/18/position = Vector3(1.22086e-06, 30.171, -3.46401e-07)
+bones/18/rotation = Quaternion(0.178913, 0.000707548, 0.00686387, 0.983841)
+bones/19/rotation = Quaternion(0.0130168, 0.809768, -0.586521, 0.00998246)
+bones/19/scale = Vector3(1, 1, 1)
+bones/20/rotation = Quaternion(0.314447, -0.328317, 0.11692, 0.882984)
 bones/20/scale = Vector3(1, 1, 1)
-bones/21/rotation = Quaternion(0.179244, -0.000784145, -0.00683936, 0.983781)
-bones/22/rotation = Quaternion(-0.0129923, 0.813266, -0.581659, -0.0101566)
+bones/21/position = Vector3(-7.74861e-07, 14.3708, -4.76836e-07)
+bones/22/position = Vector3(22.461, -8.49945, 2.47211)
+bones/22/rotation = Quaternion(-0.000149496, -0.0568797, 0.998377, -0.00277289)
 bones/22/scale = Vector3(1, 1, 1)
-bones/23/position = Vector3(-1.74546e-07, 32.304, 2.61487e-06)
-bones/23/rotation = Quaternion(0.315723, 0.321196, -0.114527, 0.885458)
+bones/23/rotation = Quaternion(0.179244, -0.000784145, -0.00683936, 0.983781)
+bones/24/rotation = Quaternion(-0.0129923, 0.813266, -0.581659, -0.0101566)
+bones/24/scale = Vector3(1, 1, 1)
+bones/25/position = Vector3(-1.74546e-07, 32.304, 2.61487e-06)
+bones/25/rotation = Quaternion(0.315723, 0.321196, -0.114527, 0.885458)
 
-[node name="MORI_003" parent="Armature_001/Skeleton3D" index="0"]
+[node name="LookAtModifier3D" type="LookAtModifier3D" parent="Armature_001/Skeleton3D" index="0"]
+forward_axis = 5
+primary_rotation_axis = 0
+origin_offset = Vector3(0.16, 0.265, 0)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature_001/Skeleton3D" index="1"]
+transform = Transform3D(0.0215275, -0.474837, 0.87981, 0.935713, -0.300361, -0.185001, 0.352106, 0.827232, 0.437844, -35.3042, -8.96593, -129.946)
+bone_name = "mixamorig_RightForeArm"
+bone_idx = 13
+
+[node name="BloodKatana" parent="Armature_001/Skeleton3D/BoneAttachment3D" index="0" instance=ExtResource("4_0ur36")]
+transform = Transform3D(21.3403, 116.038, 18.9752, 18.0004, -22.2821, 116.016, 116.193, -17.8599, -21.458, -22.6214, 45.7165, -19.2716)
+
+[node name="MORI_003" parent="Armature_001/Skeleton3D" index="2"]
 material_override = ExtResource("2_qhor5")
 
-[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
-tree_root = ExtResource("11_fvafx")
-anim_player = NodePath("../AnimationPlayer")
-parameters/Attack_Shot/active = false
-parameters/Attack_Shot/internal_active = false
-parameters/Attack_Shot/request = 0
-parameters/Attack_Shot2/active = false
-parameters/Attack_Shot2/internal_active = false
-parameters/Attack_Shot2/request = 0
-parameters/Blend3/blend_amount = 0
-parameters/Ground_Blend/blend_amount = -1.0
-parameters/Ground_Blend2/blend_amount = -1.0
-parameters/Ground_Blend3/blend_amount = -1.0
-parameters/Jump_Blend/blend_amount = -1.0
+[node name="BloodKatana" parent="." index="4" instance=ExtResource("4_0ur36")]
+transform = Transform3D(0.199935, -2.00323e-08, 0.458286, -0.458286, -8.73942e-09, 0.199935, 0, -0.5, -2.18557e-08, 0.475807, 0.739369, 0)
+visible = false

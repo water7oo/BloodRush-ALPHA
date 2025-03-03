@@ -1,13 +1,13 @@
 [gd_scene load_steps=36 format=4 uid="uid://bl275sfu3mmds"]
 
-[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_dwwfr"]
+[ext_resource type="Script" uid="uid://di7hn5g8shrvt" path="res://Scripts/enemy.gd" id="1_dwwfr"]
 [ext_resource type="Material" uid="uid://kddykiqv2ir2" path="res://MaterialTextures/Enemy.tres" id="2_0npau"]
 [ext_resource type="Texture2D" uid="uid://ckvxfd6pdd8du" path="res://My Textures/2ndPassAnimations_PixelTextureGrid_32.png" id="3_vqmhl"]
 [ext_resource type="Texture2D" uid="uid://r03mrngq4wtn" path="res://My Textures/2ndPassAnimations_PixelTextureGrid_48.png" id="4_jkxo8"]
 [ext_resource type="PackedScene" uid="uid://1b5arno23rm5" path="res://FX/punch_dust.tscn" id="6_rbnjl"]
 [ext_resource type="AudioStream" uid="uid://mmvokjkoexpy" path="res://Sounds/573378__johnloser__cyber-punch-03.wav" id="7_htiw0"]
-[ext_resource type="Shader" path="res://Shaders/3DHealthBars.gdshader" id="8_78hri"]
-[ext_resource type="Script" path="res://Scripts/enemyHealthManager.gd" id="8_scm7k"]
+[ext_resource type="Shader" uid="uid://c0ciodvcjfbyq" path="res://Shaders/3DHealthBars.gdshader" id="8_78hri"]
+[ext_resource type="Script" uid="uid://ywk4flkanwe4" path="res://Scripts/enemyHealthManager.gd" id="8_scm7k"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ffc8c"]
 resource_name = "2ndPassAnimations_Circle_008"
@@ -2502,13 +2502,13 @@ tracks/44/keys = PackedFloat32Array(0, 1, 7.38622e-06, 9.91649, -1.61082e-05)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cftkj"]
 _data = {
-"Idle": SubResource("Animation_bvo2e"),
-"RUNNING": SubResource("Animation_jeyub"),
-"RUNNING_LOW": SubResource("Animation_i1c2h"),
-"TPOSE": SubResource("Animation_eckbk"),
-"WALKING": SubResource("Animation_us0xy"),
-"WALKING_LOW1": SubResource("Animation_ugf7s"),
-"idle_low": SubResource("Animation_oqt0b")
+&"Idle": SubResource("Animation_bvo2e"),
+&"RUNNING": SubResource("Animation_jeyub"),
+&"RUNNING_LOW": SubResource("Animation_i1c2h"),
+&"TPOSE": SubResource("Animation_eckbk"),
+&"WALKING": SubResource("Animation_us0xy"),
+&"WALKING_LOW1": SubResource("Animation_ugf7s"),
+&"idle_low": SubResource("Animation_oqt0b")
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yoo35"]
