@@ -4,7 +4,7 @@
 animation = &"TPOSE"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2613s"]
-animation = &"ATTACK1"
+animation = &"ATTACK2"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kwsuw"]
 animation = &"Armature_001|LANDING"
@@ -55,9 +55,9 @@ sync = true
 sync = true
 
 [resource]
-graph_offset = Vector2(-189.546, -98.823)
+graph_offset = Vector2(-588.989, 5.7164)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_7fqlc")
-nodes/Animation/position = Vector2(-380, -80)
+nodes/Animation/position = Vector2(-380, -120)
 "nodes/Animation 10/node" = SubResource("AnimationNodeAnimation_al0tm")
 "nodes/Animation 10/position" = Vector2(580, 240)
 "nodes/Animation 11/node" = SubResource("AnimationNodeAnimation_2613s")

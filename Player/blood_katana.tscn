@@ -12,4 +12,4 @@ material_override = ExtResource("2_nw226")
 material_override = ExtResource("2_nw226")
 
 [node name="Plane" parent="Cylinder" index="1"]
-material_override = ExtResource("2_nw226")
+material_overlay = ExtResource("2_nw226")

@@ -31,11 +31,8 @@ shader_parameter/clipPosition = 0.2
 [node name="TRAINING" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.916113, -0.373826, -0.14488, 0.130719, -0.620135, 0.773528, -0.37901, 0.6897, 0.61698, -6.46824, 61.2841, 3.0847)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 9.50051, 0)
 shadow_enabled = true
-shadow_bias = 0.0
-shadow_normal_bias = 2.139
-directional_shadow_mode = 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_c0qo6")
@@ -124,7 +121,8 @@ mouse_force_pass_scroll_events = false
 color = Color(0, 0, 0, 1)
 
 [node name="Enemy" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("9_38om4")]
-transform = Transform3D(0.7, 0, 1.22391e-07, 0, 0.7, 0, -1.22391e-07, 0, 0.7, 8.81309, 5.94461, -7.37677)
+transform = Transform3D(0.7, 0, 1.22391e-07, 0, 0.7, 0, -1.22391e-07, 0, 0.7, 1.4635, 0.762087, -2.95968)
+metadata/_edit_group_ = true
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("11_hq17w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.35539, 4.5083, 13.061)
@@ -136,4 +134,4 @@ transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.53036, 3.74131, 8.499
 gizmo_extents = 4.42
 
 [node name="Cowboy" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("10_tkxv2")]
-transform = Transform3D(0.007, 0, 0, 0, 0.007, 0, 0, 0, 0.007, 0, 1.10406, 0)
+transform = Transform3D(0.007, 0, 0, 0, 0.007, 0, 0, 0, 0.007, 1.49479, 0.959527, 2.00658)

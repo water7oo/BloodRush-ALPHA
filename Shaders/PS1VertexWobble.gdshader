@@ -1,11 +1,10 @@
 shader_type spatial;
 render_mode blend_mix,
-	cull_disabled, unshaded,
+	cull_disabled,
 	depth_prepass_alpha,
 	diffuse_toon,
 	shadows_disabled,
-	specular_disabled,
-	vertex_lighting;
+	specular_disabled;
 
 
 uniform bool affine_mapping = false;

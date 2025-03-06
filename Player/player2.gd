@@ -25,6 +25,7 @@ func initialize_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, walk_state, "to_walk")
 	state_machine.add_transition(state_machine.ANYSTATE, run_state, "to_run")
 	state_machine.add_transition(state_machine.ANYSTATE, jump_state, "to_jump")
+	state_machine.add_transition(state_machine.ANYSTATE, attack_state, "to_attack")
 	
 	state_machine.add_transition(run_state, runJump_state, "to_runJump")
 	state_machine.add_transition(walk_state, burst_state, "to_burst")
@@ -34,9 +35,7 @@ func initialize_state_machine():
 	state_machine.add_transition(run_state, crouch_state, "to_crouch")
 	state_machine.add_transition(walk_state, crouch_state, "to_crouch")
 	
-	state_machine.add_transition(idle_state, attack_state, "to_attack")
-	state_machine.add_transition(run_state, attack_state, "to_attack")
-	state_machine.add_transition(walk_state, attack_state, "to_attack")
+
 
 	state_machine.initial_state = idle_state  
 	state_machine.initialize(self)
@@ -54,13 +53,18 @@ func playerGravity(delta: float) -> void:
 		velocity.y -= Global.CUSTOM_GRAVITY * delta
 
 
-#func _unhandled_input(event):
-	#if event is InputEventMouseMotion:
-#
-		#var rotation_x = spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity
-		#var rotation_y = spring_arm_pivot.rotation.y - event.relative.x * mouse_sensitivity
-#
-		#rotation_x = clamp(rotation_x, deg_to_rad(-60), deg_to_rad(30))
-#
-		#spring_arm_pivot.rotation.x = rotation_x
-		#spring_arm_pivot.rotation.y = rotation_y
+
+func _on_hurt_box_area_exited(area):
+	pass # Replace with function body.
+
+
+func _on_attack_box_area_entered(area):
+	pass # Replace with function body.
+
+
+func _on_hurt_box_area_entered(area):
+	pass # Replace with function body.
+
+
+func _on_attack_box_area_exited(area):
+	pass # Replace with function body.

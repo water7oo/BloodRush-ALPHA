@@ -15,6 +15,7 @@ var can_move: bool = true
 var is_sprinting: bool = false
 var current_speed: float = 0.0
 var sprint_timer: float = 0.0
+var velocity = Vector3.ZERO
 
 @export var runMultiplier: float = 1.5
 @export var runAdditive: float = 7
@@ -47,6 +48,9 @@ func _enter() -> void:
 func _update(delta: float) -> void:
 	player_run(delta)
 	initialize_runJump(delta)
+	initialize_attack(delta)
+	initialize_crouch(delta)
+	#print(velocity.length())
 	agent.move_and_slide()
 
 # Smooth run (Mario-esque momentum)
@@ -56,7 +60,6 @@ func player_run(delta: float) -> void:
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 	var velocity = agent.velocity
 	
-	print(current_speed)
 	
 	if direction != Vector3.ZERO && can_sprint && can_move && agent.is_on_floor():
 		sprint_timer += delta
@@ -69,7 +72,7 @@ func player_run(delta: float) -> void:
 		target_speed = MAX_SPEED
 		ACCELERATION = DASH_ACCELERATION
 		DECELERATION = DASH_DECELERATION
-
+		
 		# Calculate angle between velocity and new direction
 		var angle_diff = velocity.normalized().dot(direction)
 
@@ -112,8 +115,15 @@ func player_run(delta: float) -> void:
 	if velocity.length() <= 0:
 		animationTree.set("parameters/Ground_Blend2/blend_amount", -1) # Ensure idle animation is set
 		agent.state_machine.dispatch("to_idle")
+	
+	elif Input.is_action_pressed("move_crouch"):
+		animationTree.set("parameters/Ground_Blend2/blend_amount", -1)
+		animationTree.set("parameters/Ground_Blend/blend_amount", 0)
+		agent.state_machine.dispatch("to_crouch")
 
-	if Input.is_action_just_released("move_sprint") && direction != Vector3.ZERO:
+
+
+	elif Input.is_action_just_released("move_sprint") && direction != Vector3.ZERO:
 		animationTree.set("parameters/Ground_Blend2/blend_amount", -1)
 		agent.state_machine.dispatch("to_walk")
 
@@ -125,3 +135,14 @@ func initialize_runJump(delta: float) -> void:
 		animationTree.set("parameters/Ground_Blend2/blend_amount", -1)
 		agent.state_machine.dispatch("to_runJump")
 	pass
+
+func initialize_crouch(delta: float) -> void:
+	if Input.is_action_pressed("move_crouch"):
+		animationTree.set("parameters/Ground_Blend/blend_amount", 0)
+		agent.state_machine.dispatch("to_crouch")
+
+func initialize_attack(delta: float) -> void:
+	
+	#pressing attack unsheathes katana and player is in attackmode
+	if Input.is_action_just_pressed("attack_light_1"):
+		agent.state_machine.dispatch("to_attack")

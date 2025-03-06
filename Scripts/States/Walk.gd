@@ -28,7 +28,8 @@ func _update(delta: float) -> void:
 	initialize_run(delta)
 	initialize_burst(delta)
 	initialize_crouch(delta)
-	print(velocity.length())
+	initialize_attack(delta)
+	#print(velocity.length())
 	agent.move_and_slide()
 
 func player_movement(delta: float) -> void:
@@ -103,3 +104,10 @@ func initialize_burst(delta: float) -> void:
 func initialize_crouch(delta: float) -> void:
 	if Input.is_action_pressed("move_crouch"):
 		agent.state_machine.dispatch("to_crouch")
+		
+
+func initialize_attack(delta: float) -> void:
+	
+	#pressing attack unsheathes katana and player is in attackmode
+	if Input.is_action_just_pressed("attack_light_1"):
+		agent.state_machine.dispatch("to_attack")

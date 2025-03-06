@@ -1,5 +1,10 @@
 extends Node
 
+#Global Variables 
+@onready var playerHealthMan = get_node("/root/PlayerHealthManager")
+@onready var enemyHealthMan = get_node("/root/EnemyHealthManager")
+@onready var gameJuice = get_node("/root/GameJuice")
+
 
 var global_data = GlobalResource.new()
 @export var CUSTOM_GRAVITY: float = 35.0
@@ -13,8 +18,8 @@ var blend_lerp_speed = 10.0
 
 @export var mouse_sensitivity: float = 0.005
 
-@export var armature_rot_speed: float = .1
-@export var armature_default_rot_speed: float = .8
+@export var armature_rot_speed: float = 1
+@export var armature_default_rot_speed: float = 1
 @onready var armature = $Armature_001
 
 #Walk State Base movement values

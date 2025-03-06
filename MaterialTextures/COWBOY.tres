@@ -1,6 +1,5 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dcakvymmosyhp"]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dcakvymmosyhp"]
 
-[ext_resource type="Texture2D" uid="uid://bdkrvec3wh6qh" path="res://My Textures/TextureGrid_32_devLight.png" id="2_4wawv"]
 [ext_resource type="Shader" uid="uid://cji4m71ho8yn7" path="res://Shaders/PS1VertexWobble.gdshader" id="2_oy5gm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w36hw"]
@@ -10,7 +9,6 @@ render_priority = 0
 next_pass = SubResource("ShaderMaterial_w36hw")
 shader = ExtResource("2_oy5gm")
 shader_parameter/affine_mapping = false
-shader_parameter/albedo = ExtResource("2_4wawv")
-shader_parameter/alpha_scissor = 0.0
+shader_parameter/alpha_scissor = 0.5
 shader_parameter/jitter = 0.25
 shader_parameter/resolution = Vector2i(320, 240)
