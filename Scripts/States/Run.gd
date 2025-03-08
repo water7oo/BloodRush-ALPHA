@@ -11,7 +11,6 @@ var sprinting = Input.is_action_pressed("move_sprint")
 var is_in_air: bool = false
 var is_moving: bool = false
 var can_sprint: bool = true
-var can_move: bool = true
 var is_sprinting: bool = false
 var current_speed: float = 0.0
 var sprint_timer: float = 0.0
@@ -55,13 +54,16 @@ func _update(delta: float) -> void:
 
 # Smooth run (Mario-esque momentum)
 func player_run(delta: float) -> void:
+	if !Global.can_move:
+		return  # Prevents running input if disabled
+		
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 	var velocity = agent.velocity
 	
 	
-	if direction != Vector3.ZERO && can_sprint && can_move && agent.is_on_floor():
+	if direction != Vector3.ZERO && can_sprint && Global.can_move && agent.is_on_floor():
 		sprint_timer += delta
 		is_sprinting = true
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
@@ -78,7 +80,7 @@ func player_run(delta: float) -> void:
 
 		# If angle is sharp (negative dot product) and player is at max speed, slow down first
 		if angle_diff < 0 && current_speed >= MAX_SPEED:
-			print("SKUUUUURRRT")
+			#print("SKUUUUURRRT")
 			current_speed = move_toward(current_speed, BASE_SPEED, Global.run_momentum_deceleration * delta)
 			velocity = velocity.lerp(direction * current_speed, Global.run_inertia_blend * delta)
 		

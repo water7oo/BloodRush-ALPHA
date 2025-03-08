@@ -1,5 +1,4 @@
 extends LimboState
-
 @export var animation_player: AnimationPlayer
 @export var animation: StringName
 @onready var state_machine: LimboHSM = $LimboHSM
@@ -9,38 +8,46 @@ extends LimboState
 @onready var animationTree = playerCharScene.find_child("AnimationTree", true)
 
 @export var attackPush: float = 10.0
-@export var DECELERATION: float = Global.DECELERATION + 100  # Smooth stop during attack
+@export var DECELERATION: float = Global.DECELERATION + 100
 @export var attack_power: float = 10.0
+
 var preserved_velocity: Vector3 = Vector3.ZERO
 var is_attacking: bool = false
-var attack_cooldown: float = 0.0  # Cooldown timer
+var attack_cooldown: float = 0.0
 var attack_cooldown_amount: float = 0.2
-var current_speed: float = 0.0
-var target_speed: float = Global.MAX_SPEED
-var attack_proccessing: bool = false
+var combo_window_duration: float = 0.4  # Time frame for second attack
+var combo_timer: float = 0.0
 var can_attack: bool = true
+var can_chain_attack: bool = false  # Tracks if second attack is allowed
 
 func _enter() -> void:
 	print("Current State:", agent.state_machine.get_active_state())
-	preserved_velocity = agent.velocity  # Preserve movement before attack
-	_start_attack()  # Immediately trigger attack on state entry
+	preserved_velocity = agent.velocity  
+	_start_attack()  
 
 func _update(delta: float) -> void:
 	_process_attack(delta)
 	agent.move_and_slide()
 
 func _process_attack(delta: float) -> void:
-	# Handle attack cooldown
 	if is_attacking:
 		attack_cooldown -= delta
+		combo_timer -= delta  
 
-		# Smoothly stop movement using DECELERATION
 		agent.velocity.x = move_toward(agent.velocity.x, 0, DECELERATION * delta)
 		agent.velocity.z = move_toward(agent.velocity.z, 0, DECELERATION * delta)
 
-		# Check if attack animation is no longer active
+		# Allow chaining to the second attack
+		if combo_timer > 0 and Input.is_action_just_pressed("attack_light_1"):
+			can_chain_attack = true
+			print("Second impact detected!")
+
+		# End attack state if animation is over and no second attack
 		if attack_cooldown <= 0.0 and animationTree.get("parameters/Attack_Shot/request") == 0:
-			_exit_attack_state(delta)
+			if can_chain_attack:
+				_trigger_second_attack()
+			else:
+				_exit_attack_state()
 
 func _start_attack() -> void:
 	animationTree.set("parameters/Attack_Shot/request", 1)
@@ -48,33 +55,34 @@ func _start_attack() -> void:
 		attack_box.monitoring = true
 
 	is_attacking = true
-	attack_cooldown = attack_cooldown_amount  # Set cooldown
+	attack_cooldown = attack_cooldown_amount  
+	combo_timer = combo_window_duration  # Start the combo timer
+	can_chain_attack = false  # Reset chain attack flag
 
-
+func _trigger_second_attack() -> void:
+	print("Second attack triggered!")
+	animationTree.set("parameters/Attack_Shot2/request", 1)  # Change to second attack animation
+	can_chain_attack = false
+	combo_timer = 0.0  
+	attack_cooldown = attack_cooldown_amount  
 
 func _on_attack_box_area_entered(area):
-	if area.has_method("takeDamageEnemy") && !attack_proccessing && can_attack:
-		Global.enemyHealthMan.takeDamageEnemy(Global.enemyHealthMan.health , attack_power)
+	if area.has_method("takeDamageEnemy") and can_attack:
+		Global.enemyHealthMan.takeDamageEnemy(Global.enemyHealthMan.health, attack_power)
 		print("Enemy got hit")
 		$AudioStreamPlayer.play()
 		Global.gameJuice.hitStop(0.25, area)
-		attack_cooldown = 0.1
-		
 		attack_box.monitoring = false
 		Global.gameJuice.knockback(area.get_parent(), attack_box, 6)
-		
 
-func _exit_attack_state(delta: float) -> void:
+func _exit_attack_state() -> void:
 	is_attacking = false
-	attack_cooldown = 0.0  # Reset cooldown
+	attack_cooldown = 0.0
 
-	# Stop attack box and reset animation state
 	if attack_box:
 		attack_box.monitoring = false  
 
-	# Transition to idle or movement depending on input
 	if Input.get_vector("move_left", "move_right", "move_forward", "move_back") != Vector2.ZERO:
-		current_speed = move_toward(current_speed, target_speed, Global.run_momentum_acceleration * delta)
 		agent.state_machine.dispatch("to_walk")
 	else:
 		agent.state_machine.dispatch("to_idle")

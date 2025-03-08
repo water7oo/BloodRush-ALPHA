@@ -55,13 +55,13 @@ sync = true
 sync = true
 
 [resource]
-graph_offset = Vector2(-588.989, 5.7164)
+graph_offset = Vector2(826.113, 23.2349)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_7fqlc")
 nodes/Animation/position = Vector2(-380, -120)
 "nodes/Animation 10/node" = SubResource("AnimationNodeAnimation_al0tm")
 "nodes/Animation 10/position" = Vector2(580, 240)
 "nodes/Animation 11/node" = SubResource("AnimationNodeAnimation_2613s")
-"nodes/Animation 11/position" = Vector2(1040, 360)
+"nodes/Animation 11/position" = Vector2(1340, 400)
 "nodes/Animation 12/node" = SubResource("AnimationNodeAnimation_kwsuw")
 "nodes/Animation 12/position" = Vector2(1780, 420)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_0phbi")

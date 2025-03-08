@@ -60,38 +60,38 @@ func animations():
 		await get_tree().create_timer(0.5).timeout
 		$AnimationTree.set("parameters/Blend2/blend_amount", 0)
 
-func pause():
-	process_mode = PROCESS_MODE_DISABLED
-
-func unpause():
-	process_mode = PROCESS_MODE_INHERIT
+#func pause():
+	#process_mode = PROCESS_MODE_DISABLED
+#
+#func unpause():
+	#process_mode = PROCESS_MODE_INHERIT
 
 #Hurtbox
 #If the player touches this make them have hit pause but also put enemy in hit pause by timescale
-func _on_enemy_area_entered(area):
-	if area.name == "AttackBox" && area.monitoring == true:
-		print("Player hit me")
-		
-		
-	if area.has_method("takeDamage") && !attack_processing:
-		playerHealthMan.takeDamage(playerHealthMan.health, attack_power)
-		$AudioStreamPlayer.play()
-		attack_processing = true
-		enemyBox.monitoring = true
-		gameJuice.hitStop(0.25, area)
-		gameJuice.objectShake(area.get_parent(),0.08,.7)
-		("Hit player")
-		
-		gameJuice.knockback(area.get_parent(), enemyBox, 10)
-		
-		animations()
-		
-		attack_processing = false
-		enemyBox.monitoring = false
-		await get_tree().create_timer(1).timeout
-		enemyBox.monitoring = true
-		#print(enemyBox.monitoring)
-		
-	
+#func _on_enemy_area_entered(area):
+	#if area.name == "AttackBox" && area.monitoring == true:
+		#print("Player hit me")
+		#
+	#if area.name == "HurtBox" and !attack_processing:
+		#var player = area.get_parent()
+		#print("Enemy hit player!")
+#
+		## Apply damage
+		#playerHealthMan.takeDamage(playerHealthMan.health, attack_power)
+		#gameJuice.hitStop(0.25, area)
+		#gameJuice.objectShake(player, 0.08, .7)
+		#gameJuice.knockback(player, enemyBox, 10)
+#
+		## Play animations and effects
+		#animations()
+		#
+		## Cooldown for attack
+		#attack_processing = true
+		#enemyBox.monitoring = false
+		#await get_tree().create_timer(1).timeout
+		#attack_processing = false
+		#enemyBox.monitoring = true
+		#
+	#
 func _on_hurt_box_area_entered(area):
 	pass # Replace with function body.

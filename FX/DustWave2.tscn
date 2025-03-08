@@ -251,12 +251,9 @@ material_override = SubResource("StandardMaterial3D_5mnac")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {
-"": SubResource("AnimationLibrary_14b8y")
+&"": SubResource("AnimationLibrary_14b8y")
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
-libraries = {
-"": SubResource("AnimationLibrary_14b8y")
-}
 tree_root = SubResource("AnimationNodeBlendTree_oli77")
 anim_player = NodePath("../AnimationPlayer")

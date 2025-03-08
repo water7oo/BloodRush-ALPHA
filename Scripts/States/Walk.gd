@@ -33,11 +33,12 @@ func _update(delta: float) -> void:
 	agent.move_and_slide()
 
 func player_movement(delta: float) -> void:
+	
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 
-	if direction != Vector3.ZERO:
+	if direction != Vector3.ZERO && Global.can_move:
 		is_moving = true
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
 		Global.target_blend_amount = 0.0

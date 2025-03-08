@@ -10,8 +10,8 @@ shader = ExtResource("2_3v2rh")
 [node name="Game_Effects" instance=ExtResource("1_562kq")]
 
 [node name="Landing_strong_001" parent="RootNode" index="0"]
-transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, -0.0172687, -0.0228026, 0)
+transform = Transform3D(48.8438, 0, 0, 0, -2.13503e-06, 15.4841, 0, -48.8438, -6.76833e-07, -0.0172687, -0.0228026, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_si4m6")
 
 [node name="AnimationPlayer" parent="." index="1"]
-playback_process_mode = 0
+callback_mode_process = 0

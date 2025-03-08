@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=4 uid="uid://bgkmd80vrnlao"]
+[gd_scene load_steps=68 format=4 uid="uid://bgkmd80vrnlao"]
 
 [ext_resource type="Script" uid="uid://cllxit7uok2xf" path="res://Player/player2.gd" id="1_vkma1"]
 [ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="2_dh6mo"]
@@ -17,6 +17,8 @@
 [ext_resource type="Script" uid="uid://bw7q8jcgsl3m8" path="res://Player/Crouch.gd" id="8_gexv5"]
 [ext_resource type="Script" uid="uid://bjkhaj5omhcbw" path="res://Player/Attack.gd" id="9_gu0nf"]
 [ext_resource type="AudioStream" uid="uid://cytlh7sh0m7pl" path="res://Sounds/punch-3-166696.mp3" id="10_esln5"]
+[ext_resource type="Script" uid="uid://dmlj04uny03pk" path="res://Player/takeDamege.gd" id="10_ga41d"]
+[ext_resource type="Script" uid="uid://dfrhd0jw7xuqs" path="res://Player/recover_state.gd" id="11_3apqd"]
 [ext_resource type="PackedScene" uid="uid://botd2e2pvg6ce" path="res://Player/COWBOY(NEW.V4).tscn" id="11_4svr5"]
 [ext_resource type="AudioStream" uid="uid://q6udxs3hkfpd" path="res://Sounds/714258__qubodup__cloud-poof.wav" id="11_brbxa"]
 [ext_resource type="AudioStream" uid="uid://cnmrvupfaedd3" path="res://Sounds/350905__cabled_mess__jump_c_05.wav" id="12_kxyvo"]
@@ -4222,6 +4224,12 @@ script = ExtResource("9_gu0nf")
 playerCharScene = NodePath("../../RootNode/COWBOYPLAYER_V4")
 attack_box = NodePath("../../RootNode/AttackBox")
 
+[node name="TakeDamageState" type="LimboState" parent="LimboHSM"]
+script = ExtResource("10_ga41d")
+
+[node name="RecoverState" type="LimboState" parent="LimboHSM"]
+script = ExtResource("11_3apqd")
+
 [node name="RootNode" type="Node3D" parent="."]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
 
@@ -4235,7 +4243,7 @@ transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
 transform = Transform3D(200, 0, 0, 0, 200, 0, 0, 0, 200, 0, 153.391, -201.254)
 shape = SubResource("BoxShape3D_ga41d")
 
-[node name="HurtBox" type="Area3D" parent="RootNode"]
+[node name="HurtBox" type="Area3D" parent="RootNode" groups=["player"]]
 transform = Transform3D(-0.025, 0, 2.18557e-09, 0, 0.025, 0, -2.18557e-09, 0, -0.025, 0, 0, 0)
 script = ExtResource("5_vjco1")
 

@@ -12,6 +12,11 @@ extends CharacterBody3D
 @onready var airDive_state = $LimboHSM/AirDiveState
 @onready var slide_state = $LimboHSM/SlideState
 @onready var attack_state = $LimboHSM/AttackState
+@onready var take_damage_state = $LimboHSM/TakeDamageState
+@onready var recover_state = $LimboHSM/RecoverState
+
+
+
 
 
 
@@ -19,13 +24,17 @@ extends CharacterBody3D
 func _ready():
 	initialize_state_machine()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
+	
+	
 func initialize_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, idle_state, "to_idle")
 	state_machine.add_transition(state_machine.ANYSTATE, walk_state, "to_walk")
 	state_machine.add_transition(state_machine.ANYSTATE, run_state, "to_run")
 	state_machine.add_transition(state_machine.ANYSTATE, jump_state, "to_jump")
 	state_machine.add_transition(state_machine.ANYSTATE, attack_state, "to_attack")
+	state_machine.add_transition(state_machine.ANYSTATE, take_damage_state, "to_damaged")
+	
+	
 	
 	state_machine.add_transition(run_state, runJump_state, "to_runJump")
 	state_machine.add_transition(walk_state, burst_state, "to_burst")
@@ -35,6 +44,8 @@ func initialize_state_machine():
 	state_machine.add_transition(run_state, crouch_state, "to_crouch")
 	state_machine.add_transition(walk_state, crouch_state, "to_crouch")
 	
+	
+	state_machine.add_transition(take_damage_state, recover_state, "to_recover")
 
 
 	state_machine.initial_state = idle_state  
@@ -54,6 +65,8 @@ func playerGravity(delta: float) -> void:
 
 
 
+
+
 func _on_hurt_box_area_exited(area):
 	pass # Replace with function body.
 
@@ -62,8 +75,13 @@ func _on_attack_box_area_entered(area):
 	pass # Replace with function body.
 
 
+
 func _on_hurt_box_area_entered(area):
-	pass # Replace with function body.
+	if area.name == "enemyBox":
+		Global.last_enemy_hit = area.get_parent()  # Set the enemy that hit the player
+
+		# Optionally, transition to TakeDamage state
+		state_machine.dispatch("to_damaged")
 
 
 func _on_attack_box_area_exited(area):

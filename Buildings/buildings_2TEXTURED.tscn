@@ -1,14 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://04h1w2ualr2c"]
+[gd_scene load_steps=3 format=3 uid="uid://04h1w2ualr2c"]
 
 [ext_resource type="PackedScene" uid="uid://cmqye8nidnr6b" path="res://Buildings/Buildings2.fbx" id="1_aqxcg"]
-[ext_resource type="Texture2D" uid="uid://dwi4mooyp4y6s" path="res://My Textures/BuildingTypeA.png" id="2_flgys"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_whfkt"]
-albedo_texture = ExtResource("2_flgys")
-texture_filter = 0
+[ext_resource type="Material" uid="uid://mpycckwjukao" path="res://MaterialTextures/Buildings.tres" id="2_27nxn"]
 
 [node name="Buildings2" instance=ExtResource("1_aqxcg")]
 transform = Transform3D(1.15, 0, 0, 0, 1.15, 0, 0, 0, 1.15, 0, 1.86682, 0)
 
+[node name="Buildings3" parent="RootNode" index="0"]
+material_override = ExtResource("2_27nxn")
+
+[node name="Buildings3_001" parent="RootNode" index="1"]
+material_override = ExtResource("2_27nxn")
+
 [node name="Buildings3_002" parent="RootNode" index="2"]
-material_override = SubResource("StandardMaterial3D_whfkt")
+material_override = ExtResource("2_27nxn")
+
+[node name="Buildings3_003" parent="RootNode" index="3"]
+material_override = ExtResource("2_27nxn")
+
+[node name="Buildings3_004" parent="RootNode" index="4"]
+material_override = ExtResource("2_27nxn")
+
+[node name="Buildings3_005" parent="RootNode" index="5"]
+material_override = ExtResource("2_27nxn")

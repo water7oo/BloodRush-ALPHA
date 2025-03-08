@@ -1,16 +1,23 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://kddykiqv2ir2"]
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://kddykiqv2ir2"]
 
 [ext_resource type="Shader" uid="uid://cji4m71ho8yn7" path="res://Shaders/PS1VertexWobble.gdshader" id="2_noppe"]
-[ext_resource type="Texture2D" uid="uid://dy0v0w8pjnujn" path="res://My Textures/pixel-red.png" id="2_xhlwf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_307wq"]
+
+[sub_resource type="Gradient" id="Gradient_gxgqi"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.0833333)
+colors = PackedColorArray(0.275159, 1.66954e-07, 9.62615e-08, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xhlwf"]
+gradient = SubResource("Gradient_gxgqi")
 
 [resource]
 render_priority = 0
 next_pass = SubResource("ShaderMaterial_307wq")
 shader = ExtResource("2_noppe")
 shader_parameter/affine_mapping = false
-shader_parameter/albedo = ExtResource("2_xhlwf")
+shader_parameter/albedo = SubResource("GradientTexture1D_xhlwf")
 shader_parameter/alpha_scissor = 0.5
 shader_parameter/jitter = 0.25
 shader_parameter/resolution = Vector2i(320, 240)

@@ -39,5 +39,8 @@ var blend_lerp_speed = 10.0
 @export var air_momentum_acceleration: float = momentum_acceleration - 2
 @export var air_momentum_deceleration: float = momentum_deceleration - 2
 
+var can_move: bool = true
+var last_enemy_hit = null
+
 #Jump State Base movement values:
 @export var JUMP_VELOCITY: float = 11.0  

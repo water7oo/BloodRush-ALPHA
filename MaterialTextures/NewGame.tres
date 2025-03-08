@@ -3,12 +3,14 @@
 [ext_resource type="Sky" uid="uid://duq3mkkmxy2v1" path="res://Game/SKY_Test.tres" id="1_62d6e"]
 
 [resource]
-background_color = Color(0.929714, 0.929715, 0.929714, 1)
+background_mode = 1
+background_color = Color(4.04298e-06, 0.746277, 0.722676, 1)
 background_energy_multiplier = 11.46
 sky = ExtResource("1_62d6e")
+ambient_light_source = 3
 ambient_light_color = Color(0.93408, 0.93408, 0.93408, 1)
 ambient_light_sky_contribution = 0.0
-ambient_light_energy = 0.18
+ambient_light_energy = 0.32
 tonemap_mode = 3
 ssr_fade_in = 0.0111488
 ssr_fade_out = 0.00680117
@@ -20,7 +22,15 @@ ssao_detail = 0.0
 ssil_radius = 50.4
 ssil_intensity = 13.88
 ssil_sharpness = 0.0
-fog_light_energy = 0.76
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0035
+fog_mode = 1
+fog_light_color = Color(1, 1, 1, 1)
+fog_light_energy = 0.68
+fog_density = 1.0
+fog_height = 28.85
+fog_height_density = -12.169
+fog_depth_curve = 1.18921
+fog_depth_begin = 0.0
+fog_depth_end = 240.8
+volumetric_fog_density = 0.005
+volumetric_fog_emission = Color(1, 1, 1, 1)
 adjustment_enabled = true

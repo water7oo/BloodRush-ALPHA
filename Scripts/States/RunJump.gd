@@ -78,12 +78,10 @@ func player_runjump(delta: float) -> void:
 
 	if not agent.is_on_floor() and agent.velocity.y < 0:
 		animationTree.set("parameters/Jump_Blend/blend_amount", 0)
-		print("Falling!")
 		
 		
 	# Landing logic
 	if agent.is_on_floor():
-		print("Landed!")
 		jump_timer = 0.0
 		air_timer = 0.0
 		animationTree.set("parameters/Jump_Blend/blend_amount", -1)

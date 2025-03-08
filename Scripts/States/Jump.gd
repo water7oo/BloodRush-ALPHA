@@ -58,11 +58,11 @@ func player_jump(delta: float) -> void:
 			agent.state_machine.dispatch("to_walk")
 		elif Input.is_action_pressed("move_crouch"):
 			agent.state_machine.dispatch("to_crouch")
-		else:
+		elif input_dir == Vector2.ZERO:
 			agent.state_machine.dispatch("to_idle")
 
 
 
 	if not agent.is_on_floor() and agent.velocity.y < 0:
 		animationTree.set("parameters/Jump_Blend/blend_amount", 0)
-		print("Falling!")
+		#print("Falling!")
