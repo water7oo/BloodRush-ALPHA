@@ -25,8 +25,8 @@ func _enter() -> void:
 	animationTree.set("parameters/Ground_Blend/blend_amount", -1)
 	print("Parent node of agent:", agent)
 	pause()
-	gameJuice.objectShake(agent, 0.03, .7)
-	await get_tree().create_timer(.1).timeout
+	gameJuice.objectShake(agent, 0.03, .3)
+	await get_tree().create_timer(.3).timeout
 	unpause()
 	gameJuice.knockback(agent, Global.last_enemy_hit, 9)
 

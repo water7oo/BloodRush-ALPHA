@@ -58,8 +58,8 @@ func player_jump(delta: float) -> void:
 			agent.state_machine.dispatch("to_walk")
 		elif Input.is_action_pressed("move_crouch"):
 			agent.state_machine.dispatch("to_crouch")
-		elif input_dir == Vector2.ZERO:
-			agent.state_machine.dispatch("to_idle")
+		#elif input_dir == Vector2.ZERO:
+			#agent.state_machine.dispatch("to_idle")
 
 
 

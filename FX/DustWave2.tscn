@@ -238,7 +238,6 @@ _data = {
 animation = &"PLAY"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_oli77"]
-graph_offset = Vector2(-349.859, 168.021)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_2tmdn")
 nodes/Animation/position = Vector2(40, 180)
 node_connections = [&"output", 0, &"Animation"]
