@@ -1,6 +1,6 @@
 [gd_scene load_steps=55 format=4 uid="uid://casuryf5wgaoi"]
 
-[ext_resource type="Script" uid="uid://cllxit7uok2xf" path="res://Player/player2.gd" id="1_ad35s"]
+[ext_resource type="Script" uid="uid://cllxit7uok2xf" path="res://Player/MainPlayer.gd" id="1_ad35s"]
 [ext_resource type="Script" uid="uid://ccppxbc7l7ekv" path="res://Scripts/States/Idle.gd" id="2_yne2w"]
 [ext_resource type="Script" uid="uid://b8jrqb4iqjbm4" path="res://Scripts/States/Run.gd" id="3_bnu4g"]
 [ext_resource type="Script" uid="uid://cxsk512ivm470" path="res://Scripts/States/Walk.gd" id="4_tpc1o"]

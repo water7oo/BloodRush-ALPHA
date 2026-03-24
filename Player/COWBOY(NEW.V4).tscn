@@ -65,11 +65,9 @@ bone_idx = 13
 
 [node name="BloodKatana" parent="Armature_001/Skeleton3D/BoneAttachment3D" index="0" instance=ExtResource("4_0ur36")]
 transform = Transform3D(21.3403, 116.038, 18.9752, 18.0004, -22.2821, 116.016, 116.193, -17.8599, -21.458, -22.6214, 45.7165, -19.2716)
-visible = false
 
 [node name="MORI_003" parent="Armature_001/Skeleton3D" index="1"]
 material_override = ExtResource("2_qhor5")
 
 [node name="BloodKatana" parent="." index="3" instance=ExtResource("4_0ur36")]
-transform = Transform3D(0.199935, -2.00323e-08, 0.458286, -0.458286, -8.73942e-09, 0.199935, 0, -0.5, -2.18557e-08, 0.475807, 0.739369, 0)
-visible = false
+transform = Transform3D(0.39987, -2.62325e-08, 0.916572, -0.916572, -4.00646e-08, 0.39987, 2.62325e-08, -1, -4.00646e-08, 0.475807, 0.739369, 0)

@@ -1,16 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://b2ud3ury8epgi"]
+[gd_scene load_steps=15 format=3 uid="uid://b2ud3ury8epgi"]
 
-[ext_resource type="AudioStream" uid="uid://ckd1rwa7lgc8e" path="res://sfx_music_main (1).mp3" id="1_8mhp7"]
 [ext_resource type="Environment" uid="uid://cadv2uehcxqkc" path="res://MaterialTextures/NewGame.tres" id="1_c0qo6"]
 [ext_resource type="Material" uid="uid://dcuvjs33ebpe3" path="res://MaterialTextures/Room.tres" id="1_ewgn2"]
 [ext_resource type="Shader" uid="uid://cj820imnefddq" path="res://Shaders/1Bit3D_Shader.gdshader" id="2_nbohg"]
-[ext_resource type="PackedScene" uid="uid://04h1w2ualr2c" path="res://Buildings/buildings_2TEXTURED.tscn" id="4_4nbnq"]
 [ext_resource type="Texture2D" uid="uid://cw62ygditxxqv" path="res://addons/kenney_prototype_textures/light/texture_01.png" id="4_nf6kx"]
 [ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://ui/GameStartANIM.tscn" id="4_rsb4y"]
 [ext_resource type="PackedScene" uid="uid://brejidgy2nq2j" path="res://ui/Pausing.tscn" id="4_x187o"]
 [ext_resource type="Shader" uid="uid://b1hg6btlggl78" path="res://Shaders/uhhhhh.gdshader" id="7_kt4n2"]
 [ext_resource type="PackedScene" uid="uid://bl275sfu3mmds" path="res://Enemy/Enemy2.tscn" id="9_38om4"]
 [ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Player/COWBOYPLAYER(v4).tscn" id="10_tkxv2"]
+[ext_resource type="PackedScene" uid="uid://d1i0q0af83nws" path="res://FX/hit_1.tscn" id="11_4nbnq"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Player/PlayerCamera.tscn" id="11_hq17w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ov31c"]
@@ -32,13 +31,8 @@ shader_parameter/clipPosition = 0.2
 
 [node name="TRAINING" type="Node3D"]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("1_8mhp7")
-volume_db = -13.823
-autoplay = true
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 9.50051, 0)
+transform = Transform3D(1, 0, 0, 0, 0.966425, 0.256947, 0, -0.256947, 0.966425, 0, 9.50051, 0)
 light_indirect_energy = 2.863
 shadow_enabled = true
 
@@ -73,12 +67,6 @@ scaling_3d_mode = 0
 canvas_item_default_texture_filter = 0
 size = Vector2i(1024, 768)
 render_target_update_mode = 4
-
-[node name="Buildings2" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("4_4nbnq")]
-transform = Transform3D(1.15, 0, 0, 0, 1.15, 0, 0, 0, 1.15, 62.4725, 3.58815, 4.38812)
-
-[node name="Buildings3" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("4_4nbnq")]
-transform = Transform3D(1.15, 0, 0, 0, 1.15, 0, 0, 0, 1.15, 62.4725, 3.58815, -48.4812)
 
 [node name="Floor" type="CSGCombiner3D" parent="Preview/SubViewportContainer/SubViewport"]
 transform = Transform3D(-3.40497e-08, -35.6877, 0, 0.778967, -1.55995e-06, 0, 0, 0, 44.9384, 0, 1.15208, 10)
@@ -217,3 +205,6 @@ gizmo_extents = 4.42
 
 [node name="Cowboy" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("10_tkxv2")]
 transform = Transform3D(0.007, 0, 0, 0, 0.007, 0, 0, 0, 0.007, 1.49479, 0.959527, 2.00658)
+
+[node name="Hit1" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("11_4nbnq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.91129, 0)

@@ -1,6 +1,6 @@
-[gd_scene load_steps=68 format=4 uid="uid://bgkmd80vrnlao"]
+[gd_scene load_steps=73 format=4 uid="uid://bgkmd80vrnlao"]
 
-[ext_resource type="Script" uid="uid://cllxit7uok2xf" path="res://Player/player2.gd" id="1_vkma1"]
+[ext_resource type="Script" uid="uid://cllxit7uok2xf" path="res://Player/MainPlayer.gd" id="1_vkma1"]
 [ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="2_dh6mo"]
 [ext_resource type="Script" uid="uid://ccppxbc7l7ekv" path="res://Scripts/States/Idle.gd" id="3_e6nmv"]
 [ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="4_2qm3m"]
@@ -18,19 +18,25 @@
 [ext_resource type="Script" uid="uid://bjkhaj5omhcbw" path="res://Player/Attack.gd" id="9_gu0nf"]
 [ext_resource type="AudioStream" uid="uid://cytlh7sh0m7pl" path="res://Sounds/punch-3-166696.mp3" id="10_esln5"]
 [ext_resource type="Script" uid="uid://dmlj04uny03pk" path="res://Player/takeDamege.gd" id="10_ga41d"]
+[ext_resource type="Script" uid="uid://ca7wx65llufcw" path="res://Player/attack1.gd" id="10_m03mu"]
+[ext_resource type="PackedScene" uid="uid://8mm04hdcqj7r" path="res://FX/AirDustWave2.tscn" id="10_uf676"]
 [ext_resource type="Script" uid="uid://dfrhd0jw7xuqs" path="res://Player/recover_state.gd" id="11_3apqd"]
 [ext_resource type="PackedScene" uid="uid://botd2e2pvg6ce" path="res://Player/COWBOY(NEW.V4).tscn" id="11_4svr5"]
 [ext_resource type="AudioStream" uid="uid://q6udxs3hkfpd" path="res://Sounds/714258__qubodup__cloud-poof.wav" id="11_brbxa"]
+[ext_resource type="Script" uid="uid://ctm3qnn5r3vif" path="res://Player/attack2.gd" id="11_ud7yb"]
 [ext_resource type="AudioStream" uid="uid://cnmrvupfaedd3" path="res://Sounds/350905__cabled_mess__jump_c_05.wav" id="12_kxyvo"]
+[ext_resource type="Script" uid="uid://ddwqtiuympnl3" path="res://Player/attack3.gd" id="12_ud7yb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fvqnm"]
 custom_solver_bias = 0.305
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ga41d"]
-size = Vector3(1.11932, 0.604126, 1.87061)
+size = Vector3(2.18419, 1.71857, 1.87061)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uf676"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ra580"]
-size = Vector3(1, 1.30188, 1)
+size = Vector3(1, 1.30188, 1.90045)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r3a7f"]
 resource_name = "Cowboy_Hat.001"
@@ -4219,10 +4225,23 @@ script = ExtResource("8_gexv5")
 
 [node name="SlideState" type="LimboState" parent="LimboHSM"]
 
-[node name="AttackState" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("playerCharScene", "attack_box")]
+[node name="AttackState" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("attack_box", "attack_box_col")]
 script = ExtResource("9_gu0nf")
-playerCharScene = NodePath("../../RootNode/COWBOYPLAYER_V4")
 attack_box = NodePath("../../RootNode/AttackBox")
+attack_box_col = NodePath("../../RootNode/AttackBox/Attack_Debug")
+hit1 = ExtResource("10_uf676")
+
+[node name="Attack1" type="LimboState" parent="LimboHSM/AttackState" node_paths=PackedStringArray("attack_box")]
+script = ExtResource("10_m03mu")
+attack_box = NodePath("../../../RootNode/AttackBox")
+
+[node name="Attack2" type="LimboState" parent="LimboHSM/AttackState" node_paths=PackedStringArray("attack_box")]
+script = ExtResource("11_ud7yb")
+attack_box = NodePath("../../../RootNode/AttackBox")
+
+[node name="Attack3" type="LimboState" parent="LimboHSM/AttackState" node_paths=PackedStringArray("attack_box")]
+script = ExtResource("12_ud7yb")
+attack_box = NodePath("../../../RootNode/AttackBox")
 
 [node name="TakeDamageState" type="LimboState" parent="LimboHSM"]
 script = ExtResource("10_ga41d")
@@ -4240,15 +4259,20 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackBox"]
-transform = Transform3D(200, 0, 0, 0, 200, 0, 0, 0, 200, -0.654958, 157.261, -266.83)
+transform = Transform3D(200, 0, 0, 0, 200, 0, 0, 0, 200, 3.21628, 268.705, -266.83)
 shape = SubResource("BoxShape3D_ga41d")
+
+[node name="Attack_Debug" type="MeshInstance3D" parent="RootNode/AttackBox"]
+transform = Transform3D(280.959, 0, 0, 0, 189.477, 0, 0, 0, 325.911, 0, 128.893, -274.555)
+visible = false
+mesh = SubResource("BoxMesh_uf676")
 
 [node name="HurtBox" type="Area3D" parent="RootNode" groups=["player"]]
 transform = Transform3D(-0.025, 0, 2.18557e-09, 0, 0.025, 0, -2.18557e-09, 0, -0.025, 0, 0, 0)
 script = ExtResource("5_vjco1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/HurtBox"]
-transform = Transform3D(-63.6283, 0, -7.83336e-06, 0, 63.6283, 0, 9.60766e-06, 0, -51.878, 0.00308571, 65.3406, -0.021626)
+transform = Transform3D(-63.6277, 0, -7.83336e-06, 0, 63.6277, 0, 9.60759e-06, 0, -51.878, 0.00308587, 65.3406, 1.03753)
 shape = SubResource("BoxShape3D_ra580")
 
 [node name="Armature" type="Node3D" parent="RootNode"]
