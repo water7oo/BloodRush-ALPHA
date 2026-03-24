@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dcuvjs33ebpe3"]
+
+[ext_resource type="Texture2D" uid="uid://c1usx2kspa0ts" path="res://addons/kenney_prototype_textures/light/texture_07.png" id="1_v6veh"]
+
+[resource]
+shading_mode = 0
+diffuse_mode = 3
+disable_ambient_light = true
+albedo_color = Color(0.529067, 0.529067, 0.529067, 1)
+albedo_texture = ExtResource("1_v6veh")
+albedo_texture_force_srgb = true
+uv1_scale = Vector3(-17.505, -17.505, -17.505)
+uv1_triplanar_sharpness = 0.233259
+texture_filter = 4

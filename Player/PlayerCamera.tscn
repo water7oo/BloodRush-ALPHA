@@ -1,0 +1,103 @@
+[gd_scene load_steps=12 format=3 uid="uid://7l5yih8w56c3"]
+
+[ext_resource type="Script" uid="uid://b0vlvthw3ye25" path="res://Scripts/follow_cam.gd" id="1_hwm0y"]
+[ext_resource type="Shader" uid="uid://dg0o1j78d3etb" path="res://Shaders/TestingShaders3.gdshader" id="2_5olaf"]
+[ext_resource type="Script" uid="uid://cn6f1nyulomnm" path="res://Scripts/gameJuice.gd" id="3_sswrb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_td6vy"]
+render_priority = 0
+shader = ExtResource("2_5olaf")
+shader_parameter/shadow_color = Color(0, 0, 0, 1)
+shader_parameter/shadow_thickness = 1.8
+shader_parameter/normal_threshold = 0.05
+shader_parameter/depth_sensitivity = 2.0
+shader_parameter/outline_start = 0.1
+shader_parameter/outline_end = 0.2
+
+[sub_resource type="QuadMesh" id="QuadMesh_n1m7q"]
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7gdqc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wivcw"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_a8st2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_t12er"]
+
+[sub_resource type="Animation" id="Animation_xr2s2"]
+resource_name = "cam_shake"
+length = 0.5
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, -4.41225, 4.94835, 0.1, 1, 0, -4.22343, 4.99524, 0.2, 1, 0, -4.39127, 4.95355, 0.3, 1, 0, -4.2549, 4.98742, 0.4, 1, 0, -4.30735, 4.97439, 0.5, 1, 0, -4.23256, 4.99298)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o2025"]
+_data = {
+&"cam_shake": SubResource("Animation_xr2s2")
+}
+
+[node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
+script = ExtResource("1_hwm0y")
+enabled = true
+spring_arm_pivot = NodePath("SpringArmPivot")
+
+[node name="SpringArmPivot" type="Node3D" parent="." groups=["camera"]]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.981484, 0.191546, 0, -0.191546, 0.981484, 0, 0, 0)
+collision_mask = 255
+spring_length = 0.0
+
+[node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D"]
+
+[node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin"]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 1.14471, 14.6083)
+current = true
+fov = 45.0
+size = 5.762
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D"]
+transform = Transform3D(2, -2.32831e-10, -5.96046e-08, 2.32831e-10, 2, 0, 0, 0, 2, 0.0447144, -0.107597, -1.45398)
+material_override = SubResource("ShaderMaterial_td6vy")
+mesh = SubResource("QuadMesh_n1m7q")
+skeleton = NodePath("../../../../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D"]
+transform = Transform3D(2, -2.32831e-10, -5.96046e-08, 2.32831e-10, 2, 0, 0, 0, 2, 0.0447144, -0.107597, -1.45398)
+visible = false
+material_override = SubResource("ShaderMaterial_7gdqc")
+mesh = SubResource("QuadMesh_n1m7q")
+skeleton = NodePath("../../../../..")
+
+[node name="Marker3D" type="Marker3D" parent="SpringArmPivot"]
+transform = Transform3D(1, 0, 0, 9.31323e-10, 1, 1.49012e-08, 7.45058e-09, -1.49012e-08, 1, -2.79397e-08, 4.47035e-08, 9.68575e-08)
+visible = false
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SpringArmPivot"]
+transform = Transform3D(0.445, 0, 0, 0, 0.444999, 0, 0, 0, 0.445, 0, 1.38965, 0.232)
+material_override = SubResource("ShaderMaterial_wivcw")
+mesh = SubResource("CapsuleMesh_a8st2")
+skeleton = NodePath("../SpringArm3D/Margin/Camera3D")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="SpringArmPivot"]
+transform = Transform3D(0.698, 0, 0, 0, 0.698, 0, 0, 0, 0.698, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_wivcw")
+mesh = SubResource("BoxMesh_t12er")
+skeleton = NodePath("../SpringArm3D/Margin/Camera3D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../SpringArmPivot/SpringArm3D/Margin/Camera3D")
+libraries = {
+&"": SubResource("AnimationLibrary_o2025")
+}
+speed_scale = 1.5
+
+[node name="GameJuice" type="Node3D" parent="AnimationPlayer"]
+transform = Transform3D(1, 2.32831e-10, 0, 0, 1, -1.86265e-09, 7.45058e-09, 1.86265e-09, 1, 1.86265e-09, -1.19209e-07, 0.0591607)
+script = ExtResource("3_sswrb")

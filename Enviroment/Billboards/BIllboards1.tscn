@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=4 uid="uid://cch03gmig4hys"]
+
+[ext_resource type="Material" uid="uid://2dnbklqr20g7" path="res://MaterialTextures/BillBoards.tres" id="1_n6brq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x647u"]
+resource_name = "BILLBOARD_2"
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.906332, 0.906332, 0.906332, 1)
+metallic = 0.4
+roughness = 0.272166
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_gwnqj"]
+_surfaces = [{
+"aabb": AABB(-0.0154845, -0.00910948, -0.00931598, 0.0114226, 0.000632614, 0.0335629),
+"format": 34359742465,
+"index_count": 36,
+"index_data": PackedByteArray("AAACAAEAAAADAAIABAAGAAUABAAHAAYABAAFAAIAAgADAAQABwAEAAMAAwAAAAcABgAHAAAAAAABAAYABQAGAAEAAQACAAUA"),
+"name": "BILLBOARD_2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("aW2Fu3sMC7xwjMY8nLJ9vHsMC7xwjMY8nLJ9vOo/FbxwjMY8aW2Fu+o/FbxwjMY8aW2Fu+o/FbwNohi8nLJ9vOo/FbwNohi8nLJ9vHsMC7wNohi8aW2Fu3sMC7wNohi8")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_p3s3u"]
+resource_name = "Root Scene_Cube"
+_surfaces = [{
+"aabb": AABB(-0.0154845, -0.00910948, -0.00931598, 0.0114226, 0.000632614, 0.0335629),
+"attribute_data": PackedByteArray("AAAgPwAAAD8AAGA/AAAAPwAAYD8AAIA+AAAgPwAAgD4AAMA+AACAPgAAAD4AAIA+AAAAPgAAAD8AAMA+AAAAP3ZtGT5wdU0/NomMPACzVzw2iYw8cHVNP3VtGT4As1c8AADAPgAAAD8AACA/AACAPgAAwD4AAIA+AAAgPwAAAD9LvkM/8+dsP+MFHz/Afp084wUfP/PnbD9LvkM/wH6dPAAAwD4AAIA/AAAgPwAAQD8AAMA+AABAPwAAID8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAACAAEAAAADAAIABAAGAAUABAAHAAYACAAKAAkACQALAAgADAAOAA0ADQAPAAwAEAASABEAEQATABAAFAAWABUAFQAXABQA"),
+"material": SubResource("StandardMaterial3D_x647u"),
+"name": "BILLBOARD_2",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("aW2Fu3sMC7xwjMY8nLJ9vHsMC7xwjMY8nLJ9vOo/FbxwjMY8aW2Fu+o/FbxwjMY8aW2Fu+o/FbwNohi8nLJ9vOo/FbwNohi8nLJ9vHsMC7wNohi8aW2Fu3sMC7wNohi8aW2Fu+o/FbwNohi8nLJ9vOo/FbxwjMY8nLJ9vOo/FbwNohi8aW2Fu+o/FbxwjMY8aW2Fu3sMC7wNohi8aW2Fu+o/FbxwjMY8aW2Fu+o/FbwNohi8aW2Fu3sMC7xwjMY8nLJ9vHsMC7wNohi8aW2Fu3sMC7xwjMY8aW2Fu3sMC7wNohi8nLJ9vHsMC7xwjMY8nLJ9vOo/FbwNohi8nLJ9vHsMC7xwjMY8nLJ9vHsMC7wNohi8nLJ9vOo/FbxwjMY8/3//fwAA/7//f/9/AAD/v/9//38AAP+//3//fwAA/7//////////v/////////+//////////7//////////v/9/AAD///+//38AAP///7//fwAA////v/9/AAD///+/////f/9//7////9//3//v////3//f/+/////f/9//7//f///AAD/v/9///8AAP+//3///wAA/7//f///AAD/vwAA/3//f/+/AAD/f/9//78AAP9//3//vwAA/3//f/+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_gwnqj")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="RootNode" type="Node3D" parent="."]
+
+[node name="Cube" type="MeshInstance3D" parent="RootNode"]
+transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, -1.27255, 1.82833, 0.247139)
+material_override = ExtResource("1_n6brq")
+mesh = SubResource("ArrayMesh_p3s3u")
+skeleton = NodePath("")

@@ -1,0 +1,155 @@
+[gd_scene load_steps=16 format=3 uid="uid://b2ud3ury8epgi"]
+
+[ext_resource type="Material" uid="uid://dcuvjs33ebpe3" path="res://Room.tres" id="1_ewgn2"]
+[ext_resource type="Shader" path="res://Game/TestingShaders3.gdshader" id="2_7m6hl"]
+[ext_resource type="PackedScene" uid="uid://brejidgy2nq2j" path="res://ui/Pausing.tscn" id="4_x187o"]
+[ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://GameStartANIM.tscn" id="8_muyqj"]
+[ext_resource type="PackedScene" uid="uid://bl275sfu3mmds" path="res://Cowboy_Player/Enemy.tscn" id="9_38om4"]
+[ext_resource type="Shader" path="res://Game/RETRO.gdshader" id="10_4wx4q"]
+[ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Cowboy_Player/PlayerCamera.tscn" id="11_hq17w"]
+[ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Cowboy3rd/cowboy_3rd_pass.tscn" id="12_njj0u"]
+[ext_resource type="PackedScene" uid="uid://ctudhwisdi64s" path="res://FX/Burst_dust.tscn" id="13_fmoji"]
+[ext_resource type="PackedScene" uid="uid://rlcylvhdacih" path="res://FX/Move_Dust.tscn" id="14_xyb0d"]
+[ext_resource type="PackedScene" uid="uid://d1yu2x7osdqa5" path="res://FX/jump_dust.tscn" id="15_2mw5p"]
+[ext_resource type="PackedScene" uid="uid://dq1wojfy8mi7q" path="res://FX/Dust.tscn" id="16_dgh31"]
+
+[sub_resource type="Environment" id="Environment_kag6n"]
+background_color = Color(0.505882, 0.505882, 0.505882, 1)
+background_energy_multiplier = 13.26
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ov31c"]
+shader = ExtResource("2_7m6hl")
+shader_parameter/change_color_depth = true
+shader_parameter/target_color_depth = 8
+shader_parameter/dithering = true
+shader_parameter/scale_resolution = true
+shader_parameter/target_resolution_scale = 3
+shader_parameter/enable_recolor = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_518tn"]
+shader = ExtResource("10_4wx4q")
+shader_parameter/enabled = true
+shader_parameter/dithering = true
+shader_parameter/colors = 12
+shader_parameter/dither_size = 2
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.499315, 0.026168, 0, 0.052336, 0.99863, -0.5, 0.864838, -0.0453243, -6.46824, 61.2841, 3.0847)
+light_energy = 10.667
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+shadow_normal_bias = 2.139
+directional_shadow_mode = 0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kag6n")
+
+[node name="Floor" type="CSGCombiner3D" parent="."]
+transform = Transform3D(-3.40497e-08, -35.6877, 0, 0.778967, -1.55995e-06, 0, 0, 0, 44.9384, 0, 1.15208, 10)
+material_override = ExtResource("1_ewgn2")
+use_collision = true
+collision_layer = 3
+collision_mask = 3
+
+[node name="MeshInstance3D2" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1.76656e-15, -2.38742e-12, -42.6991, 8.82136e-10, 0.80708, -2.84217e-14, 0.0160266, -2.80164e-08, 1.41419e-15, -11.6091, -0.00179779, -0.576119)
+
+[node name="MeshInstance3D3" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(0.740151, -2.27374e-12, 0, 6.10623e-16, 0.80708, 0, 0, 0, 0.924571, 9.82115, -0.00179781, -0.00154649)
+visible = false
+
+[node name="MeshInstance3D" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1.428, -5.83874e-16, 0, 5.35499e-16, 1.557, 0, 0, 0, 1.785, -1.52742, -0.0378563, -0.00154649)
+size = Vector3(1, 1.58838, 1)
+
+[node name="MeshInstance3D4" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(3.52785e-08, -1.85154e-06, 42.6991, 0.0176164, -1.39606e-07, -4.07393e-08, 2.11243e-09, 0.734244, 3.2353e-08, -10.6511, -0.333517, -0.0688021)
+visible = false
+
+[node name="MeshInstance3D5" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(3.52785e-08, -1.85154e-06, 42.6991, 0.0176164, -1.39606e-07, -4.07393e-08, 2.11243e-09, 0.734244, 3.2353e-08, -10.6511, 0.340188, -0.0115905)
+visible = false
+
+[node name="MeshInstance3D6" type="CSGBox3D" parent="Floor"]
+transform = Transform3D(1.76656e-15, -2.38742e-12, 42.6991, 8.82136e-10, 0.807079, 2.84217e-14, -0.0160266, 2.80163e-08, 1.41419e-15, -10.6511, -0.0571915, 0.495654)
+
+[node name="Preview" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Preview"]
+material = SubResource("ShaderMaterial_ov31c")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Opener" parent="Preview/SubViewportContainer" instance=ExtResource("8_muyqj")]
+visible = false
+
+[node name="SubViewport" type="SubViewport" parent="Preview/SubViewportContainer"]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="Pausing" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("4_x187o")]
+
+[node name="ColorRect" type="ColorRect" parent="Preview/SubViewportContainer/SubViewport"]
+visible = false
+material = SubResource("ShaderMaterial_518tn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+mouse_force_pass_scroll_events = false
+
+[node name="Enemy" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("9_38om4")]
+transform = Transform3D(0.6, 0, 1.04907e-07, 0, 0.6, 0, -1.04907e-07, 0, 0.6, -0.41856, 0.780326, -11.2596)
+
+[node name="Enemy2" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("9_38om4")]
+transform = Transform3D(-1.31134e-07, 0, 0.6, 0, 0.6, 0, -0.6, 0, -1.31134e-07, -11.8859, 0.780326, -2.72438)
+
+[node name="Enemy3" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("9_38om4")]
+transform = Transform3D(1.83587e-07, 0, -0.6, 0, 0.6, 0, 0.6, 0, 1.83587e-07, 12.1141, 0.780326, -2.72438)
+
+[node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("11_hq17w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.35539, 1.77179, 3.14396)
+target = NodePath("../Cowboy_3rdPass/CamTarget")
+speed = 5.0
+
+[node name="CamTarget2" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.53036, 3.74131, 8.49949)
+gizmo_extents = 4.42
+
+[node name="Cowboy_3rdPass" parent="Preview/SubViewportContainer/SubViewport" instance=ExtResource("12_njj0u")]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -0.532753, 1.77491, 6.11236)
+
+[node name="DUST5" parent="Preview/SubViewportContainer/SubViewport/Cowboy_3rdPass" instance=ExtResource("13_fmoji")]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+
+[node name="DUST4" parent="Preview/SubViewportContainer/SubViewport/Cowboy_3rdPass" instance=ExtResource("14_xyb0d")]
+
+[node name="DUST3" parent="Preview/SubViewportContainer/SubViewport/Cowboy_3rdPass" instance=ExtResource("15_2mw5p")]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+
+[node name="DUST2" parent="Preview/SubViewportContainer/SubViewport/Cowboy_3rdPass" instance=ExtResource("16_dgh31")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.045106, 0.224882, 0.133729)
+
+[node name="CamTarget" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport/Cowboy_3rdPass"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.203987, 0.456273, -0.0285969)
+gizmo_extents = 4.42

@@ -1,0 +1,17 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dltyulci0fcbh"]
+
+[ext_resource type="Texture2D" uid="uid://bilphu4f2woud" path="res://FX/Dust_Wave2-e8432e9fa40c58d5df7e1588c66db668_DustLanding.png" id="1_5rl0l"]
+
+[resource]
+resource_name = "Material.004"
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+depth_draw_mode = 1
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_5rl0l")
+uv1_scale = Vector3(1.165, 1.165, 1.165)
+uv1_offset = Vector3(0.136817, -0.163037, -0.457307)
+texture_filter = 2

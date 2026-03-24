@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://d0aor8f4btjh6"]
+
+[ext_resource type="Shader" uid="uid://cji4m71ho8yn7" path="res://Shaders/PS1VertexWobble.gdshader" id="1_g0h0y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w36hw"]
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_w36hw")
+shader = ExtResource("1_g0h0y")
+shader_parameter/affine_mapping = false
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(320, 240)

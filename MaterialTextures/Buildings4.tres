@@ -1,0 +1,29 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://cys0111o8jke2"]
+
+[ext_resource type="Shader" path="res://Shaders/OUTLINE_NEW.gdshader" id="1_may04"]
+[ext_resource type="Shader" path="res://Shaders/PS1VertexWobble.gdshader" id="2_ydud7"]
+[ext_resource type="Texture2D" uid="uid://cvtlpxne2f0ax" path="res://addons/kenney_prototype_textures/dark/texture_03.png" id="3_ugmds"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_skukh"]
+render_priority = 0
+shader = ExtResource("1_may04")
+shader_parameter/border_width = null
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/pattern = null
+shader_parameter/line_number = null
+shader_parameter/line_sharpness = null
+shader_parameter/pulse = null
+shader_parameter/pulse_speed = null
+shader_parameter/line_movement = null
+shader_parameter/line_movement_speed = null
+shader_parameter/wave = null
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_skukh")
+shader = ExtResource("2_ydud7")
+shader_parameter/affine_mapping = false
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.4
+shader_parameter/resolution = Vector2i(1005, 240)
+shader_parameter/albedo = ExtResource("3_ugmds")

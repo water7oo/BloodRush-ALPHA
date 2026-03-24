@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://g08n8hp8526i"]
+
+[ext_resource type="Texture2D" uid="uid://665pnlo4bre7" path="res://FX/Dust_Wave-a950bd95818ba0173f18abab2810d5bc_Slashing_Texture3.png" id="1_lt1e4"]
+
+[resource]
+resource_name = "Material.003"
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = ExtResource("1_lt1e4")
+albedo_texture_msdf = true
+uv1_scale = Vector3(0.439615, 0.439615, 0.439615)
+uv1_offset = Vector3(0, 1.76065, 0)
+texture_filter = 0
