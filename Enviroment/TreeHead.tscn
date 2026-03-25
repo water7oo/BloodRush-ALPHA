@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dbvxknylp1wou"]
+
+[ext_resource type="PackedScene" uid="uid://bgx755meppbej" path="res://Enviroment/treeHEAD.fbx" id="1_cbkw7"]
+[ext_resource type="Texture2D" uid="uid://c6tgqpnmgsbpl" path="res://Enviroment/TREETop4.png" id="2_5ojqq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o3qhu"]
+transparency = 3
+alpha_hash_scale = 1.33
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = ExtResource("2_5ojqq")
+texture_filter = 0
+
+[node name="treeHEAD" unique_id=492140939 instance=ExtResource("1_cbkw7")]
+
+[node name="Plane_008" parent="." index="0" unique_id=349424019]
+material_override = SubResource("StandardMaterial3D_o3qhu")
+
+[node name="Plane_009" parent="." index="1" unique_id=1615232669]
+material_override = SubResource("StandardMaterial3D_o3qhu")
+
+[node name="Plane_010" parent="." index="2" unique_id=473112187]
+material_override = SubResource("StandardMaterial3D_o3qhu")
+
+[node name="Plane_011" parent="." index="3" unique_id=1333242305]
+material_override = SubResource("StandardMaterial3D_o3qhu")

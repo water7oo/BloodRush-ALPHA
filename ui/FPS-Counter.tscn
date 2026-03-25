@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://by6p0ccfrdmgj"]
+
+[ext_resource type="Script" uid="uid://dcrt7gs7uoyt7" path="res://Scripts/fps_counter.gd" id="1_mkgey"]
+[ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="2_xjupe"]
+
+[node name="FpsCounter" type="Node2D" unique_id=2126418477]
+script = ExtResource("1_mkgey")
+
+[node name="Label" type="Label" parent="." unique_id=1818945902]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_xjupe")
+theme_override_font_sizes/font_size = 42
+text = "FPS: --"

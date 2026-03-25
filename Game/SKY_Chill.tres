@@ -1,4 +1,4 @@
-[gd_resource type="Sky" load_steps=3 format=3 uid="uid://btm7cnvle7iqe"]
+[gd_resource type="Sky" format=3 uid="uid://btm7cnvle7iqe"]
 
 [ext_resource type="Texture2D" uid="uid://dwcs3mbhlswtr" path="res://My Textures/Sky Texture_Game_Chilled.png" id="1_t1323"]
 

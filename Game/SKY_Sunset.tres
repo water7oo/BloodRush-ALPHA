@@ -1,4 +1,4 @@
-[gd_resource type="Sky" load_steps=3 format=3 uid="uid://cj0020bhxfxxp"]
+[gd_resource type="Sky" format=3 uid="uid://cj0020bhxfxxp"]
 
 [ext_resource type="Texture2D" uid="uid://bht7sc261n00g" path="res://My Textures/Sky Texture_Game_Sunset.png" id="1_vyjq1"]
 

@@ -4,20 +4,21 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://behrtgia26cja"
-path="res://.godot/imported/Cowboy_3rdPass.fbx-666e901a9fd301b95249a964ae3a168f.scn"
+valid=false
 
 [deps]
 
 source_file="res://Player/Cowboy_3rdPass.fbx"
-dest_files=["res://.godot/imported/Cowboy_3rdPass.fbx-666e901a9fd301b95249a964ae3a168f.scn"]
 
 [params]
 
 nodes/root_type="Node3D"
 nodes/root_name="Scene Root"
+nodes/root_script=null
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
 meshes/generate_lods=true
@@ -32,6 +33,9 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
 _subresources={
 "animations": {
 "Armature_001|ATTACK": {
@@ -23426,3 +23430,4 @@ _subresources={
 fbx/importer=1
 fbx/allow_geometry_helper_nodes=false
 fbx/embedded_image_handling=1
+fbx/naming_version=2

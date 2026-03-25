@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=4 uid="uid://bgkmd80vrnlao"]
+[gd_scene format=4 uid="uid://bgkmd80vrnlao"]
 
 [ext_resource type="Script" uid="uid://cllxit7uok2xf" path="res://Player/MainPlayer.gd" id="1_vkma1"]
 [ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="2_dh6mo"]
@@ -4179,106 +4179,106 @@ _data = {
 &"WALK": SubResource("Animation_7hgkg")
 }
 
-[node name="Cowboy" type="CharacterBody3D" groups=["player"]]
+[node name="Cowboy" type="CharacterBody3D" unique_id=1875695566 groups=["player"]]
 transform = Transform3D(0.002, 0, 0, 0, 0.002, 0, 0, 0, 0.002, 0, 0, 0)
 wall_min_slide_angle = 0.0
 script = ExtResource("1_vkma1")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1164858316]
 process_mode = 3
 transform = Transform3D(200, 0, 1.2919e-12, 0, 200, 0, -1.2919e-12, 0, 200, -0.00771429, 174.994, 0.0540649)
 shape = SubResource("CapsuleShape3D_fvqnm")
 debug_color = Color(4.04298e-06, 0.588061, 0.758272, 1)
 debug_fill = false
 
-[node name="LimboHSM" type="LimboHSM" parent="."]
+[node name="LimboHSM" type="LimboHSM" parent="." unique_id=746783965]
 
-[node name="IdleState" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("animation_player")]
+[node name="IdleState" type="LimboState" parent="LimboHSM" unique_id=18934191 node_paths=PackedStringArray("animation_player")]
 script = ExtResource("3_e6nmv")
 animation_player = NodePath("../../AnimationPlayer")
 animation = &"Idle"
 
-[node name="RunState" type="LimboState" parent="LimboHSM"]
+[node name="RunState" type="LimboState" parent="LimboHSM" unique_id=1604296761]
 script = ExtResource("5_wlkfw")
 
-[node name="WalkState" type="LimboState" parent="LimboHSM"]
+[node name="WalkState" type="LimboState" parent="LimboHSM" unique_id=18910356]
 script = ExtResource("4_ahlvu")
 
-[node name="JumpState" type="LimboState" parent="LimboHSM"]
+[node name="JumpState" type="LimboState" parent="LimboHSM" unique_id=1330742266]
 script = ExtResource("4_wae6y")
 ACCELERATION = 1.0
 
-[node name="RunJumpState" type="LimboState" parent="LimboHSM"]
+[node name="RunJumpState" type="LimboState" parent="LimboHSM" unique_id=1005569122]
 script = ExtResource("8_ec3d6")
 JUMP_VELOCITY = 13.0
 BASE_SPEED = 10.0
 
-[node name="BurstState" type="LimboState" parent="LimboHSM"]
+[node name="BurstState" type="LimboState" parent="LimboHSM" unique_id=1205184245]
 script = ExtResource("7_1mupm")
 
-[node name="CrouchState" type="LimboState" parent="LimboHSM"]
+[node name="CrouchState" type="LimboState" parent="LimboHSM" unique_id=651595241]
 script = ExtResource("8_gexv5")
 
-[node name="GroundDiveState" type="LimboState" parent="LimboHSM"]
+[node name="GroundDiveState" type="LimboState" parent="LimboHSM" unique_id=54718051]
 
-[node name="AirDiveState" type="LimboState" parent="LimboHSM"]
+[node name="AirDiveState" type="LimboState" parent="LimboHSM" unique_id=452910796]
 
-[node name="SlideState" type="LimboState" parent="LimboHSM"]
+[node name="SlideState" type="LimboState" parent="LimboHSM" unique_id=884797944]
 
-[node name="AttackState" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("attack_box", "attack_box_col")]
+[node name="AttackState" type="LimboState" parent="LimboHSM" unique_id=1534995653 node_paths=PackedStringArray("attack_box", "attack_box_col")]
 script = ExtResource("9_gu0nf")
 attack_box = NodePath("../../RootNode/AttackBox")
 attack_box_col = NodePath("../../RootNode/AttackBox/Attack_Debug")
 hit1 = ExtResource("10_uf676")
 
-[node name="Attack1" type="LimboState" parent="LimboHSM/AttackState" node_paths=PackedStringArray("attack_box")]
+[node name="Attack1" type="LimboState" parent="LimboHSM/AttackState" unique_id=1537399078 node_paths=PackedStringArray("attack_box")]
 script = ExtResource("10_m03mu")
 attack_box = NodePath("../../../RootNode/AttackBox")
 
-[node name="Attack2" type="LimboState" parent="LimboHSM/AttackState" node_paths=PackedStringArray("attack_box")]
+[node name="Attack2" type="LimboState" parent="LimboHSM/AttackState" unique_id=1148958918 node_paths=PackedStringArray("attack_box")]
 script = ExtResource("11_ud7yb")
 attack_box = NodePath("../../../RootNode/AttackBox")
 
-[node name="Attack3" type="LimboState" parent="LimboHSM/AttackState" node_paths=PackedStringArray("attack_box")]
+[node name="Attack3" type="LimboState" parent="LimboHSM/AttackState" unique_id=567924050 node_paths=PackedStringArray("attack_box")]
 script = ExtResource("12_ud7yb")
 attack_box = NodePath("../../../RootNode/AttackBox")
 
-[node name="TakeDamageState" type="LimboState" parent="LimboHSM"]
+[node name="TakeDamageState" type="LimboState" parent="LimboHSM" unique_id=374788086]
 script = ExtResource("10_ga41d")
 
-[node name="RecoverState" type="LimboState" parent="LimboHSM"]
+[node name="RecoverState" type="LimboState" parent="LimboHSM" unique_id=225231129]
 script = ExtResource("11_3apqd")
 
-[node name="RootNode" type="Node3D" parent="."]
+[node name="RootNode" type="Node3D" parent="." unique_id=706186421]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
 
-[node name="COWBOYPLAYER_V4" parent="RootNode" instance=ExtResource("11_4svr5")]
+[node name="COWBOYPLAYER_V4" parent="RootNode" unique_id=1328944574 instance=ExtResource("11_4svr5")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="AttackBox" type="Area3D" parent="RootNode"]
+[node name="AttackBox" type="Area3D" parent="RootNode" unique_id=372951343]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackBox" unique_id=1738751669]
 transform = Transform3D(200, 0, 0, 0, 200, 0, 0, 0, 200, 3.21628, 268.705, -266.83)
 shape = SubResource("BoxShape3D_ga41d")
 
-[node name="Attack_Debug" type="MeshInstance3D" parent="RootNode/AttackBox"]
+[node name="Attack_Debug" type="MeshInstance3D" parent="RootNode/AttackBox" unique_id=1425357709]
 transform = Transform3D(280.959, 0, 0, 0, 189.477, 0, 0, 0, 325.911, 0, 128.893, -274.555)
 visible = false
 mesh = SubResource("BoxMesh_uf676")
 
-[node name="HurtBox" type="Area3D" parent="RootNode" groups=["player"]]
+[node name="HurtBox" type="Area3D" parent="RootNode" unique_id=989369383 groups=["player"]]
 transform = Transform3D(-0.025, 0, 2.18557e-09, 0, 0.025, 0, -2.18557e-09, 0, -0.025, 0, 0, 0)
 script = ExtResource("5_vjco1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/HurtBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/HurtBox" unique_id=1854769840]
 transform = Transform3D(-63.6277, 0, -7.83336e-06, 0, 63.6277, 0, 9.60759e-06, 0, -51.878, 0.00308587, 65.3406, 1.03753)
 shape = SubResource("BoxShape3D_ra580")
 
-[node name="Armature" type="Node3D" parent="RootNode"]
+[node name="Armature" type="Node3D" parent="RootNode" unique_id=1224416078]
 visible = false
 
-[node name="Skeleton3D" type="Skeleton3D" parent="RootNode/Armature"]
+[node name="Skeleton3D" type="Skeleton3D" parent="RootNode/Armature" unique_id=192054626]
 show_rest_only = true
 bones/0/name = "mixamorig_Hips"
 bones/0/parent = -1
@@ -4396,9 +4396,9 @@ bones/16/name = "mixamorig_RightHand"
 bones/16/parent = 15
 bones/16/rest = Transform3D(0.993226, -0.0456036, 0.106879, 0.0713526, 0.965302, -0.251199, -0.091715, 0.257124, 0.962016, 9.53674e-09, 0.165281, 2.86102e-08)
 bones/16/enabled = true
-bones/16/position = Vector3(0.191613, -0.673079, 1.8616)
-bones/16/rotation = Quaternion(0.545746, -0.49093, -0.382917, 0.560825)
-bones/16/scale = Vector3(1, 0.999999, 1)
+bones/16/position = Vector3(0.19161281, -0.6730789, 1.8615977)
+bones/16/rotation = Quaternion(0.54574555, -0.4909298, -0.3829169, 0.56082475)
+bones/16/scale = Vector3(1, 0.99999934, 0.99999976)
 bones/17/name = "mixamorig_RightHand_end"
 bones/17/parent = 16
 bones/17/rest = Transform3D(1, 1.04e-32, -1.249e-16, 0, 1, 8.32667e-17, 1.249e-16, -8.32667e-17, 1, 7.10543e-17, 0.165281, 1.42109e-16)
@@ -4491,95 +4491,93 @@ bones/29/position = Vector3(7.10543e-17, 0.171757, 4.44089e-18)
 bones/29/rotation = Quaternion(3.46945e-18, 2.51535e-17, 2.77556e-17, 1)
 bones/29/scale = Vector3(1, 1, 1)
 
-[node name="Hat_002" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Hat_002" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=37204669]
 visible = false
 material_override = ExtResource("2_dh6mo")
 mesh = SubResource("ArrayMesh_ovrgn")
 skin = SubResource("Skin_p65hi")
 
-[node name="Hat_Belt_009" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Hat_Belt_009" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=212115767]
 visible = false
 material_override = ExtResource("2_dh6mo")
 mesh = SubResource("ArrayMesh_slb2c")
 skin = SubResource("Skin_354jk")
 
-[node name="Hat_Belt_010" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Hat_Belt_010" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=410274191]
 visible = false
 material_override = ExtResource("2_dh6mo")
 mesh = SubResource("ArrayMesh_0n4yd")
 skin = SubResource("Skin_k0li4")
 
-[node name="Cowboy_002" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Cowboy_002" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=531377651]
 material_override = ExtResource("2_dh6mo")
 mesh = SubResource("ArrayMesh_qoyso")
 skin = SubResource("Skin_55x0b")
 
-[node name="Cowboy_003" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Cowboy_003" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=1336493823]
 visible = false
 material_override = ExtResource("2_dh6mo")
 mesh = SubResource("ArrayMesh_ti1lt")
 skin = SubResource("Skin_55x0b")
 
-[node name="Plane" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Plane" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=1201093455]
 visible = false
 material_override = ExtResource("2_dh6mo")
 mesh = SubResource("ArrayMesh_m3fvf")
 skin = SubResource("Skin_a7ri4")
 
-[node name="Plane_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Plane_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=2055325282]
 visible = false
 material_override = ExtResource("2_dh6mo")
 mesh = SubResource("ArrayMesh_xibmf")
 skin = SubResource("Skin_8lu1o")
 
-[node name="Plane_002" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Plane_002" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=1690498833]
 visible = false
 material_override = ExtResource("2_dh6mo")
 mesh = SubResource("ArrayMesh_fdfw2")
 skin = SubResource("Skin_8lu1o")
 
-[node name="SwordHolder" type="BoneAttachment3D" parent="RootNode/Armature/Skeleton3D"]
-transform = Transform3D(0.999838, 0.00378748, -0.0176395, -0.0120135, 0.8692, -0.494315, 0.0134601, 0.494446, 0.869104, 0.027537, 1.03631, -0.00510705)
+[node name="SwordHolder" type="BoneAttachment3D" parent="RootNode/Armature/Skeleton3D" unique_id=1980294551]
+transform = Transform3D(0.99983805, 0.0037874812, -0.017639473, -0.012013514, 0.86920035, -0.4943148, 0.013460062, 0.49444556, 0.8691038, 0.027536985, 1.0363129, -0.0051070526)
 bone_name = "mixamorig_Spine2"
 bone_idx = 3
 
-[node name="Sword Attachment" type="BoneAttachment3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Sword Attachment" type="BoneAttachment3D" parent="RootNode/Armature/Skeleton3D" unique_id=299634275]
 transform = Transform3D(0.764425, 0.576858, -0.287905, 0.482265, -0.807999, -0.338463, -0.427873, 0.119883, -0.895852, 1.33478, 0.25291, 0.0133007)
 bone_name = "mixamorig_RightHand"
 bone_idx = 16
 override_pose = true
 
-[node name="BloodKatana" parent="RootNode/Armature/Skeleton3D/Sword Attachment" instance=ExtResource("4_qtvmj")]
+[node name="BloodKatana" parent="RootNode/Armature/Skeleton3D/Sword Attachment" unique_id=1225449477 instance=ExtResource("4_qtvmj")]
 transform = Transform3D(-0.408352, 0.385908, 1.44994, 1.46097, -0.240054, 0.475348, 0.341801, 1.4871, -0.299529, -0.532874, -0.620582, -0.884871)
 
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="RootNode/Armature/Skeleton3D"]
-transform = Transform3D(-0.190405, 0.722154, -0.665012, -0.959111, -0.281338, -0.0308995, -0.209407, 0.631936, 0.746193, 0.59713, 1.07125, 0.116424)
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="RootNode/Armature/Skeleton3D" unique_id=2082723780]
+transform = Transform3D(-0.19040534, 0.7221536, -0.66501164, -0.95911074, -0.28133786, -0.03089945, -0.20940697, 0.63193554, 0.7461929, 0.59712964, 1.0712451, 0.11642432)
 bone_name = "mixamorig_LeftHand"
 bone_idx = 11
 
-[node name="AttackBox" type="Area3D" parent="RootNode/Armature/Skeleton3D/BoneAttachment3D"]
+[node name="AttackBox" type="Area3D" parent="RootNode/Armature/Skeleton3D/BoneAttachment3D" unique_id=574168905]
 transform = Transform3D(0.125993, -0.985415, 0.114378, -0.621949, -0.168287, -0.76476, 0.772855, 0.0252174, -0.634081, 1.52613, -0.889295, -0.572568)
 script = ExtResource("4_e2wra")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/Armature/Skeleton3D/BoneAttachment3D/AttackBox"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/Armature/Skeleton3D/BoneAttachment3D/AttackBox" unique_id=928630847]
 transform = Transform3D(1.64555, 0.194832, 0.605139, -0.0725129, 2.73838, -0.462663, -0.330639, 0.369093, 3.11316, -0.831, 2.009, -3.495)
 shape = SubResource("BoxShape3D_qk5tl")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_ceiih")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=177184446]
+libraries/ = SubResource("AnimationLibrary_ceiih")
 
-[node name="Refill_Cooldown" type="Timer" parent="."]
+[node name="Refill_Cooldown" type="Timer" parent="." unique_id=1800916538]
 process_callback = 0
 wait_time = 5.0
 autostart = true
 
-[node name="Dodge_Cooldown_Label" type="Label" parent="."]
+[node name="Dodge_Cooldown_Label" type="Label" parent="." unique_id=1137222108]
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="player_health_label" type="ProgressBar" parent="."]
+[node name="player_health_label" type="ProgressBar" parent="." unique_id=724431374]
 visible = false
 z_index = 1
 texture_filter = 3
@@ -4593,7 +4591,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_gsih2")
 step = 1.0
 show_percentage = false
 
-[node name="UI Cooldowns" parent="." instance=ExtResource("4_2qm3m")]
+[node name="UI Cooldowns" parent="." unique_id=788698732 instance=ExtResource("4_2qm3m")]
 visible = false
 z_index = 1
 texture_filter = 1
@@ -4605,27 +4603,25 @@ theme_override_styles/background = ExtResource("5_t0q8v")
 theme_override_styles/fill = ExtResource("5_ucyed")
 value = 50.0
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=1067128715]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1226914827]
 process_mode = 3
 stream = ExtResource("10_esln5")
 
-[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=1560250936]
 process_mode = 3
 stream = ExtResource("11_brbxa")
 
-[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer3" type="AudioStreamPlayer" parent="." unique_id=1628933937]
 process_mode = 3
 stream = ExtResource("12_kxyvo")
 
-[node name="AirWavePos" type="Marker3D" parent="."]
+[node name="AirWavePos" type="Marker3D" parent="." unique_id=237657627]
 transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -1.50914e-07, 1.11191, 1.72625)
 
-[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_vsafk")
-}
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="." unique_id=2062568979]
+libraries/ = SubResource("AnimationLibrary_vsafk")
 
 [connection signal="area_entered" from="RootNode/AttackBox" to="." method="_on_attack_box_area_entered"]
 [connection signal="area_exited" from="RootNode/AttackBox" to="." method="_on_attack_box_area_exited"]

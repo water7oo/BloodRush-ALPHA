@@ -8,12 +8,16 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="BLOOD RUSH ALPHA"
 config/tags=PackedStringArray("3d", "bloodrush", "thirdperson")
 run/main_scene="res://Game/DevRoomGame.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 run/scale=0.5
 run/stretch/scale=1.0
@@ -193,11 +197,55 @@ outline_width={
 "type": "float",
 "value": 4.0
 }
+precision_multiplier={
+"type": "float",
+"value": 0.2
+}
+cloud_noise={
+"type": "sampler2D",
+"value": "res://MaterialTextures/new_noise_texture_2d.tres"
+}
 diffuse_curve={
 "type": "sampler2D",
 "value": ""
 }
-precision_multiplier={
+cloud_scale={
+"type": "float",
+"value": 0.03
+}
+cloud_world_y={
+"type": "float",
+"value": 0.0
+}
+cloud_speed={
+"type": "float",
+"value": 0.02
+}
+cloud_threshold={
+"type": "float",
+"value": 0.5
+}
+cloud_softness={
 "type": "float",
 "value": 0.2
+}
+light_direction={
+"type": "vec3",
+"value": Vector3(0, -1, 0)
+}
+cloud_contrast={
+"type": "float",
+"value": 0.2
+}
+cloud_shadow_min={
+"type": "float",
+"value": 0.4
+}
+cloud_diverge_angle={
+"type": "float",
+"value": 15.0
+}
+cloud_direction={
+"type": "float",
+"value": 0.0
 }

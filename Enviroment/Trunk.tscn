@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://djpj07be2ylsn"]
+
+[ext_resource type="PackedScene" uid="uid://b4wwbv0gtohim" path="res://Enviroment/trunk.fbx" id="1_huins"]
+[ext_resource type="Texture2D" uid="uid://bjug886cge34w" path="res://Enviroment/trunk4.png" id="2_aj84e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8vh2i"]
+transparency = 3
+alpha_hash_scale = 1.33
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = ExtResource("2_aj84e")
+texture_filter = 0
+
+[node name="trunk" unique_id=1973528022 instance=ExtResource("1_huins")]
+
+[node name="Plane_004" parent="." index="0" unique_id=212093165]
+material_override = SubResource("StandardMaterial3D_8vh2i")
+
+[node name="Plane_005" parent="." index="1" unique_id=236764764]
+material_override = SubResource("StandardMaterial3D_8vh2i")
+
+[node name="Plane_006" parent="." index="2" unique_id=797345549]
+material_override = SubResource("StandardMaterial3D_8vh2i")
+
+[node name="Plane_007" parent="." index="3" unique_id=383354988]
+material_override = SubResource("StandardMaterial3D_8vh2i")

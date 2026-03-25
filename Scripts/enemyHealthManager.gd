@@ -13,7 +13,7 @@ var taking_damage := false
 
 func _ready():
 	var health = max_health
-	enemyHealthBar.set_shader_parameter('progress', health)
+	#enemyHealthBar.set_shader_parameter('progress', health)
 	
 	pass
 	

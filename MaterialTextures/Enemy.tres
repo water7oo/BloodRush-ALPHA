@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://kddykiqv2ir2"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://kddykiqv2ir2"]
 
 [ext_resource type="Shader" uid="uid://cji4m71ho8yn7" path="res://Shaders/PS1VertexWobble.gdshader" id="2_noppe"]
 

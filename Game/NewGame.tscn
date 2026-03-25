@@ -1,8 +1,8 @@
-[gd_scene load_steps=27 format=3 uid="uid://ciyscyyb72708"]
+[gd_scene format=3 uid="uid://ciyscyyb72708"]
 
 [ext_resource type="Sky" uid="uid://cj0020bhxfxxp" path="res://Game/SKY_Sunset.tres" id="1_ly5ya"]
 [ext_resource type="Material" uid="uid://bvdjc6srvvdrc" path="res://MaterialTextures/GroundPS1.tres" id="2_6hlbg"]
-[ext_resource type="PackedScene" uid="uid://jubxd8mx88ue" path="res://Enviroment/Billboards/Construction/scaffolding1.tscn" id="2_on1q0"]
+[ext_resource type="PackedScene" uid="uid://jubxd8mx88ue" path="res://TRASH/Billboards/Construction/scaffolding1.tscn" id="2_on1q0"]
 [ext_resource type="Texture2D" uid="uid://cvtlpxne2f0ax" path="res://addons/kenney_prototype_textures/dark/texture_03.png" id="3_nrbii"]
 [ext_resource type="PackedScene" uid="uid://bl275sfu3mmds" path="res://Enemy/Enemy2.tscn" id="3_yu345"]
 [ext_resource type="Material" uid="uid://b2if6iw14snee" path="res://MaterialTextures/Objects.tres" id="4_e3dc7"]
@@ -17,8 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://d1yu2x7osdqa5" path="res://FX/jump_dust.tscn" id="12_d51g0"]
 [ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Player/COWBOYPLAYER(v4).tscn" id="12_dxn1b"]
 [ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://ui/GameStartANIM.tscn" id="13_a8nsm"]
-[ext_resource type="PackedScene" uid="uid://dordn2c1222of" path="res://Enviroment/Billboards/Billboards2.tscn" id="13_cmpb6"]
-[ext_resource type="PackedScene" uid="uid://da2icq52660iu" path="res://Buildings/BUILDINGS_2.tscn" id="13_wx5oi"]
+[ext_resource type="PackedScene" uid="uid://dordn2c1222of" path="res://TRASH/Billboards/Billboards2.tscn" id="13_cmpb6"]
+[ext_resource type="PackedScene" uid="uid://da2icq52660iu" path="res://TRASH/Buildings/BUILDINGS_2.tscn" id="13_wx5oi"]
 
 [sub_resource type="Environment" id="Environment_tjwux"]
 background_mode = 2

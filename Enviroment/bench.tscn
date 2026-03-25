@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://675efup0jeq"]
+
+[ext_resource type="PackedScene" uid="uid://cpmr7524wxgtv" path="res://Enviroment/Bench.fbx" id="1_jkbbx"]
+[ext_resource type="Texture2D" uid="uid://dwxjt8vex62fw" path="res://Enviroment/metalBench2.png" id="2_pmcd2"]
+[ext_resource type="Texture2D" uid="uid://eo5cpnpk5tbq" path="res://Enviroment/benchWood2.png" id="3_gew87"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_06ftb"]
+transparency = 3
+alpha_hash_scale = 1.33
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = ExtResource("2_pmcd2")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ibhdk"]
+transparency = 3
+alpha_hash_scale = 1.33
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = ExtResource("2_pmcd2")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cotkc"]
+transparency = 3
+alpha_hash_scale = 1.33
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = ExtResource("2_pmcd2")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ti0u"]
+transparency = 3
+alpha_hash_scale = 1.33
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = ExtResource("3_gew87")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qs2uy"]
+transparency = 3
+alpha_hash_scale = 1.33
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = ExtResource("3_gew87")
+texture_filter = 0
+
+[node name="Bench" unique_id=346019474 instance=ExtResource("1_jkbbx")]
+
+[node name="Cube" parent="." index="0" unique_id=423364963]
+material_override = SubResource("StandardMaterial3D_06ftb")
+
+[node name="Cube_001" parent="." index="1" unique_id=71988661]
+material_override = SubResource("StandardMaterial3D_ibhdk")
+
+[node name="Cube_002" parent="." index="2" unique_id=1544015886]
+material_override = SubResource("StandardMaterial3D_ibhdk")
+
+[node name="Cube_003" parent="." index="3" unique_id=127726737]
+material_override = SubResource("StandardMaterial3D_cotkc")
+
+[node name="Cube_004" parent="." index="4" unique_id=673971706]
+material_override = SubResource("StandardMaterial3D_ibhdk")
+
+[node name="Cube_005" parent="." index="5" unique_id=96823823]
+material_override = SubResource("StandardMaterial3D_ibhdk")
+
+[node name="Plane_012" parent="." index="6" unique_id=257513001]
+material_override = SubResource("StandardMaterial3D_2ti0u")
+
+[node name="Plane_013" parent="." index="7" unique_id=129107393]
+material_override = SubResource("StandardMaterial3D_qs2uy")

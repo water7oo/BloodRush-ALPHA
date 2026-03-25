@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://c0l0o5bv0bjqw"]
+
+[ext_resource type="Shader" uid="uid://bvjdruuput33e" path="res://addons/GrassDylearn/Shaders/Grass.gdshader" id="3_eyj53"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_85gia"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0xmer"]
+render_priority = 0
+shader = ExtResource("3_eyj53")
+shader_parameter/cloud_scale = 0.03
+shader_parameter/cloud_world_y = 5.0
+shader_parameter/cloud_speed = 0.02
+shader_parameter/cloud_contrast = 2.0
+shader_parameter/cloud_threshold = -0.2
+shader_parameter/cloud_direction = Vector2(0.5, 0.5)
+shader_parameter/light_direction = Vector3(0, -1, 0)
+shader_parameter/cloud_shadow_min = 0.4
+shader_parameter/cloud_diverge_angle = 15.0
+
+[sub_resource type="MultiMesh" id="MultiMesh_eyj53"]
+transform_format = 1
+
+[node name="Grass" type="Node3D" unique_id=614776203]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1491969163]
+transform = Transform3D(100, 0, 0, 0, 4.859763, 0, 0, 0, 100, 0, 0, 0)
+mesh = SubResource("BoxMesh_85gia")
+
+[node name="Grass" type="MultiMeshInstance3D" parent="MeshInstance3D2" unique_id=1770134575]
+material_override = SubResource("ShaderMaterial_0xmer")
+cast_shadow = 0
+multimesh = SubResource("MultiMesh_eyj53")
