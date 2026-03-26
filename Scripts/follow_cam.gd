@@ -17,7 +17,7 @@ var is_mouse_visible: bool = true
 @export var magnitude: float = 0.08
 
 var y_cam_rot_dist: float = -80
-var x_cam_rot_dist: float = 1
+var x_cam_rot_dist: float = 10
 
 var original_global_transform: Transform3D
 var target_node: Node3D

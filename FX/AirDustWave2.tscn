@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://8mm04hdcqj7r"]
+[gd_scene format=3 uid="uid://8mm04hdcqj7r"]
 
-[ext_resource type="PackedScene" uid="uid://ds8v5374rd1s7" path="res://FX/Dust_Wave2.fbx" id="1_o7j2e"]
+[ext_resource type="PackedScene" uid="uid://dnf5pg2d14fel" path="res://FX/2D_DUST.tscn" id="1_o7j2e"]
 [ext_resource type="Texture2D" uid="uid://bilphu4f2woud" path="res://FX/Dust_Wave2-e8432e9fa40c58d5df7e1588c66db668_DustLanding.png" id="2_oo24h"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5mnac"]

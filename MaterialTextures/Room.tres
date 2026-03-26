@@ -1,12 +1,12 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://dcuvjs33ebpe3"]
 
-[ext_resource type="Texture2D" uid="uid://boial4b5rlyu8" path="res://addons/kenney_prototype_textures/light/texture_08.png" id="1_v6veh"]
+[ext_resource type="Texture2D" uid="uid://bdkrvec3wh6qh" path="res://My Textures/TextureGrid_32_devLight.png" id="1_v6veh"]
 
 [resource]
 shading_mode = 0
 diffuse_mode = 3
 disable_ambient_light = true
 albedo_texture = ExtResource("1_v6veh")
-uv1_scale = Vector3(-17.505, -17.505, -17.505)
+uv1_scale = Vector3(5.705, 5.705, 5.705)
 uv1_triplanar_sharpness = 0.233259
 texture_filter = 4

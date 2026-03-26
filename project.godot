@@ -247,5 +247,17 @@ cloud_diverge_angle={
 }
 cloud_direction={
 "type": "float",
-"value": 0.0
+"value": 0.2
+}
+wind_intensity={
+"type": "float",
+"value": 0.2
+}
+wind_direction={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+player_position={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
 }

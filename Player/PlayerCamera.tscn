@@ -9,10 +9,10 @@
 render_priority = 0
 shader = ExtResource("2_ye0eu")
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/shadow_thickness = 1.845
+shader_parameter/shadow_thickness = 1.23
 shader_parameter/depth_sensitivity = 0.02
 shader_parameter/outline_start = 0.2
-shader_parameter/outline_end = 0.225
+shader_parameter/outline_end = 0.4
 
 [sub_resource type="QuadMesh" id="QuadMesh_n1m7q"]
 size = Vector2(2, 2)
@@ -57,9 +57,9 @@ spring_length = 0.0
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin" unique_id=1586954262]
 process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 0.9999996, -5.9604645e-08, 0, 4.4703484e-08, 0.9999996, 0, 0.6907897, 16.93419)
+transform = Transform3D(1, 0, 0, 0, 0.99750245, 0.070626944, 0, -0.070626944, 0.99750245, 0, 2.1078978, 15.843029)
 current = true
-fov = 45.0
+fov = 45.9
 size = 5.762
 
 [node name="Outline" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D" unique_id=219274816]

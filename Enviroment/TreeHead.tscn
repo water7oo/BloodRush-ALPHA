@@ -1,31 +1,22 @@
 [gd_scene format=3 uid="uid://dbvxknylp1wou"]
 
 [ext_resource type="PackedScene" uid="uid://bgx755meppbej" path="res://Enviroment/treeHEAD.fbx" id="1_cbkw7"]
-[ext_resource type="Texture2D" uid="uid://c6tgqpnmgsbpl" path="res://Enviroment/TREETop4.png" id="2_5ojqq"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o3qhu"]
-transparency = 3
-alpha_hash_scale = 1.33
-alpha_antialiasing_mode = 0
-cull_mode = 2
-shading_mode = 0
-diffuse_mode = 3
-specular_mode = 1
-disable_ambient_light = true
-disable_fog = true
-albedo_texture = ExtResource("2_5ojqq")
-texture_filter = 0
+[ext_resource type="PackedScene" uid="uid://cu7p5aaf6mgic" path="res://Enviroment/LeavesFalling.tscn" id="3_rmhne"]
+[ext_resource type="Material" uid="uid://d360xlp7pvh1n" path="res://Game/TreeHead_1.tres" id="4_ugb34"]
 
 [node name="treeHEAD" unique_id=492140939 instance=ExtResource("1_cbkw7")]
 
 [node name="Plane_008" parent="." index="0" unique_id=349424019]
-material_override = SubResource("StandardMaterial3D_o3qhu")
+material_override = ExtResource("4_ugb34")
 
 [node name="Plane_009" parent="." index="1" unique_id=1615232669]
-material_override = SubResource("StandardMaterial3D_o3qhu")
+material_override = ExtResource("4_ugb34")
 
 [node name="Plane_010" parent="." index="2" unique_id=473112187]
-material_override = SubResource("StandardMaterial3D_o3qhu")
+material_override = ExtResource("4_ugb34")
 
 [node name="Plane_011" parent="." index="3" unique_id=1333242305]
-material_override = SubResource("StandardMaterial3D_o3qhu")
+material_override = ExtResource("4_ugb34")
+
+[node name="LeavesFalling" parent="." index="4" unique_id=538284635 instance=ExtResource("3_rmhne")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0723141, 0.08458513)
