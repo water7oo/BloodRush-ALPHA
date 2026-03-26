@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://babe5tbhi8dwe"]
+
+[ext_resource type="Texture2D" uid="uid://cg7ghut4v0jd6" path="res://My Textures/Sprite-0004.png" id="1_tt8tk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7n5ai"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_texture = ExtResource("1_tt8tk")
+texture_filter = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_kjly2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tt8tk"]
+size = Vector3(1, 1, 0.1340332)
+
+[node name="Fence" type="StaticBody3D" unique_id=388693363]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1299673158]
+material_override = SubResource("StandardMaterial3D_7n5ai")
+mesh = SubResource("QuadMesh_kjly2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=884590250]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.013793945)
+shape = SubResource("BoxShape3D_tt8tk")

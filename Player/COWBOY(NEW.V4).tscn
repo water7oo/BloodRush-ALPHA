@@ -29,17 +29,17 @@ bones/1/rotation = Quaternion(-0.005127955, 8.536499e-06, -1.1930323e-05, 0.9999
 bones/2/rotation = Quaternion(-9.313226e-10, 3.5634256e-14, 6.828278e-13, 1)
 bones/3/rotation = Quaternion(-7.916242e-09, 1.10588655e-17, 4.8820777e-16, 1)
 bones/4/position = Vector3(-1.5890945e-08, 22.99689, 6.484773e-07)
-bones/4/rotation = Quaternion(-0.046492696, 0.11779925, -0.022042884, 0.9917035)
+bones/4/rotation = Quaternion(-0.18001182, -0.0051519303, 0.0040898602, 0.98364246)
 bones/5/rotation = Quaternion(0.037521902, -3.3201746e-09, 5.2423815e-10, 0.99929583)
-bones/7/position = Vector3(-13.107806, 19.518282, -0.28432637)
-bones/7/rotation = Quaternion(0.56809163, -0.1012102, 0.8001129, 0.16385278)
+bones/7/position = Vector3(-13.134421, 20.416407, 0.19758555)
+bones/7/rotation = Quaternion(0.63619596, -0.03531895, 0.7338791, 0.23543334)
 bones/8/position = Vector3(2.633474e-06, 26.740139, -6.235451e-06)
 bones/8/rotation = Quaternion(0.017626101, -0.7493636, -0.0064994544, 0.6618922)
 bones/9/position = Vector3(-7.3854353e-06, 8.558221, -1.1333819e-05)
 bones/9/rotation = Quaternion(-0.056576002, -0.6298052, -0.05487109, 0.7727443)
 bones/10/position = Vector3(5.9604636e-06, 32.319897, -2.324582e-06)
-bones/11/position = Vector3(13.107805, 21.17668, 0.2299974)
-bones/11/rotation = Quaternion(-0.5606222, -0.18899791, 0.7712735, -0.23477583)
+bones/11/position = Vector3(13.134421, 20.27857, -0.25193164)
+bones/11/rotation = Quaternion(-0.6139336, -0.105636254, 0.73102635, -0.2784365)
 bones/12/position = Vector3(6.6614566e-06, 26.740143, 1.01901e-05)
 bones/12/rotation = Quaternion(0.14852485, -0.0074688415, 0.0053294795, 0.9888661)
 bones/13/position = Vector3(-4.950568e-06, 6.5893917, 1.917073e-06)
@@ -59,7 +59,7 @@ bones/25/position = Vector3(-8.055081e-07, 32.304012, 5.437978e-06)
 bones/25/rotation = Quaternion(0.3157233, 0.3211958, -0.11452717, 0.88545793)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature_001/Skeleton3D" index="0" unique_id=390984200]
-transform = Transform3D(0.26260683, -0.32414344, 0.9088281, -0.17379694, -0.9423706, -0.28588793, 0.94912165, -0.082875416, -0.30380812, -30.59394, 126.01203, -1.5068176)
+transform = Transform3D(0.09356382, -0.26792786, 0.95888484, -0.30041796, -0.9258163, -0.22937447, 0.9492072, -0.2666051, -0.16711327, -29.253536, 125.16209, -8.014438)
 bone_name = "mixamorig_RightForeArm"
 bone_idx = 13
 
