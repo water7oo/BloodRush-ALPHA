@@ -74,7 +74,6 @@ func _physics_process(delta):
 	
 
 func start_hit_flash():
-	print($AnimationPlayer)
 	pass
 	
 

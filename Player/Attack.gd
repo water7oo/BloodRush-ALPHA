@@ -110,6 +110,10 @@ func _start_attack() -> void:
 
 func _on_attack_box_area_entered(area):
 	if area.has_method("takeDamageEnemy"):
+		var enemy = area
+		while enemy and not (enemy is CharacterBody3D):
+			enemy = enemy.get_parent()
+				
 		if area in enemies_hit:
 			return
 		enemies_hit[area] = true 
@@ -123,7 +127,12 @@ func _on_attack_box_area_entered(area):
 
 		gameJuice.objectShake(area.get_parent(), enemyTargetLength, enemyTargetMagnitude)
 		
-		
+		if enemy.has_node("MeshInstance3D"):
+			var mesh = enemy.get_node("MeshInstance3D")
+			print("flash!")
+			mesh.trigger_flash()
+			await get_tree().process_frame
+			
 		if area.has_method("set_monitoring"):
 			area.monitoring = false
 
@@ -131,19 +140,17 @@ func _on_attack_box_area_entered(area):
 		agent.velocity = Vector3.ZERO
 		pause()
 		await get_tree().create_timer(enemyTargetHitStop).timeout
+
 		unpause()
+		
 		agent.velocity = saved_velocity
 
 
 		if area.has_method("set_monitoring"):
 			area.monitoring = true
 			
-		var enemy = area
-		while enemy and not (enemy is CharacterBody3D):
-			enemy = enemy.get_parent()
-				
-		if enemy is Enemy:
-			enemy.start_hit_flash()
+
+
 			
 			
 		if enemy is CharacterBody3D:

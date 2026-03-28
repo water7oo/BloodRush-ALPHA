@@ -30,6 +30,8 @@ extends LimboState
 @export var hit3Sound: AudioStreamPlayer
 @export var jump_cancel_window: float = 0.25
 
+var enemies_hit:= {}
+
 var preserved_velocity: Vector3 = Vector3.ZERO
 var is_attacking: bool = false
 var attack_cooldown: float = 0.0
@@ -41,6 +43,7 @@ var jump_cancel_timer: float = 0.0
 var isHit: bool = false
 
 func _enter() -> void:
+	enemies_hit.clear()
 	if attack_box:
 		attackUpper_debug.visible = true
 		attack_box_col.visible = true
@@ -98,8 +101,8 @@ func _process_attack(delta: float) -> void:
 			print("JUMP CANCEL")
 			agent.velocity.y = Global.JUMP_VELOCITY
 
-			agent.velocity.x *= 1.1
-			agent.velocity.z *= 1.1
+			#agent.velocity.x *= 10
+			#agent.velocity.z *= 10
 
 			jump_cancel_timer = 0.0
 			isHit = false
@@ -120,6 +123,7 @@ func _process_attack(delta: float) -> void:
 			_exit_attack_state()
 
 func _start_attack() -> void:
+	enemies_hit.clear()
 	animationTree.set("parameters/AttackShot/request", 1)
 	is_attacking = true
 	attack_cooldown = attack_duration
@@ -132,25 +136,50 @@ func _start_attack() -> void:
 
 func _on_attack_box_area_entered(area):
 	if area.has_method("takeDamageEnemy"):
+		var enemy = area
+		while enemy and not (enemy is CharacterBody3D):
+			enemy = enemy.get_parent()
+				
+		if area in enemies_hit:
+			return
+		enemies_hit[area] = true 
+		
 		print("Enemy hit:", area.name)
 		isHit = true
-		hit3Sound.play()
+		Global.isHit = true
+		hit1Sound.play()
 		jump_cancel_timer = jump_cancel_window
 		attack_cooldown = min(attack_cooldown, hit_cooldown_amount)
 
 		gameJuice.objectShake(area.get_parent(), enemyTargetLength, enemyTargetMagnitude)
+		
+		if enemy.has_node("MeshInstance3D"):
+			var mesh = enemy.get_node("MeshInstance3D")
+			mesh.trigger_flash()
+			await get_tree().process_frame
+			
+		if area.has_method("set_monitoring"):
+			area.monitoring = false
 
+		var saved_velocity = agent.velocity
+		agent.velocity = Vector3.ZERO
 		pause()
 		await get_tree().create_timer(enemyTargetHitStop).timeout
+
 		unpause()
+		
+		agent.velocity = saved_velocity
 
-		var enemy = area
-		while enemy and not (enemy is CharacterBody3D):
-			enemy = enemy.get_parent()
 
+		if area.has_method("set_monitoring"):
+			area.monitoring = true
+			
+
+
+			
+			
 		if enemy is CharacterBody3D:
 			print("Applying knockback to:", enemy.name)
-			#agent.velocity.y = Global.JUMP_VELOCITY * .6
 			gameJuice.knockback(
 				enemy,
 				agent,
