@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://1b5arno23rm5"]
+[gd_scene format=3 uid="uid://1b5arno23rm5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mdfhj"]
 shading_mode = 0
@@ -40,9 +40,9 @@ scale_over_velocity_curve = SubResource("CurveTexture_q3xk7")
 
 [sub_resource type="QuadMesh" id="QuadMesh_cgq8r"]
 
-[node name="PunchDust" type="Node3D"]
+[node name="PunchDust" type="Node3D" unique_id=1815149693]
 
-[node name="punch_burst" type="GPUParticles3D" parent="." groups=["punch_dust"]]
+[node name="punch_burst" type="GPUParticles3D" parent="." unique_id=495661948 groups=["punch_dust"]]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_mdfhj")
 emitting = false

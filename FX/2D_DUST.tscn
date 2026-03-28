@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnf5pg2d14fel"]
+[gd_scene format=3 uid="uid://dnf5pg2d14fel"]
 
 [ext_resource type="Texture2D" uid="uid://bieag6y18328y" path="res://FX/Explosion_Sheet.png" id="1_ubgxf"]
 
@@ -19,13 +19,14 @@ scale_min = 0.4
 anim_speed_min = 0.24
 anim_speed_max = 1.88
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" unique_id=737440289]
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=145497646]
+visible = false
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_gxl8i")
 position = Vector2(98, 87)
 amount = 6
-process_material = SubResource("ParticleProcessMaterial_dlsig")
 texture = ExtResource("1_ubgxf")
 lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_dlsig")

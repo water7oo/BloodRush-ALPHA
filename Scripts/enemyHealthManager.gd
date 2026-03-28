@@ -26,7 +26,8 @@ func takeDamageEnemy(health, attack_damage):
 	max_health = max_health - attack_damage
 	print("ENEMY IS TAKING DAMAGE " + str(max_health))
 	taking_damage = true
-	await get_tree().create_timer(.15).timeout
+	$"../MeshInstance3D".material_override.set_shader_parameter("shader_parameter/flash_amount", 1)
+	await get_tree().create_timer(.10).timeout
 	taking_damage = false
 	
 	

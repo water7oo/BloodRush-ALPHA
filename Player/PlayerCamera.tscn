@@ -49,15 +49,17 @@ spring_arm_pivot = NodePath("SpringArmPivot")
 [node name="SpringArmPivot" type="Node3D" parent="." unique_id=1971082669 groups=["camera"]]
 
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot" unique_id=1330695577]
-transform = Transform3D(1, 0, 0, 0, 0.981484, 0.191546, 0, -0.191546, 0.981484, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.95961905, 0.28130355, 0, -0.28130355, 0.95961905, 0, 0, 0)
 collision_mask = 255
 spring_length = 0.0
+margin = 0.0
 
 [node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D" unique_id=177009744]
+transform = Transform3D(1, 0, 0, 0, 0.9957329, -0.09228374, 0, 0.09228374, 0.9957329, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin" unique_id=1586954262]
 process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 0.99750245, 0.070626944, 0, -0.070626944, 0.99750245, 0, 2.1078978, 15.843029)
+transform = Transform3D(1, 0, 0, 0, 0.99750245, 0.070626944, 0, -0.070626944, 0.99750245, 0, 2.2515488, 23.80117)
 current = true
 fov = 45.9
 size = 5.762

@@ -12,6 +12,7 @@ extends CharacterBody3D
 @onready var airDive_state = $LimboHSM/AirDiveState
 @onready var slide_state = $LimboHSM/SlideState
 @onready var attack_state = $LimboHSM/AttackState
+@onready var attack_upper_state = $LimboHSM/AttackUpperState
 
 @onready var attack1_state = $LimboHSM/AttackState/Attack1
 @onready var attack2_state = $LimboHSM/AttackState/Attack2
@@ -32,6 +33,7 @@ func initialize_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, run_state, "to_run")
 	state_machine.add_transition(state_machine.ANYSTATE, jump_state, "to_jump")
 	state_machine.add_transition(state_machine.ANYSTATE, attack_state, "to_attack")
+	state_machine.add_transition(state_machine.ANYSTATE, attack_upper_state, "to_attackUpper")
 	state_machine.add_transition(state_machine.ANYSTATE, take_damage_state, "to_damaged")
 	
 	
@@ -65,6 +67,10 @@ func initialize_state_machine():
 
 func _physics_process(delta: float) -> void:
 	playerGravity(delta)
+	
+	
+	if Global.attack_cooldown_timer > 0.0:
+		Global.attack_cooldown_timer -= delta
 	
 func playerCamera(delta: float) -> void:
 	pass

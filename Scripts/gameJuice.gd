@@ -33,19 +33,28 @@ func unpause():
 	print("unpause")
 	process_mode = PROCESS_MODE_INHERIT  # Restore original processing mode
 
-func knockback(enemy, target_attack, knockback_force):
-	# Handle knockback logic, same as before
-	var enemy_global_transform = enemy.global_transform
-	var target_attack_global_transform = target_attack.global_transform
-
-	var target_attack_position = target_attack_global_transform.origin
-	var enemy_position = enemy_global_transform.origin
-
-	var knockback_direction = (enemy_position - target_attack_position).normalized()
-	var knockback_velocity = knockback_direction * knockback_force
-
-	enemy.velocity = knockback_velocity
-	enemy.velocity.y = 0
+func knockback(enemy: CharacterBody3D, attacker: Node3D, force: float, direction: Vector3):
+	if not enemy:
+		return
+	
+	var enemy_pos = enemy.global_transform.origin
+	var attacker_pos = attacker.global_transform.origin
+	
+	
+	var away_dir = enemy_pos - attacker_pos
+	away_dir.y = 0
+	away_dir = away_dir.normalized()
+	
+	
+	var final_dir = Vector3(
+		away_dir.x * direction.z,  
+		direction.y,               
+		away_dir.z * direction.z
+	)
+	
+	final_dir = final_dir.normalized()
+	
+	enemy.velocity = final_dir * force* force
 
 func objectShake(target, period, magnitude):
 	# Object shake logic to add "impact" feel

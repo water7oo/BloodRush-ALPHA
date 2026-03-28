@@ -7,37 +7,41 @@ extends LimboState
 @onready var animationTree = playerCharScene.find_child("AnimationTree", true)
 @onready var gameJuice = get_node("/root/GameJuice")
 
+@export var shakeLength: float = 0.03
+@export var shakeMagnitude: float = 0.3
+@export var hitStopTime: float = 0.3
 
-@export var BASE_SPEED: float = Global.BASE_SPEED - 5
-@export var DECELERATION: float = Global.DECELERATION - 5 
+@export var knockback_force: float = 12.0
+@export var knockback_direction: Vector3 = Vector3(0, 1, 0.5)
 
 var taking_damage := false
-var hitstun_timer := .1  # Time player is stunned before regaining control
+var hitstun_timer := 0.1
 
 func _enter() -> void:
-	print("Current State:", agent.state_machine.get_active_state())
-	# Disable movement input but allow physics (knockback)
-	Global.can_move = false
 	taking_damage = true
-	
+
+	var current_state = agent.state_machine.get_active_state()
+	if current_state != self:
+		if current_state.has_method("_exit_attack_state"):
+			current_state._exit_attack_state()
+
+	Global.can_move = false
+
 	animationTree.set("parameters/Jump_Blend/blend_amount", -1)
 	animationTree.set("parameters/Ground_Blend/blend_amount", -1)
-	animationTree.set("parameters/Ground_Blend/blend_amount", -1)
-	print("Parent node of agent:", agent)
-	pause()
-	gameJuice.objectShake(agent, 0.03, .3)
-	await get_tree().create_timer(.3).timeout
-	unpause()
-	gameJuice.knockback(agent, Global.last_enemy_hit, 9)
 
-	# Transition to recovery state after hitstun (if needed)
+	pause()
+	gameJuice.objectShake(agent, shakeLength, shakeMagnitude)
+	$"../../hit1".emitting = true
+	await get_tree().create_timer(hitStopTime).timeout
+	unpause()
+
+	gameJuice.knockback(enemy, agent, knockback_force, knockback_direction)
+
 	agent.state_machine.dispatch("to_recover")
 
-
 func pause():
-	process_mode = PROCESS_MODE_DISABLED  # Disable processing for pause effect
+	process_mode = PROCESS_MODE_DISABLED
 
-# Unpause functionality (called after hitstop ends)
 func unpause():
-	process_mode = PROCESS_MODE_INHERIT  # Restore original processing mode
-	
+	process_mode = PROCESS_MODE_INHERIT

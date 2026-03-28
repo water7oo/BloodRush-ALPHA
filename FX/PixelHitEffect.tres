@@ -1,0 +1,47 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dbj1gqpp8xunp"]
+
+[ext_resource type="Texture2D" uid="uid://dyej4r850v6s7" path="res://FX/hit1.png" id="1_gy5tt"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_4x58y"]
+expanded_output_ports = [0]
+input_name = "color"
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_3x2wv"]
+parameter_name = "Hit1_Texture"
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_5o15v"]
+expanded_output_ports = [0]
+source = 5
+texture_type = 1
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_5j0np"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeBillboard" id="VisualShaderNodeBillboard_rl476"]
+billboard_type = 3
+keep_scale = true
+
+[sub_resource type="VisualShader" id="VisualShader_2pexc"]
+modes/diffuse = 3
+modes/specular = 1
+flags/unshaded = true
+nodes/vertex/0/position = Vector2(460, 40)
+nodes/vertex/2/node = SubResource("VisualShaderNodeBillboard_rl476")
+nodes/vertex/2/position = Vector2(180, 80)
+nodes/vertex/connections = PackedInt32Array(2, 0, 0, 10)
+nodes/fragment/0/position = Vector2(640, -60)
+nodes/fragment/2/node = SubResource("VisualShaderNodeInput_4x58y")
+nodes/fragment/2/position = Vector2(60, 220)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture2DParameter_3x2wv")
+nodes/fragment/3/position = Vector2(-380, -180)
+nodes/fragment/4/node = SubResource("VisualShaderNodeTexture_5o15v")
+nodes/fragment/4/position = Vector2(-40, -160)
+nodes/fragment/5/node = SubResource("VisualShaderNodeFloatOp_5j0np")
+nodes/fragment/5/position = Vector2(260, -160)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 3, 0, 4, 2, 4, 1, 5, 0, 2, 4, 5, 1, 5, 0, 0, 1)
+
+[resource]
+render_priority = 0
+shader = SubResource("VisualShader_2pexc")
+shader_parameter/Hit1_Texture = ExtResource("1_gy5tt")

@@ -14,6 +14,8 @@ const CUSTOM_GRAVITY: float = 30.0  # Keeps the character from feeling too float
 @export var can_jump: bool = true
 var last_ground_position = Vector3.ZERO
 
+@onready var moveDust = $"../../move_dust"
+
 var current_speed: float = 0.0
 var is_moving: bool = false
 var target_speed: float = Global.MAX_SPEED
@@ -44,6 +46,7 @@ func player_movement(delta: float) -> void:
 		Global.target_blend_amount = 0.0
 		Global.current_blend_amount = lerp(Global.current_blend_amount, Global.target_blend_amount, Global.blend_lerp_speed * delta)
 		animationTree.set("parameters/Ground_Blend/blend_amount", 1)
+		moveDust.emitting = true
 
 		var target_rotation = atan2(direction.x, direction.z)
 
@@ -112,3 +115,5 @@ func initialize_attack(delta: float) -> void:
 	#pressing attack unsheathes katana and player is in attackmode
 	if Input.is_action_just_pressed("attack_light_1"):
 		agent.state_machine.dispatch("to_attack")
+	elif Input.is_action_just_pressed("attack_upper"):
+		agent.state_machine.dispatch("to_attackUpper")

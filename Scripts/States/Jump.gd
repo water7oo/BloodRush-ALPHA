@@ -29,6 +29,7 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	player_jump(delta)
+	initialize_attack(delta)
 	agent.move_and_slide()
 
 func player_jump(delta: float) -> void:
@@ -62,7 +63,14 @@ func player_jump(delta: float) -> void:
 			#agent.state_machine.dispatch("to_idle")
 
 
-
+# Falling check
 	if not agent.is_on_floor() and agent.velocity.y < 0:
 		animationTree.set("parameters/Jump_Blend/blend_amount", 0)
 		#print("Falling!")
+		
+		
+func initialize_attack(delta: float) -> void:
+	
+	#pressing attack unsheathes katana and player is in attackmode
+	if Input.is_action_just_pressed("attack_light_1"):
+		agent.state_machine.dispatch("to_attack")

@@ -1,8 +1,6 @@
 class_name Enemy
 extends CharacterBody3D
 
-
-
 @onready var playerHealthMan = get_node("/root/PlayerHealthManager")
 @onready var enemyHealthMan = get_node("/root/EnemyHealthManager")
 
@@ -14,8 +12,8 @@ extends CharacterBody3D
 
 
 
-var enemy_default_mesh = preload("res://MaterialTextures/Enemy.tres")
-var enemy_damage_mesh = preload("res://MaterialTextures/Enemy_Hit.tres")
+@export var enemy_default_mesh: Material
+@export var enemy_damage_mesh: Material = preload("res://MaterialTextures/Enemy_Hit.tres")
 var current_speed = 5.0
 const JUMP_VELOCITY = 4.5
 var can_move = true
@@ -28,16 +26,44 @@ var attack_processing = false
 
 var attack_power = 1
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
+
+
+@onready var mesh_instance := $MeshInstance3D
+
+@export var hit_flash_duration: float = 0.2
+var flash_timer: float = 0.0
+var is_flashing: bool = false
+var original_emission: Color = Color(1,1,1) # default to white emission
+
+
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready():
-	#enemyHealthMan.health = enemyHealthMan.max_health
-	#$health_label.text = "Testintg"
-	pass
+	if not mesh_instance:
+		print("No mesh_instance assigned!")
+		return
+
+	# Make sure the material is a StandardMaterial3D
+	var mat = mesh_instance.material_override
+	if mat == null:
+		mat = mesh_instance.get_active_material(0)
+
+	if mat and mat is StandardMaterial3D:
+		# store original emission color
+		original_emission = mat.emission
+		print("StandardMaterial3D found and ready!")
+	else:
+		print("Material is NOT a StandardMaterial3D:", mat)
+		
 
 func _physics_process(delta):
+	start_hit_flash()
 	
+		
+	if is_flashing:
+		flash_timer -= delta
+		if flash_timer <= 0.0:
+			end_hit_flash()
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
@@ -45,7 +71,26 @@ func _physics_process(delta):
 	velocity.z = move_toward(velocity.z, 0, ENEMY_DECELERATION * delta)
 
 	move_and_slide()
+	
 
+func start_hit_flash():
+	print($AnimationPlayer)
+	pass
+	
+
+	
+func end_hit_flash():
+	if not mesh_instance:
+		return
+	var mat: StandardMaterial3D = mesh_instance.material_override
+	if mat == null:
+		mat = mesh_instance.get_active_material(0)
+	if mat and mat is StandardMaterial3D:
+		is_flashing = false
+		mat.emission_enabled = false
+		mat.emission = original_emission
+		print("Enemy hit flash ended!")
+	
 func particles():
 	for node in punch_dust:
 		var particle_emitter = node.get_node("punch_dust")
@@ -68,10 +113,14 @@ func animations():
 
 #Hurtbox
 #If the player touches this make them have hit pause but also put enemy in hit pause by timescale
-#func _on_enemy_area_entered(area):
-	#if area.name == "AttackBox" && area.monitoring == true:
-		#print("Player hit me")
-		#
+func _on_enemy_area_entered(area):
+	if area.name == "AttackBox" && area.monitoring == true:
+		print("Player Attack:" + str(area.monitoring))
+		area.monitoring == false
+		
+		$hit1.emitting = true
+		
+
 	#if area.name == "HurtBox" and !attack_processing:
 		#var player = area.get_parent()
 		#print("Enemy hit player!")
@@ -94,4 +143,5 @@ func animations():
 		#
 	#
 func _on_hurt_box_area_entered(area):
+	#if area.name == "AttackBox" || area.name == "AttackUpperBox"
 	pass # Replace with function body.

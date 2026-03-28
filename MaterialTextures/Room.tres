@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://bdkrvec3wh6qh" path="res://My Textures/TextureGrid_32_devLight.png" id="1_v6veh"]
 
 [resource]
-shading_mode = 0
 diffuse_mode = 3
 disable_ambient_light = true
 albedo_texture = ExtResource("1_v6veh")

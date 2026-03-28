@@ -3,7 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://ce3emrnfl1nuy" path="res://Player/COWBOYPLAYER_V4.blend" id="1_g7xsl"]
 [ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="2_qhor5"]
 [ext_resource type="PackedScene" uid="uid://bqgjb8xjd76lj" path="res://Player/blood_katana.tscn" id="4_0ur36"]
+[ext_resource type="Material" uid="uid://bvipd0cuplg0p" path="res://MaterialTextures/gameplayer.tres" id="5_h4mu4"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://ccqgr0tb8ublp" path="res://Animations/cowboy2ndPassTree.tres" id="11_fvafx"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_yvqdt"]
 
 [node name="COWBOYPLAYER_V4" unique_id=588792171 groups=["player"] instance=ExtResource("1_g7xsl")]
 
@@ -68,8 +71,14 @@ transform = Transform3D(21.3403, 116.038, 18.9752, 18.0004, -22.2821, 116.016, 1
 visible = false
 
 [node name="MORI_003" parent="Armature_001/Skeleton3D" index="1" unique_id=1424242972]
+visible = false
 material_override = ExtResource("2_qhor5")
 
 [node name="BloodKatana" parent="." index="3" unique_id=890456567 instance=ExtResource("4_0ur36")]
 transform = Transform3D(0.39987, -2.62325e-08, 0.916572, -0.916572, -4.00646e-08, 0.39987, 2.62325e-08, -1, -4.00646e-08, 0.475807, 0.739369, 0)
 visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="4" unique_id=1318401053]
+transform = Transform3D(1, 0, 0, 0, 2.286518, 0, 0, 0, 1, 0, 1.1280712, 0)
+material_override = ExtResource("5_h4mu4")
+mesh = SubResource("QuadMesh_yvqdt")
