@@ -29,6 +29,7 @@ extends LimboState
 @export var hit2Sound: AudioStreamPlayer
 @export var hit3Sound: AudioStreamPlayer
 @export var jump_cancel_window: float = 0.25
+@export var attack_startup: float = 0.1
 
 var enemies_hit:= {}
 
@@ -80,7 +81,7 @@ func _process_attack(delta: float) -> void:
 			isHit = false
 			jump_cancel_timer = 0.0
 			
-			_exit_attack_state()  # <-- make sure the attack state fully ends
+			_exit_attack_state()
 			agent.state_machine.dispatch("to_jump")
 			return
 	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta

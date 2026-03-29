@@ -1,9 +1,9 @@
-[gd_resource type="ShaderMaterial" format=3 uid="uid://kddykiqv2ir2"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://kddykiqv2ir2"]
 
 [ext_resource type="Shader" uid="uid://c8gnrj13ddg2o" path="res://FX/hitFlash.gdshader" id="1_gxgqi"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_gxgqi")
-shader_parameter/flash_amount = 0.0
-shader_parameter/flash_color = Color(1, 0, 0, 1)
+shader_parameter/flash = 0.0
+shader_parameter/custom_color = Color(1, 1, 1, 1)

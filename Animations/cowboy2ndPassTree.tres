@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeBlendTree" format=3 uid="uid://ccqgr0tb8ublp"]
+[gd_resource type="AnimationNodeBlendTree" load_steps=20 format=3 uid="uid://ccqgr0tb8ublp"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_al0tm"]
 animation = &"TPOSE"
@@ -56,7 +56,6 @@ sync = true
 
 [resource]
 graph_offset = Vector2(826.113, 23.2349)
-nodes/output/position = Vector2(1760, 80)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_7fqlc")
 nodes/Animation/position = Vector2(-380, -120)
 "nodes/Animation 10/node" = SubResource("AnimationNodeAnimation_al0tm")
@@ -95,4 +94,5 @@ nodes/Ground_Blend3/node = SubResource("AnimationNodeBlend3_w35fh")
 nodes/Ground_Blend3/position = Vector2(900, 40)
 nodes/Jump_Blend/node = SubResource("AnimationNodeBlend3_fbv64")
 nodes/Jump_Blend/position = Vector2(640, 0)
-node_connections = [&"output", 0, &"Attack_Shot2", &"Attack_Shot", 0, &"Ground_Blend3", &"Attack_Shot", 1, &"Animation 9", &"Attack_Shot2", 0, &"Attack_Shot", &"Attack_Shot2", 1, &"Animation 11", &"Ground_Blend", 0, &"Animation", &"Ground_Blend", 1, &"Animation 3", &"Ground_Blend", 2, &"Animation 2", &"Ground_Blend2", 0, &"Ground_Blend", &"Ground_Blend2", 1, &"Animation 7", &"Ground_Blend2", 2, &"Animation 6", &"Ground_Blend3", 0, &"Jump_Blend", &"Ground_Blend3", 1, &"Animation 10", &"Ground_Blend3", 2, &"Animation 4", &"Jump_Blend", 0, &"Ground_Blend2", &"Jump_Blend", 1, &"Animation 8", &"Jump_Blend", 2, &"Animation 5"]
+nodes/output/position = Vector2(1760, 80)
+node_connections = [&"Attack_Shot", 0, &"Ground_Blend3", &"Attack_Shot", 1, &"Animation 9", &"Attack_Shot2", 0, &"Attack_Shot", &"Attack_Shot2", 1, &"Animation 11", &"Ground_Blend", 0, &"Animation", &"Ground_Blend", 1, &"Animation 3", &"Ground_Blend", 2, &"Animation 2", &"Ground_Blend2", 0, &"Ground_Blend", &"Ground_Blend2", 1, &"Animation 7", &"Ground_Blend2", 2, &"Animation 6", &"Ground_Blend3", 0, &"Jump_Blend", &"Ground_Blend3", 1, &"Animation 10", &"Ground_Blend3", 2, &"Animation 4", &"Jump_Blend", 0, &"Ground_Blend2", &"Jump_Blend", 1, &"Animation 8", &"Jump_Blend", 2, &"Animation 5", &"output", 0, &"Attack_Shot2"]

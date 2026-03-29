@@ -124,12 +124,21 @@ func _on_attack_box_area_entered(area):
 		hit1Sound.play()
 		jump_cancel_timer = jump_cancel_window
 		attack_cooldown = min(attack_cooldown, hit_cooldown_amount)
+		
+		var hit1Effect = enemy.find_child("hit1", true, false)
+				
+		if hit1Effect is GPUParticles3D:
+			print("HIT EFFECT")
+			hit1Effect.restart()
+			hit1Effect.emitting = true
+		elif hit1Effect == null:
+			print("Warning: No GPUParticles3D found on " + enemy.name)
 
+			
 		gameJuice.objectShake(area.get_parent(), enemyTargetLength, enemyTargetMagnitude)
 		
 		if enemy.has_node("MeshInstance3D"):
 			var mesh = enemy.get_node("MeshInstance3D")
-			print("flash!")
 			mesh.trigger_flash()
 			await get_tree().process_frame
 			
@@ -162,21 +171,6 @@ func _on_attack_box_area_entered(area):
 				knockback_direction
 			)
 
-	# Hit effect
-	if hit1 and enemy:
-		var hit_effect = hit1.instantiate()
-		get_tree().current_scene.add_child(hit_effect)
-
-		if hit_effect is GPUParticles3D:
-			hit_effect.restart()
-		elif hit_effect.has_method("restart"):
-			hit_effect.call("restart")
-		elif hit_effect.has_method("set_emitting"):
-			hit_effect.set("emitting", true)
-
-		await get_tree().create_timer(1.0).timeout
-		if is_instance_valid(hit_effect):
-			hit_effect.queue_free()
 
 
 
