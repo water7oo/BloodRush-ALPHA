@@ -28,9 +28,10 @@ extends LimboState
 @export var hit1Sound: AudioStreamPlayer
 @export var hit2Sound: AudioStreamPlayer
 @export var hit3Sound: AudioStreamPlayer
-@export var jump_cancel_window: float = 0.25
+@export var jump_cancel_window: float = enemyTargetHitStop + 0.15
 @export var attack_startup: float = 0.1
 
+@export var jumpCancelFX = GPUParticles3D
 var enemies_hit:= {}
 
 var preserved_velocity: Vector3 = Vector3.ZERO
@@ -75,13 +76,13 @@ func _process_attack(delta: float) -> void:
 		
 		if Input.is_action_just_pressed("move_jump"):
 			print("Jump Cancel")
-			agent.velocity.y = Global.JUMP_VELOCITY
 			agent.velocity.x *= 1.1
 			agent.velocity.z *= 1.1
 			isHit = false
 			jump_cancel_timer = 0.0
 			
 			_exit_attack_state()
+			jumpCancelFX.emitting = true
 			agent.state_machine.dispatch("to_jump")
 			return
 	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
@@ -114,7 +115,7 @@ func _process_attack(delta: float) -> void:
 	# Combo chain
 	if combo_timer > 0 and Input.is_action_just_pressed("attack_light_1"):
 		can_chain_attack = true
-		print("Attack chain triggered!")
+		#print("Attack chain triggered!")
 
 	# Exit
 	if attack_cooldown <= 0.0:
@@ -145,7 +146,7 @@ func _on_attack_box_area_entered(area):
 			return
 		enemies_hit[area] = true 
 		
-		print("Enemy hit:", area.name)
+		#print("Enemy hit:", area.name)
 		isHit = true
 		Global.isHit = true
 		hit1Sound.play()
@@ -164,11 +165,8 @@ func _on_attack_box_area_entered(area):
 
 		var saved_velocity = agent.velocity
 		agent.velocity = Vector3.ZERO
-		pause()
-		await get_tree().create_timer(enemyTargetHitStop).timeout
-
-		unpause()
-		
+		gameJuice.objectShake(area.get_parent(), enemyTargetLength, enemyTargetMagnitude)
+		await gameJuice.hitstop(enemyTargetHitStop)
 		agent.velocity = saved_velocity
 
 
@@ -180,7 +178,7 @@ func _on_attack_box_area_entered(area):
 			
 			
 		if enemy is CharacterBody3D:
-			print("Applying knockback to:", enemy.name)
+			#print("Applying knockback to:", enemy.name)
 			gameJuice.knockback(
 				enemy,
 				agent,
@@ -215,9 +213,10 @@ func _exit_attack_state() -> void:
 	attackUpper_debug.visible = false
 	attack_box_col.visible = false
 	attack_cooldown = 0.0
+	isHit = false
 	Global.attack_cooldown_timer = Global.attack_cooldown_duration
 	if attack_box:
 		attack_box.monitoring = false
 
-	print("Attack ended, hitbox disabled:", attack_box.monitoring)
+	#print("Attack ended, hitbox disabled:", attack_box.monitoring)
 	agent.state_machine.dispatch("to_idle")

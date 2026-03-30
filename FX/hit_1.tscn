@@ -262,15 +262,15 @@ alpha_curve = SubResource("CurveTexture_1gjv2")
 [node name="Hit1" type="Node3D"]
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
-visible = false
 material_override = SubResource("ShaderMaterial_3x2wv")
+emitting = false
 amount = 1
+one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_5o15v")
 draw_pass_1 = SubResource("QuadMesh_x1xct")
 
 [node name="GPUParticles3D3" type="GPUParticles3D" parent="."]
-visible = false
 material_override = SubResource("ShaderMaterial_5j0np")
 emitting = false
 amount = 1

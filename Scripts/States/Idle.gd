@@ -55,8 +55,16 @@ func initialize_crouch(delta: float) -> void:
 		agent.state_machine.dispatch("to_crouch")
 
 func initialize_attack(delta: float) -> void:
-	if Global.attack_cooldown_timer <= 0.0:
-		if Input.is_action_just_pressed("attack_light_1"):
-			agent.state_machine.dispatch("to_attack")
-		elif Input.is_action_just_pressed("attack_upper"):
-			agent.state_machine.dispatch("to_attackUpper")
+	
+	# Combo takes priority
+	if Input.is_action_pressed("attack_medium_1") and Input.is_action_pressed("attack_heavy_1"):
+		agent.state_machine.dispatch("to_attackUpper")
+		return
+
+	
+	if Input.is_action_just_pressed("attack_light_1") && Global.attack_cooldown_timer <= 0:
+		agent.state_machine.dispatch("to_attack")
+	elif Input.is_action_just_pressed("attack_medium_1") && Global.attackMedium_cooldown_timer <= 0:
+		agent.state_machine.dispatch("to_mediumAttack")
+	elif Input.is_action_just_pressed("attack_heavy_1") && Global.attackHeavy_cooldown_timer <= 0:
+		agent.state_machine.dispatch("to_heavyAttack")

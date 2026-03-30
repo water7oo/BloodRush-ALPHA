@@ -40,6 +40,7 @@ var can_chain_attack: bool = false
 var isHit: bool = false
 
 
+
 @export var hit1Sound: AudioStreamPlayer
 @export var hit2Sound: AudioStreamPlayer
 @export var hit3Sound: AudioStreamPlayer
@@ -70,18 +71,6 @@ func _process_attack(delta: float) -> void:
 	if Global.attack_cooldown_timer > 0.0:
 		Global.attack_cooldown_timer -= delta
 		
-	if jump_cancel_timer > 0.0:
-		jump_cancel_timer -= delta
-		
-		if Input.is_action_just_pressed("move_jump"):
-			print("Jump Cancel")
-			agent.velocity.y = Global.JUMP_VELOCITY
-			agent.velocity.x *= 1.1
-			agent.velocity.z *= 1.1
-			isHit = false
-			jump_cancel_timer = 0.0
-			agent.state_machine.dispatch("to_jump")
-			return
 
 	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
 
@@ -109,7 +98,11 @@ func _start_attack() -> void:
 	can_chain_attack = false
 
 func _on_attack_box_area_entered(area):
+	if isHit:
+		return
 	if area.has_method("takeDamageEnemy"):
+		isHit = true
+		attack_box.monitoring = false
 		var enemy = area
 		while enemy and not (enemy is CharacterBody3D):
 			enemy = enemy.get_parent()
@@ -118,25 +111,15 @@ func _on_attack_box_area_entered(area):
 			return
 		enemies_hit[area] = true 
 		
-		print("Enemy hit:", area.name)
+		#print("Enemy hit:", area.name)
 		isHit = true
 		Global.isHit = true
 		hit1Sound.play()
 		jump_cancel_timer = jump_cancel_window
 		attack_cooldown = min(attack_cooldown, hit_cooldown_amount)
 		
-		var hit1Effect = enemy.find_child("hit1", true, false)
-				
-		if hit1Effect is GPUParticles3D:
-			print("HIT EFFECT")
-			hit1Effect.restart()
-			hit1Effect.emitting = true
-		elif hit1Effect == null:
-			print("Warning: No GPUParticles3D found on " + enemy.name)
 
 			
-		gameJuice.objectShake(area.get_parent(), enemyTargetLength, enemyTargetMagnitude)
-		
 		if enemy.has_node("MeshInstance3D"):
 			var mesh = enemy.get_node("MeshInstance3D")
 			mesh.trigger_flash()
@@ -145,14 +128,26 @@ func _on_attack_box_area_entered(area):
 		if area.has_method("set_monitoring"):
 			area.monitoring = false
 
+		var hit1Effect = enemy.find_child("hit1", true, false)
+				
+		if hit1Effect is GPUParticles3D:
+			#print("HIT EFFECT")
+			hit1Effect.restart()
+			hit1Effect.emitting = true
+		elif hit1Effect == null:
+			print("Warning: No GPUParticles3D found on " + enemy.name)
+			
+			
+		hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 		var saved_velocity = agent.velocity
 		agent.velocity = Vector3.ZERO
-		pause()
-		await get_tree().create_timer(enemyTargetHitStop).timeout
-
-		unpause()
-		
+		gameJuice.objectShake(area.get_parent(), enemyTargetLength, enemyTargetMagnitude)
+		await gameJuice.hitstop(enemyTargetHitStop)
 		agent.velocity = saved_velocity
+
+
+		
+
 
 
 		if area.has_method("set_monitoring"):
@@ -163,7 +158,7 @@ func _on_attack_box_area_entered(area):
 			
 			
 		if enemy is CharacterBody3D:
-			print("Applying knockback to:", enemy.name)
+			#print("Applying knockback to:", enemy.name)
 			gameJuice.knockback(
 				enemy,
 				agent,
@@ -186,6 +181,7 @@ func _exit_attack_state() -> void:
 	attack_box_debug.visible = false
 	attack_box_col.visible = false
 	attack_cooldown = 0.0
+	isHit = false
 	Global.attack_cooldown_timer = Global.attack_cooldown_duration
 	if attack_box:
 		attack_box.monitoring = false

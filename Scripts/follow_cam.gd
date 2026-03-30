@@ -25,6 +25,7 @@ var target_node: Node3D
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	target_node = get_node(target) as Node3D
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	#original_global_transform = target_node.global_transform
 
@@ -73,7 +74,8 @@ func _unhandled_input(event):
 		#spring_arm_pivot.rotation.y += joystick_sensitivity 
 
 func _physics_process(delta):
-	followTarget(delta)
+	var real_delta = delta / Engine.time_scale if Engine.time_scale > 0 else 0.016
+	followTarget(real_delta)
 
 func _process(delta: float) -> void:
 	_unhandled_input(delta)

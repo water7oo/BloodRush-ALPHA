@@ -47,7 +47,6 @@ func player_jump(delta: float) -> void:
 
 	# Landing logic with smooth deceleration instead of hard stop
 	if agent.is_on_floor():
-		print("Landed!")
 		animationTree.set("parameters/Jump_Blend/blend_amount", -1)
 		
 		# Reduce velocity smoothly rather than stopping immediately
@@ -70,7 +69,6 @@ func player_jump(delta: float) -> void:
 		
 		
 func initialize_attack(delta: float) -> void:
-	
-	#pressing attack unsheathes katana and player is in attackmode
+
 	if Input.is_action_just_pressed("attack_light_1"):
-		agent.state_machine.dispatch("to_attack")
+		agent.state_machine.dispatch("to_airAttack")

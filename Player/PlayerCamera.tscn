@@ -26,13 +26,16 @@ size = Vector2(2, 2)
 [sub_resource type="BoxMesh" id="BoxMesh_t12er"]
 
 [node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
+process_mode = 3
 script = ExtResource("1_hwm0y")
 enabled = true
 spring_arm_pivot = NodePath("SpringArmPivot")
 
 [node name="SpringArmPivot" type="Node3D" parent="." groups=["camera"]]
+process_mode = 3
 
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
+process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 0.959619, 0.281304, 0, -0.281304, 0.959619, 0, 0, 0)
 collision_mask = 255
 spring_length = 0.0

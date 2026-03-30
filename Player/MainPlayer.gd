@@ -11,12 +11,13 @@ extends CharacterBody3D
 @onready var groundDive_state = $LimboHSM/GroundDiveState
 @onready var airDive_state = $LimboHSM/AirDiveState
 @onready var slide_state = $LimboHSM/SlideState
-@onready var attack_state = $LimboHSM/AttackState
-@onready var attack_upper_state = $LimboHSM/AttackUpperState
 
-@onready var attack1_state = $LimboHSM/AttackState/Attack1
-@onready var attack2_state = $LimboHSM/AttackState/Attack2
-@onready var attack3_state = $LimboHSM/AttackState/Attack3
+
+@onready var attack_state = $LimboHSM/AttackState
+@onready var attackMedium_state = $LimboHSM/AttackMediumState
+@onready var attackHeavy_state = $LimboHSM/AttackHeavyState
+@onready var attack_upper_state = $LimboHSM/AttackUpperState
+@onready var air_attack_state = $LimboHSM/AirAttackState
 
 @onready var take_damage_state = $LimboHSM/TakeDamageState
 @onready var recover_state = $LimboHSM/RecoverState
@@ -32,11 +33,14 @@ func initialize_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, walk_state, "to_walk")
 	state_machine.add_transition(state_machine.ANYSTATE, run_state, "to_run")
 	state_machine.add_transition(state_machine.ANYSTATE, jump_state, "to_jump")
+	
+	
 	state_machine.add_transition(state_machine.ANYSTATE, attack_state, "to_attack")
 	state_machine.add_transition(state_machine.ANYSTATE, attack_upper_state, "to_attackUpper")
 	state_machine.add_transition(state_machine.ANYSTATE, take_damage_state, "to_damaged")
-	
-	
+	state_machine.add_transition(jump_state, air_attack_state, "to_airAttack")
+	state_machine.add_transition(state_machine.ANYSTATE, attackMedium_state, "to_mediumAttack")
+	state_machine.add_transition(state_machine.ANYSTATE, attackHeavy_state, "to_heavyAttack")
 	
 	state_machine.add_transition(run_state, runJump_state, "to_runJump")
 	state_machine.add_transition(walk_state, burst_state, "to_burst")
@@ -56,12 +60,7 @@ func initialize_state_machine():
 	
 	
 	
-	state_machine.add_transition(attack_state, attack1_state, "to_attack1")
-	state_machine.add_transition(attack1_state, attack2_state, "to_attack2")
-	state_machine.add_transition(attack2_state, attack3_state, "to_attack3")
-	state_machine.add_transition(attack1_state, idle_state, "to_idle")
-	state_machine.add_transition(attack2_state, idle_state, "to_idle")
-	state_machine.add_transition(attack3_state, idle_state, "to_idle")
+
 
 
 

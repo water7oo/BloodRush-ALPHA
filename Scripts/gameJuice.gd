@@ -4,24 +4,23 @@ extends Node
 var impact = true
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	pass
 
-# Hitstop logic with pause
-func hitStop(timeScale, target):
-	if target.get_parent().has_method("pause"):
-		# Apply pause to parent node for hitstop effect
-		print("FREEZE")
-		target.get_parent().pause()
-		target.get_parent().can_move = false
-		target.get_parent().current_speed = 0
-		
-		# Wait for the duration of the hitstop (using a timer)
-		var timer = get_tree().create_timer(timeScale)
-		await timer.timeout  # Use await instead of yield
-		
-		# After time ends, unpause the game
-		target.get_parent().unpause()
-		target.get_parent().can_move = true
+var is_in_hitstop := false
+
+func hitstop(duration: float) -> void:
+	if is_in_hitstop:
+		await get_tree().create_timer(duration, true, false, true).timeout
+		return
+	
+	print("stop engine")
+	is_in_hitstop = true
+	Engine.time_scale = 0.05
+	await get_tree().create_timer(duration, true, false, true).timeout
+	print("reset engine")
+	Engine.time_scale = 1.0
+	is_in_hitstop = false
 
 # Pause functionality (called by hitStop)
 func pause():
