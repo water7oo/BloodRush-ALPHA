@@ -30,8 +30,7 @@ func _update(delta: float) -> void:
 	initialize_run(delta)
 	initialize_burst(delta)
 	initialize_crouch(delta)
-	initialize_attack(delta)
-	#print(velocity.length())
+	handle_attack_input()
 	agent.move_and_slide()
 
 func player_movement(delta: float) -> void:
@@ -110,10 +109,17 @@ func initialize_crouch(delta: float) -> void:
 		agent.state_machine.dispatch("to_crouch")
 		
 
-func initialize_attack(delta: float) -> void:
-	
-	#pressing attack unsheathes katana and player is in attackmode
-	if Input.is_action_just_pressed("attack_light_1"):
+func handle_attack_input() -> void:
+	if (Input.is_action_just_pressed("attack_medium_1") and Input.is_action_pressed("attack_heavy_1")) \
+	or (Input.is_action_just_pressed("attack_heavy_1") and Input.is_action_pressed("attack_medium_1")):
+		if Global.attackUpper_cooldown_timer <= 0:
+			agent.state_machine.dispatch("to_attackUpper")
+		return  # only trigger one attack per frame
+
+	# Single attacks
+	if Input.is_action_just_pressed("attack_light_1") and Global.attack_cooldown_timer <= 0:
 		agent.state_machine.dispatch("to_attack")
-	elif Input.is_action_just_pressed("attack_upper"):
-		agent.state_machine.dispatch("to_attackUpper")
+	elif Input.is_action_just_pressed("attack_medium_1") and Global.attackMedium_cooldown_timer <= 0:
+		agent.state_machine.dispatch("to_mediumAttack")
+	elif Input.is_action_just_pressed("attack_heavy_1") and Global.attackHeavy_cooldown_timer <= 0:
+		agent.state_machine.dispatch("to_heavyAttack")

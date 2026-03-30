@@ -21,7 +21,7 @@ func _update(delta: float) -> void:
 	player_idle(delta)
 	initialize_jump(delta)
 	initialize_crouch(delta)
-	initialize_attack(delta)
+	handle_attack_input()
 
 func player_idle(delta: float) -> void:
 	
@@ -54,17 +54,28 @@ func initialize_crouch(delta: float) -> void:
 	if Input.is_action_pressed("move_crouch"):
 		agent.state_machine.dispatch("to_crouch")
 
-func initialize_attack(delta: float) -> void:
+func _process(delta: float) -> void:
+	if Global.attack_cooldown_timer > 0:
+		Global.attack_cooldown_timer -= delta
+	if Global.attackMedium_cooldown_timer > 0:
+		Global.attackMedium_cooldown_timer -= delta
+	if Global.attackHeavy_cooldown_timer > 0:
+		Global.attackHeavy_cooldown_timer -= delta
+	if Global.attackUpper_cooldown_timer > 0:
+		Global.attackUpper_cooldown_timer -= delta
 	
-	# Combo takes priority
-	if Input.is_action_pressed("attack_medium_1") and Input.is_action_pressed("attack_heavy_1"):
-		agent.state_machine.dispatch("to_attackUpper")
-		return
+func handle_attack_input() -> void:
+	# Combo takes priority (just_pressed + pressed)
+	if (Input.is_action_just_pressed("attack_medium_1") and Input.is_action_pressed("attack_heavy_1")) \
+	or (Input.is_action_just_pressed("attack_heavy_1") and Input.is_action_pressed("attack_medium_1")):
+		if Global.attackUpper_cooldown_timer <= 0:
+			agent.state_machine.dispatch("to_attackUpper")
+		return  # only trigger one attack per frame
 
-	
-	if Input.is_action_just_pressed("attack_light_1") && Global.attack_cooldown_timer <= 0:
+	# Single attacks
+	if Input.is_action_just_pressed("attack_light_1") and Global.attack_cooldown_timer <= 0:
 		agent.state_machine.dispatch("to_attack")
-	elif Input.is_action_just_pressed("attack_medium_1") && Global.attackMedium_cooldown_timer <= 0:
+	elif Input.is_action_just_pressed("attack_medium_1") and Global.attackMedium_cooldown_timer <= 0:
 		agent.state_machine.dispatch("to_mediumAttack")
-	elif Input.is_action_just_pressed("attack_heavy_1") && Global.attackHeavy_cooldown_timer <= 0:
+	elif Input.is_action_just_pressed("attack_heavy_1") and Global.attackHeavy_cooldown_timer <= 0:
 		agent.state_machine.dispatch("to_heavyAttack")

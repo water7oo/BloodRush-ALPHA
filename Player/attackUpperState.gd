@@ -28,6 +28,8 @@ extends LimboState
 @export var hit1Sound: AudioStreamPlayer
 @export var hit2Sound: AudioStreamPlayer
 @export var hit3Sound: AudioStreamPlayer
+@export var hit4Sound: AudioStreamPlayer
+
 @export var jump_cancel_window: float = enemyTargetHitStop + 0.15
 @export var attack_startup: float = 0.1
 
@@ -57,6 +59,16 @@ func _enter() -> void:
 	print("Current Attack State:", agent.state_machine.get_active_state())
 	print("SHORYUKEN")
 	_start_attack()
+	match agent.state_machine.get_active_state():
+		"to_attack":
+			Global.attack_cooldown_timer = Global.attack_cooldown_duration
+		"to_mediumAttack":
+			Global.attackMedium_cooldown_timer = Global.attackMedium_cooldown_duration
+		"to_heavyAttack":
+			Global.attackHeavy_cooldown_timer = Global.attackHeavy_cooldown_duration
+		"to_attackUpper":
+			Global.attackUpper_cooldown_timer = Global.attackUpper_cooldown_duration
+
 
 func _update(delta: float) -> void:
 	_process_attack(delta)
@@ -149,7 +161,7 @@ func _on_attack_box_area_entered(area):
 		#print("Enemy hit:", area.name)
 		isHit = true
 		Global.isHit = true
-		hit1Sound.play()
+		hit3Sound.play()
 		jump_cancel_timer = jump_cancel_window
 		attack_cooldown = min(attack_cooldown, hit_cooldown_amount)
 
@@ -186,21 +198,6 @@ func _on_attack_box_area_entered(area):
 				knockback_direction
 			)
 
-	# Hit effect
-	if hit1 and enemy:
-		var hit_effect = hit1.instantiate()
-		get_tree().current_scene.add_child(hit_effect)
-
-		if hit_effect is GPUParticles3D:
-			hit_effect.restart()
-		elif hit_effect.has_method("restart"):
-			hit_effect.call("restart")
-		elif hit_effect.has_method("set_emitting"):
-			hit_effect.set("emitting", true)
-
-		await get_tree().create_timer(1.0).timeout
-		if is_instance_valid(hit_effect):
-			hit_effect.queue_free()
 
 func pause():
 	process_mode = PROCESS_MODE_DISABLED

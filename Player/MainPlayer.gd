@@ -35,12 +35,32 @@ func initialize_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, jump_state, "to_jump")
 	
 	
-	state_machine.add_transition(state_machine.ANYSTATE, attack_state, "to_attack")
-	state_machine.add_transition(state_machine.ANYSTATE, attack_upper_state, "to_attackUpper")
-	state_machine.add_transition(state_machine.ANYSTATE, take_damage_state, "to_damaged")
+
 	state_machine.add_transition(jump_state, air_attack_state, "to_airAttack")
-	state_machine.add_transition(state_machine.ANYSTATE, attackMedium_state, "to_mediumAttack")
-	state_machine.add_transition(state_machine.ANYSTATE, attackHeavy_state, "to_heavyAttack")
+
+	state_machine.add_transition(idle_state, attack_state, "to_attack")       # L
+	state_machine.add_transition(idle_state, attackMedium_state, "to_mediumAttack") # M
+	state_machine.add_transition(idle_state, attackHeavy_state, "to_heavyAttack")   # H
+	state_machine.add_transition(idle_state, attack_upper_state, "to_attackUpper")  
+
+
+	state_machine.add_transition(walk_state, attack_state, "to_attack")       # L
+	state_machine.add_transition(walk_state, attackMedium_state, "to_mediumAttack") # M
+	state_machine.add_transition(walk_state, attackHeavy_state, "to_heavyAttack")   # H
+	state_machine.add_transition(walk_state, attack_upper_state, "to_attackUpper")  
+
+	state_machine.add_transition(run_state, attack_state, "to_attack")       # L
+	state_machine.add_transition(run_state, attackMedium_state, "to_mediumAttack") # M
+	state_machine.add_transition(run_state, attackHeavy_state, "to_heavyAttack")   # H
+	state_machine.add_transition(run_state, attack_upper_state, "to_attackUpper")  
+	
+	# THE COMBO CHAIN (Gatling Rules)
+	state_machine.add_transition(attack_state, attackMedium_state, "to_mediumAttack") # L -> M
+	state_machine.add_transition(attackMedium_state, attackHeavy_state, "to_heavyAttack") # M -> H
+	state_machine.add_transition(attackHeavy_state, attack_upper_state, "to_attackUpper") # H -> Launch
+
+	# THE FINISHER
+	state_machine.add_transition(attack_upper_state, jump_state, "to_jump")
 	
 	state_machine.add_transition(run_state, runJump_state, "to_runJump")
 	state_machine.add_transition(walk_state, burst_state, "to_burst")

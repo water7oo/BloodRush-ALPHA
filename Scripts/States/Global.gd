@@ -44,10 +44,13 @@ var blend_lerp_speed = 10.0
 @export var attack_cooldown_duration: float = 0.1 
 
 @export var attackMedium_cooldown_timer: float = 0.0
-@export var attackMedium_cooldown_duration: float = 0.3
+@export var attackMedium_cooldown_duration: float = 0.2
 
 @export var attackHeavy_cooldown_timer: float = 0.0
-@export var attackHeavy_cooldown_duration: float = 0.5
+@export var attackHeavy_cooldown_duration: float = 0.35
+
+@export var attackUpper_cooldown_timer: float = 0.0
+@export var attackUpper_cooldown_duration: float = 0.4
 
 var can_move: bool = true
 var last_enemy_hit = null

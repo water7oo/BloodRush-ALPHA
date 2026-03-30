@@ -4,12 +4,14 @@ extends LimboState
 @onready var state_machine: LimboHSM = $LimboHSM
 @onready var playerCharScene = $"../../RootNode/COWBOYPLAYER_V4"
 @onready var animationTree = playerCharScene.find_child("AnimationTree", true)
-
+@export var jump1Sound: AudioStreamPlayer
 @export var BASE_SPEED: float = 6.0  
 @export var MAX_SPEED: float = Global.MAX_SPEED - 3
 @export var ACCELERATION: float = Global.ACCELERATION - 5
 @export var DECELERATION: float = Global.DECELERATION + 50  # Adjusted to allow smoother momentum retention
 @export var momentum_deceleration: float = 1  
+@export var land1Sound: AudioStreamPlayer
+var was_on_floor: bool = false
 
 var air_timer: float = 0.0
 var jump_timer: float = 0.0
@@ -31,6 +33,13 @@ func _update(delta: float) -> void:
 	player_jump(delta)
 	initialize_attack(delta)
 	agent.move_and_slide()
+	
+	var is_on_floor = agent.is_on_floor()
+
+	if is_on_floor and not was_on_floor:
+		land1Sound.play()
+
+	was_on_floor = is_on_floor
 
 func player_jump(delta: float) -> void:
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
@@ -48,7 +57,6 @@ func player_jump(delta: float) -> void:
 	# Landing logic with smooth deceleration instead of hard stop
 	if agent.is_on_floor():
 		animationTree.set("parameters/Jump_Blend/blend_amount", -1)
-		
 		# Reduce velocity smoothly rather than stopping immediately
 		agent.velocity.x = move_toward(agent.velocity.x, agent.velocity.x * 0.5, 20 * delta)
 		agent.velocity.z = move_toward(agent.velocity.z, agent.velocity.z * 0.5, 20 * delta)
@@ -65,7 +73,6 @@ func player_jump(delta: float) -> void:
 # Falling check
 	if not agent.is_on_floor() and agent.velocity.y < 0:
 		animationTree.set("parameters/Jump_Blend/blend_amount", 0)
-		#print("Falling!")
 		
 		
 func initialize_attack(delta: float) -> void:

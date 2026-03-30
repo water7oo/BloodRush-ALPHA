@@ -44,6 +44,7 @@ var isHit: bool = false
 @export var hit1Sound: AudioStreamPlayer
 @export var hit2Sound: AudioStreamPlayer
 @export var hit3Sound: AudioStreamPlayer
+@export var hit4Sound: AudioStreamPlayer
 
 func _enter() -> void:
 	enemies_hit.clear()

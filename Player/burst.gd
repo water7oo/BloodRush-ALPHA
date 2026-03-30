@@ -3,7 +3,7 @@ extends LimboState
 @onready var armature = $"../../RootNode/Armature"
 @onready var playerCharScene = $"../../RootNode/COWBOYPLAYER_V4"
 @onready var animationTree = playerCharScene.find_child("AnimationTree", true)
-
+@export var Dodge1Sound: AudioStreamPlayer
 
 
 var is_dodging: bool = false
@@ -27,6 +27,7 @@ var last_ground_position = Vector3.ZERO
 var dodge_direction = Vector3.ZERO
 
 func _enter() -> void:
+	Dodge1Sound.play()
 	print("Entering Burst State")
 	animationTree.set("parameters/Ground_Blend2/blend_amount", 1)
 	is_dodging = true

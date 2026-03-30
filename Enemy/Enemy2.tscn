@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://bl275sfu3mmds"]
+[gd_scene format=4 uid="uid://bl275sfu3mmds"]
 
 [ext_resource type="Script" uid="uid://di7hn5g8shrvt" path="res://Scripts/enemy.gd" id="1_dwwfr"]
 [ext_resource type="Material" uid="uid://kddykiqv2ir2" path="res://MaterialTextures/Enemy.tres" id="2_0npau"]
@@ -269,6 +269,7 @@ animation = &"idle_low"
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_c683h"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ch611"]
+nodes/output/position = Vector2(500, 60)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_ea1wc")
 nodes/Animation/position = Vector2(-300, 120)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_15axv")
@@ -279,8 +280,7 @@ nodes/Blend2/node = SubResource("AnimationNodeBlend2_c683h")
 nodes/Blend2/position = Vector2(-60, 80)
 "nodes/Blend2 2/node" = SubResource("AnimationNodeBlend2_an1gk")
 "nodes/Blend2 2/position" = Vector2(220, 60)
-nodes/output/position = Vector2(500, 60)
-node_connections = [&"Blend2", 0, &"Animation", &"Blend2", 1, &"Animation 2", &"Blend2 2", 0, &"Blend2", &"Blend2 2", 1, &"Animation 3", &"output", 0, &"Blend2 2"]
+node_connections = [&"output", 0, &"Blend2 2", &"Blend2", 0, &"Animation", &"Blend2", 1, &"Animation 2", &"Blend2 2", 0, &"Blend2", &"Blend2 2", 1, &"Animation 3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_u8c5v"]
 size = Vector3(0.660662, 1.02917, 0.50911)
@@ -338,22 +338,22 @@ alpha_curve = SubResource("CurveTexture_x1xct")
 [sub_resource type="QuadMesh" id="QuadMesh_en0dp"]
 material = ExtResource("10_4svdh")
 
-[node name="Enemy" type="CharacterBody3D" groups=["Enemies"]]
+[node name="Enemy" type="CharacterBody3D" unique_id=457208653 groups=["Enemies"]]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
 script = ExtResource("1_dwwfr")
 hit_flash_duration = 1.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=295370142]
 transform = Transform3D(2.535, 0, 0, 0, 2.535, 0, 0, 0, 2.535, 0, 1.28779, 0)
 mesh = SubResource("BoxMesh_2ic80")
 script = ExtResource("4_866rt")
 
-[node name="RootNode" type="Node3D" parent="."]
+[node name="RootNode" type="Node3D" parent="." unique_id=1805039592]
 
-[node name="Armature" type="Node3D" parent="RootNode"]
+[node name="Armature" type="Node3D" parent="RootNode" unique_id=1260031344]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, -1.62921e-09, 0, 1.62921e-09, 0.01, 0, 0, 0)
 
-[node name="Skeleton3D" type="Skeleton3D" parent="RootNode/Armature"]
+[node name="Skeleton3D" type="Skeleton3D" parent="RootNode/Armature" unique_id=130467109]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 visible = false
 bones/0/name = "mixamorig_Hips"
@@ -532,74 +532,74 @@ bones/24/position = Vector3(4.47035e-07, 20.0375, -3.73274e-06)
 bones/24/rotation = Quaternion(8.55655e-09, 2.25755e-08, 2.67755e-09, 1)
 bones/24/scale = Vector3(1, 1, 1)
 
-[node name="Cowboy_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Cowboy_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=1709704639]
 mesh = SubResource("ArrayMesh_ffc8c")
 skin = SubResource("Skin_dknlr")
 surface_material_override/0 = ExtResource("2_0npau")
 
-[node name="Hat_Belt_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Hat_Belt_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=584490868]
 mesh = SubResource("ArrayMesh_qaed4")
 skin = SubResource("Skin_dknlr")
 surface_material_override/0 = ExtResource("2_0npau")
 
-[node name="Hat_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Hat_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=147195033]
 mesh = SubResource("ArrayMesh_ajm2o")
 skin = SubResource("Skin_dknlr")
 surface_material_override/0 = ExtResource("2_0npau")
 
-[node name="Hat_Belt_003" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Hat_Belt_003" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=2105385290]
 mesh = SubResource("ArrayMesh_vdll3")
 skin = SubResource("Skin_dknlr")
 surface_material_override/0 = ExtResource("2_0npau")
 
-[node name="Hat_Belt_007" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Hat_Belt_007" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=1413219516]
 mesh = SubResource("ArrayMesh_hidgf")
 skin = SubResource("Skin_dknlr")
 surface_material_override/0 = ExtResource("2_0npau")
 
-[node name="Hat_Belt_008" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D"]
+[node name="Hat_Belt_008" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=1315820499]
 material_override = ExtResource("2_0npau")
 mesh = SubResource("ArrayMesh_amyn8")
 skin = SubResource("Skin_dknlr")
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1928647156]
 tree_root = SubResource("AnimationNodeBlendTree_ch611")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Blend2/blend_amount = 0.0
 "parameters/Blend2 2/blend_amount" = 0.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2111857369]
 
-[node name="enemyHurtBox" type="Area3D" parent="."]
+[node name="enemyHurtBox" type="Area3D" parent="." unique_id=415868738]
 transform = Transform3D(1.17749, 0, 0, 0, 0.642886, 0, 0, 0, 1.74745, 0, 1.12452, 0.336345)
 gravity_space_override = 1
 script = ExtResource("8_scm7k")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="enemyHurtBox"]
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="enemyHurtBox" unique_id=1395692564]
 transform = Transform3D(3.99981, 0, 0, 0, 3.99958, -0.0579429, 0, 0.0579429, 3.99958, 0.0154045, 0.371267, -0.193714)
 shape = SubResource("BoxShape3D_u8c5v")
 
-[node name="enemyBox" type="Area3D" parent="."]
+[node name="enemyBox" type="Area3D" parent="." unique_id=1258361166]
 transform = Transform3D(0.855, 0, 0, 0, 0.632, 0, 0, 0, 1.042, 0, 0.624111, 0.144857)
 monitoring = false
 monitorable = false
 gravity_space_override = 1
 script = ExtResource("8_scm7k")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="enemyBox"]
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="enemyBox" unique_id=1405604518]
 transform = Transform3D(6.22486, 0, 0, 0, 6.22273, -0.121589, 0, 0.15908, 3.635, 0.00262567, 1.13445, -0.177029)
 shape = SubResource("BoxShape3D_4svdh")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=545622494]
 process_mode = 3
 transform = Transform3D(2.2, 0, 0, 0, 2.2, 0, 0, 0, 2.2, 0, 1.76257, -0.0626284)
 shape = SubResource("CapsuleShape3D_yoo35")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=2132078457]
 process_callback = 0
 autostart = true
 
-[node name="health_label" type="Label3D" parent="."]
+[node name="health_label" type="Label3D" parent="." unique_id=593637493]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.74297, 0)
 billboard = 1
 texture_filter = 0
@@ -608,21 +608,21 @@ font_size = 130
 outline_size = 22
 uppercase = true
 
-[node name="PunchDust" parent="." instance=ExtResource("6_rbnjl")]
+[node name="PunchDust" parent="." unique_id=1308319518 instance=ExtResource("6_rbnjl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.83869, 0.566111)
 visible = false
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1360374910]
 stream = ExtResource("7_htiw0")
 volume_db = -33.968
 
-[node name="EnemyHealthBar" type="MeshInstance3D" parent="."]
+[node name="EnemyHealthBar" type="MeshInstance3D" parent="." unique_id=1367893088]
 transform = Transform3D(5.82455, 0, 0, 0, 0.352775, 0, 0, 0, 1, 0, 3.01409, 0)
 visible = false
 mesh = SubResource("QuadMesh_l36fl")
 surface_material_override/0 = SubResource("ShaderMaterial_ra2eo")
 
-[node name="hit1" type="GPUParticles3D" parent="."]
+[node name="hit1" type="GPUParticles3D" parent="." unique_id=1294251315]
 process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.32948, 0)
 emitting = false

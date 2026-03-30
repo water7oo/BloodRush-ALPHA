@@ -44,6 +44,7 @@ var isHit: bool = false
 @export var hit1Sound: AudioStreamPlayer
 @export var hit2Sound: AudioStreamPlayer
 @export var hit3Sound: AudioStreamPlayer
+@export var hit4Sound: AudioStreamPlayer
 
 func _enter() -> void:
 	enemies_hit.clear()
@@ -114,7 +115,7 @@ func _on_attack_box_area_entered(area):
 		#print("Enemy hit:", area.name)
 		isHit = true
 		Global.isHit = true
-		hit1Sound.play()
+		hit2Sound.play()
 		jump_cancel_timer = jump_cancel_window
 		attack_cooldown = min(attack_cooldown, hit_cooldown_amount)
 		
