@@ -39,7 +39,7 @@ func _update(delta: float) -> void:
 	
 	if agent.state_machine.get_active_state() == self:
 		if is_on_floor and not was_on_floor:
-			agent.state_machine.dispatch("to_idle")
+			land1Sound.play()
 			Global.attackAir_cooldown_timer = 0
 			Global.attackMediumAir_cooldown_timer = 0
 			Global.attackHeavyAir_cooldown_timer = 0
@@ -50,7 +50,7 @@ func _update(delta: float) -> void:
 			Global.attackMedium_cooldown_timer = 0
 			Global.attackHeavy_cooldown_timer = 0
 			Global.attackUpper_cooldown_timer = 0
-			land1Sound.play()
+			agent.state_machine.dispatch("to_idle")
 		
 
 	was_on_floor = is_on_floor

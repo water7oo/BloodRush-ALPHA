@@ -139,7 +139,6 @@ func consume_inputs(types: Array):
 func can_buffer_attack() -> bool:
 	var state = state_machine.get_active_state()
 
-	# You can expand this later
 	if state.has_method("can_cancel") and state.can_cancel:
 		return true
 		

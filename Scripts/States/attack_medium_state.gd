@@ -86,6 +86,7 @@ func _process_attack(delta: float) -> void:
 		
 	if Global.attackMedium_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
 		if buffered_input and can_chain_attack:
+			show_combo_fx()
 			agent.state_machine.dispatch(next_attack_state)
 		else:
 			agent.state_machine.dispatch("to_idle")
@@ -115,6 +116,11 @@ func _start_attack() -> void:
 	
 	
 	next_attack_state = "to_heavyAttack"  # Light -> Medium
+
+func show_combo_fx() -> void:
+	if ComboConfirmFX:
+		ComboConfirmFX.restart()
+		ComboConfirmFX.emitting = true
 
 func _on_attack_box_area_entered(area):
 	if isHit:

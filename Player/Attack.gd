@@ -90,7 +90,6 @@ func _process_attack(delta: float) -> void:
 			can_cancel = false
 
 	if buffered_input and can_cancel:
-		show_combo_fx()
 		agent.state_machine.dispatch(next_attack_state)
 		
 	if Global.attack_cooldown_timer <= 0.0 and recovery_timer <= 0.0:

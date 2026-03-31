@@ -55,6 +55,8 @@ var isHit: bool = false
 
 var next_attack_state: StringName
 
+var buffered_input := false
+
 # -----------------------
 
 func _enter() -> void:
@@ -73,26 +75,33 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	_process_attack(delta)
+	if Input.is_action_just_pressed("move_jump"):
+		buffered_input = true
 	agent.move_and_slide()
 
 # -----------------------
 
 func _process_attack(delta: float) -> void:
-
 	if Global.attackUpper_cooldown_timer > 0.0:
 		Global.attackUpper_cooldown_timer -= delta
-
-
 	if recovery_timer > 0.0:
 		recovery_timer -= delta
 	if combo_timer > 0.0:
 		combo_timer -= delta
+	if can_cancel:
+		cancel_timer -= delta
+		if cancel_timer <= 0:
+			can_cancel = false
 
 	# =========================
-	if jump_cancel_timer > 0.0 and isHit:
-		jump_cancel_timer -= delta
+	# =========================
 
-		if Input.is_action_just_pressed("move_jump"):
+	if buffered_input and can_cancel:
+		agent.state_machine.dispatch(next_attack_state)
+		
+	if Global.attack_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
+		if buffered_input and can_chain_attack:
+			show_combo_fx()
 			print("Jump Cancel")
 			jumpCancelSound.play()
 			# Small forward boost
@@ -109,19 +118,12 @@ func _process_attack(delta: float) -> void:
 
 			if jumpCancelFX:
 				jumpCancelFX.emitting = true
-
-			agent.state_machine.dispatch("to_jump")
-			return
-
-	# =========================
-
-	if Global.attackUpper_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
-		_exit_attack_state()
-
-		if can_chain_attack and next_attack_state:
 			agent.state_machine.dispatch(next_attack_state)
 		else:
 			agent.state_machine.dispatch("to_idle")
+
+		buffered_input = false
+		_exit_attack_state()
 
 	# =========================
 
@@ -156,7 +158,10 @@ func _start_attack() -> void:
 	# Launcher → jump follow-up
 	next_attack_state = "to_jump"
 
-# -----------------------
+func show_combo_fx() -> void:
+	if ComboConfirmFX:
+		ComboConfirmFX.restart()
+		ComboConfirmFX.emitting = true
 
 func _on_attack_box_area_entered(area):
 	if isHit:
