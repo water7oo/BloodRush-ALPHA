@@ -25,24 +25,24 @@ parameters/Ground_Blend2/blend_amount = -1.0
 parameters/Ground_Blend3/blend_amount = -1.0
 parameters/Jump_Blend/blend_amount = -1.0
 
-[node name="Skeleton3D" parent="Armature_001" parent_id_path=PackedInt32Array(441478836) index="0" unique_id=1335770693]
+[node name="Skeleton3D" parent="Armature_001" parent_id_path=PackedInt32Array(63879458) index="0" unique_id=691688560]
 bones/0/position = Vector3(8.806781e-15, 79.27571, -2.0304396)
 bones/0/rotation = Quaternion(1.1930224e-05, 1, -1.46896895e-08, 8.475214e-06)
 bones/1/rotation = Quaternion(-0.005127955, 8.536499e-06, -1.1930323e-05, 0.99998695)
 bones/2/rotation = Quaternion(-9.313226e-10, 3.5634256e-14, 6.828278e-13, 1)
 bones/3/rotation = Quaternion(-7.916242e-09, 1.10588655e-17, 4.8820777e-16, 1)
 bones/4/position = Vector3(-1.5890945e-08, 22.99689, 6.484773e-07)
-bones/4/rotation = Quaternion(-0.18001182, -0.0051519303, 0.0040898602, 0.98364246)
+bones/4/rotation = Quaternion(-0.020477148, -0.068686165, 0.011299579, 0.9973641)
 bones/5/rotation = Quaternion(0.037521902, -3.3201746e-09, 5.2423815e-10, 0.99929583)
-bones/7/position = Vector3(-13.134421, 20.416407, 0.19758555)
-bones/7/rotation = Quaternion(0.63619596, -0.03531895, 0.7338791, 0.23543334)
+bones/7/position = Vector3(-13.134422, 20.425455, 0.19460797)
+bones/7/rotation = Quaternion(0.62001526, -0.105180964, 0.6974572, 0.34361538)
 bones/8/position = Vector3(2.633474e-06, 26.740139, -6.235451e-06)
 bones/8/rotation = Quaternion(0.017626101, -0.7493636, -0.0064994544, 0.6618922)
 bones/9/position = Vector3(-7.3854353e-06, 8.558221, -1.1333819e-05)
 bones/9/rotation = Quaternion(-0.056576002, -0.6298052, -0.05487109, 0.7727443)
 bones/10/position = Vector3(5.9604636e-06, 32.319897, -2.324582e-06)
-bones/11/position = Vector3(13.134421, 20.27857, -0.25193164)
-bones/11/rotation = Quaternion(-0.6139336, -0.105636254, 0.73102635, -0.2784365)
+bones/11/position = Vector3(13.134424, 20.269537, -0.24895547)
+bones/11/rotation = Quaternion(-0.5908751, -0.16200812, 0.696318, -0.37384665)
 bones/12/position = Vector3(6.6614566e-06, 26.740143, 1.01901e-05)
 bones/12/rotation = Quaternion(0.14852485, -0.0074688415, 0.0053294795, 0.9888661)
 bones/13/position = Vector3(-4.950568e-06, 6.5893917, 1.917073e-06)
@@ -62,7 +62,7 @@ bones/25/position = Vector3(-8.055081e-07, 32.304012, 5.437978e-06)
 bones/25/rotation = Quaternion(0.3157233, 0.3211958, -0.11452717, 0.88545793)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature_001/Skeleton3D" index="0" unique_id=390984200]
-transform = Transform3D(0.09356382, -0.26792786, 0.95888484, -0.30041796, -0.9258163, -0.22937447, 0.9492072, -0.2666051, -0.16711327, -29.253536, 125.16209, -8.014438)
+transform = Transform3D(0.02152763, -0.4748366, 0.87981033, -0.3521059, -0.8272323, -0.43784443, 0.9357122, -0.30036077, -0.18500108, -35.3042, 129.94556, -8.965935)
 bone_name = "mixamorig_RightForeArm"
 bone_idx = 13
 
@@ -70,7 +70,7 @@ bone_idx = 13
 transform = Transform3D(21.3403, 116.038, 18.9752, 18.0004, -22.2821, 116.016, 116.193, -17.8599, -21.458, -22.6214, 45.7165, -19.2716)
 visible = false
 
-[node name="MORI_003" parent="Armature_001/Skeleton3D" index="1" unique_id=1424242972]
+[node name="MORI_003" parent="Armature_001/Skeleton3D" index="1" unique_id=1939629804]
 visible = false
 material_override = ExtResource("2_qhor5")
 

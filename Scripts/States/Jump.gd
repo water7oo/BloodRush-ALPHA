@@ -21,6 +21,7 @@ var can_jump: bool = true
 var velocity = Vector3.ZERO
 
 func _enter() -> void:
+	jump1Sound.play()
 	print("Current State:", agent.state_machine.get_active_state())
 	if agent.is_on_floor():
 		agent.velocity.y = Global.JUMP_VELOCITY

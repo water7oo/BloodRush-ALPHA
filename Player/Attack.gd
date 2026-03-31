@@ -3,7 +3,9 @@ extends LimboState
 @export var attack_box: Node
 @export var attack_box_col: Node
 @export var attack_box_debug: Node
-@export var hit1: PackedScene
+@export var ComboConfirmFX: GPUParticles3D
+
+
 @onready var playerCharScene =  $"../../RootNode/COWBOYPLAYER_V4"
 @onready var gameJuice = get_node("/root/GameJuice")
 
@@ -18,7 +20,6 @@ extends LimboState
 @export var attack_duration: float = 0.4  
 @export var hit_cooldown_amount: float = 0.2
 @export var attack_cooldown_duration: float = 0.5
-var attack_cooldown_timer: float = 0.0
 
 @export var enemyTargetLength: float = 0.4
 @export var enemyTargetMagnitude: float = 0.01
@@ -33,7 +34,6 @@ var jump_cancel_timer: float = 0.0
 @export var jump_cancel_window: float = 0.25
 
 var preserved_velocity: Vector3 = Vector3.ZERO
-var attack_cooldown: float = 0.0
 var combo_timer: float = 0.0
 var can_chain_attack: bool = false  
 var isHit: bool = false
@@ -69,22 +69,26 @@ func _update(delta: float) -> void:
 	agent.move_and_slide()
 
 func can_start_attack() -> bool:
-	return attack_cooldown_timer <= 0.0 and not Global.is_attacking
+	return Global.attack_cooldown_timer_timer <= 0.0 and not Global.is_attacking
 
 func _process_attack(delta: float) -> void:
-	if attack_cooldown > 0.0:
-		attack_cooldown -= delta
+	if Global.attack_cooldown_timer > 0.0:
+		Global.attack_cooldown_timer -= delta
 	if recovery_timer > 0.0:
 		recovery_timer -= delta
 	if combo_timer > 0.0:
 		combo_timer -= delta
 
-	if attack_cooldown <= 0.0 and recovery_timer <= 0.0:
+
+			
+	if Global.attack_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
 		_exit_attack_state()
 		if can_chain_attack and next_attack_state:
 			agent.state_machine.dispatch(next_attack_state)
+			show_combo_fx()
 		else:
 			agent.state_machine.dispatch("to_idle")
+
 
 	# Gravity and velocity
 	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
@@ -106,7 +110,7 @@ func _start_attack() -> void:
 	Global.is_attacking = true
 	isHit = false
 
-	attack_cooldown = attack_duration
+	Global.attack_cooldown_timer = attack_duration
 	combo_timer = combo_window_duration
 	recovery_timer = recovery_duration  
 
@@ -116,15 +120,19 @@ func _start_attack() -> void:
 	# Set next attack in combo chain
 	next_attack_state = "to_mediumAttack"  # Light -> Medium
 
+func show_combo_fx() -> void:
+	if ComboConfirmFX:
+		ComboConfirmFX.restart()
+		ComboConfirmFX.emitting = true
+		
+		
 func _on_attack_box_area_entered(area):
 	if isHit:
 		return
 	if area.has_method("takeDamageEnemy"):
-		print("light attack")
 		isHit = true
-		
+	
 		recovery_timer = hit_recovery_duration
-		can_cancel = true
 		cancel_timer = cancel_window
 		attack_box.monitoring = false
 		var enemy = area
@@ -135,7 +143,10 @@ func _on_attack_box_area_entered(area):
 		enemies_hit[area] = true 
 		Global.isHit = true
 		hit1Sound.play()
-		attack_cooldown = min(attack_cooldown, hit_cooldown_amount)
+		Global.attack_cooldown_timer = min(Global.attack_cooldown_timer, hit_cooldown_amount)
+		
+
+		
 		if enemy.has_node("MeshInstance3D"):
 			var mesh = enemy.get_node("MeshInstance3D")
 			mesh.trigger_flash()
@@ -144,19 +155,24 @@ func _on_attack_box_area_entered(area):
 		if area.has_method("set_monitoring"):
 			area.monitoring = false
 
+			
+			
+
+		var saved_velocity = agent.velocity
+		agent.velocity = Vector3.ZERO
+		can_cancel = true
+		gameJuice.objectShake(enemy, enemyTargetLength, enemyTargetMagnitude)
+		await gameJuice.hitstop(enemyTargetHitStop)
+
 		var hit1Effect = enemy.find_child("hit1", true, false)
 				
 		if hit1Effect is GPUParticles3D:
 			hit1Effect.restart()
 			hit1Effect.emitting = true
+			hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 		elif hit1Effect == null:
-			print("Warning: No GPUParticles3D found on " + enemy.name)
-			
-			
-		hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
-		var saved_velocity = agent.velocity
-		agent.velocity = Vector3.ZERO
-		gameJuice.objectShake(area.get_parent(), enemyTargetLength, enemyTargetMagnitude)
+			print("Warning: No GPUParticles3D found on " + enemy.name)	
+		gameJuice.objectShake(enemy, enemyTargetLength, enemyTargetMagnitude)
 		await gameJuice.hitstop(enemyTargetHitStop)
 		agent.velocity = saved_velocity
 
@@ -179,7 +195,3 @@ func _exit_attack_state() -> void:
 	isHit = false
 	if attack_box:
 		attack_box.monitoring = false
-
-	# Reset cooldown timers
-	Global.attack_cooldown_timer = Global.attack_cooldown_duration
-	attack_cooldown_timer = attack_cooldown_duration

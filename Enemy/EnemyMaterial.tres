@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dkc2f2xqtp41w"]
+
+[ext_resource type="Texture2D" uid="uid://7qgg4do3dwtm" path="res://Enemy/Sandbag.fbm/7467e88d.png" id="1_uqwa1"]
+[ext_resource type="Shader" uid="uid://c8gnrj13ddg2o" path="res://FX/hitFlash.gdshader" id="2_a8ak2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ae78"]
+render_priority = 0
+shader = ExtResource("2_a8ak2")
+shader_parameter/flash = 0.0
+shader_parameter/custom_color = Color(1, 1, 1, 1)
+
+[resource]
+next_pass = SubResource("ShaderMaterial_3ae78")
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_uqwa1")
+emission = Color(1, 1, 1, 1)
+texture_filter = 0

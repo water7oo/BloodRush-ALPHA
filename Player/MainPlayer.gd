@@ -25,6 +25,11 @@ extends CharacterBody3D
 @onready var take_damage_state = $LimboHSM/TakeDamageState
 @onready var recover_state = $LimboHSM/RecoverState
 
+var input_buffer := {}
+var input_buffer_time := 0.2
+var input_queue: Array = []
+
+
 
 func _ready():
 	initialize_state_machine()
@@ -99,27 +104,84 @@ func _physics_process(delta: float) -> void:
 	handle_attack_input()
 	
 
+func record_inputs():
+	var time = Time.get_ticks_msec() / 1000.0
+
+	if Input.is_action_just_pressed("attack_light_1"):
+		input_queue.append({"type": "light", "time": time})
+
+	if Input.is_action_just_pressed("attack_medium_1"):
+		input_queue.append({"type": "medium", "time": time})
+
+	if Input.is_action_just_pressed("attack_heavy_1"):
+		input_queue.append({"type": "heavy", "time": time})
+		
+
+func clean_inputs():
+	var current_time = Time.get_ticks_msec() / 1000.0
+	
+	input_queue = input_queue.filter(func(i):
+		return current_time - i.time <= input_buffer_time
+	)
+
+func has_input(type: String) -> bool:
+	for i in input_queue:
+		if i.type == type:
+			return true
+	return false
+	
+func consume_inputs(types: Array):
+	input_queue = input_queue.filter(func(i):
+		return not i.type in types
+	)
+
+func can_buffer_attack() -> bool:
+	var state = state_machine.get_active_state()
+
+	# You can expand this later
+	if state.has_method("can_cancel") and state.can_cancel:
+		return true
+		
+	return false
 
 func handle_attack_input() -> void:
-	if Global.is_attacking:
-		return  # Prevent input until attack recovery allows cancel or hit confirm
+	record_inputs()
+	clean_inputs()
 
 	var is_air = not is_on_floor()
 
-	# Light attack
-	if Input.is_action_just_pressed("attack_light_1") and Global.attack_cooldown_timer <= 0:
-		state_machine.dispatch("to_airAttack" if is_air else "to_attack")
-		return
 
-	# Medium attack
-	if Input.is_action_just_pressed("attack_medium_1") and Global.attackMedium_cooldown_timer <= 0:
-		state_machine.dispatch("to_airMediumAttack" if is_air else "to_mediumAttack")
-		return
+	# ✅ LAUNCHER (priority move)
+	if has_input("medium") and has_input("heavy") and Global.attackUpper_cooldown_timer <= 0:
+		if not Global.is_attacking or can_buffer_attack():
+			state_machine.dispatch("to_attackUpper" if not is_air else "to_airSLamAttack")
+			Global.attackUpper_cooldown_timer = Global.attackUpper_cooldown_duration
+			consume_inputs(["medium", "heavy"])
+			return
 
-	# Heavy attack
-	if Input.is_action_just_pressed("attack_heavy_1") and Global.attackHeavy_cooldown_timer <= 0:
-		state_machine.dispatch("to_airHeavyAttack" if is_air else "to_heavyAttack")
-		return
+	# ✅ LIGHT
+	if has_input("light") and Global.attack_cooldown_timer <= 0:
+		if not Global.is_attacking or can_buffer_attack():
+			state_machine.dispatch("to_airAttack" if is_air else "to_attack")
+			Global.attack_cooldown_timer = Global.attack_cooldown_duration
+			consume_inputs(["light"])
+			return
+
+	# ✅ MEDIUM
+	if has_input("medium") and Global.attackMedium_cooldown_timer <= 0:
+		if not Global.is_attacking or can_buffer_attack():
+			state_machine.dispatch("to_airMediumAttack" if is_air else "to_mediumAttack")
+			Global.attackMedium_cooldown_timer = Global.attackMedium_cooldown_duration
+			consume_inputs(["medium"])
+			return
+
+	# ✅ HEAVY
+	if has_input("heavy") and Global.attackHeavy_cooldown_timer <= 0:
+		if not Global.is_attacking or can_buffer_attack():
+			state_machine.dispatch("to_airHeavyAttack" if is_air else "to_heavyAttack")
+			Global.attackHeavy_cooldown_timer = Global.attackHeavy_cooldown_duration
+			consume_inputs(["heavy"])
+			return
 		
 func playerCamera(delta: float) -> void:
 	pass

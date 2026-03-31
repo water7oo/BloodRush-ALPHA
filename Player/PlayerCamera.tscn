@@ -9,10 +9,10 @@
 render_priority = 0
 shader = ExtResource("2_ye0eu")
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/shadow_thickness = 1.23
-shader_parameter/depth_sensitivity = 0.02
+shader_parameter/shadow_thickness = 1.3
+shader_parameter/depth_sensitivity = 0.04
 shader_parameter/outline_start = 0.2
-shader_parameter/outline_end = 0.4
+shader_parameter/outline_end = 2.4
 
 [sub_resource type="QuadMesh" id="QuadMesh_n1m7q"]
 size = Vector2(2, 2)
@@ -32,10 +32,8 @@ enabled = true
 spring_arm_pivot = NodePath("SpringArmPivot")
 
 [node name="SpringArmPivot" type="Node3D" parent="." unique_id=1208215425 groups=["camera"]]
-process_mode = 3
 
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot" unique_id=304660332]
-process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 0.959619, 0.281304, 0, -0.281304, 0.959619, 0, 0, 0)
 collision_mask = 255
 spring_length = 0.0
@@ -46,7 +44,7 @@ transform = Transform3D(1, 0, 0, 0, 0.995733, -0.0922837, 0, 0.0922837, 0.995733
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin" unique_id=1163280920]
 process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 0.99440026, 0.10567391, 0, -0.10567391, 0.99440026, 0, 3.811637, 24.105665)
+transform = Transform3D(1, 0, 0, 0, 0.99440026, 0.10567385, 0, -0.10567385, 0.99440026, 0, 5.4152627, 31.55068)
 current = true
 fov = 45.9
 size = 5.762

@@ -10,9 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bl275sfu3mmds" path="res://Enemy/Enemy2.tscn" id="8_x6rhu"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Player/PlayerCamera.tscn" id="9_sw35u"]
 [ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Player/COWBOYPLAYER(v4).tscn" id="10_wbl5e"]
-[ext_resource type="Texture2D" uid="uid://bdkrvec3wh6qh" path="res://My Textures/TextureGrid_32_devLight.png" id="19_4mwm1"]
 [ext_resource type="Material" uid="uid://dcuvjs33ebpe3" path="res://MaterialTextures/Room.tres" id="21_lu0m3"]
-[ext_resource type="PackedScene" uid="uid://675efup0jeq" path="res://Enviroment/bench.tscn" id="22_k3ilg"]
 [ext_resource type="PackedScene" uid="uid://3jvyp4is0xns" path="res://Enviroment/bush.tscn" id="23_fbm6c"]
 [ext_resource type="PackedScene" uid="uid://dbvxknylp1wou" path="res://Enviroment/TreeHead.tscn" id="24_40guh"]
 [ext_resource type="PackedScene" uid="uid://djpj07be2ylsn" path="res://Enviroment/Trunk.tscn" id="25_c8r2n"]
@@ -33,7 +31,7 @@ volumetric_fog_emission_energy = 122.2
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ov31c"]
 shader = ExtResource("2_2nta8")
 shader_parameter/change_color_depth = true
-shader_parameter/target_color_depth = 4
+shader_parameter/target_color_depth = 5
 shader_parameter/dithering = true
 shader_parameter/scale_resolution = true
 shader_parameter/target_resolution_scale = 1
@@ -46,16 +44,6 @@ shader_parameter/clipPosition = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b0ev0"]
 size = Vector3(0.209863, 0.2, 0.2)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2po7x"]
-shading_mode = 0
-diffuse_mode = 3
-specular_mode = 1
-disable_ambient_light = true
-albedo_texture = ExtResource("19_4mwm1")
-uv1_scale = Vector3(11, 11, 11)
-uv1_triplanar_sharpness = 0.233259
-texture_filter = 4
 
 [node name="TRAINING" type="Node3D" unique_id=334628358]
 
@@ -171,16 +159,6 @@ transform = Transform3D(6, 0, 0, 0, -2.62268e-07, 6, 0, -6, -2.62268e-07, -17.62
 transform = Transform3D(42.4697, 0, 0, 0, 43.8333, 1.42109e-14, 0, -2.75122e-11, 4.71876, -4.37611, -4.16667, -0.833334)
 shape = SubResource("BoxShape3D_b0ev0")
 
-[node name="Wall" type="CSGCombiner3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=507974537]
-transform = Transform3D(-3.86192e-07, -334.841, 0, 8.83504, -1.46334e-05, 0, 0, 0, 392.027, -27.2877, -0.759947, 23.1525)
-material_override = SubResource("StandardMaterial3D_2po7x")
-use_collision = true
-
-[node name="MeshInstance3D4" type="CSGBox3D" parent="Preview/SubViewportContainer/SubViewport/Wall" unique_id=1702577353]
-transform = Transform3D(1, -2.27374e-11, 0, -1.11022e-16, 1, 0, 0, 0, 1, 2.44242, -0.0723267, -0.0584437)
-visible = false
-size = Vector3(0.158636, 0.124639, 0.121)
-
 [node name="Floor" type="CSGCombiner3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1770941170]
 transform = Transform3D(-3.40497e-08, -35.6877, 0, 0.778967, -1.55995e-06, 0, 0, 0, 44.9384, 0, 1.15208, 10)
 material_overlay = ExtResource("21_lu0m3")
@@ -189,19 +167,13 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="MeshInstance3D" type="CSGBox3D" parent="Preview/SubViewportContainer/SubViewport/Floor" unique_id=1454563573]
-transform = Transform3D(11.342, 2.34832e-09, 0, 1.77636e-15, 9.38252, 0, 0, 0, 8.72365, -7.33694, 0.0385135, -0.341102)
-size = Vector3(1.20399, 0.114513, 0.092585)
+transform = Transform3D(11.342, 2.4465407e-09, 0, 1.7763568e-15, 9.38252, 0, 0, 0, 8.72365, -2.2055273, 0.038513493, -0.34110194)
+size = Vector3(0.29913855, 0.114513, 0.092585)
 
 [node name="MeshInstance3D3" type="CSGBox3D" parent="Preview/SubViewportContainer/SubViewport/Floor" unique_id=1586581000]
 transform = Transform3D(11.342, 5.20049e-09, 0, 1.77636e-15, 9.38252, 0, 0, 0, 8.72365, -2.13536, 0.836974, 0.00107372)
 visible = false
 size = Vector3(0.624329, 0.0582642, 0.0124887)
-
-[node name="Bench" parent="Preview/SubViewportContainer/SubViewport" unique_id=1994223661 instance=ExtResource("22_k3ilg")]
-transform = Transform3D(3.16, 0, 0, 0, 3.16, 0, 0, 0, 3.16, 0, 0.793727, 10.3658)
-
-[node name="Bench2" parent="Preview/SubViewportContainer/SubViewport" unique_id=1340243251 instance=ExtResource("22_k3ilg")]
-transform = Transform3D(3.16, 0, 0, 0, 3.16, 0, 0, 0, 3.16, -9, 0.793727, 10.3658)
 
 [node name="bushALL" type="Node3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=2073376120]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2829, 0, 3.53464)

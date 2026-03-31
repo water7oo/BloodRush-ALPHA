@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://dbj1gqpp8xunp"]
 
-[ext_resource type="Texture2D" uid="uid://dyej4r850v6s7" path="res://FX/hit1.png" id="1_gy5tt"]
+[ext_resource type="Texture2D" uid="uid://h0pqkcu5k018" path="res://FX/T_flare2.png" id="1_gy5tt"]
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_4x58y"]
 expanded_output_ports = [0]
@@ -26,9 +26,10 @@ keep_scale = true
 modes/diffuse = 3
 modes/specular = 1
 flags/unshaded = true
+flags/shadows_disabled = true
 nodes/vertex/0/position = Vector2(460, 40)
 nodes/vertex/2/node = SubResource("VisualShaderNodeBillboard_rl476")
-nodes/vertex/2/position = Vector2(180, 80)
+nodes/vertex/2/position = Vector2(20, 120)
 nodes/vertex/connections = PackedInt32Array(2, 0, 0, 10)
 nodes/fragment/0/position = Vector2(640, -60)
 nodes/fragment/2/node = SubResource("VisualShaderNodeInput_4x58y")
