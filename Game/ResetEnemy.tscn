@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" uid="uid://c0uhkhs4x77ay" path="res://Game/resetEnemyPos.gd" id="1_jx2w8"]
 
-[node name="ResetEnemy" type="Node3D" unique_id=1684563751]
+[node name="Reset" type="Node3D" unique_id=1684563751]
 script = ExtResource("1_jx2w8")

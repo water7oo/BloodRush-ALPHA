@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://7l5yih8w56c3"]
+[gd_scene format=3 uid="uid://7l5yih8w56c3"]
 
 [ext_resource type="Script" uid="uid://b0vlvthw3ye25" path="res://Scripts/follow_cam.gd" id="1_hwm0y"]
 [ext_resource type="Shader" uid="uid://xtbp2rolummv" path="res://Shaders/OUTLINE_2.1.gdshader" id="2_ye0eu"]
@@ -25,71 +25,71 @@ size = Vector2(2, 2)
 
 [sub_resource type="BoxMesh" id="BoxMesh_t12er"]
 
-[node name="CameraSet" type="Node3D" node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
+[node name="CameraSet" type="Node3D" unique_id=388107330 node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
 process_mode = 3
 script = ExtResource("1_hwm0y")
 enabled = true
 spring_arm_pivot = NodePath("SpringArmPivot")
 
-[node name="SpringArmPivot" type="Node3D" parent="." groups=["camera"]]
+[node name="SpringArmPivot" type="Node3D" parent="." unique_id=1208215425 groups=["camera"]]
 process_mode = 3
 
-[node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot"]
+[node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot" unique_id=304660332]
 process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 0.959619, 0.281304, 0, -0.281304, 0.959619, 0, 0, 0)
 collision_mask = 255
 spring_length = 0.0
 margin = 0.0
 
-[node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D"]
+[node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D" unique_id=1220356171]
 transform = Transform3D(1, 0, 0, 0, 0.995733, -0.0922837, 0, 0.0922837, 0.995733, 0, 0, 0)
 
-[node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin"]
+[node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin" unique_id=1163280920]
 process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 0.997502, 0.0706269, 0, -0.0706269, 0.997502, 0, 2.25155, 23.8012)
+transform = Transform3D(1, 0, 0, 0, 0.99440026, 0.10567391, 0, -0.10567391, 0.99440026, 0, 3.811637, 24.105665)
 current = true
 fov = 45.9
 size = 5.762
 
-[node name="Outline" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D"]
+[node name="Outline" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D" unique_id=1257294092]
 transform = Transform3D(6.67, 0, 0, 0, 6.54708, -1.27464, 0, 1.27464, 6.54708, 0.0447144, -0.107597, -1.45398)
 material_override = SubResource("ShaderMaterial_td6vy")
 mesh = SubResource("QuadMesh_n1m7q")
 skeleton = NodePath("../../../../..")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D" unique_id=1738410965]
 transform = Transform3D(2, -2.32831e-10, -5.96046e-08, 2.32831e-10, 2, 0, -3.46945e-18, 0, 2, 0.0447144, -0.215859, -0.899242)
 visible = false
 material_override = SubResource("ShaderMaterial_7gdqc")
 mesh = SubResource("QuadMesh_n1m7q")
 skeleton = NodePath("../../../../..")
 
-[node name="Marker3D" type="Marker3D" parent="SpringArmPivot"]
+[node name="Marker3D" type="Marker3D" parent="SpringArmPivot" unique_id=688075516]
 transform = Transform3D(1, 0, 0, 9.31323e-10, 1, 1.49012e-08, 7.45058e-09, -1.49012e-08, 1, -2.79397e-08, 4.47035e-08, 9.68575e-08)
 visible = false
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="SpringArmPivot"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SpringArmPivot" unique_id=2093584758]
 transform = Transform3D(0.445, 0, 0, 0, 0.444999, 0, 0, 0, 0.445, 0, 1.38965, 0.232)
 visible = false
 material_override = SubResource("ShaderMaterial_wivcw")
 mesh = SubResource("CapsuleMesh_a8st2")
 skeleton = NodePath("../SpringArm3D/Margin/Camera3D")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="SpringArmPivot"]
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="SpringArmPivot" unique_id=2072487226]
 transform = Transform3D(0.698, 0, 0, 0, 0.698, 0, 0, 0, 0.698, 0, 0, 0)
 visible = false
 material_override = SubResource("ShaderMaterial_wivcw")
 mesh = SubResource("BoxMesh_t12er")
 skeleton = NodePath("../SpringArm3D/Margin/Camera3D")
 
-[node name="bush2" parent="." instance=ExtResource("3_ye0eu")]
+[node name="bush2" parent="." unique_id=887475478 instance=ExtResource("3_ye0eu")]
 transform = Transform3D(0.524971, -0.923009, 1.89245, 1.70508e-07, -1.95038, -0.951265, 2.10554, 0.230132, -0.47184, 0.069, 3.56781, -36.4612)
 visible = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1580383606]
 root_node = NodePath("../SpringArmPivot/SpringArm3D/Margin/Camera3D")
 speed_scale = 1.5
 
-[node name="GameJuice" type="Node3D" parent="AnimationPlayer"]
+[node name="GameJuice" type="Node3D" parent="AnimationPlayer" unique_id=2004426651]
 transform = Transform3D(1, 2.32831e-10, 0, 0, 1, -1.86265e-09, 7.45058e-09, 1.86265e-09, 1, 1.86265e-09, -1.19209e-07, 0.0591607)
 script = ExtResource("3_sswrb")

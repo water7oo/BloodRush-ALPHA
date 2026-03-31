@@ -100,10 +100,6 @@ canvas_item_default_texture_filter = 0
 size = Vector2i(1024, 768)
 render_target_update_mode = 4
 
-[node name="Marker3D3" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1999923023]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4322, 1.45085, -11)
-gizmo_extents = 5.83
-
 [node name="Pausing" parent="Preview/SubViewportContainer/SubViewport" unique_id=515406776 instance=ExtResource("5_swveh")]
 
 [node name="ColorRect" type="ColorRect" parent="Preview/SubViewportContainer/SubViewport" unique_id=510113303]
@@ -118,13 +114,15 @@ mouse_filter = 1
 mouse_force_pass_scroll_events = false
 color = Color(0, 0, 0, 1)
 
-[node name="ResetEnemy" parent="Preview/SubViewportContainer/SubViewport" unique_id=935272242 node_paths=PackedStringArray("enemyDummy1", "enemyDummy2", "enemyDummy3", "resetPos1", "resetPos2", "resetPos3") instance=ExtResource("7_s2vfm")]
+[node name="Reset" parent="Preview/SubViewportContainer/SubViewport" unique_id=935272242 node_paths=PackedStringArray("enemyDummy1", "enemyDummy2", "enemyDummy3", "resetPos1", "resetPos2", "resetPos3", "playerReset", "player") instance=ExtResource("7_s2vfm")]
 enemyDummy1 = NodePath("../Enemy")
 enemyDummy2 = NodePath("../Enemy2")
 enemyDummy3 = NodePath("../Enemy3")
 resetPos1 = NodePath("../Marker3D2")
 resetPos2 = NodePath("../Marker3D")
 resetPos3 = NodePath("../Marker3D3")
+playerReset = NodePath("../PlayerReset")
+player = NodePath("../Cowboy")
 
 [node name="Enemy" parent="Preview/SubViewportContainer/SubViewport" unique_id=1594704572 instance=ExtResource("8_x6rhu")]
 transform = Transform3D(0.8, 0, 1.39875e-07, 0, 0.8, 0, -1.39875e-07, 0, 0.8, 1.4635, 0.762087, 6.34689)
@@ -147,12 +145,20 @@ speed = 7.0
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.53036, 3.74131, 8.49949)
 gizmo_extents = 4.42
 
+[node name="Marker3D3" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1999923023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4322, 1.45085, -11)
+gizmo_extents = 5.83
+
 [node name="Marker3D" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1415759767]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43216, 1.10057, 0)
 gizmo_extents = 6.95
 
 [node name="Marker3D2" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=610414995]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.43216, 1.45085, 4)
+gizmo_extents = 5.83
+
+[node name="PlayerReset" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1982135318]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.43216, 1.45085, -6)
 gizmo_extents = 5.83
 
 [node name="Cowboy" parent="Preview/SubViewportContainer/SubViewport" unique_id=375016865 instance=ExtResource("10_wbl5e")]

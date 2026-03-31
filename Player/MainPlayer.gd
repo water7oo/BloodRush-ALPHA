@@ -17,7 +17,10 @@ extends CharacterBody3D
 @onready var attackMedium_state = $LimboHSM/AttackMediumState
 @onready var attackHeavy_state = $LimboHSM/AttackHeavyState
 @onready var attack_upper_state = $LimboHSM/AttackUpperState
+@onready var attack_slamAir_state = $LimboHSM/AttackAirSlamState
 @onready var air_attack_state = $LimboHSM/AirAttackState
+@onready var air_attackMedium_state = $LimboHSM/AirAttackMediumState
+@onready var air_attackHeavy_state = $LimboHSM/AirAttackHeavyState
 
 @onready var take_damage_state = $LimboHSM/TakeDamageState
 @onready var recover_state = $LimboHSM/RecoverState
@@ -36,8 +39,14 @@ func initialize_state_machine():
 	
 	
 
-	state_machine.add_transition(jump_state, air_attack_state, "to_airAttack")
-
+	state_machine.add_transition(state_machine.ANYSTATE, air_attack_state, "to_airAttack")
+	state_machine.add_transition(state_machine.ANYSTATE, air_attackMedium_state, "to_airMediumAttack")
+	state_machine.add_transition(state_machine.ANYSTATE, air_attackHeavy_state, "to_airHeavyAttack")
+	state_machine.add_transition(state_machine.ANYSTATE, attack_slamAir_state, "to_airSLamAttack")
+	
+	
+	
+	
 	state_machine.add_transition(idle_state, attack_state, "to_attack")       # L
 	state_machine.add_transition(idle_state, attackMedium_state, "to_mediumAttack") # M
 	state_machine.add_transition(idle_state, attackHeavy_state, "to_heavyAttack")   # H
@@ -58,6 +67,7 @@ func initialize_state_machine():
 	state_machine.add_transition(attack_state, attackMedium_state, "to_mediumAttack") # L -> M
 	state_machine.add_transition(attackMedium_state, attackHeavy_state, "to_heavyAttack") # M -> H
 	state_machine.add_transition(attackHeavy_state, attack_upper_state, "to_attackUpper") # H -> Launch
+
 
 	# THE FINISHER
 	state_machine.add_transition(attack_upper_state, jump_state, "to_jump")
@@ -86,11 +96,31 @@ func initialize_state_machine():
 
 func _physics_process(delta: float) -> void:
 	playerGravity(delta)
+	handle_attack_input()
 	
-	
-	if Global.attack_cooldown_timer > 0.0:
-		Global.attack_cooldown_timer -= delta
-	
+
+
+func handle_attack_input() -> void:
+	if Global.is_attacking:
+		return  # Prevent input until attack recovery allows cancel or hit confirm
+
+	var is_air = not is_on_floor()
+
+	# Light attack
+	if Input.is_action_just_pressed("attack_light_1") and Global.attack_cooldown_timer <= 0:
+		state_machine.dispatch("to_airAttack" if is_air else "to_attack")
+		return
+
+	# Medium attack
+	if Input.is_action_just_pressed("attack_medium_1") and Global.attackMedium_cooldown_timer <= 0:
+		state_machine.dispatch("to_airMediumAttack" if is_air else "to_mediumAttack")
+		return
+
+	# Heavy attack
+	if Input.is_action_just_pressed("attack_heavy_1") and Global.attackHeavy_cooldown_timer <= 0:
+		state_machine.dispatch("to_airHeavyAttack" if is_air else "to_heavyAttack")
+		return
+		
 func playerCamera(delta: float) -> void:
 	pass
 

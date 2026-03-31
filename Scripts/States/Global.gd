@@ -41,19 +41,32 @@ var blend_lerp_speed = 10.0
 @export var air_momentum_deceleration: float = momentum_deceleration - 2
 
 @export var attack_cooldown_timer: float = 0.0
-@export var attack_cooldown_duration: float = 0.1 
+@export var attack_cooldown_duration: float = 1
+
+@export var attackAir_cooldown_timer: float = 0.0
+@export var attackAir_cooldown_duration: float = 0.1 
 
 @export var attackMedium_cooldown_timer: float = 0.0
-@export var attackMedium_cooldown_duration: float = 0.2
+@export var attackMedium_cooldown_duration: float = 0.3
+
+@export var attackMediumAir_cooldown_timer: float = 0.0
+@export var attackMediumAir_cooldown_duration: float = 0.3
 
 @export var attackHeavy_cooldown_timer: float = 0.0
-@export var attackHeavy_cooldown_duration: float = 0.35
+@export var attackHeavy_cooldown_duration: float = 1
+
+@export var attackHeavyAir_cooldown_timer: float = 0.0
+@export var attackHeavyAir_cooldown_duration: float = 0.4
 
 @export var attackUpper_cooldown_timer: float = 0.0
-@export var attackUpper_cooldown_duration: float = 0.4
+@export var attackUpper_cooldown_duration: float = 0.5
+
+@export var attackAirSlam_cooldown_timer: float = 0.0
+@export var attackAirSlam_cooldown_duration: float = 0.45
 
 var can_move: bool = true
 var last_enemy_hit = null
+var is_attacking: bool = false
 var isHit = false
 
 #Jump State Base movement values:

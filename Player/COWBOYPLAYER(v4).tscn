@@ -13,13 +13,16 @@
 [ext_resource type="Script" uid="uid://c7wq57pjqc84x" path="res://Scripts/States/RunJump.gd" id="8_ec3d6"]
 [ext_resource type="Script" uid="uid://bw7q8jcgsl3m8" path="res://Player/Crouch.gd" id="8_gexv5"]
 [ext_resource type="Script" uid="uid://bjkhaj5omhcbw" path="res://Player/Attack.gd" id="9_gu0nf"]
+[ext_resource type="Script" uid="uid://bixvumpjxnj6p" path="res://Scripts/States/attack_air_slam_state.gd" id="10_3mcw4"]
 [ext_resource type="Script" uid="uid://dmlj04uny03pk" path="res://Player/takeDamege.gd" id="10_ga41d"]
 [ext_resource type="Script" uid="uid://dfrhd0jw7xuqs" path="res://Player/recover_state.gd" id="11_3apqd"]
 [ext_resource type="PackedScene" uid="uid://botd2e2pvg6ce" path="res://Player/COWBOY(NEW.V4).tscn" id="11_4svr5"]
 [ext_resource type="Script" uid="uid://dd5untx5oxewc" path="res://Scripts/States/attack_medium_state.gd" id="11_m03mu"]
 [ext_resource type="Script" uid="uid://dx1tx542bb2tb" path="res://Scripts/States/air_attack_state.gd" id="11_why3t"]
 [ext_resource type="Script" uid="uid://coaor0yqhgel0" path="res://Scripts/States/attack_heavy_state.gd" id="12_m03mu"]
+[ext_resource type="Script" uid="uid://c0fmcpcbdnh3w" path="res://Scripts/States/air_attack_medium_state.gd" id="15_0rtpi"]
 [ext_resource type="Script" uid="uid://dexogtbtatw6s" path="res://Player/attackUpperState.gd" id="16_4mqd1"]
+[ext_resource type="Script" uid="uid://dhkxh7d1i5toa" path="res://Scripts/States/air_attack_heavy_state.gd" id="16_aggol"]
 [ext_resource type="Material" uid="uid://dbj1gqpp8xunp" path="res://FX/PixelHitEffect.tres" id="16_owvjx"]
 [ext_resource type="Texture2D" uid="uid://dyej4r850v6s7" path="res://FX/hit1.png" id="17_m03mu"]
 [ext_resource type="AudioStream" uid="uid://80h5goafphae" path="res://Sounds/hit2.wav" id="22_why3t"]
@@ -208,9 +211,24 @@ albedo_color = Color(0.97451, 0, 0.0829406, 1)
 shading_mode = 0
 albedo_color = Color(0.61476904, 0.99999994, 0.29145467, 1)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sl3xx"]
+shading_mode = 0
+albedo_color = Color(1, 0.63, 0.26, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_56u1a"]
+shading_mode = 0
+albedo_color = Color(1, 0.29000002, 0.29000002, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4mqd1"]
 shading_mode = 0
 albedo_color = Color(5.39064e-06, 0.901053, 0.757418, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4mqd1"]
+size = Vector3(1.3562317, 1.2475586, 1.6600952)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3mcw4"]
+shading_mode = 0
+albedo_color = Color(1, 0.20999998, 0.8025, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ra580"]
 size = Vector3(1, 0.941803, 1.90045)
@@ -276,14 +294,33 @@ attackUpper_debug = NodePath("../../RootNode/AttackUpperBox/Attack_Debug")
 attack_duration = 0.1
 enemyTargetLength = 0.05
 enemyTargetMagnitude = 0.1
-enemyTargetHitStop = 0.1
+enemyTargetHitStop = 0.2
 knockback_force = 3.0
 knockback_direction = Vector3(0, 2, 1)
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
 hit4Sound = NodePath("../../hit4Sound")
-jump_cancel_window = 0.3
+recovery_duration = 0.6
+cancel_window = 0.3
+attack_startup = 0.2
+jumpCancelFX = NodePath("../../JumpCancel1")
+
+[node name="AttackAirSlamState" type="LimboState" parent="LimboHSM" unique_id=666826914 node_paths=PackedStringArray("attack_box", "attack_box_col", "attackUpper_debug", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "jumpCancelFX")]
+script = ExtResource("10_3mcw4")
+attack_box = NodePath("../../RootNode/AirAttackSlamBox")
+attack_box_col = NodePath("../../RootNode/AirAttackSlamBox/CollisionShape3D")
+attackUpper_debug = NodePath("../../RootNode/AirAttackSlamBox/Attack_Debug")
+attack_duration = 0.1
+enemyTargetLength = 0.05
+enemyTargetMagnitude = 0.1
+enemyTargetHitStop = 0.1
+knockback_force = 3.0
+knockback_direction = Vector3(0, -1, 1)
+hit1Sound = NodePath("../../hit1Sound")
+hit2Sound = NodePath("../../hit2Sound")
+hit3Sound = NodePath("../../hit3Sound")
+hit4Sound = NodePath("../../hit4Sound")
 jumpCancelFX = NodePath("../../JumpCancel1")
 
 [node name="AttackState" type="LimboState" parent="LimboHSM" unique_id=377672798 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound")]
@@ -297,6 +334,7 @@ enemyTargetMagnitude = 0.1
 enemyTargetHitStop = 0.3
 knockback_force = 2.0
 knockback_direction = Vector3(0, 0, 1)
+recovery_duration = 0.5
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -313,6 +351,7 @@ enemyTargetMagnitude = 0.1
 enemyTargetHitStop = 0.3
 knockback_force = 3.5
 knockback_direction = Vector3(0, 0, 1)
+recovery_duration = 0.5
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -328,7 +367,8 @@ enemyTargetLength = 0.01
 enemyTargetMagnitude = 0.1
 enemyTargetHitStop = 0.5
 knockback_force = 4.5
-knockback_direction = Vector3(0, 0, 1)
+knockback_direction = Vector3(0, 0.2, 1)
+recovery_duration = 0.8
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -340,10 +380,41 @@ attack_box = NodePath("../../RootNode/AirAttackBox")
 attack_box_col = NodePath("../../RootNode/AirAttackBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AirAttackBox/Attack_Debug")
 attack_duration = 0.1
-enemyTargetLength = 0.1
+enemyTargetLength = 0.01
 enemyTargetMagnitude = 0.1
-knockback_force = 2.5
+enemyTargetHitStop = 0.3
+knockback_force = 2.0
 knockback_direction = Vector3(0, 0.2, 0.5)
+hit1Sound = NodePath("../../hit1Sound")
+hit2Sound = NodePath("../../hit2Sound")
+hit3Sound = NodePath("../../hit3Sound")
+
+[node name="AirAttackMediumState" type="LimboState" parent="LimboHSM" unique_id=588184422 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "hit1Sound", "hit2Sound", "hit3Sound")]
+script = ExtResource("15_0rtpi")
+attack_box = NodePath("../../RootNode/AirAttackMediumBox")
+attack_box_col = NodePath("../../RootNode/AirAttackMediumBox/CollisionShape3D")
+attack_box_debug = NodePath("../../RootNode/AirAttackMediumBox/Attack_Debug")
+attack_duration = 0.1
+enemyTargetLength = 0.01
+enemyTargetMagnitude = 0.1
+enemyTargetHitStop = 0.3
+knockback_force = 3.5
+knockback_direction = Vector3(0, 0.2, 1)
+hit1Sound = NodePath("../../hit1Sound")
+hit2Sound = NodePath("../../hit2Sound")
+hit3Sound = NodePath("../../hit3Sound")
+
+[node name="AirAttackHeavyState" type="LimboState" parent="LimboHSM" unique_id=1529037227 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "hit1Sound", "hit2Sound", "hit3Sound")]
+script = ExtResource("16_aggol")
+attack_box = NodePath("../../RootNode/AirAttackHeavyBox")
+attack_box_col = NodePath("../../RootNode/AirAttackHeavyBox/CollisionShape3D")
+attack_box_debug = NodePath("../../RootNode/AirAttackHeavyBox/Attack_Debug")
+attack_duration = 0.1
+enemyTargetLength = 0.01
+enemyTargetMagnitude = 0.1
+enemyTargetHitStop = 0.5
+knockback_force = 4.5
+knockback_direction = Vector3(0, 0.2, 1)
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -469,6 +540,36 @@ visible = false
 material_override = SubResource("StandardMaterial3D_3apqd")
 mesh = SubResource("BoxMesh_uf676")
 
+[node name="AirAttackMediumBox" type="Area3D" parent="RootNode" unique_id=1864254235]
+transform = Transform3D(0.008, 0, 0, 0, 0.008, 0, 0, 0, 0.008, 0, 0, 0)
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AirAttackMediumBox" unique_id=522699343]
+transform = Transform3D(201.6, 0, 0, 0, 160, 0, 0, 0, 181.44, 18.1057, 192.566, -380.603)
+visible = false
+shape = SubResource("BoxShape3D_ga41d")
+
+[node name="Attack_Debug" type="MeshInstance3D" parent="RootNode/AirAttackMediumBox" unique_id=1702146837]
+transform = Transform3D(283.207, 0, 0, 0, 151.582, 0, 0, 0, 295.666, 0.0177394, 190.048, -337.194)
+visible = false
+material_override = SubResource("StandardMaterial3D_sl3xx")
+mesh = SubResource("BoxMesh_uf676")
+
+[node name="AirAttackHeavyBox" type="Area3D" parent="RootNode" unique_id=1138153025]
+transform = Transform3D(0.008, 0, 0, 0, 0.008, 0, 0, 0, 0.008, 0, 0, 0)
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AirAttackHeavyBox" unique_id=1582367203]
+transform = Transform3D(201.6, 0, 0, 0, 160, 0, 0, 0, 181.44, 18.1057, 192.566, -380.603)
+visible = false
+shape = SubResource("BoxShape3D_ga41d")
+
+[node name="Attack_Debug" type="MeshInstance3D" parent="RootNode/AirAttackHeavyBox" unique_id=878291419]
+transform = Transform3D(283.207, 0, 0, 0, 151.582, 0, 0, 0, 295.666, 0.0177394, 190.048, -337.194)
+visible = false
+material_override = SubResource("StandardMaterial3D_56u1a")
+mesh = SubResource("BoxMesh_uf676")
+
 [node name="AttackUpperBox" type="Area3D" parent="RootNode" unique_id=2060644472]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
 monitoring = false
@@ -482,6 +583,21 @@ shape = SubResource("BoxShape3D_ga41d")
 transform = Transform3D(208.5, 0, 0, 0, -9.48537e-06, -325.911, 0, 217, -1.4246e-05, 1.10871, 158.138, -257.746)
 visible = false
 material_override = SubResource("StandardMaterial3D_4mqd1")
+mesh = SubResource("BoxMesh_uf676")
+
+[node name="AirAttackSlamBox" type="Area3D" parent="RootNode" unique_id=726601377]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AirAttackSlamBox" unique_id=492489350]
+transform = Transform3D(165.35493, 0, 0, 0, -9.485369e-06, -40.319992, 0, 217, -1.762442e-06, 2.445412, 142.19554, -254.22107)
+visible = false
+shape = SubResource("BoxShape3D_4mqd1")
+
+[node name="Attack_Debug" type="MeshInstance3D" parent="RootNode/AirAttackSlamBox" unique_id=724994965]
+transform = Transform3D(208.5, 0, 0, 0, -9.485369e-06, -65.703674, 0, 217, -2.871994e-06, 1.10871, 141.74716, -235.97018)
+visible = false
+material_override = SubResource("StandardMaterial3D_3mcw4")
 mesh = SubResource("BoxMesh_uf676")
 
 [node name="HurtBox" type="Area3D" parent="RootNode" unique_id=363235003 groups=["player"]]
@@ -534,34 +650,49 @@ value = 50.0
 [node name="hit1Sound" type="AudioStreamPlayer" parent="." unique_id=1287895694]
 process_mode = 3
 stream = ExtResource("22_why3t")
+volume_db = -12.67
 pitch_scale = 0.92
 
 [node name="hit2Sound" type="AudioStreamPlayer" parent="." unique_id=1313085057]
 process_mode = 3
 stream = ExtResource("23_m03mu")
+volume_db = -12.0
 
 [node name="hit3Sound" type="AudioStreamPlayer" parent="." unique_id=341554967]
 process_mode = 3
 stream = ExtResource("23_m03mu")
+volume_db = -12.0
 pitch_scale = 0.5
 
 [node name="hit4Sound" type="AudioStreamPlayer" parent="." unique_id=665712956]
 process_mode = 3
 stream = ExtResource("25_4mqd1")
+volume_db = -12.0
 
 [node name="Dodge1Sound" type="AudioStreamPlayer" parent="." unique_id=1764746396]
 stream = ExtResource("25_owvjx")
+volume_db = -12.0
 
 [node name="Land1" type="AudioStreamPlayer" parent="." unique_id=198691937]
 stream = ExtResource("25_uf676")
+volume_db = -29.181
+pitch_scale = 0.86
 
 [node name="Jump1Sound" type="AudioStreamPlayer" parent="." unique_id=1382775900]
 stream = ExtResource("25_ud7yb")
+volume_db = -12.0
 
 [node name="AirWavePos" type="Marker3D" parent="." unique_id=1545100302]
 transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -1.50914e-07, 1.11191, 1.72625)
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="." unique_id=1695491790]
+
+[node name="attack_cooldown" type="ProgressBar" parent="." unique_id=42913131]
+offset_left = 559.0
+offset_top = 652.0
+offset_right = 927.0
+offset_bottom = 679.0
+show_percentage = false
 
 [connection signal="area_entered" from="RootNode/AttackBox" to="." method="_on_attack_box_area_entered"]
 [connection signal="area_exited" from="RootNode/AttackBox" to="." method="_on_attack_box_area_exited"]
@@ -571,5 +702,9 @@ transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -1.50914
 [connection signal="area_exited" from="RootNode/AttackHeavy" to="." method="_on_attack_box_area_exited"]
 [connection signal="area_entered" from="RootNode/AirAttackBox" to="." method="_on_attack_box_area_entered"]
 [connection signal="area_exited" from="RootNode/AirAttackBox" to="." method="_on_attack_box_area_exited"]
+[connection signal="area_entered" from="RootNode/AirAttackMediumBox" to="." method="_on_attack_box_area_entered"]
+[connection signal="area_exited" from="RootNode/AirAttackMediumBox" to="." method="_on_attack_box_area_exited"]
+[connection signal="area_entered" from="RootNode/AirAttackHeavyBox" to="." method="_on_attack_box_area_entered"]
+[connection signal="area_exited" from="RootNode/AirAttackHeavyBox" to="." method="_on_attack_box_area_exited"]
 [connection signal="area_entered" from="RootNode/HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="area_exited" from="RootNode/HurtBox" to="." method="_on_hurt_box_area_exited"]

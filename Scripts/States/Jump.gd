@@ -22,7 +22,8 @@ var velocity = Vector3.ZERO
 
 func _enter() -> void:
 	print("Current State:", agent.state_machine.get_active_state())
-	agent.velocity.y = Global.JUMP_VELOCITY
+	if agent.is_on_floor():
+		agent.velocity.y = Global.JUMP_VELOCITY
 	animationTree.set("parameters/Jump_Blend/blend_amount", 1)
 	
 	air_timer = 0.0
@@ -31,13 +32,19 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	player_jump(delta)
-	initialize_attack(delta)
+	#initialize_attack(delta)
 	agent.move_and_slide()
 	
 	var is_on_floor = agent.is_on_floor()
-
-	if is_on_floor and not was_on_floor:
-		land1Sound.play()
+	
+	if agent.state_machine.get_active_state() == self:
+		if is_on_floor and not was_on_floor:
+			agent.state_machine.dispatch("to_idle")
+			Global.attackAir_cooldown_timer = 0
+			Global.attackMediumAir_cooldown_timer = 0
+			Global.attackHeavyAir_cooldown_timer = 0
+			land1Sound.play()
+		
 
 	was_on_floor = is_on_floor
 
@@ -75,7 +82,18 @@ func player_jump(delta: float) -> void:
 		animationTree.set("parameters/Jump_Blend/blend_amount", 0)
 		
 		
-func initialize_attack(delta: float) -> void:
-
-	if Input.is_action_just_pressed("attack_light_1"):
-		agent.state_machine.dispatch("to_airAttack")
+#func initialize_attack(delta: float) -> void:
+	## Combo takes priority (just_pressed + pressed)
+	#if (Input.is_action_just_pressed("attack_medium_1") and Input.is_action_pressed("attack_heavy_1")) and !agent.is_on_floor() \
+	#or (Input.is_action_just_pressed("attack_heavy_1") and Input.is_action_pressed("attack_medium_1")) and !agent.is_on_floor():
+		#if Global.attackUpper_cooldown_timer <= 0:
+			#agent.state_machine.dispatch("to_airSLamAttack")
+		#return  # only trigger one attack per frame
+#
+	## Single attacks
+	#if Input.is_action_just_pressed("attack_light_1") and Global.attackAir_cooldown_timer <= 0 and !agent.is_on_floor():
+		#agent.state_machine.dispatch("to_airAttack")
+	#elif Input.is_action_just_pressed("attack_medium_1") and Global.attackMediumAir_cooldown_timer <= 0 and !agent.is_on_floor():
+		#agent.state_machine.dispatch("to_airMediumAttack")
+	#elif Input.is_action_just_pressed("attack_heavy_1") and Global.attackHeavyAir_cooldown_timer <= 0 and !agent.is_on_floor():
+		#agent.state_machine.dispatch("to_airHeavyAttack")

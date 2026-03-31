@@ -33,7 +33,6 @@ var jump_cancel_timer: float = 0.0
 @export var jump_cancel_window: float = 0.25
 
 var preserved_velocity: Vector3 = Vector3.ZERO
-
 var attack_cooldown: float = 0.0
 var combo_timer: float = 0.0
 var can_chain_attack: bool = false  
@@ -67,8 +66,8 @@ func _process_attack(delta: float) -> void:
 	if Global.is_attacking:
 		attack_cooldown -= delta
 		combo_timer -= delta
-	if Global.attackAir_cooldown_timer > 0.0:
-		Global.attackAir_cooldown_timer -= delta
+	if Global.attackHeavyAir_cooldown_timer > 0.0:
+		Global.attackHeavyAir_cooldown_timer -= delta
 		
 	#if jump_cancel_timer > 0.0:
 		#jump_cancel_timer -= delta
@@ -181,7 +180,7 @@ func _exit_attack_state() -> void:
 	attack_box_col.visible = false
 	attack_cooldown = 0.0
 	isHit = false
-	Global.attackAir_cooldown_timer = Global.attackAir_cooldown_duration
+	Global.attackHeavyAir_cooldown_timer = Global.attackHeavyAir_cooldown_duration
 	if attack_box:
 		attack_box.monitoring = false
 		
