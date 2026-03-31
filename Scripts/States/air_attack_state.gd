@@ -120,7 +120,7 @@ func _on_attack_box_area_entered(area):
 		return
 	if area.has_method("takeDamageEnemy"):
 		isHit = true
-		
+		can_chain_attack = true
 		recovery_timer = hit_recovery_duration
 		cancel_timer = cancel_window
 		can_cancel = true

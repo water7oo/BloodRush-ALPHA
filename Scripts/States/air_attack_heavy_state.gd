@@ -104,43 +104,64 @@ func _start_attack() -> void:
 	next_attack_state = "to_airMediumAttack"  # Light -> Medium
 
 func _on_attack_box_area_entered(area):
-	if area.has_method("takeDamageEnemy") and area not in enemies_hit:
+	if isHit:
+		return
+	if area.has_method("takeDamageEnemy"):
+		isHit = true
+		can_chain_attack = true
+		recovery_timer = hit_recovery_duration
+		cancel_timer = cancel_window
+		can_cancel = true
+		cancel_timer = cancel_window
+		attack_box.monitoring = false
 		var enemy = area
 		while enemy and not (enemy is CharacterBody3D):
 			enemy = enemy.get_parent()
-
-		enemies_hit[area] = true
-		isHit = true
-		
-		recovery_timer = hit_recovery_duration
+		if area in enemies_hit:
+			return
+		enemies_hit[area] = true 
 		Global.isHit = true
 		hit1Sound.play()
-		jump_cancel_timer = jump_cancel_window
-		attack_cooldown = min(attack_cooldown, hit_cooldown_amount)
-
-
+		Global.attackHeavyAir_cooldown_timer = min(Global.attackHeavyAir_cooldown_timer, hit_cooldown_amount)
+		
+		
+		
 		if enemy.has_node("MeshInstance3D"):
 			var mesh = enemy.get_node("MeshInstance3D")
 			mesh.trigger_flash()
 			await get_tree().process_frame
+			
+		if area.has_method("set_monitoring"):
+			area.monitoring = false
 
-		var saved_velocity = agent.velocity
-		agent.velocity = Vector3.ZERO
-		
 		var hit1Effect = enemy.find_child("hit1", true, false)
 				
 		if hit1Effect is GPUParticles3D:
 			hit1Effect.restart()
 			hit1Effect.emitting = true
-			hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 		elif hit1Effect == null:
-			print("Warning: No GPUParticles3D found on " + enemy.name)	
+			print("Warning: No GPUParticles3D found on " + enemy.name)
+			
+			
+		hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
+		var saved_velocity = agent.velocity
+		agent.velocity = Vector3.ZERO
+		can_cancel = true
 		gameJuice.objectShake(enemy, enemyTargetLength, enemyTargetMagnitude)
 		await gameJuice.hitstop(enemyTargetHitStop)
 		agent.velocity = saved_velocity
 
+		if area.has_method("set_monitoring"):
+			area.monitoring = true
+			
 		if enemy is CharacterBody3D:
-			gameJuice.knockback(enemy, agent, knockback_force, knockback_direction)
+			#print("Applying knockback to:", enemy.name)
+			gameJuice.knockback(
+				enemy,
+				agent,
+				knockback_force,
+				knockback_direction
+			)
 
 func _exit_attack_state() -> void:
 	Global.is_attacking = false

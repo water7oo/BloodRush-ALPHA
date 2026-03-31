@@ -113,34 +113,28 @@ func _start_attack() -> void:
 	can_chain_attack = false
 
 func _on_attack_box_area_entered(area):
+	if isHit:
+		return
 	if area.has_method("takeDamageEnemy"):
+		isHit = true
+		can_chain_attack = true
+		recovery_timer = hit_recovery_duration
+		cancel_timer = cancel_window
+		can_cancel = true
+		cancel_timer = cancel_window
+		attack_box.monitoring = false
 		var enemy = area
 		while enemy and not (enemy is CharacterBody3D):
 			enemy = enemy.get_parent()
-				
 		if area in enemies_hit:
 			return
 		enemies_hit[area] = true 
-		
-		#print("Enemy hit:", area.name)
-		isHit = true
-		recovery_timer = hit_recovery_duration
 		Global.isHit = true
 		hit1Sound.play()
-		jump_cancel_timer = jump_cancel_window
 		Global.attackMediumAir_cooldown_timer = min(Global.attackMediumAir_cooldown_timer, hit_cooldown_amount)
 		
 		
-		var hit1Effect = enemy.find_child("hit1", true, false)
-				
-		if hit1Effect is GPUParticles3D:
-			#print("HIT EFFECT")
-			hit1Effect.restart()
-			hit1Effect.emitting = true
-		elif hit1Effect == null:
-			print("Warning: No GPUParticles3D found on " + enemy.name)
-
-			
+		
 		if enemy.has_node("MeshInstance3D"):
 			var mesh = enemy.get_node("MeshInstance3D")
 			mesh.trigger_flash()
@@ -149,18 +143,25 @@ func _on_attack_box_area_entered(area):
 		if area.has_method("set_monitoring"):
 			area.monitoring = false
 
+		var hit1Effect = enemy.find_child("hit1", true, false)
+				
+		if hit1Effect is GPUParticles3D:
+			hit1Effect.restart()
+			hit1Effect.emitting = true
+		elif hit1Effect == null:
+			print("Warning: No GPUParticles3D found on " + enemy.name)
+			
+			
+		hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 		var saved_velocity = agent.velocity
 		agent.velocity = Vector3.ZERO
+		can_cancel = true
 		gameJuice.objectShake(enemy, enemyTargetLength, enemyTargetMagnitude)
 		await gameJuice.hitstop(enemyTargetHitStop)
 		agent.velocity = saved_velocity
 
-
 		if area.has_method("set_monitoring"):
 			area.monitoring = true
-			
-
-			
 			
 		if enemy is CharacterBody3D:
 			#print("Applying knockback to:", enemy.name)

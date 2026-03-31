@@ -109,7 +109,6 @@ func _start_attack() -> void:
 
 	Global.is_attacking = true
 	isHit = false
-
 	Global.attack_cooldown_timer = attack_duration
 	combo_timer = combo_window_duration
 	recovery_timer = recovery_duration  
@@ -131,7 +130,7 @@ func _on_attack_box_area_entered(area):
 		return
 	if area.has_method("takeDamageEnemy"):
 		isHit = true
-	
+		can_chain_attack = true
 		recovery_timer = hit_recovery_duration
 		cancel_timer = cancel_window
 		attack_box.monitoring = false
