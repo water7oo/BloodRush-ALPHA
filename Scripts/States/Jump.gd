@@ -33,7 +33,6 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	player_jump(delta)
-	#initialize_attack(delta)
 	agent.move_and_slide()
 	
 	var is_on_floor = agent.is_on_floor()
@@ -44,6 +43,13 @@ func _update(delta: float) -> void:
 			Global.attackAir_cooldown_timer = 0
 			Global.attackMediumAir_cooldown_timer = 0
 			Global.attackHeavyAir_cooldown_timer = 0
+			Global.attackAirSlam_cooldown_timer = 0
+			
+			
+			Global.attack_cooldown_timer = 0
+			Global.attackMedium_cooldown_timer = 0
+			Global.attackHeavy_cooldown_timer = 0
+			Global.attackUpper_cooldown_timer = 0
 			land1Sound.play()
 		
 
@@ -83,18 +89,3 @@ func player_jump(delta: float) -> void:
 		animationTree.set("parameters/Jump_Blend/blend_amount", 0)
 		
 		
-#func initialize_attack(delta: float) -> void:
-	## Combo takes priority (just_pressed + pressed)
-	#if (Input.is_action_just_pressed("attack_medium_1") and Input.is_action_pressed("attack_heavy_1")) and !agent.is_on_floor() \
-	#or (Input.is_action_just_pressed("attack_heavy_1") and Input.is_action_pressed("attack_medium_1")) and !agent.is_on_floor():
-		#if Global.attackUpper_cooldown_timer <= 0:
-			#agent.state_machine.dispatch("to_airSLamAttack")
-		#return  # only trigger one attack per frame
-#
-	## Single attacks
-	#if Input.is_action_just_pressed("attack_light_1") and Global.attackAir_cooldown_timer <= 0 and !agent.is_on_floor():
-		#agent.state_machine.dispatch("to_airAttack")
-	#elif Input.is_action_just_pressed("attack_medium_1") and Global.attackMediumAir_cooldown_timer <= 0 and !agent.is_on_floor():
-		#agent.state_machine.dispatch("to_airMediumAttack")
-	#elif Input.is_action_just_pressed("attack_heavy_1") and Global.attackHeavyAir_cooldown_timer <= 0 and !agent.is_on_floor():
-		#agent.state_machine.dispatch("to_airHeavyAttack")

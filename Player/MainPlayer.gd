@@ -24,7 +24,7 @@ extends CharacterBody3D
 
 @onready var take_damage_state = $LimboHSM/TakeDamageState
 @onready var recover_state = $LimboHSM/RecoverState
-
+@onready var stateDebugLabel = $"State debug"
 var input_buffer := {}
 var input_buffer_time := 0.2
 var input_queue: Array = []
@@ -101,6 +101,7 @@ func initialize_state_machine():
 
 func _physics_process(delta: float) -> void:
 	playerGravity(delta)
+	stateDebugLabel.text = ("STATE DEBUG: " + str(state_machine.get_active_state()).to_upper())
 	handle_attack_input()
 	
 

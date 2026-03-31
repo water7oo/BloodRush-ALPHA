@@ -52,6 +52,8 @@ var cancel_timer: float = 0.0
 @export var hit3Sound: AudioStreamPlayer
 @export var hit4Sound: AudioStreamPlayer
 
+var buffered_input := false
+
 func _enter() -> void:
 	enemies_hit.clear()
 	if attack_box:
@@ -66,28 +68,40 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	_process_attack(delta)
+	if Input.is_action_just_pressed("attack_heavy_1"):
+		buffered_input = true
 	agent.move_and_slide()
 
 func can_start_attack() -> bool:
 	return attack_cooldown_timer <= 0.0 and not Global.is_attacking
 
 func _process_attack(delta: float) -> void:
-	if Global.attack_cooldown_timer > 0.0:
-		Global.attack_cooldown_timer -= delta
+	if Global.attackMediumAir_cooldown_timer > 0.0:
+		Global.attackMediumAir_cooldown_timer -= delta
 	if recovery_timer > 0.0:
 		recovery_timer -= delta
 	if combo_timer > 0.0:
 		combo_timer -= delta
+	if can_cancel:
+		cancel_timer -= delta
+		if cancel_timer <= 0:
+			can_cancel = false
+
+	if buffered_input and can_cancel:
+		agent.state_machine.dispatch(next_attack_state)
 		
-	if Global.attack_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
-		_exit_attack_state()
-		if can_chain_attack and next_attack_state:
+	if Global.attackMediumAir_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
+		if buffered_input and can_chain_attack:
 			agent.state_machine.dispatch(next_attack_state)
 		else:
 			agent.state_machine.dispatch("to_idle")
-			
-	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
 
+		buffered_input = false
+		_exit_attack_state()
+
+
+	# Gravity and velocity
+	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
 	if agent.is_on_floor():
 		agent.velocity.x = move_toward(agent.velocity.x, 0, DECELERATION * delta)
 		agent.velocity.z = move_toward(agent.velocity.z, 0, DECELERATION * delta)
@@ -95,11 +109,7 @@ func _process_attack(delta: float) -> void:
 		agent.velocity.x = lerp(agent.velocity.x, preserved_velocity.x, 0.1)
 		agent.velocity.z = lerp(agent.velocity.z, preserved_velocity.z, 0.1)
 
-	if attack_cooldown <= 0.0:
-		if can_chain_attack and next_attack_state:
-			agent.state_machine.dispatch(next_attack_state)
-		else:
-			_exit_attack_state()
+	agent.move_and_slide()
 			
 
 
@@ -111,6 +121,8 @@ func _start_attack() -> void:
 	combo_timer = combo_window_duration
 	recovery_timer = recovery_duration  
 	can_chain_attack = false
+	
+	next_attack_state = "to_airHeavyttack"  # Light -> Medium
 
 func _on_attack_box_area_entered(area):
 	if isHit:
@@ -186,16 +198,6 @@ func _exit_attack_state() -> void:
 	Global.is_attacking = false
 	attack_box_debug.visible = false
 	attack_box_col.visible = false
-	attack_cooldown = 0.0
 	isHit = false
-	Global.attackMediumAir_cooldown_timer = Global.attackMediumAir_cooldown_duration
 	if attack_box:
 		attack_box.monitoring = false
-		
-		attack_cooldown_timer = attack_cooldown_duration
-
-	#print("Attack ended, hitbox disabled:", attack_box.monitoring)
-	if agent.is_on_floor():
-		agent.state_machine.dispatch("to_idle")
-	else:
-		agent.state_machine.dispatch("to_jump")

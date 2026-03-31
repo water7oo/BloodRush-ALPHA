@@ -32,6 +32,7 @@
 [ext_resource type="AudioStream" uid="uid://ctlry7okk0ea" path="res://Sounds/jump.wav" id="25_ud7yb"]
 [ext_resource type="AudioStream" uid="uid://rwhetch2imdf" path="res://Sounds/Land1.wav" id="25_uf676"]
 [ext_resource type="AudioStream" uid="uid://5ii0pco4segn" path="res://Sounds/jump3.wav" id="32_0rtpi"]
+[ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="33_aggol"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fvqnm"]
 custom_solver_bias = 0.305
@@ -666,17 +667,16 @@ wait_time = 5.0
 autostart = true
 
 [node name="Dodge_Cooldown_Label" type="Label" parent="." unique_id=1432948907]
+visible = false
 offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="player_health_label" type="ProgressBar" parent="." unique_id=1777002807]
-visible = false
 z_index = 1
 texture_filter = 3
-offset_left = 2.0
-offset_top = 378.0
-offset_right = 106.0
-offset_bottom = 401.0
+offset_top = 668.0
+offset_right = 104.0
+offset_bottom = 691.0
 scale = Vector2(4.50153, 1.20149)
 theme_override_styles/background = ExtResource("5_t0q8v")
 theme_override_styles/fill = SubResource("StyleBoxFlat_gsih2")
@@ -684,13 +684,12 @@ step = 1.0
 show_percentage = false
 
 [node name="UI Cooldowns" parent="." unique_id=995890868 instance=ExtResource("4_2qm3m")]
-visible = false
 z_index = 1
 texture_filter = 1
-offset_left = 2.0
-offset_top = 362.0
-offset_right = 362.0
-offset_bottom = 370.0
+offset_left = 0.0
+offset_top = 652.0
+offset_right = 360.0
+offset_bottom = 660.0
 theme_override_styles/background = ExtResource("5_t0q8v")
 theme_override_styles/fill = ExtResource("5_ucyed")
 value = 50.0
@@ -702,7 +701,20 @@ transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, -1.50914
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="." unique_id=1695491790]
 
+[node name="State debug" type="Label" parent="." unique_id=331578538]
+offset_left = 7.0
+offset_top = 625.0
+offset_right = 139.0
+offset_bottom = 682.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("33_aggol")
+theme_override_font_sizes/font_size = 18
+text = "STATE DEBUG:"
+
 [node name="attack_cooldown" type="ProgressBar" parent="." unique_id=42913131]
+visible = false
 offset_left = 559.0
 offset_top = 652.0
 offset_right = 927.0

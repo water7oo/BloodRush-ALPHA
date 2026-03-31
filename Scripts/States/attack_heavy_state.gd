@@ -44,6 +44,7 @@ var recovery_timer: float = 0.0
 var can_chain_attack: bool = false  
 var isHit: bool = false
 
+var buffered_input := false
 
 
 # -----------------------
@@ -58,42 +59,52 @@ func _enter() -> void:
 		attack_box.connect("area_entered", Callable(self, "_on_attack_box_area_entered"), CONNECT_DEFERRED)
 
 	preserved_velocity = agent.velocity
+	print("Current Attack State:", agent.state_machine.get_active_state())
 	_start_attack()
 
 func _update(delta: float) -> void:
 	_process_attack(delta)
+	if Input.is_action_just_pressed("attack_heavy_1") && Input.is_action_just_pressed("attack_medium_1"):
+		buffered_input = true
 	agent.move_and_slide()
 
 # -----------------------
 
 func _process_attack(delta: float) -> void:
-	# ✅ Correct cooldown
 	if Global.attackHeavy_cooldown_timer > 0.0:
 		Global.attackHeavy_cooldown_timer -= delta
-
 	if recovery_timer > 0.0:
 		recovery_timer -= delta
 	if combo_timer > 0.0:
 		combo_timer -= delta
+	if can_cancel:
+		cancel_timer -= delta
+		if cancel_timer <= 0:
+			can_cancel = false
 
-	# Exit
+	if buffered_input and can_cancel:
+		agent.state_machine.dispatch(next_attack_state)
+		
 	if Global.attackHeavy_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
-		_exit_attack_state()
-
-		if can_chain_attack and next_attack_state:
+		if buffered_input and can_chain_attack:
 			agent.state_machine.dispatch(next_attack_state)
 		else:
 			agent.state_machine.dispatch("to_idle")
 
-	# Movement
-	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
+		buffered_input = false
+		_exit_attack_state()
 
+
+	# Gravity and velocity
+	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
 	if agent.is_on_floor():
 		agent.velocity.x = move_toward(agent.velocity.x, 0, DECELERATION * delta)
 		agent.velocity.z = move_toward(agent.velocity.z, 0, DECELERATION * delta)
 	else:
 		agent.velocity.x = lerp(agent.velocity.x, preserved_velocity.x, 0.1)
 		agent.velocity.z = lerp(agent.velocity.z, preserved_velocity.z, 0.1)
+
+	agent.move_and_slide()
 
 # -----------------------
 
@@ -173,10 +184,8 @@ func _on_attack_box_area_entered(area):
 
 func _exit_attack_state() -> void:
 	Global.is_attacking = false
-
 	attack_box_debug.visible = false
 	attack_box_col.visible = false
 	isHit = false
-
 	if attack_box:
 		attack_box.monitoring = false

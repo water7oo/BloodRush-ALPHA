@@ -51,6 +51,8 @@ var cancel_timer: float = 0.0
 @export var hit3Sound: AudioStreamPlayer
 @export var hit4Sound: AudioStreamPlayer
 
+var buffered_input := false
+
 func _enter() -> void:
 	enemies_hit.clear()
 	if attack_box:
@@ -65,11 +67,15 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	_process_attack(delta)
+	if Input.is_action_just_pressed("attack_medium_1"):
+		buffered_input = true
+		
+		
 	#print("attack_cooldown:", attack_cooldown, "recovery_timer:", recovery_timer, "combo_timer:", combo_timer)
 	agent.move_and_slide()
 
 func can_start_attack() -> bool:
-	return Global.attack_cooldown_timer_timer <= 0.0 and not Global.is_attacking
+	return Global.attack_cooldown_timer <= 0.0 and not Global.is_attacking
 
 func _process_attack(delta: float) -> void:
 	if Global.attack_cooldown_timer > 0.0:
@@ -78,16 +84,24 @@ func _process_attack(delta: float) -> void:
 		recovery_timer -= delta
 	if combo_timer > 0.0:
 		combo_timer -= delta
+	if can_cancel:
+		cancel_timer -= delta
+		if cancel_timer <= 0:
+			can_cancel = false
 
-
-			
+	if buffered_input and can_cancel:
+		show_combo_fx()
+		agent.state_machine.dispatch(next_attack_state)
+		
 	if Global.attack_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
-		_exit_attack_state()
-		if can_chain_attack and next_attack_state:
-			agent.state_machine.dispatch(next_attack_state)
+		if buffered_input and can_chain_attack:
 			show_combo_fx()
+			agent.state_machine.dispatch(next_attack_state)
 		else:
 			agent.state_machine.dispatch("to_idle")
+
+		buffered_input = false
+		_exit_attack_state()
 
 
 	# Gravity and velocity
@@ -133,6 +147,8 @@ func _on_attack_box_area_entered(area):
 		can_chain_attack = true
 		recovery_timer = hit_recovery_duration
 		cancel_timer = cancel_window
+		can_cancel = true
+		cancel_timer = cancel_window
 		attack_box.monitoring = false
 		var enemy = area
 		while enemy and not (enemy is CharacterBody3D):
@@ -172,7 +188,6 @@ func _on_attack_box_area_entered(area):
 		elif hit1Effect == null:
 			print("Warning: No GPUParticles3D found on " + enemy.name)	
 		gameJuice.objectShake(enemy, enemyTargetLength, enemyTargetMagnitude)
-		await gameJuice.hitstop(enemyTargetHitStop)
 		agent.velocity = saved_velocity
 
 		if area.has_method("set_monitoring"):

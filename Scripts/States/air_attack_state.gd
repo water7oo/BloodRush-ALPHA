@@ -48,6 +48,8 @@ var isHit: bool = false
 var jump_cancel_timer: float = 0.0
 @export var jump_cancel_window: float = 0.25
 
+var buffered_input := false
+
 func _enter() -> void:
 	enemies_hit.clear()
 	if attack_box:
@@ -57,12 +59,19 @@ func _enter() -> void:
 		attack_box.connect("area_entered", Callable(self, "_on_attack_box_area_entered"), CONNECT_DEFERRED)
 
 	preserved_velocity = agent.velocity
+	print("Current Attack State:", agent.state_machine.get_active_state())
 	_start_attack()
 
 func _update(delta: float) -> void:
 	_process_attack(delta)
+	if Input.is_action_just_pressed("attack_medium_1"):
+		buffered_input = true
+		
 	agent.move_and_slide()
 
+func can_start_attack() -> bool:
+	return Global.attackAir_cooldown_timer <= 0.0 and not Global.is_attacking
+	
 func _process_attack(delta: float) -> void:
 	if Global.attackAir_cooldown_timer > 0.0:
 		Global.attackAir_cooldown_timer -= delta
@@ -70,38 +79,34 @@ func _process_attack(delta: float) -> void:
 		recovery_timer -= delta
 	if combo_timer > 0.0:
 		combo_timer -= delta
+	if can_cancel:
+		cancel_timer -= delta
+		if cancel_timer <= 0:
+			can_cancel = false
 
-	# will add rejumps later
-	#if jump_cancel_timer > 0.0 and isHit:
-		#jump_cancel_timer -= delta
-		#if Input.is_action_just_pressed("move_jump"):
-			#agent.velocity.x *= 1.1
-			#agent.velocity.z *= 1.1
-			#agent.velocity.y = Global.JUMP_VELOCITY * 0.8
-			#isHit = false
-			#jump_cancel_timer = 0.0
-			#_exit_attack_state()
-			#agent.state_machine.dispatch("to_jump")
-			#return
-
+	if buffered_input and can_cancel:
+		agent.state_machine.dispatch(next_attack_state)
+		
 	if Global.attackAir_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
-		_exit_attack_state()
-		if can_chain_attack and next_attack_state:
+		if buffered_input and can_chain_attack:
 			agent.state_machine.dispatch(next_attack_state)
 		else:
 			agent.state_machine.dispatch("to_idle")
 
-	# Gravity & air movement
-	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
-	agent.velocity.x = lerp(agent.velocity.x, preserved_velocity.x, 0.1)
-	agent.velocity.z = lerp(agent.velocity.z, preserved_velocity.z, 0.1)
+		buffered_input = false
+		_exit_attack_state()
 
-	# Exit state
-	if attack_cooldown <= 0.0:
-		if can_chain_attack:
-			agent.state_machine.dispatch(next_attack_state)
-		else:
-			_exit_attack_state()
+
+	# Gravity and velocity
+	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
+	if agent.is_on_floor():
+		agent.velocity.x = move_toward(agent.velocity.x, 0, DECELERATION * delta)
+		agent.velocity.z = move_toward(agent.velocity.z, 0, DECELERATION * delta)
+	else:
+		agent.velocity.x = lerp(agent.velocity.x, preserved_velocity.x, 0.1)
+		agent.velocity.z = lerp(agent.velocity.z, preserved_velocity.z, 0.1)
+
+	agent.move_and_slide()
 
 func _start_attack() -> void:
 	enemies_hit.clear()
@@ -182,9 +187,3 @@ func _exit_attack_state() -> void:
 	isHit = false
 	if attack_box:
 		attack_box.monitoring = false
-
-	Global.attackAir_cooldown_timer = Global.attackAir_cooldown_duration
-	if agent.is_on_floor():
-		agent.state_machine.dispatch("to_idle")
-	else:
-		agent.state_machine.dispatch("to_jump")
