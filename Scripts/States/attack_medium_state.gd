@@ -69,7 +69,10 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	_process_attack(delta)
-	if Input.is_action_just_pressed("attack_heavy_1"):
+	
+	if Input.is_action_just_pressed("attack_heavy_1") && Input.is_action_just_pressed("attack_medium_1"):
+		buffered_input = true
+	elif Input.is_action_just_pressed("attack_heavy_1"):
 		buffered_input = true
 	agent.move_and_slide()
 
@@ -94,7 +97,10 @@ func _process_attack(delta: float) -> void:
 	if Global.attackMedium_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
 		buffered_input = false
 		can_chain_attack = true
-		if can_chain_attack && Input.is_action_just_pressed("attack_heavy_1"):
+		if can_chain_attack && Input.is_action_just_pressed("attack_medium_1") && Input.is_action_just_pressed("attack_heavy_1"):
+			_exit_attack_state()
+			agent.state_machine.dispatch(next_attack_state)
+		elif can_chain_attack && Input.is_action_just_pressed("attack_heavy_1"):
 			_exit_attack_state()
 			agent.state_machine.dispatch(next_attack_state)
 		else:

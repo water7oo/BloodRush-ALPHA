@@ -21,6 +21,8 @@ var can_jump: bool = true
 var velocity = Vector3.ZERO
 
 func _enter() -> void:
+	if $"../../move_dust".emitting:
+		$"../../move_dust".emitting = false
 	jump1Sound.play()
 	print("Current State:", agent.state_machine.get_active_state())
 	if agent.is_on_floor():
@@ -40,6 +42,8 @@ func _update(delta: float) -> void:
 	if agent.state_machine.get_active_state() == self:
 		if is_on_floor and not was_on_floor:
 			land1Sound.play()
+			$"../../LandEmitter/LandDust".restart()
+			$"../../LandEmitter/LandDust".emitting = true
 			Global.attackAir_cooldown_timer = 0
 			Global.attackMediumAir_cooldown_timer = 0
 			Global.attackHeavyAir_cooldown_timer = 0

@@ -74,7 +74,6 @@ func _update(delta: float) -> void:
 		buffered_input = true
 		
 		
-	#print("attack_cooldown:", attack_cooldown, "recovery_timer:", recovery_timer, "combo_timer:", combo_timer)
 	agent.move_and_slide()
 
 func can_start_attack() -> bool:

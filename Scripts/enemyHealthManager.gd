@@ -8,11 +8,11 @@ var taking_damage := false
 @onready var EnemyHealthBar = $"../HealthBar/SubViewport/ProgressBar"
 var current_health: float
 var max_health: float = 0.0
-
+@onready var deathSound = $"../deathSound"
 
 func _ready():
 	
-	max_health = 200
+	max_health = 100
 	current_health = max_health
 	
 	if EnemyHealthBar:
@@ -24,11 +24,12 @@ func _ready():
 		print("Health bar not found")
 	pass
 
+	
 func enemyDie():
-	# if enemy health reaches 0, turn off hurtbox
 	if current_health <= 0:
 		monitoring = false
 		monitorable = false
+		deathSound.play()
 		print("ENEMY IS DEAD")
 	else:
 		monitoring = true

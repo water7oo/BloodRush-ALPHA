@@ -24,6 +24,7 @@ var attack_power = 1
 
 
 @onready var mesh_instance := $MeshInstance3D
+@onready var slide_dust: GPUParticles3D = $slideDust
 
 @export var hit_flash_duration: float = 0.2
 var flash_timer: float = 0.0
@@ -53,7 +54,7 @@ func _ready():
 
 func _physics_process(delta):
 	start_hit_flash()
-	
+	SlideFX()
 		
 	if is_flashing:
 		flash_timer -= delta
@@ -71,7 +72,15 @@ func _physics_process(delta):
 func start_hit_flash():
 	pass
 	
+func SlideFX():
+	if slide_dust == null:
+		print("slide_dust NOT FOUND")
+		return
 
+	if velocity.length() > 0.2 and is_on_floor():
+		slide_dust.emitting = true
+	else:
+		slide_dust.emitting = false
 	
 func end_hit_flash():
 	if not mesh_instance:
@@ -99,43 +108,12 @@ func animations():
 		await get_tree().create_timer(0.5).timeout
 		$AnimationTree.set("parameters/Blend2/blend_amount", 0)
 
-#func pause():
-	#process_mode = PROCESS_MODE_DISABLED
-#
-#func unpause():
-	#process_mode = PROCESS_MODE_INHERIT
 
-#Hurtbox
-#If the player touches this make them have hit pause but also put enemy in hit pause by timescale
 func _on_enemy_area_entered(area):
-	if area.name == "AttackBox" && area.monitoring == true:
-		print("Player Attack:" + str(area.monitoring))
-		area.monitoring == false
-		
-		$hit1.emitting = true
+	if area.name == "hurtbox":
+		print('attack player')
 		
 
-	#if area.name == "HurtBox" and !attack_processing:
-		#var player = area.get_parent()
-		#print("Enemy hit player!")
-#
-		## Apply damage
-		#playerHealthMan.takeDamage(playerHealthMan.health, attack_power)
-		#gameJuice.hitStop(0.25, area)
-		#gameJuice.objectShake(player, 0.08, .7)
-		#gameJuice.knockback(player, enemyBox, 10)
-#
-		## Play animations and effects
-		#animations()
-		#
-		## Cooldown for attack
-		#attack_processing = true
-		#enemyBox.monitoring = false
-		#await get_tree().create_timer(1).timeout
-		#attack_processing = false
-		#enemyBox.monitoring = true
-		#
-	#
 func _on_hurt_box_area_entered(area):
 	#if area.name == "AttackBox" || area.name == "AttackUpperBox"
 	pass # Replace with function body.

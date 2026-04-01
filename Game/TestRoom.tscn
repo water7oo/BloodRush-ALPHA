@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bl275sfu3mmds" path="res://Enemy/Enemy2.tscn" id="8_x6rhu"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Player/PlayerCamera.tscn" id="9_sw35u"]
 [ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Player/COWBOYPLAYER(v4).tscn" id="10_wbl5e"]
+[ext_resource type="PackedScene" uid="uid://c6fb8qtkqsif8" path="res://Enemy/EnemyHostile.tscn" id="16_cg3hj"]
 [ext_resource type="Material" uid="uid://dcuvjs33ebpe3" path="res://MaterialTextures/Room.tres" id="21_lu0m3"]
 [ext_resource type="PackedScene" uid="uid://3jvyp4is0xns" path="res://Enviroment/bush.tscn" id="23_fbm6c"]
 [ext_resource type="PackedScene" uid="uid://dbvxknylp1wou" path="res://Enviroment/TreeHead.tscn" id="24_40guh"]
@@ -480,3 +481,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.620
 
 [node name="Fence32" parent="Preview/SubViewportContainer/SubViewport/FenceALL" unique_id=397583452 instance=ExtResource("26_u0pkm")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.62042, 1.2, -13.1131)
+
+[node name="Enemy" parent="." unique_id=457208653 instance=ExtResource("16_cg3hj")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 1, -16)

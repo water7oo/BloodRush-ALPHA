@@ -1,18 +1,35 @@
-[gd_scene format=4 uid="uid://bl275sfu3mmds"]
+[gd_scene format=4 uid="uid://c6fb8qtkqsif8"]
 
-[ext_resource type="Script" uid="uid://di7hn5g8shrvt" path="res://Scripts/enemy.gd" id="1_dwwfr"]
-[ext_resource type="ArrayMesh" uid="uid://brq7yfue6csrm" path="res://Enemy/Sandbag.obj" id="2_0hvkj"]
-[ext_resource type="Material" uid="uid://kddykiqv2ir2" path="res://MaterialTextures/Enemy.tres" id="2_0npau"]
-[ext_resource type="Material" uid="uid://dkc2f2xqtp41w" path="res://Enemy/EnemyMaterial.tres" id="3_866rt"]
-[ext_resource type="Texture2D" uid="uid://ckvxfd6pdd8du" path="res://My Textures/2ndPassAnimations_PixelTextureGrid_32.png" id="3_vqmhl"]
-[ext_resource type="Script" uid="uid://cm0rl70t4u6fn" path="res://FX/flashDamage.gd" id="4_866rt"]
-[ext_resource type="Texture2D" uid="uid://r03mrngq4wtn" path="res://My Textures/2ndPassAnimations_PixelTextureGrid_48.png" id="4_jkxo8"]
-[ext_resource type="Shader" uid="uid://c0ciodvcjfbyq" path="res://Shaders/3DHealthBars.gdshader" id="8_78hri"]
-[ext_resource type="Script" uid="uid://ywk4flkanwe4" path="res://Scripts/enemyHealthManager.gd" id="8_scm7k"]
-[ext_resource type="AudioStream" uid="uid://bih8tk6so4qxc" path="res://Sounds/death1.wav" id="10_3ae78"]
-[ext_resource type="Material" uid="uid://dbj1gqpp8xunp" path="res://FX/PixelHitEffect.tres" id="10_4svdh"]
-[ext_resource type="Texture2D" uid="uid://bieag6y18328y" path="res://FX/Explosion_Sheet.png" id="11_3ae78"]
-[ext_resource type="Script" uid="uid://djfdwolmvokwk" path="res://Enemy/noticePlayer.gd" id="12_866rt"]
+[ext_resource type="Script" uid="uid://di7hn5g8shrvt" path="res://Scripts/enemy.gd" id="1_2tiy1"]
+[ext_resource type="ArrayMesh" uid="uid://brq7yfue6csrm" path="res://Enemy/Sandbag.obj" id="2_tuc0k"]
+[ext_resource type="Texture2D" uid="uid://7qgg4do3dwtm" path="res://Enemy/Sandbag.fbm/7467e88d.png" id="3_tuc0k"]
+[ext_resource type="Shader" uid="uid://c8gnrj13ddg2o" path="res://FX/hitFlash.gdshader" id="4_a6utb"]
+[ext_resource type="Script" uid="uid://cm0rl70t4u6fn" path="res://FX/flashDamage.gd" id="4_wyb1b"]
+[ext_resource type="Shader" uid="uid://c0ciodvcjfbyq" path="res://Shaders/3DHealthBars.gdshader" id="5_o88hp"]
+[ext_resource type="Material" uid="uid://kddykiqv2ir2" path="res://MaterialTextures/Enemy.tres" id="6_jdsf8"]
+[ext_resource type="Texture2D" uid="uid://ckvxfd6pdd8du" path="res://My Textures/2ndPassAnimations_PixelTextureGrid_32.png" id="7_djeph"]
+[ext_resource type="Texture2D" uid="uid://r03mrngq4wtn" path="res://My Textures/2ndPassAnimations_PixelTextureGrid_48.png" id="8_bq7li"]
+[ext_resource type="Script" uid="uid://ywk4flkanwe4" path="res://Scripts/enemyHealthManager.gd" id="9_n3h2g"]
+[ext_resource type="AudioStream" uid="uid://bih8tk6so4qxc" path="res://Sounds/death1.wav" id="10_dexmo"]
+[ext_resource type="Texture2D" uid="uid://bieag6y18328y" path="res://FX/Explosion_Sheet.png" id="11_oiwxk"]
+[ext_resource type="Material" uid="uid://dbj1gqpp8xunp" path="res://FX/PixelHitEffect.tres" id="12_n48et"]
+[ext_resource type="Script" uid="uid://djfdwolmvokwk" path="res://Enemy/noticePlayer.gd" id="13_ulp1q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ae78"]
+render_priority = 0
+shader = ExtResource("4_a6utb")
+shader_parameter/flash = 0.0
+shader_parameter/custom_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wyb1b"]
+next_pass = SubResource("ShaderMaterial_3ae78")
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.9723547, 0.16254929, 3.85046e-07, 1)
+albedo_texture = ExtResource("3_tuc0k")
+albedo_texture_force_srgb = true
+texture_filter = 0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_0hvkj"]
 viewport_path = NodePath("HealthBar/SubViewport")
@@ -25,7 +42,7 @@ bg_color = Color(0.97766954, 0.10013088, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ra2eo"]
 render_priority = 0
-shader = ExtResource("8_78hri")
+shader = ExtResource("5_o88hp")
 shader_parameter/bar_color = Color(0.6395921, 0.9038032, 0, 1)
 shader_parameter/bar_empty_color = Color(0.95, 0, 0, 1)
 shader_parameter/maxProg = 100.0
@@ -169,7 +186,7 @@ resource_name = "Cowboy_Hat"
 cull_mode = 2
 shading_mode = 0
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("3_vqmhl")
+albedo_texture = ExtResource("7_djeph")
 texture_filter = 2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ajm2o"]
@@ -196,7 +213,7 @@ resource_name = "Cowboy_HatBuckle"
 cull_mode = 2
 shading_mode = 0
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("4_jkxo8")
+albedo_texture = ExtResource("8_bq7li")
 texture_filter = 2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_vdll3"]
@@ -314,7 +331,7 @@ _data = {
 size = Vector3(0.660662, 1.02917, 0.50911)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4svdh"]
-size = Vector3(0.540073, 0.674385, 0.760075)
+size = Vector3(0.540073, 0.7910788, 0.760075)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yoo35"]
 radius = 0.729492
@@ -325,7 +342,7 @@ transparency = 1
 shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
-albedo_texture = ExtResource("11_3ae78")
+albedo_texture = ExtResource("11_oiwxk")
 uv1_scale = Vector3(0.95, 0.95, 0.95)
 texture_filter = 0
 billboard_mode = 3
@@ -378,20 +395,20 @@ color_ramp = SubResource("GradientTexture1D_5j0np")
 alpha_curve = SubResource("CurveTexture_x1xct")
 
 [sub_resource type="QuadMesh" id="QuadMesh_en0dp"]
-material = ExtResource("10_4svdh")
+material = ExtResource("12_n48et")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_0hvkj"]
 
 [node name="Enemy" type="CharacterBody3D" unique_id=457208653 groups=["Enemies"]]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
-script = ExtResource("1_dwwfr")
+script = ExtResource("1_2tiy1")
 hit_flash_duration = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=295370142]
 transform = Transform3D(0.21499997, 0, 0, 0, 0.21499997, 0, 0, 0, 0.21499997, 0, 1.9552886, 0)
-mesh = ExtResource("2_0hvkj")
-surface_material_override/0 = ExtResource("3_866rt")
-script = ExtResource("4_866rt")
+mesh = ExtResource("2_tuc0k")
+surface_material_override/0 = SubResource("StandardMaterial3D_wyb1b")
+script = ExtResource("4_wyb1b")
 
 [node name="HealthBar" type="Sprite3D" parent="." unique_id=886727701]
 transform = Transform3D(5.824551, 0, 0, 0, 0.35277504, 0, 0, 0, 1.0000001, 0, 4.393954, 0)
@@ -606,30 +623,30 @@ bones/24/scale = Vector3(1, 1, 1)
 [node name="Cowboy_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=1709704639]
 mesh = SubResource("ArrayMesh_ffc8c")
 skin = SubResource("Skin_dknlr")
-surface_material_override/0 = ExtResource("2_0npau")
+surface_material_override/0 = ExtResource("6_jdsf8")
 
 [node name="Hat_Belt_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=584490868]
 mesh = SubResource("ArrayMesh_qaed4")
 skin = SubResource("Skin_dknlr")
-surface_material_override/0 = ExtResource("2_0npau")
+surface_material_override/0 = ExtResource("6_jdsf8")
 
 [node name="Hat_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=147195033]
 mesh = SubResource("ArrayMesh_ajm2o")
 skin = SubResource("Skin_dknlr")
-surface_material_override/0 = ExtResource("2_0npau")
+surface_material_override/0 = ExtResource("6_jdsf8")
 
 [node name="Hat_Belt_003" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=2105385290]
 mesh = SubResource("ArrayMesh_vdll3")
 skin = SubResource("Skin_dknlr")
-surface_material_override/0 = ExtResource("2_0npau")
+surface_material_override/0 = ExtResource("6_jdsf8")
 
 [node name="Hat_Belt_007" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=1413219516]
 mesh = SubResource("ArrayMesh_hidgf")
 skin = SubResource("Skin_dknlr")
-surface_material_override/0 = ExtResource("2_0npau")
+surface_material_override/0 = ExtResource("6_jdsf8")
 
 [node name="Hat_Belt_008" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=1315820499]
-material_override = ExtResource("2_0npau")
+material_override = ExtResource("6_jdsf8")
 mesh = SubResource("ArrayMesh_amyn8")
 skin = SubResource("Skin_dknlr")
 
@@ -644,7 +661,7 @@ libraries/ = SubResource("AnimationLibrary_3ae78")
 
 [node name="enemyHurtBox" type="Area3D" parent="." unique_id=415868738]
 transform = Transform3D(1.17749, 0, 0, 0, 0.642886, 0, 0, 0, 1.74745, 0, 1.12452, 0.336345)
-script = ExtResource("8_scm7k")
+script = ExtResource("9_n3h2g")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="enemyHurtBox" unique_id=1395692564]
 transform = Transform3D(3.99981, 0, 0, 0, 3.99958, -0.0579429, 0, 0.0579429, 3.99958, 0.0154045, 0.371267, -0.193714)
@@ -652,12 +669,10 @@ shape = SubResource("BoxShape3D_u8c5v")
 
 [node name="enemyBox" type="Area3D" parent="." unique_id=1258361166]
 transform = Transform3D(0.855, 0, 0, 0, 0.632, 0, 0, 0, 1.042, 0, 0.624111, 0.144857)
-monitoring = false
-monitorable = false
 gravity_space_override = 1
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="enemyBox" unique_id=1405604518]
-transform = Transform3D(6.22486, 0, 0, 0, 6.22273, -0.121589, 0, 0.15908, 3.635, 0.00262567, 1.13445, -0.177029)
+transform = Transform3D(9.095, 0, 0, 0, 9.09203, -0.13580583, 0, 0.23243706, 5.3123465, 0.0026256703, 2.619783, -0.13905762)
 shape = SubResource("BoxShape3D_4svdh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=545622494]
@@ -670,17 +685,16 @@ process_callback = 0
 autostart = true
 
 [node name="health_label" type="Label3D" parent="." unique_id=593637493]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.514678, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0328918, 0)
 billboard = 1
 texture_filter = 0
-text = "Dummy"
+text = "fighter"
 font_size = 130
 outline_size = 22
 uppercase = true
 
 [node name="deathSound" type="AudioStreamPlayer" parent="." unique_id=1360374910]
-stream = ExtResource("10_3ae78")
+stream = ExtResource("10_dexmo")
 
 [node name="slideDust" type="GPUParticles3D" parent="." unique_id=191014370]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
@@ -708,7 +722,7 @@ process_material = SubResource("ParticleProcessMaterial_bdgjx")
 draw_pass_1 = SubResource("QuadMesh_en0dp")
 
 [node name="NoticePlayer" type="Area3D" parent="." unique_id=2071341225]
-script = ExtResource("12_866rt")
+script = ExtResource("13_ulp1q")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NoticePlayer" unique_id=1122049651]
 transform = Transform3D(17, 0, 0, 0, 17, 0, 0, 0, 17, 0, 0, 0)

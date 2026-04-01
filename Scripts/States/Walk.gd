@@ -61,6 +61,7 @@ func player_movement(delta: float) -> void:
 	else:
 		is_moving = false
 		current_speed = 0
+		moveDust.emitting = false
 		velocity.x = move_toward(velocity.x, 0, Global.BASE_DECELERATION * delta)
 		velocity.z = move_toward(velocity.z, 0, Global.BASE_DECELERATION * delta)
 
