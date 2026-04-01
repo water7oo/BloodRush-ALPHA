@@ -57,6 +57,8 @@ var next_attack_state: StringName
 
 var buffered_input := false
 
+var current_combo_count = Global.combo_hits.size()
+var last_enemy_hit = Global.combo_hits[-1]["enemy"] if current_combo_count > 0 else null
 # -----------------------
 
 func _enter() -> void:
@@ -97,10 +99,15 @@ func _process_attack(delta: float) -> void:
 	# =========================
 
 	if buffered_input and can_cancel:
+		buffered_input = false
+		_exit_attack_state()
 		agent.state_machine.dispatch(next_attack_state)
+		return
 		
-	if Global.attack_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
-		if buffered_input and can_chain_attack:
+	if Global.attackUpper_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
+		buffered_input = false
+		can_chain_attack = true
+		if can_chain_attack && Input.is_action_just_pressed("move_jump"):
 			show_combo_fx()
 			print("Jump Cancel")
 			jumpCancelSound.play()
@@ -108,22 +115,22 @@ func _process_attack(delta: float) -> void:
 			agent.velocity.x *= 1.1
 			agent.velocity.z *= 1.1
 
-			# Optional vertical boost
-			agent.velocity.y = Global.JUMP_VELOCITY * 0.8
-
 			isHit = false
 			jump_cancel_timer = 0.0
-
-			_exit_attack_state()
-
+			
 			if jumpCancelFX:
 				jumpCancelFX.emitting = true
+
+			_exit_attack_state()
 			agent.state_machine.dispatch(next_attack_state)
 		else:
+			_exit_attack_state()
 			agent.state_machine.dispatch("to_idle")
-
+		return 
+		
+		
 		buffered_input = false
-		_exit_attack_state()
+
 
 	# =========================
 
@@ -145,8 +152,6 @@ func _start_attack() -> void:
 
 	Global.is_attacking = true
 	isHit = false
-
-	# ✅ GLOBAL COOLDOWN START
 	Global.attackUpper_cooldown_timer = attack_duration
 
 	combo_timer = combo_window_duration
@@ -155,7 +160,6 @@ func _start_attack() -> void:
 	can_chain_attack = false
 	can_cancel = false
 
-	# Launcher → jump follow-up
 	next_attack_state = "to_jump"
 
 func show_combo_fx() -> void:
@@ -167,7 +171,14 @@ func _on_attack_box_area_entered(area):
 	if isHit:
 		return
 
-	if area.has_method("takeDamageEnemy"):
+	if area.has_method("takeDamageEnemy") && area.current_health > 0:
+		area.takeDamageEnemy(Global.attackLauncherDamage)
+		Global.combo_hits.append({
+	"enemy": area,
+	"damage": 10,
+	"attack_type": "attackLauncher",
+	"timestamp": Time.get_ticks_msec()
+})
 		isHit = true
 
 		# ✅ ENABLE JUMP CANCEL WINDOW HERE
@@ -186,7 +197,7 @@ func _on_attack_box_area_entered(area):
 		enemies_hit[area] = true 
 
 		Global.isHit = true
-		hit3Sound.play()
+		hit4Sound.play()
 
 		# ✅ HIT CONFIRM REDUCES COOLDOWN
 		Global.attackUpper_cooldown_timer = min(Global.attackUpper_cooldown_timer, hit_cooldown_amount)
@@ -224,6 +235,8 @@ func _on_attack_box_area_entered(area):
 
 func _exit_attack_state() -> void:
 	Global.is_attacking = false
+	if attack_box and attack_box.is_connected("area_entered", Callable(self, "_on_attack_box_area_entered")):
+		attack_box.disconnect("area_entered", Callable(self, "_on_attack_box_area_entered"))
 
 	attackUpper_debug.visible = false
 	attack_box_col.visible = false

@@ -11,6 +11,27 @@
 [ext_resource type="Shader" uid="uid://c0ciodvcjfbyq" path="res://Shaders/3DHealthBars.gdshader" id="8_78hri"]
 [ext_resource type="Script" uid="uid://ywk4flkanwe4" path="res://Scripts/enemyHealthManager.gd" id="8_scm7k"]
 [ext_resource type="Material" uid="uid://dbj1gqpp8xunp" path="res://FX/PixelHitEffect.tres" id="10_4svdh"]
+[ext_resource type="Script" uid="uid://djfdwolmvokwk" path="res://Enemy/noticePlayer.gd" id="12_866rt"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_0hvkj"]
+viewport_path = NodePath("HealthBar/SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hvkj"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_866rt"]
+bg_color = Color(0.97766954, 0.10013088, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ra2eo"]
+render_priority = 0
+shader = ExtResource("8_78hri")
+shader_parameter/bar_color = Color(0.6395921, 0.9038032, 0, 1)
+shader_parameter/bar_empty_color = Color(0.95, 0, 0, 1)
+shader_parameter/maxProg = 100.0
+shader_parameter/progress = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_l36fl"]
+size = Vector2(1.345, 0.125)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ffc8c"]
 resource_name = "2ndPassAnimations_Circle_008"
@@ -304,17 +325,6 @@ format = 1
 mix_rate = 48000
 stereo = true
 
-[sub_resource type="QuadMesh" id="QuadMesh_l36fl"]
-size = Vector2(1.345, 0.125)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ra2eo"]
-render_priority = 0
-shader = ExtResource("8_78hri")
-shader_parameter/bar_color = Color(0.831373, 0, 0, 1)
-shader_parameter/bar_empty_color = Color(1, 0, 0, 1)
-shader_parameter/maxProg = 30.0
-shader_parameter/progress = 30.0
-
 [sub_resource type="Curve" id="Curve_0hvkj"]
 _data = [Vector2(0, 0.0880331), 0.0, 0.0, 0, 0, Vector2(0.506757, 1), 0.0, 0.0, 0, 0, Vector2(0.746622, 0.0612105), 0.0, 0.0, 0, 0, Vector2(1, 0.0165062), 0.0, 0.0, 0, 0]
 point_count = 4
@@ -350,6 +360,8 @@ alpha_curve = SubResource("CurveTexture_x1xct")
 [sub_resource type="QuadMesh" id="QuadMesh_en0dp"]
 material = ExtResource("10_4svdh")
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_0hvkj"]
+
 [node name="Enemy" type="CharacterBody3D" unique_id=457208653 groups=["Enemies"]]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
 script = ExtResource("1_dwwfr")
@@ -360,6 +372,32 @@ transform = Transform3D(0.21499997, 0, 0, 0, 0.21499997, 0, 0, 0, 0.21499997, 0,
 mesh = ExtResource("2_0hvkj")
 surface_material_override/0 = ExtResource("3_866rt")
 script = ExtResource("4_866rt")
+
+[node name="HealthBar" type="Sprite3D" parent="." unique_id=886727701]
+transform = Transform3D(5.824551, 0, 0, 0, 0.35277504, 0, 0, 0, 1.0000001, 0, 4.393954, 0)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_0hvkj")
+
+[node name="SubViewport" type="SubViewport" parent="HealthBar" unique_id=713179497]
+transparent_bg = true
+size = Vector2i(39, 106)
+
+[node name="ProgressBar" type="ProgressBar" parent="HealthBar/SubViewport" unique_id=822217650]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_0hvkj")
+theme_override_styles/fill = SubResource("StyleBoxFlat_866rt")
+
+[node name="EnemyHealthBar" type="MeshInstance3D" parent="." unique_id=1367893088]
+transform = Transform3D(5.824551, 0, 0, 0, 0.35277504, 0, 0, 0, 1.0000001, 0, 4.2640905, 0)
+visible = false
+material_override = SubResource("ShaderMaterial_ra2eo")
+mesh = SubResource("QuadMesh_l36fl")
 
 [node name="RootNode" type="Node3D" parent="." unique_id=1805039592]
 
@@ -586,7 +624,6 @@ libraries/ = SubResource("AnimationLibrary_3ae78")
 
 [node name="enemyHurtBox" type="Area3D" parent="." unique_id=415868738]
 transform = Transform3D(1.17749, 0, 0, 0, 0.642886, 0, 0, 0, 1.74745, 0, 1.12452, 0.336345)
-gravity_space_override = 1
 script = ExtResource("8_scm7k")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="enemyHurtBox" unique_id=1395692564]
@@ -598,7 +635,6 @@ transform = Transform3D(0.855, 0, 0, 0, 0.632, 0, 0, 0, 1.042, 0, 0.624111, 0.14
 monitoring = false
 monitorable = false
 gravity_space_override = 1
-script = ExtResource("8_scm7k")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="enemyBox" unique_id=1405604518]
 transform = Transform3D(6.22486, 0, 0, 0, 6.22273, -0.121589, 0, 0.15908, 3.635, 0.00262567, 1.13445, -0.177029)
@@ -615,6 +651,7 @@ autostart = true
 
 [node name="health_label" type="Label3D" parent="." unique_id=593637493]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.514678, 0)
+visible = false
 billboard = 1
 texture_filter = 0
 text = "Dummy"
@@ -630,15 +667,10 @@ visible = false
 stream = SubResource("AudioStreamWAV_3ae78")
 volume_db = -33.968
 
-[node name="EnemyHealthBar" type="MeshInstance3D" parent="." unique_id=1367893088]
-transform = Transform3D(5.82455, 0, 0, 0, 0.352775, 0, 0, 0, 1, 0, 3.01409, 0)
-visible = false
-mesh = SubResource("QuadMesh_l36fl")
-surface_material_override/0 = SubResource("ShaderMaterial_ra2eo")
-
 [node name="hit1" type="GPUParticles3D" parent="." unique_id=1294251315]
 process_mode = 3
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.32948, 0)
+emitting = false
 amount = 1
 lifetime = 0.7
 one_shot = true
@@ -647,6 +679,15 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_bdgjx")
 draw_pass_1 = SubResource("QuadMesh_en0dp")
 
+[node name="NoticePlayer" type="Area3D" parent="." unique_id=2071341225]
+script = ExtResource("12_866rt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NoticePlayer" unique_id=1122049651]
+transform = Transform3D(17, 0, 0, 0, 17, 0, 0, 0, 17, 0, 0, 0)
+shape = SubResource("SphereShape3D_0hvkj")
+
 [connection signal="area_entered" from="enemyHurtBox" to="." method="_on_enemy_area_entered"]
 [connection signal="area_entered" from="enemyBox" to="." method="_on_enemy_area_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="NoticePlayer" to="NoticePlayer" method="_on_area_entered"]
+[connection signal="area_exited" from="NoticePlayer" to="NoticePlayer" method="_on_area_exited"]

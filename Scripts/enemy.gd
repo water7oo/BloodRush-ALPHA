@@ -4,16 +4,11 @@ extends CharacterBody3D
 @onready var playerHealthMan = get_node("/root/PlayerHealthManager")
 @onready var enemyHealthMan = get_node("/root/EnemyHealthManager")
 
-#@onready var playerEditScene = preload("res://Animations/PlayerEdit.tscn")
-#@onready var armature = playerEditScene.get_node("Armature")
+
 @onready var gameJuice = get_node("/root/GameJuice")
 @onready var followcam = get_node("/root/FollowCam")
 @onready var enemyHealthLabel = $health_label
 
-
-
-@export var enemy_default_mesh: Material
-@export var enemy_damage_mesh: Material = preload("res://MaterialTextures/Enemy_Hit.tres")
 var current_speed = 5.0
 const JUMP_VELOCITY = 4.5
 var can_move = true
@@ -51,7 +46,7 @@ func _ready():
 	if mat and mat is StandardMaterial3D:
 		# store original emission color
 		original_emission = mat.emission
-		print("StandardMaterial3D found and ready!")
+		#print("StandardMaterial3D found and ready!")
 	else:
 		print("Material is NOT a StandardMaterial3D:", mat)
 		

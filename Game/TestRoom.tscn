@@ -167,13 +167,8 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="MeshInstance3D" type="CSGBox3D" parent="Preview/SubViewportContainer/SubViewport/Floor" unique_id=1454563573]
-transform = Transform3D(11.342, 2.4465407e-09, 0, 1.7763568e-15, 9.38252, 0, 0, 0, 8.72365, -2.2055273, 0.038513493, -0.34110194)
-size = Vector3(0.29913855, 0.114513, 0.092585)
-
-[node name="MeshInstance3D3" type="CSGBox3D" parent="Preview/SubViewportContainer/SubViewport/Floor" unique_id=1586581000]
-transform = Transform3D(11.342, 5.20049e-09, 0, 1.77636e-15, 9.38252, 0, 0, 0, 8.72365, -2.13536, 0.836974, 0.00107372)
-visible = false
-size = Vector3(0.624329, 0.0582642, 0.0124887)
+transform = Transform3D(11.342, 2.5302143e-09, 0, 1.7763568e-15, 9.38252, 0, 0, 0, 8.72365, -2.1243448, 0.038513485, -0.34110194)
+size = Vector3(0.28482318, 0.114513, 0.092585)
 
 [node name="bushALL" type="Node3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=2073376120]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2829, 0, 3.53464)

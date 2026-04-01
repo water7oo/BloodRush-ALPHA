@@ -1,41 +1,46 @@
 extends Area3D
 
 @onready var gameJuice = get_node("/root/GameJuice")
-@onready var enemy_health_label = $health_label
 @onready var animationPlayer = $AnimationPlayer
-@onready var enemy = get_node("/root/enemy")
 @onready var punch_dust = get_tree().get_nodes_in_group("punch_dust")
-@onready var enemyHealthBar = load("res://Enemy/Enemy2.tscn::ShaderMaterial_ra2eo")
-var health
-var max_health = 10.0
 var taking_damage := false
+
+@onready var EnemyHealthBar = $"../HealthBar/SubViewport/ProgressBar"
+var current_health: float
+var max_health: float = 0.0
 
 
 func _ready():
-	var health = max_health
-	#enemyHealthBar.set_shader_parameter('progress', health)
 	
+	max_health = 100
+	current_health = max_health
+	
+	if EnemyHealthBar:
+		EnemyHealthBar.max_value = max_health
+		EnemyHealthBar.value = current_health
+		EnemyHealthBar.min_value = 0.0
+		print("Health bar found!!")
+	else:
+		print("Health bar not found")
 	pass
-	
-	
-func readHealth():
-	print("Enemy health is currently " + str(health))
 
+func enemyDie():
+	# if enemy health reaches 0, turn off hurtbox
+	if current_health <= 0:
+		monitoring = false
+		monitorable = false
+		print("ENEMY IS DEAD")
+	else:
+		monitoring = true
+		monitorable = true
+	pass
 
-func takeDamageEnemy(health, attack_damage):
-	max_health = max_health - attack_damage
-	print("ENEMY IS TAKING DAMAGE " + str(max_health))
-	taking_damage = true
-	$"../MeshInstance3D".material_override.set_shader_parameter("shader_parameter/flash_amount", 1)
-	await get_tree().create_timer(.10).timeout
-	taking_damage = false
-	
-	
+func takeDamageEnemy(damage: float) -> void:
+	# Defensive check
+	if EnemyHealthBar == null:
+		print("EnemyHealthBar is null in takeDamageEnemy!")
+		return
 
-func particles():
-	for node in punch_dust:
-		var particle_emitter = node.get_node("punch_dust")
-		if particle_emitter && taking_damage == true:
-			particle_emitter.set_emitting(true)
-		else:
-			particle_emitter.set_emitting(false)
+	current_health = clamp(current_health - damage, 0.0, max_health)
+	EnemyHealthBar.value = current_health
+	print("Enemy HP:", current_health, " / ", max_health)

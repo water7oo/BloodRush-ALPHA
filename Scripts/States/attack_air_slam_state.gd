@@ -27,7 +27,10 @@ extends LimboState
 @export var knockback_force: float = 16.0
 @export var knockback_direction: Vector3 = Vector3(0, 1.5, 0.3)
 
+@export var hit1Sound: AudioStreamPlayer
+@export var hit2Sound: AudioStreamPlayer
 @export var hit3Sound: AudioStreamPlayer
+@export var hit4Sound: AudioStreamPlayer
 @export var jumpCancelSound: AudioStreamPlayer
 
 
@@ -49,7 +52,10 @@ var cancel_timer: float = 0.0
 var isHit: bool = false
 
 var next_attack_state: StringName
+var buffered_input := false
 
+var current_combo_count = Global.combo_hits.size()
+var last_enemy_hit = Global.combo_hits[-1]["enemy"] if current_combo_count > 0 else null
 # -----------------------
 
 func _enter() -> void:
@@ -73,9 +79,16 @@ func _update(delta: float) -> void:
 # -----------------------
 
 func _process_attack(delta: float) -> void:
-
 	if Global.attackAirSlam_cooldown_timer > 0.0:
 		Global.attackAirSlam_cooldown_timer -= delta
+	if recovery_timer > 0.0:
+		recovery_timer -= delta
+	if combo_timer > 0.0:
+		combo_timer -= delta
+	if can_cancel:
+		cancel_timer -= delta
+		if cancel_timer <= 0:
+			can_cancel = false
 
 
 	if recovery_timer > 0.0:
@@ -83,40 +96,18 @@ func _process_attack(delta: float) -> void:
 	if combo_timer > 0.0:
 		combo_timer -= delta
 
-	# =========================
-	if jump_cancel_timer > 0.0 and isHit:
-		jump_cancel_timer -= delta
-
-		if Input.is_action_just_pressed("move_jump"):
-			print("Jump Cancel")
-			jumpCancelSound.play()
-			# Small forward boost
-			agent.velocity.x *= 1.1
-			agent.velocity.z *= 1.1
-
-			# Optional vertical boost
-			agent.velocity.y = Global.JUMP_VELOCITY * 0.8
-
-			isHit = false
-			jump_cancel_timer = 0.0
-
-			_exit_attack_state()
-
-			if jumpCancelFX:
-				jumpCancelFX.emitting = true
-
-			agent.state_machine.dispatch("to_jump")
-			return
-
-	# =========================
-
-	if Global.attackAirSlam_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
+	if buffered_input and can_cancel:
+		buffered_input = false
 		_exit_attack_state()
+		agent.state_machine.dispatch(next_attack_state)
+		return
 
-		if can_chain_attack and next_attack_state:
-			agent.state_machine.dispatch(next_attack_state)
-		else:
-			agent.state_machine.dispatch("to_idle")
+	if Global.attackUpper_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
+		isHit = false
+		buffered_input = false
+		jump_cancel_timer = 0.0
+		_exit_attack_state()
+		agent.state_machine.dispatch("to_idle")
 
 	# =========================
 
@@ -157,7 +148,14 @@ func _on_attack_box_area_entered(area):
 	if isHit:
 		return
 
-	if area.has_method("takeDamageEnemy"):
+	if area.has_method("takeDamageEnemy") && area.current_health > 0:
+		area.takeDamageEnemy(Global.attackAirSlamDamage)
+		Global.combo_hits.append({
+	"enemy": area,
+	"damage": 10,
+	"attack_type": "attackAirSlam",
+	"timestamp": Time.get_ticks_msec()
+})
 		isHit = true
 
 		# ✅ ENABLE JUMP CANCEL WINDOW HERE
@@ -176,7 +174,7 @@ func _on_attack_box_area_entered(area):
 		enemies_hit[area] = true 
 
 		Global.isHit = true
-		hit3Sound.play()
+		hit4Sound.play()
 
 		# ✅ HIT CONFIRM REDUCES COOLDOWN
 		Global.attackAirSlam_cooldown_timer = min(Global.attackAirSlam_cooldown_timer, hit_cooldown_amount)
@@ -215,6 +213,8 @@ func _on_attack_box_area_entered(area):
 
 func _exit_attack_state() -> void:
 	Global.is_attacking = false
+	if attack_box and attack_box.is_connected("area_entered", Callable(self, "_on_attack_box_area_entered")):
+		attack_box.disconnect("area_entered", Callable(self, "_on_attack_box_area_entered"))
 
 	attackUpper_debug.visible = false
 	attack_box_col.visible = false

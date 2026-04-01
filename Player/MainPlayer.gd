@@ -31,6 +31,8 @@ var input_queue: Array = []
 
 
 
+
+
 func _ready():
 	initialize_state_machine()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -97,8 +99,21 @@ func initialize_state_machine():
 	
 
 
-
-
+func _process(delta: float) -> void:
+	if Global.combo_hits.size() >= 2:
+		$ComboCounter.visible = true
+		$ComboCounter.text = "x" + str(Global.combo_hits.size())
+	else:
+		$ComboCounter.visible = false
+		
+	if Global.combo_hits.size() > 0:
+		Global.combo_timer += delta
+		if Global.combo_timer > Global.combo_reset_time:
+			Global.combo_hits.clear()
+			Global.combo_timer = 0.0
+			print("Combo reset!")
+			
+			
 func _physics_process(delta: float) -> void:
 	playerGravity(delta)
 	stateDebugLabel.text = ("STATE DEBUG: " + str(state_machine.get_active_state()).to_upper())

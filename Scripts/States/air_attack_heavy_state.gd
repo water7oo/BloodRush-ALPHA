@@ -50,6 +50,9 @@ var jump_cancel_timer: float = 0.0
 @export var jump_cancel_window: float = 0.25
 
 var buffered_input := false
+var current_combo_count = Global.combo_hits.size()
+var last_enemy_hit = Global.combo_hits[-1]["enemy"] if current_combo_count > 0 else null
+
 
 func _enter() -> void:
 	enemies_hit.clear()
@@ -82,16 +85,24 @@ func _process_attack(delta: float) -> void:
 			can_cancel = false
 
 	if buffered_input and can_cancel:
-		agent.state_machine.dispatch(next_attack_state)
-		
-	if Global.attackHeavyAir_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
-		if buffered_input and can_chain_attack:
-			agent.state_machine.dispatch(next_attack_state)
-		else:
-			agent.state_machine.dispatch("to_idle")
-
 		buffered_input = false
 		_exit_attack_state()
+		agent.state_machine.dispatch(next_attack_state)
+		return
+		
+	if Global.attackHeavyAir_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
+		buffered_input = false
+		can_chain_attack = true
+		if can_chain_attack && Input.is_action_just_pressed("attack_medium_1") && Input.is_action_just_pressed("attack_heavy_1") && !agent.is_on_floor():
+			_exit_attack_state()
+			agent.state_machine.dispatch(next_attack_state)
+		else:
+			_exit_attack_state()
+			agent.state_machine.dispatch("to_idle")
+		
+		return
+
+		buffered_input = false
 
 
 	# Gravity and velocity
@@ -120,7 +131,14 @@ func _start_attack() -> void:
 func _on_attack_box_area_entered(area):
 	if isHit:
 		return
-	if area.has_method("takeDamageEnemy"):
+	if area.has_method("takeDamageEnemy") && area.current_health > 0:
+		area.takeDamageEnemy(Global.attackAirHeavyDamage)
+		Global.combo_hits.append({
+	"enemy": area,
+	"damage": 10,
+	"attack_type": "attackHeavyAir",
+	"timestamp": Time.get_ticks_msec()
+})
 		isHit = true
 		can_chain_attack = true
 		recovery_timer = hit_recovery_duration
@@ -135,7 +153,7 @@ func _on_attack_box_area_entered(area):
 			return
 		enemies_hit[area] = true 
 		Global.isHit = true
-		hit1Sound.play()
+		hit3Sound.play()
 		Global.attackHeavyAir_cooldown_timer = min(Global.attackHeavyAir_cooldown_timer, hit_cooldown_amount)
 		
 		
@@ -179,6 +197,9 @@ func _on_attack_box_area_entered(area):
 
 func _exit_attack_state() -> void:
 	Global.is_attacking = false
+	if attack_box and attack_box.is_connected("area_entered", Callable(self, "_on_attack_box_area_entered")):
+		attack_box.disconnect("area_entered", Callable(self, "_on_attack_box_area_entered"))
+
 	attack_box_debug.visible = false
 	attack_box_col.visible = false
 	isHit = false
