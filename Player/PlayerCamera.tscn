@@ -44,7 +44,7 @@ transform = Transform3D(1, 0, 0, 0, 0.995733, -0.0922837, 0, 0.0922837, 0.995733
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin" unique_id=1163280920]
 process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 0.99440026, 0.10567385, 0, -0.10567385, 0.99440026, 0, 5.4152627, 31.55068)
+transform = Transform3D(1, 0, 0, 0, 0.9944002, 0.10567382, 0, -0.10567382, 0.9944002, 0, 3.6200905, 25.087135)
 current = true
 fov = 45.9
 size = 5.762

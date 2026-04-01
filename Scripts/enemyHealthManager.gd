@@ -12,7 +12,7 @@ var max_health: float = 0.0
 
 func _ready():
 	
-	max_health = 100
+	max_health = 200
 	current_health = max_health
 	
 	if EnemyHealthBar:

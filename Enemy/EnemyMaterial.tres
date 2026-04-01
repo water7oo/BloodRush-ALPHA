@@ -11,9 +11,8 @@ shader_parameter/custom_color = Color(1, 1, 1, 1)
 
 [resource]
 next_pass = SubResource("ShaderMaterial_3ae78")
-shading_mode = 2
+shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("1_uqwa1")
-emission = Color(1, 1, 1, 1)
 texture_filter = 0

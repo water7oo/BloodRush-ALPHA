@@ -102,7 +102,7 @@ func _process_attack(delta: float) -> void:
 		agent.state_machine.dispatch(next_attack_state)
 		return
 
-	if Global.attackUpper_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
+	if Global.attackUpper_cooldown_timer <= 0.0 and recovery_timer <= 0.0 || agent.is_on_floor():
 		isHit = false
 		buffered_input = false
 		jump_cancel_timer = 0.0
@@ -140,7 +140,7 @@ func _start_attack() -> void:
 	can_cancel = false
 
 	# Launcher → jump follow-up
-	next_attack_state = "to_jump"
+	next_attack_state = "to_idle"
 
 # -----------------------
 
