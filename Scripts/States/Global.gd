@@ -18,16 +18,16 @@ var blend_lerp_speed = 10.0
 
 @export var mouse_sensitivity: float = 0.005
 
-@export var armature_rot_speed: float = 1
-@export var armature_default_rot_speed: float = 1
+@export var armature_rot_speed: float = .7
+@export var armature_default_rot_speed: float = .7
 @onready var armature = $Armature_001
 
 #Walk State Base movement values
-@export var BASE_SPEED: float = 9.0
-@export var MAX_SPEED: float = 12.0  # Reduce slightly for better control
-@export var ACCELERATION: float = 30.0  # Slightly higher for snappier movement
-@export var DECELERATION: float = 40.0  # Increase for quicker stopping
-@export var BASE_DECELERATION: float = 40.0  # Matches normal deceleration
+@export var BASE_SPEED: float = 11.0
+@export var MAX_SPEED: float = 15.0  # Reduce slightly for better control
+@export var ACCELERATION: float = 50.0  # Slightly higher for snappier movement
+@export var DECELERATION: float = 60.0  # Increase for quicker stopping
+@export var BASE_DECELERATION: float = 60.0  # Matches normal deceleration
 @export var momentum_deceleration: float = DECELERATION - 5
 @export var momentum_acceleration: float = ACCELERATION + 100
 @export var inertia_blend: float = 4
@@ -85,4 +85,4 @@ var is_attacking: bool = false
 var isHit = false
 
 #Jump State Base movement values:
-@export var JUMP_VELOCITY: float = 13.0  
+@export var JUMP_VELOCITY: float = 12.0  

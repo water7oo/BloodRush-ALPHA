@@ -1,15 +1,12 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://dcuvjs33ebpe3"]
 
-[ext_resource type="Texture2D" uid="uid://bdkrvec3wh6qh" path="res://My Textures/TextureGrid_32_devLight.png" id="1_v6veh"]
+[ext_resource type="Texture2D" uid="uid://bqcs3j00sa7kh" path="res://My Textures/CheckeredPattern.png" id="1_v6veh"]
 
 [resource]
 diffuse_mode = 3
 specular_mode = 1
-disable_ambient_light = true
-albedo_color = Color(0.32915857, 0.3291583, 0.3291585, 1)
 albedo_texture = ExtResource("1_v6veh")
-albedo_texture_force_srgb = true
 roughness = 0.0
-uv1_scale = Vector3(5.705, 5.705, 5.705)
+uv1_scale = Vector3(2.37, 2.37, 2.37)
 uv1_triplanar_sharpness = 0.233259
-texture_filter = 2
+texture_filter = 0

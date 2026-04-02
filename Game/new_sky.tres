@@ -1,11 +1,11 @@
 [gd_resource type="Sky" format=3 uid="uid://cukdbb832rfga"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cl4fa"]
-sky_top_color = Color(5.19812e-06, 0.48957, 0.661506, 1)
+sky_top_color = Color(0, 0.48400003, 0.66, 1)
 sky_horizon_color = Color(5.96821e-06, 0.935889, 0.911724, 1)
-sky_curve = 0.160766
+sky_curve = 0.053033076
 ground_bottom_color = Color(5.58317e-06, 0.911724, 0.888148, 1)
-ground_horizon_color = Color(3.46541e-06, 0.839143, 0.823632, 1)
+ground_horizon_color = Color(1.3284087e-05, 0.9256971, 0.90600663, 1)
 
 [resource]
 sky_material = SubResource("ProceduralSkyMaterial_cl4fa")

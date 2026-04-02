@@ -3,10 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ce3emrnfl1nuy" path="res://Player/COWBOYPLAYER_V4.blend" id="1_g7xsl"]
 [ext_resource type="Material" uid="uid://dcakvymmosyhp" path="res://MaterialTextures/COWBOY.tres" id="2_qhor5"]
 [ext_resource type="PackedScene" uid="uid://bqgjb8xjd76lj" path="res://Player/blood_katana.tscn" id="4_0ur36"]
-[ext_resource type="Material" uid="uid://bvipd0cuplg0p" path="res://MaterialTextures/gameplayer.tres" id="5_h4mu4"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://ccqgr0tb8ublp" path="res://Animations/cowboy2ndPassTree.tres" id="11_fvafx"]
-
-[sub_resource type="QuadMesh" id="QuadMesh_yvqdt"]
 
 [node name="COWBOYPLAYER_V4" unique_id=588792171 groups=["player"] instance=ExtResource("1_g7xsl")]
 
@@ -25,7 +22,10 @@ parameters/Ground_Blend2/blend_amount = -1.0
 parameters/Ground_Blend3/blend_amount = -1.0
 parameters/Jump_Blend/blend_amount = -1.0
 
-[node name="Skeleton3D" parent="Armature_001" parent_id_path=PackedInt32Array(63879458) index="0" unique_id=691688560]
+[node name="Armature_001" parent="." index="1" unique_id=63879458]
+visible = false
+
+[node name="Skeleton3D" parent="Armature_001" index="0" unique_id=691688560]
 bones/0/position = Vector3(8.806781e-15, 79.27571, -2.0304396)
 bones/0/rotation = Quaternion(1.1930224e-05, 1, -1.46896895e-08, 8.475214e-06)
 bones/1/rotation = Quaternion(-0.005127955, 8.536499e-06, -1.1930323e-05, 0.99998695)
@@ -68,17 +68,10 @@ bone_idx = 13
 
 [node name="BloodKatana" parent="Armature_001/Skeleton3D/BoneAttachment3D" index="0" unique_id=849572419 instance=ExtResource("4_0ur36")]
 transform = Transform3D(21.3403, 116.038, 18.9752, 18.0004, -22.2821, 116.016, 116.193, -17.8599, -21.458, -22.6214, 45.7165, -19.2716)
-visible = false
 
 [node name="MORI_003" parent="Armature_001/Skeleton3D" index="1" unique_id=1939629804]
-visible = false
 material_override = ExtResource("2_qhor5")
 
 [node name="BloodKatana" parent="." index="3" unique_id=890456567 instance=ExtResource("4_0ur36")]
 transform = Transform3D(0.39987, -2.62325e-08, 0.916572, -0.916572, -4.00646e-08, 0.39987, 2.62325e-08, -1, -4.00646e-08, 0.475807, 0.739369, 0)
 visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="4" unique_id=1318401053]
-transform = Transform3D(1, 0, 0, 0, 2.286518, 0, 0, 0, 1, 0, 1.1280712, 0)
-material_override = ExtResource("5_h4mu4")
-mesh = SubResource("QuadMesh_yvqdt")

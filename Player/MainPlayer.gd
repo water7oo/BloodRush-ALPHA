@@ -22,6 +22,9 @@ extends CharacterBody3D
 @onready var air_attackMedium_state = $LimboHSM/AirAttackMediumState
 @onready var air_attackHeavy_state = $LimboHSM/AirAttackHeavyState
 
+@onready var guard_state = $LimboHSM/GuardState
+
+
 @onready var take_damage_state = $LimboHSM/TakeDamageState
 @onready var recover_state = $LimboHSM/RecoverState
 @onready var stateDebugLabel = $"State debug"
@@ -52,7 +55,7 @@ func initialize_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, attack_slamAir_state, "to_airSLamAttack")
 	
 	
-	
+	state_machine.add_transition(state_machine.ANYSTATE, guard_state, "to_guard")
 	
 	state_machine.add_transition(idle_state, attack_state, "to_attack")       # L
 	state_machine.add_transition(idle_state, attackMedium_state, "to_mediumAttack") # M
@@ -111,7 +114,6 @@ func _process(delta: float) -> void:
 		if Global.combo_timer > Global.combo_reset_time:
 			Global.combo_hits.clear()
 			Global.combo_timer = 0.0
-			print("Combo reset!")
 			
 			
 func _physics_process(delta: float) -> void:
@@ -207,24 +209,9 @@ func playerGravity(delta: float) -> void:
 
 
 
-
-
-func _on_hurt_box_area_exited(area):
-	pass # Replace with function body.
-
-
-func _on_attack_box_area_entered(area):
-	pass # Replace with function body.
-
-
-
 func _on_hurt_box_area_entered(area):
 	if area.name == "enemyBox":
 		Global.last_enemy_hit = area.get_parent()  # Set the enemy that hit the player
-
+		
 		# Optionally, transition to TakeDamage state
 		state_machine.dispatch("to_damaged")
-
-
-func _on_attack_box_area_exited(area):
-	pass # Replace with function body.

@@ -2,8 +2,7 @@ extends LimboState
 
 @onready var armature = $"../../RootNode"
 @onready var state_machine: LimboHSM = $LimboHSM
-@onready var playerCharScene = $"../../RootNode/COWBOYPLAYER_V4"
-@onready var animationTree = playerCharScene.find_child("AnimationTree", true)
+
 @export var jump1Sound: AudioStreamPlayer
 @export var BASE_SPEED: float = 6.0  
 @export var MAX_SPEED: float = Global.MAX_SPEED - 3
@@ -20,14 +19,18 @@ var can_jump: bool = true
 
 var velocity = Vector3.ZERO
 
+@export var moveDust: GPUParticles3D
+@export var landDust: GPUParticles3D
+
+
 func _enter() -> void:
-	if $"../../move_dust".emitting:
-		$"../../move_dust".emitting = false
+	if moveDust.emitting:
+		moveDust.emitting = false
 	jump1Sound.play()
 	print("Current State:", agent.state_machine.get_active_state())
 	if agent.is_on_floor():
 		agent.velocity.y = Global.JUMP_VELOCITY
-	animationTree.set("parameters/Jump_Blend/blend_amount", 1)
+	#animationTree.set("parameters/Jump_Blend/blend_amount", 1)
 	
 	air_timer = 0.0
 	jump_timer = 0.0
@@ -42,8 +45,8 @@ func _update(delta: float) -> void:
 	if agent.state_machine.get_active_state() == self:
 		if is_on_floor and not was_on_floor:
 			land1Sound.play()
-			$"../../LandEmitter/LandDust".restart()
-			$"../../LandEmitter/LandDust".emitting = true
+			landDust.restart()
+			landDust.emitting = true
 			Global.attackAir_cooldown_timer = 0
 			Global.attackMediumAir_cooldown_timer = 0
 			Global.attackHeavyAir_cooldown_timer = 0
@@ -74,7 +77,7 @@ func player_jump(delta: float) -> void:
 
 	# Landing logic with smooth deceleration instead of hard stop
 	if agent.is_on_floor():
-		animationTree.set("parameters/Jump_Blend/blend_amount", -1)
+		#animationTree.set("parameters/Jump_Blend/blend_amount", -1)
 		# Reduce velocity smoothly rather than stopping immediately
 		agent.velocity.x = move_toward(agent.velocity.x, agent.velocity.x * 0.5, 20 * delta)
 		agent.velocity.z = move_toward(agent.velocity.z, agent.velocity.z * 0.5, 20 * delta)
@@ -90,6 +93,6 @@ func player_jump(delta: float) -> void:
 
 # Falling check
 	if not agent.is_on_floor() and agent.velocity.y < 0:
-		animationTree.set("parameters/Jump_Blend/blend_amount", 0)
-		
+		#animationTree.set("parameters/Jump_Blend/blend_amount", 0)
+		pass
 		

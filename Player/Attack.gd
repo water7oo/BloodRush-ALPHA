@@ -6,10 +6,9 @@ extends LimboState
 @export var ComboConfirmFX: GPUParticles3D
 
 
-@onready var playerCharScene =  $"../../RootNode/COWBOYPLAYER_V4"
+
 @onready var gameJuice = get_node("/root/GameJuice")
 
-@onready var animationTree = playerCharScene.find_child("AnimationTree", true)
 
 
 @export var DECELERATION: float = Global.DECELERATION + 100
@@ -50,6 +49,7 @@ var cancel_timer: float = 0.0
 @export var hit2Sound: AudioStreamPlayer
 @export var hit3Sound: AudioStreamPlayer
 @export var hit4Sound: AudioStreamPlayer
+@export var hit5GuardSOund: AudioStreamPlayer
 
 var buffered_input := false
 
@@ -128,7 +128,7 @@ func _process_attack(delta: float) -> void:
 
 func _start_attack() -> void:
 	enemies_hit.clear()
-	animationTree.set("parameters/AttackShot/request", 1)
+	#animationTree.set("parameters/AttackShot/request", 1)
 
 	Global.is_attacking = true
 	isHit = false
@@ -151,73 +151,95 @@ func show_combo_fx() -> void:
 func _on_attack_box_area_entered(area):
 	if isHit:
 		return
-	if area.has_method("takeDamageEnemy") && area.current_health > 0:
-		
-		area.takeDamageEnemy(Global.attackLightDamage)
-		Global.combo_hits.append({
-	"enemy": area,
-	"damage": 10,
-	"attack_type": "attackLight",
-	"timestamp": Time.get_ticks_msec()
-})
-		
-		isHit = true
-		can_chain_attack = true
-		recovery_timer = hit_recovery_duration
-		cancel_timer = cancel_window
-		can_cancel = true
-		cancel_timer = cancel_window
-		attack_box.monitoring = false
-		var enemy = area
-		while enemy and not (enemy is CharacterBody3D):
-			enemy = enemy.get_parent()
-		if area in enemies_hit:
-			return
-		enemies_hit[area] = true 
-		Global.isHit = true
-		hit1Sound.play()
-		Global.attack_cooldown_timer = min(Global.attack_cooldown_timer, hit_cooldown_amount)
 
+
+# Added the guard check conditional and guard hit sound
+
+	if EnemyHealthManager.isGuarding == true:
+		hit5GuardSOund.play()
 		
-		if enemy.has_node("MeshInstance3D"):
-			var mesh = enemy.get_node("MeshInstance3D")
+		
+		if enemy.has_node("EnemyMesh"):
+			var mesh = enemy.get_node("EnemyMesh")
 			mesh.trigger_flash()
 			await get_tree().process_frame
-			
-		if area.has_method("set_monitoring"):
-			area.monitoring = false
-
-			
-			
-
-		var saved_velocity = agent.velocity
-		agent.velocity = Vector3.ZERO
-		can_cancel = true
+		
 		gameJuice.objectShake(enemy, enemyTargetLength, enemyTargetMagnitude)
 		await gameJuice.hitstop(enemyTargetHitStop)
 
-		var hit1Effect = enemy.find_child("hit1", true, false)
-				
-		if hit1Effect is GPUParticles3D:
-			hit1Effect.restart()
-			hit1Effect.emitting = true
-			hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
-		elif hit1Effect == null:
-			print("Warning: No GPUParticles3D found on " + enemy.name)	
-		gameJuice.objectShake(enemy, enemyTargetLength, enemyTargetMagnitude)
-		agent.velocity = saved_velocity
 
-		if area.has_method("set_monitoring"):
-			area.monitoring = true
+	else:
+		if area.has_method("takeDamageEnemy") && area.current_health > 0:
 			
-		if enemy is CharacterBody3D:
-			#print("Applying knockback to:", enemy.name)
-			gameJuice.knockback(
-				enemy,
-				agent,
-				knockback_force,
-				knockback_direction
-			)
+			area.takeDamageEnemy(Global.attackLightDamage)
+			Global.combo_hits.append({
+		"enemy": area,
+		"damage": 10,
+		"attack_type": "attackLight",
+		"timestamp": Time.get_ticks_msec()
+	})
+			
+			isHit = true
+			can_chain_attack = true
+			recovery_timer = hit_recovery_duration
+			cancel_timer = cancel_window
+			can_cancel = true
+			cancel_timer = cancel_window
+			attack_box.monitoring = false
+			var enemy = area
+			while enemy and not (enemy is CharacterBody3D):
+				enemy = enemy.get_parent()
+			if area in enemies_hit:
+				return
+			enemies_hit[area] = true 
+			Global.isHit = true
+			hit1Sound.play()
+			Global.attack_cooldown_timer = min(Global.attack_cooldown_timer, hit_cooldown_amount)
+
+			
+			if enemy.has_node("EnemyMesh"):
+				var mesh = enemy.get_node("EnemyMesh")
+				mesh.trigger_flash()
+				await get_tree().process_frame
+				
+			if area.has_method("set_monitoring"):
+				area.monitoring = false
+
+				
+				
+
+			var saved_velocity = agent.velocity
+			agent.velocity = Vector3.ZERO
+			can_cancel = true
+			
+			EnemyHealthManager.enemyWasHit = true
+			
+			gameJuice.objectShake(enemy, enemyTargetLength, enemyTargetMagnitude)
+			await gameJuice.hitstop(enemyTargetHitStop)
+
+			EnemyHealthManager.enemyWasHit = false
+
+			var hit1Effect = enemy.find_child("hit1", true, false)
+					
+			if hit1Effect is GPUParticles3D:
+				hit1Effect.restart()
+				hit1Effect.emitting = true
+				hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
+			elif hit1Effect == null:
+				print("Warning: No GPUParticles3D found on " + enemy.name)	
+			agent.velocity = saved_velocity
+
+			if area.has_method("set_monitoring"):
+				area.monitoring = true
+				
+			if enemy is CharacterBody3D:
+				print("Applying knockback to:", enemy.name)
+				gameJuice.knockback(
+					enemy,
+					agent,
+					knockback_force,
+					knockback_direction
+				)
 
 func _exit_attack_state() -> void:
 	Global.is_attacking = false

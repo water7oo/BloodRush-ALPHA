@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://c5tb3qneywfkf"]
+
+[ext_resource type="PackedScene" uid="uid://tciq3kebt6pr" path="res://Player/player.blend" id="1_4flbx"]
+
+[node name="player" unique_id=265813638 instance=ExtResource("1_4flbx")]
+
+[node name="Head_Body" parent="." index="0" unique_id=1600778884]
+visible = false
+
+[node name="Arms" parent="." index="1" unique_id=608417956]
+visible = false
+
+[node name="Hands" parent="." index="2" unique_id=1625514771]
+visible = false
+
+[node name="Legs" parent="." index="3" unique_id=1059365918]
+visible = false
+
+[node name="Feet" parent="." index="4" unique_id=649664522]
+visible = false

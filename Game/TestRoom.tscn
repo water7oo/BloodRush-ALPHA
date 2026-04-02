@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://brejidgy2nq2j" path="res://ui/Pausing.tscn" id="5_swveh"]
 [ext_resource type="Shader" uid="uid://b1hg6btlggl78" path="res://Shaders/uhhhhh.gdshader" id="6_gdw0k"]
 [ext_resource type="PackedScene" uid="uid://en5j5w4rjeu2" path="res://Game/ResetEnemy.tscn" id="7_s2vfm"]
-[ext_resource type="PackedScene" uid="uid://bl275sfu3mmds" path="res://Enemy/Enemy2.tscn" id="8_x6rhu"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Player/PlayerCamera.tscn" id="9_sw35u"]
 [ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Player/COWBOYPLAYER(v4).tscn" id="10_wbl5e"]
 [ext_resource type="PackedScene" uid="uid://c6fb8qtkqsif8" path="res://Enemy/EnemyHostile.tscn" id="16_cg3hj"]
@@ -18,12 +17,10 @@
 [ext_resource type="PackedScene" uid="uid://babe5tbhi8dwe" path="res://Enviroment/Fence.tscn" id="26_u0pkm"]
 
 [sub_resource type="Environment" id="Environment_trpa7"]
-background_mode = 1
+background_mode = 2
 background_color = Color(1, 1, 1, 1)
 sky = ExtResource("1_iu1ym")
 ambient_light_source = 2
-ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_energy = 0.4
 glow_intensity = 4.66
 volumetric_fog_density = 0.0167
 volumetric_fog_albedo = Color(0.456267, 1, 0.98943, 1)
@@ -48,11 +45,9 @@ size = Vector3(0.209863, 0.2, 0.2)
 
 [node name="TRAINING" type="Node3D" unique_id=334628358]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1958810760]
-transform = Transform3D(1, 0, 0, 0, 0.00193746, 0.999998, 0, -0.999998, 0.00193746, 0, 9.50051, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=351352346]
+transform = Transform3D(1, 0, 0, 0, 0.0019374636, 0.99999815, 0, -0.99999815, 0.0019374636, 0, 20.500511, -6)
 shadow_enabled = true
-shadow_blur = 0.076
-directional_shadow_mode = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1349527202]
 environment = SubResource("Environment_trpa7")
@@ -103,27 +98,15 @@ mouse_filter = 1
 mouse_force_pass_scroll_events = false
 color = Color(0, 0, 0, 1)
 
-[node name="Reset" parent="Preview/SubViewportContainer/SubViewport" unique_id=935272242 node_paths=PackedStringArray("enemyDummy1", "enemyDummy2", "enemyDummy3", "resetPos1", "resetPos2", "resetPos3", "playerReset", "player") instance=ExtResource("7_s2vfm")]
-enemyDummy1 = NodePath("../Enemy")
-enemyDummy2 = NodePath("../Enemy2")
-enemyDummy3 = NodePath("../Enemy3")
+[node name="Reset" parent="Preview/SubViewportContainer/SubViewport" unique_id=935272242 node_paths=PackedStringArray("resetPos1", "resetPos2", "resetPos3", "playerReset", "player") instance=ExtResource("7_s2vfm")]
 resetPos1 = NodePath("../Marker3D2")
 resetPos2 = NodePath("../Marker3D")
 resetPos3 = NodePath("../Marker3D3")
 playerReset = NodePath("../PlayerReset")
 player = NodePath("../Cowboy")
 
-[node name="Enemy" parent="Preview/SubViewportContainer/SubViewport" unique_id=1594704572 instance=ExtResource("8_x6rhu")]
-transform = Transform3D(0.8, 0, 1.39875e-07, 0, 0.8, 0, -1.39875e-07, 0, 0.8, 1.4635, 0.762087, 6.34689)
-metadata/_edit_group_ = true
-
-[node name="Enemy2" parent="Preview/SubViewportContainer/SubViewport" unique_id=278209319 instance=ExtResource("8_x6rhu")]
-transform = Transform3D(0.69282, 0, -0.4, 0, 0.8, 0, 0.4, 0, 0.69282, 1.4635, 0.762087, -2.65311)
-metadata/_edit_group_ = true
-
-[node name="Enemy3" parent="Preview/SubViewportContainer/SubViewport" unique_id=1428132463 instance=ExtResource("8_x6rhu")]
-transform = Transform3D(0.207055, 0, 0.772741, 0, 0.8, 0, -0.772741, 0, 0.207055, -10.5365, 0.762087, 0.346889)
-metadata/_edit_group_ = true
+[node name="Enemy" parent="Preview/SubViewportContainer/SubViewport" unique_id=457208653 instance=ExtResource("16_cg3hj")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, -4, 1, -6)
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" unique_id=1881110884 instance=ExtResource("9_sw35u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49479, 1.496, 2.00658)
@@ -151,7 +134,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.43216, 1.45085, -6)
 gizmo_extents = 5.83
 
 [node name="Cowboy" parent="Preview/SubViewportContainer/SubViewport" unique_id=375016865 instance=ExtResource("10_wbl5e")]
-transform = Transform3D(0.006, 0, 0, 0, 0.006, 0, 0, 0, 0.006, 5.92, 0.959527, -1.076)
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -4.9971905, 1.6243083, -1.076)
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1903846000]
 transform = Transform3D(6, 0, 0, 0, -2.62268e-07, 6, 0, -6, -2.62268e-07, -17.6236, -2.18461, -20.3883)
@@ -481,6 +464,3 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.620
 
 [node name="Fence32" parent="Preview/SubViewportContainer/SubViewport/FenceALL" unique_id=397583452 instance=ExtResource("26_u0pkm")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.62042, 1.2, -13.1131)
-
-[node name="Enemy" parent="." unique_id=457208653 instance=ExtResource("16_cg3hj")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 1, -16)

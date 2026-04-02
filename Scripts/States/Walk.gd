@@ -3,8 +3,7 @@ extends LimboState
 @onready var armature = $"../../RootNode"
 @onready var state_machine: LimboHSM = $LimboHSM
 
-@onready var playerCharScene = $"../../RootNode/COWBOYPLAYER_V4"
-@onready var animationTree =  playerCharScene.find_child("AnimationTree", true)
+
 
 @export var JUMP_VELOCITY: float = 12.0  # Increased for better jump height
 const CUSTOM_GRAVITY: float = 30.0  # Keeps the character from feeling too floaty
@@ -30,6 +29,7 @@ func _update(delta: float) -> void:
 	initialize_run(delta)
 	initialize_burst(delta)
 	initialize_crouch(delta)
+	initialize_guard(delta)
 	agent.move_and_slide()
 
 func player_movement(delta: float) -> void:
@@ -43,7 +43,7 @@ func player_movement(delta: float) -> void:
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
 		Global.target_blend_amount = 0.0
 		Global.current_blend_amount = lerp(Global.current_blend_amount, Global.target_blend_amount, Global.blend_lerp_speed * delta)
-		animationTree.set("parameters/Ground_Blend/blend_amount", 1)
+		#animationTree.set("parameters/Ground_Blend/blend_amount", 1)
 		moveDust.emitting = true
 
 		var target_rotation = atan2(direction.x, direction.z)
@@ -108,3 +108,6 @@ func initialize_crouch(delta: float) -> void:
 	if Input.is_action_pressed("move_crouch"):
 		agent.state_machine.dispatch("to_crouch")
 		
+func initialize_guard(delta: float) -> void:
+	if Input.is_action_just_pressed("defend_guard"):
+		agent.state_machine.dispatch("to_guard")

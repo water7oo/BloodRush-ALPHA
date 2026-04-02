@@ -2,8 +2,6 @@ extends LimboState
 
 @onready var armature = $"../../RootNode"
 @onready var state_machine: LimboHSM = $LimboHSM
-@onready var playerCharScene = $"../../RootNode/COWBOYPLAYER_V4"
-@onready var animationTree = playerCharScene.find_child("AnimationTree", true)
 
 @export var BASE_SPEED: float = Global.BASE_SPEED - 2  # Slightly slower than walking
 @export var DECELERATION: float = Global.DECELERATION - 5  
@@ -27,7 +25,7 @@ func player_movement(delta: float) -> void:
 	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 
-	animationTree.set("parameters/Ground_Blend/blend_amount", 0)  # Crouch animation
+	#animationTree.set("parameters/Ground_Blend/blend_amount", 0)  # Crouch animation
 
 	if direction != Vector3.ZERO:
 		is_moving = true
@@ -45,7 +43,7 @@ func player_movement(delta: float) -> void:
 
 	# Transition back to standing
 	if Input.is_action_just_released("move_crouch"):
-		animationTree.set("parameters/Ground_Blend/blend_amount", 1)  # Return to standing animation
+		#animationTree.set("parameters/Ground_Blend/blend_amount", 1)  # Return to standing animation
 		if input_dir == Vector2.ZERO:
 			agent.state_machine.dispatch("to_idle")
 		else:

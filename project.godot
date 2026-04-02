@@ -24,15 +24,13 @@ run/stretch/scale=1.0
 
 [autoload]
 
-Global="*res://Scripts/States/Global.gd"
-InputBuffer="*res://TRASH/InputBuffer.gd"
-Combat="*res://Scripts/Combat.gd"
-GameJuice="*res://Scripts/gameJuice.gd"
+MainEnemy="*uid://bs0oo1mwxyf4u"
+FollowCam="*res://Scripts/follow_cam.gd"
+enemy="*res://Scripts/enemy.gd"
 EnemyHealthManager="*res://Scripts/enemyHealthManager.gd"
 PlayerHealthManager="*res://Scripts/playerHealthManager.gd"
-FollowCam="*res://Scripts/follow_cam.gd"
-Hitpausing="*res://Scripts/hitpausing.gd"
-enemy="*res://Scripts/enemy.gd"
+GameJuice="*res://Scripts/gameJuice.gd"
+Global="*res://Scripts/States/Global.gd"
 
 [display]
 
@@ -184,6 +182,11 @@ attack_heavy_1={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":66,"key_label":0,"unicode":98,"location":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
+]
+}
+defend_guard={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":85,"key_label":0,"unicode":117,"location":0,"echo":false,"script":null)
 ]
 }
 

@@ -4,8 +4,6 @@ extends LimboState
 @export var animation: StringName
 @onready var state_machine: LimboHSM = $LimboHSM
 
-@onready var playerCharScene = $"../../RootNode/COWBOYPLAYER_V4"
-@onready var animationTree = playerCharScene.find_child("AnimationTree", true)
 
 @export var BASE_SPEED: float = Global.BASE_SPEED - 5
 @export var DECELERATION: float = Global.DECELERATION - 5 
@@ -15,7 +13,7 @@ var preserved_velocity: Vector3 = Vector3.ZERO
 
 func _enter() -> void:
 	print("Current State:", agent.state_machine.get_active_state())
-	animationTree.set("parameters/Ground_Blend/blend_amount", 0)
+	#animationTree.set("parameters/Ground_Blend/blend_amount", 0)
 	# Preserve momentum when entering idle state
 	#Global.can_move = false
 	preserved_velocity = agent.velocity

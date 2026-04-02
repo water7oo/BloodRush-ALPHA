@@ -9,10 +9,60 @@
 [ext_resource type="Texture2D" uid="uid://r03mrngq4wtn" path="res://My Textures/2ndPassAnimations_PixelTextureGrid_48.png" id="4_jkxo8"]
 [ext_resource type="Shader" uid="uid://c0ciodvcjfbyq" path="res://Shaders/3DHealthBars.gdshader" id="8_78hri"]
 [ext_resource type="Script" uid="uid://ywk4flkanwe4" path="res://Scripts/enemyHealthManager.gd" id="8_scm7k"]
-[ext_resource type="AudioStream" uid="uid://bih8tk6so4qxc" path="res://Sounds/death1.wav" id="10_3ae78"]
-[ext_resource type="Material" uid="uid://dbj1gqpp8xunp" path="res://FX/PixelHitEffect.tres" id="10_4svdh"]
 [ext_resource type="Texture2D" uid="uid://bieag6y18328y" path="res://FX/Explosion_Sheet.png" id="11_3ae78"]
+[ext_resource type="AudioStream" uid="uid://cf1i4kbxr2n4y" path="res://Sounds/hitHard1.wav" id="11_bdgjx"]
+[ext_resource type="Texture2D" uid="uid://dburebixgi0qs" path="res://My Textures/Sprite_FX_Blast_0017.png" id="12_3ae78"]
 [ext_resource type="Script" uid="uid://djfdwolmvokwk" path="res://Enemy/noticePlayer.gd" id="12_866rt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bdgjx"]
+transparency = 1
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("11_3ae78")
+uv1_scale = Vector3(0.95, 0.95, 0.95)
+texture_filter = 0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 1
+particles_anim_loop = true
+proximity_fade_distance = 52.8
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_en0dp"]
+emission_shape = 1
+emission_sphere_radius = 0.5
+gravity = Vector3(0, 0, 0)
+damping_max = 14.516
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_5xtnc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_en0dp"]
+transparency = 1
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("12_3ae78")
+uv1_scale = Vector3(0.865, 0.865, 0.865)
+uv1_offset = Vector3(0.015, 0.055, -0.035)
+texture_filter = 2
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = true
+proximity_fade_distance = 52.8
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5xtnc"]
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 5.0
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_fccjc"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_0hvkj"]
 viewport_path = NodePath("HealthBar/SubViewport")
@@ -22,17 +72,6 @@ bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_866rt"]
 bg_color = Color(0.97766954, 0.10013088, 0, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ra2eo"]
-render_priority = 0
-shader = ExtResource("8_78hri")
-shader_parameter/bar_color = Color(0.6395921, 0.9038032, 0, 1)
-shader_parameter/bar_empty_color = Color(0.95, 0, 0, 1)
-shader_parameter/maxProg = 100.0
-shader_parameter/progress = 0.0
-
-[sub_resource type="QuadMesh" id="QuadMesh_l36fl"]
-size = Vector2(1.345, 0.125)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ffc8c"]
 resource_name = "2ndPassAnimations_Circle_008"
@@ -294,7 +333,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/path = NodePath("EnemyMesh:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -320,78 +359,53 @@ size = Vector3(0.540073, 0.674385, 0.760075)
 radius = 0.729492
 height = 1.61089
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bdgjx"]
-transparency = 1
-shading_mode = 0
-diffuse_mode = 3
-specular_mode = 1
-albedo_texture = ExtResource("11_3ae78")
-uv1_scale = Vector3(0.95, 0.95, 0.95)
-texture_filter = 0
-billboard_mode = 3
-billboard_keep_scale = true
-particles_anim_h_frames = 5
-particles_anim_v_frames = 1
-particles_anim_loop = true
-proximity_fade_distance = 52.8
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ra2eo"]
+render_priority = 0
+shader = ExtResource("8_78hri")
+shader_parameter/bar_color = Color(0.6395921, 0.9038032, 0, 1)
+shader_parameter/bar_empty_color = Color(0.95, 0, 0, 1)
+shader_parameter/maxProg = 100.0
+shader_parameter/progress = 0.0
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_en0dp"]
-emission_shape = 1
-emission_sphere_radius = 0.5
-gravity = Vector3(0, 0, 0)
-damping_max = 14.516
-anim_speed_min = 1.0
-anim_speed_max = 1.0
-
-[sub_resource type="QuadMesh" id="QuadMesh_5xtnc"]
-
-[sub_resource type="Curve" id="Curve_0hvkj"]
-_data = [Vector2(0, 0.0880331), 0.0, 0.0, 0, 0, Vector2(0.506757, 1), 0.0, 0.0, 0, 0, Vector2(0.746622, 0.0612105), 0.0, 0.0, 0, 0, Vector2(1, 0.0165062), 0.0, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="CurveTexture" id="CurveTexture_x1xct"]
-curve = SubResource("Curve_0hvkj")
-
-[sub_resource type="Gradient" id="Gradient_866rt"]
-interpolation_mode = 1
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_5j0np"]
-gradient = SubResource("Gradient_866rt")
-use_hdr = true
-
-[sub_resource type="Curve" id="Curve_3ae78"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_2pexc"]
-curve = SubResource("Curve_3ae78")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bdgjx"]
-angle_min = -180.0
-angle_max = 180.0
-gravity = Vector3(0, 0, 0)
-scale_min = 10.0
-scale_max = 10.0
-scale_curve = SubResource("CurveTexture_2pexc")
-color_ramp = SubResource("GradientTexture1D_5j0np")
-alpha_curve = SubResource("CurveTexture_x1xct")
-
-[sub_resource type="QuadMesh" id="QuadMesh_en0dp"]
-material = ExtResource("10_4svdh")
+[sub_resource type="QuadMesh" id="QuadMesh_l36fl"]
+size = Vector2(1.345, 0.125)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_0hvkj"]
 
 [node name="Enemy" type="CharacterBody3D" unique_id=457208653 groups=["Enemies"]]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
 script = ExtResource("1_dwwfr")
 hit_flash_duration = 1.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=295370142]
+[node name="EnemyMesh" type="MeshInstance3D" parent="." unique_id=295370142]
 transform = Transform3D(0.21499997, 0, 0, 0, 0.21499997, 0, 0, 0, 0.21499997, 0, 1.9552886, 0)
 mesh = ExtResource("2_0hvkj")
 surface_material_override/0 = ExtResource("3_866rt")
 script = ExtResource("4_866rt")
+
+[node name="slideDust" type="GPUParticles3D" parent="." unique_id=191014370]
+transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_bdgjx")
+emitting = false
+amount = 16
+lifetime = 1.35
+speed_scale = 4.14
+randomness = 0.98
+fixed_fps = 60
+trail_lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_en0dp")
+draw_pass_1 = SubResource("QuadMesh_5xtnc")
+
+[node name="hit1" type="GPUParticles3D" parent="." unique_id=383090491]
+process_mode = 3
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 1.99422, 0)
+material_override = SubResource("StandardMaterial3D_en0dp")
+emitting = false
+amount = 1
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_5xtnc")
+draw_pass_1 = SubResource("QuadMesh_fccjc")
 
 [node name="HealthBar" type="Sprite3D" parent="." unique_id=886727701]
 transform = Transform3D(5.824551, 0, 0, 0, 0.35277504, 0, 0, 0, 1.0000001, 0, 4.393954, 0)
@@ -412,12 +426,6 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_0hvkj")
 theme_override_styles/fill = SubResource("StyleBoxFlat_866rt")
-
-[node name="EnemyHealthBar" type="MeshInstance3D" parent="." unique_id=1367893088]
-transform = Transform3D(5.824551, 0, 0, 0, 0.35277504, 0, 0, 0, 1.0000001, 0, 4.2640905, 0)
-visible = false
-material_override = SubResource("ShaderMaterial_ra2eo")
-mesh = SubResource("QuadMesh_l36fl")
 
 [node name="RootNode" type="Node3D" parent="." unique_id=1805039592]
 
@@ -670,8 +678,7 @@ process_callback = 0
 autostart = true
 
 [node name="health_label" type="Label3D" parent="." unique_id=593637493]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.514678, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0570126, 0)
 billboard = 1
 texture_filter = 0
 text = "Dummy"
@@ -680,32 +687,15 @@ outline_size = 22
 uppercase = true
 
 [node name="deathSound" type="AudioStreamPlayer" parent="." unique_id=1360374910]
-stream = ExtResource("10_3ae78")
+stream = ExtResource("11_bdgjx")
+volume_db = -21.347
+pitch_scale = 0.43
 
-[node name="slideDust" type="GPUParticles3D" parent="." unique_id=191014370]
-transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_bdgjx")
-emitting = false
-amount = 16
-lifetime = 1.35
-speed_scale = 4.14
-randomness = 0.98
-fixed_fps = 60
-trail_lifetime = 0.5
-process_material = SubResource("ParticleProcessMaterial_en0dp")
-draw_pass_1 = SubResource("QuadMesh_5xtnc")
-
-[node name="hit1" type="GPUParticles3D" parent="." unique_id=1294251315]
-process_mode = 3
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.32948, 0)
-emitting = false
-amount = 1
-lifetime = 0.7
-one_shot = true
-speed_scale = 10.0
-explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_bdgjx")
-draw_pass_1 = SubResource("QuadMesh_en0dp")
+[node name="oldHealthBar" type="MeshInstance3D" parent="." unique_id=1367893088]
+transform = Transform3D(5.824551, 0, 0, 0, 0.35277504, 0, 0, 0, 1.0000001, 0, 4.2640905, 0)
+visible = false
+material_override = SubResource("ShaderMaterial_ra2eo")
+mesh = SubResource("QuadMesh_l36fl")
 
 [node name="NoticePlayer" type="Area3D" parent="." unique_id=2071341225]
 script = ExtResource("12_866rt")

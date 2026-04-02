@@ -5,9 +5,9 @@ extends LimboState
 @export var attackUpper_debug: Node
 @export var ComboConfirmFX: GPUParticles3D
 
-@onready var playerCharScene = $"../../RootNode/COWBOYPLAYER_V4"
+
 @onready var gameJuice = get_node("/root/GameJuice")
-@onready var animationTree = playerCharScene.find_child("AnimationTree", true)
+
 
 @export var DECELERATION: float = Global.DECELERATION + 100
 
@@ -148,7 +148,7 @@ func _process_attack(delta: float) -> void:
 func _start_attack() -> void:
 	enemies_hit.clear()
 
-	animationTree.set("parameters/AttackShot/request", 1)
+	#animationTree.set("parameters/AttackShot/request", 1)
 
 	Global.is_attacking = true
 	isHit = false
@@ -199,11 +199,10 @@ func _on_attack_box_area_entered(area):
 		Global.isHit = true
 		hit4Sound.play()
 
-		# ✅ HIT CONFIRM REDUCES COOLDOWN
 		Global.attackUpper_cooldown_timer = min(Global.attackUpper_cooldown_timer, hit_cooldown_amount)
 
-		if enemy.has_node("MeshInstance3D"):
-			var mesh = enemy.get_node("MeshInstance3D")
+		if enemy.has_node("EnemyMesh"):
+			var mesh = enemy.get_node("EnemyMesh")
 			mesh.trigger_flash()
 			await get_tree().process_frame
 
@@ -219,10 +218,13 @@ func _on_attack_box_area_entered(area):
 			hit1Effect.emitting = true
 			hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 		elif hit1Effect == null:
-			print("Warning: No GPUParticles3D found on " + enemy.name)	
+			print("Warning: No GPUParticles3D found on " + enemy.name)
+			
+		EnemyHealthManager.enemyWasHit = true
 		gameJuice.objectShake(area.get_parent(), enemyTargetLength, enemyTargetMagnitude)
 		await gameJuice.hitstop(enemyTargetHitStop)
-
+		
+		EnemyHealthManager.enemyWasHit = false
 		agent.velocity = saved_velocity
 
 		if area.has_method("set_monitoring"):

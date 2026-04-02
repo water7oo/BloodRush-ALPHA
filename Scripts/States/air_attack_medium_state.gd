@@ -5,10 +5,8 @@ extends LimboState
 @export var attack_box_debug: Node
 @export var ComboConfirmFX: GPUParticles3D
 
-@onready var playerCharScene =  $"../../RootNode/COWBOYPLAYER_V4"
 @onready var gameJuice = get_node("/root/GameJuice")
 
-@onready var animationTree = playerCharScene.find_child("AnimationTree", true)
 
 
 @export var DECELERATION: float = Global.DECELERATION + 100
@@ -126,7 +124,7 @@ func _process_attack(delta: float) -> void:
 
 func _start_attack() -> void:
 	enemies_hit.clear()
-	animationTree.set("parameters/AttackShot/request", 1)
+	#animationTree.set("parameters/AttackShot/request", 1)
 	Global.is_attacking = true
 	attack_cooldown = attack_duration
 	combo_timer = combo_window_duration
@@ -165,8 +163,8 @@ func _on_attack_box_area_entered(area):
 		
 		
 		
-		if enemy.has_node("MeshInstance3D"):
-			var mesh = enemy.get_node("MeshInstance3D")
+		if enemy.has_node("EnemyMesh"):
+			var mesh = enemy.get_node("EnemyMesh")
 			mesh.trigger_flash()
 			await get_tree().process_frame
 			
@@ -186,10 +184,13 @@ func _on_attack_box_area_entered(area):
 		var saved_velocity = agent.velocity
 		agent.velocity = Vector3.ZERO
 		can_cancel = true
+		
+		EnemyHealthManager.enemyWasHit = true
 		gameJuice.objectShake(enemy, enemyTargetLength, enemyTargetMagnitude)
 		await gameJuice.hitstop(enemyTargetHitStop)
 		agent.velocity = saved_velocity
-
+		EnemyHealthManager.enemyWasHit = false
+		
 		if area.has_method("set_monitoring"):
 			area.monitoring = true
 			
