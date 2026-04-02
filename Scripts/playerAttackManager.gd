@@ -1,16 +1,18 @@
 extends Node
 
 # will deal with attack damage from player, move swapping
-
 # Player will be able to swap out launchers + slammers + grabs
-
 # There are 3 types of swappables: Launchers, Slammers, and Grabs
-
 # Launchers: Upwards hitting moves (multihit launchers, hard launchers)
 # Slammers: Downwards hitting moves (multihit slammers, hard slammers)
 # Grabs: Grab based moves (reCombo grabs, Throws)
-
 # On special moves enter, check for what kind of swappable the player has --> execute property
+
+
+# (For now just debug the swappables) 
+#Attack state scripts will look at swappable script and check to see which swappble 
+#is selected then execute code accordingly 
+
 
 @export var lightAttackDamage: float = 5
 @export var MediumAttackDamage: float = 10

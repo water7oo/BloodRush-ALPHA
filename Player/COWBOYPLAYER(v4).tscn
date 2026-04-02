@@ -394,6 +394,12 @@ visible = false
 material_override = ExtResource("37_xsw6c")
 mesh = SubResource("QuadMesh_frjtj")
 
+[node name="Swappable Launch" type="Node" parent="." unique_id=1097230123]
+
+[node name="Swappable Slam" type="Node" parent="." unique_id=82713219]
+
+[node name="Swappable Grab" type="Node" parent="." unique_id=109821804]
+
 [node name="playerAttackManager" type="Node" parent="." unique_id=1279584512]
 script = ExtResource("40_taog0")
 
