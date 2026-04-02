@@ -20,7 +20,7 @@ var GuardDamage = 5
 
 
 func _ready():
-	max_health = 1000
+	max_health = 100
 	current_health = max_health
 	
 	if EnemyHealthBar:

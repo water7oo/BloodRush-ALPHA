@@ -64,17 +64,7 @@ var blend_lerp_speed = 10.0
 @export var attackAirSlam_cooldown_timer: float = 0.0
 @export var attackAirSlam_cooldown_duration: float = 1
 
-# Damage
-
-@export var attackLightDamage: float = 5.0
-@export var attackMediumDamage: float = 10.0
-@export var attackHeavyDamage: float = 20.0
-@export var attackLauncherDamage: float = 15.0
-@export var attackAirLightDamage: float = 5.0
-@export var attackAirMediumDamage: float = 10.0
-@export var attackAirHeavyDamage: float = 20.0
-@export var attackAirSlamDamage: float = 20.0
-
+# Move these to playerAttackManager
 var combo_hits: Array = []
 var combo_reset_time: float = 1
 var combo_timer: float = 0.0
@@ -84,5 +74,4 @@ var last_enemy_hit = null
 var is_attacking: bool = false
 var isHit = false
 
-#Jump State Base movement values:
 @export var JUMP_VELOCITY: float = 12.0  

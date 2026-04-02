@@ -29,6 +29,7 @@ FollowCam="*res://Scripts/follow_cam.gd"
 enemy="*res://Scripts/enemy.gd"
 EnemyHealthManager="*res://Scripts/enemyHealthManager.gd"
 PlayerHealthManager="*res://Scripts/playerHealthManager.gd"
+PlayerAttackManager="*uid://7nffybofk8fa"
 GameJuice="*res://Scripts/gameJuice.gd"
 Global="*res://Scripts/States/Global.gd"
 

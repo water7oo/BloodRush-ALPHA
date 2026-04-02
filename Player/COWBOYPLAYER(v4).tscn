@@ -39,6 +39,7 @@
 [ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="33_aggol"]
 [ext_resource type="Material" uid="uid://bvipd0cuplg0p" path="res://MaterialTextures/gameplayer.tres" id="37_xsw6c"]
 [ext_resource type="PackedScene" uid="uid://c5tb3qneywfkf" path="res://Player/player1.tscn" id="38_frjtj"]
+[ext_resource type="Script" uid="uid://7nffybofk8fa" path="res://Scripts/playerAttackManager.gd" id="40_taog0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fvqnm"]
 custom_solver_bias = 0.305
@@ -352,6 +353,8 @@ albedo_color = Color(1, 0.20999998, 0.8025, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gsih2"]
 bg_color = Color(0.407843, 0.776471, 0, 1)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_wtaik"]
+
 [node name="Cowboy" type="CharacterBody3D" unique_id=401760427 groups=["player"]]
 wall_min_slide_angle = 0.0
 floor_constant_speed = true
@@ -390,6 +393,9 @@ debug_fill = false
 visible = false
 material_override = ExtResource("37_xsw6c")
 mesh = SubResource("QuadMesh_frjtj")
+
+[node name="playerAttackManager" type="Node" parent="." unique_id=1279584512]
+script = ExtResource("40_taog0")
 
 [node name="LimboHSM" type="LimboHSM" parent="." unique_id=1653008851]
 
@@ -903,6 +909,12 @@ value = 50.0
 [node name="AirWavePos" type="Marker3D" parent="." unique_id=1545100302]
 transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, 0, 0, 0)
 
+[node name="Targeting" type="Area3D" parent="." unique_id=795992432]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Targeting" unique_id=206963885]
+transform = Transform3D(18.025, 0, 0, 0, 18.025, 0, 0, 0, 18.025, 0, 0, 0)
+shape = SubResource("SphereShape3D_wtaik")
+
 [connection signal="area_entered" from="RootNode/HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="area_exited" from="RootNode/HurtBox" to="." method="_on_hurt_box_area_exited"]
 [connection signal="area_entered" from="RootNode/AttackBox" to="." method="_on_attack_box_area_entered"]
@@ -917,3 +929,4 @@ transform = Transform3D(1, 0, 2.13163e-14, 0, 1, 0, -2.13163e-14, 0, 1, 0, 0, 0)
 [connection signal="area_exited" from="RootNode/AirAttackMediumBox" to="." method="_on_attack_box_area_exited"]
 [connection signal="area_entered" from="RootNode/AirAttackHeavyBox" to="." method="_on_attack_box_area_entered"]
 [connection signal="area_exited" from="RootNode/AirAttackHeavyBox" to="." method="_on_attack_box_area_exited"]
+[connection signal="area_entered" from="Targeting" to="." method="_on_targeting_area_entered"]

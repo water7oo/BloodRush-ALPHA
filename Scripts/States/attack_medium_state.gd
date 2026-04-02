@@ -142,10 +142,10 @@ func _on_attack_box_area_entered(area):
 	if isHit:
 		return
 	if area.has_method("takeDamageEnemy") && area.current_health > 0:
-		area.takeDamageEnemy(Global.attackMediumDamage)
+		area.takeDamageEnemy(PlayerAttackManager.MediumAttackDamage)
 		Global.combo_hits.append({
 	"enemy": area,
-	"damage": 10,
+	"damage": PlayerAttackManager.MediumAttackDamage,
 	"attack_type": "attackMedium",
 	"timestamp": Time.get_ticks_msec()
 })

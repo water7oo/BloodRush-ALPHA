@@ -400,7 +400,6 @@ anim_speed_max = 1.0
 
 [node name="Enemy" type="CharacterBody3D" unique_id=457208653 groups=["Enemies"]]
 script = ExtResource("1_a6utb")
-isAlwaysAliveDebug = true
 
 [node name="LimboHSM" type="LimboHSM" parent="." unique_id=284204221]
 

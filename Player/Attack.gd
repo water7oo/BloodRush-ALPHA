@@ -154,7 +154,7 @@ func _on_attack_box_area_entered(area):
 
 
 # Added the guard check conditional and guard hit sound
-
+#--------------------
 	if EnemyHealthManager.isGuarding == true:
 		hit5GuardSOund.play()
 		
@@ -167,14 +167,16 @@ func _on_attack_box_area_entered(area):
 		gameJuice.objectShake(enemy, enemyTargetLength, enemyTargetMagnitude)
 		await gameJuice.hitstop(enemyTargetHitStop)
 
+#--------------------
 
 	else:
+#		Normal takedamageenemy code block
 		if area.has_method("takeDamageEnemy") && area.current_health > 0:
 			
-			area.takeDamageEnemy(Global.attackLightDamage)
+			area.takeDamageEnemy(PlayerAttackManager.lightAttackDamage)
 			Global.combo_hits.append({
 		"enemy": area,
-		"damage": 10,
+		"damage": PlayerAttackManager.lightAttackDamage ,
 		"attack_type": "attackLight",
 		"timestamp": Time.get_ticks_msec()
 	})

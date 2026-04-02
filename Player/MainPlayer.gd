@@ -215,3 +215,9 @@ func _on_hurt_box_area_entered(area):
 		
 		# Optionally, transition to TakeDamage state
 		state_machine.dispatch("to_damaged")
+
+
+func _on_targeting_area_entered(area: Area3D) -> void:
+	if area.name == "enemyBox":
+		print("Locking on enemy")
+	pass # Replace with function body.

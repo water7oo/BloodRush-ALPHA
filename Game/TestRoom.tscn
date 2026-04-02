@@ -98,7 +98,10 @@ mouse_filter = 1
 mouse_force_pass_scroll_events = false
 color = Color(0, 0, 0, 1)
 
-[node name="Reset" parent="Preview/SubViewportContainer/SubViewport" unique_id=935272242 node_paths=PackedStringArray("resetPos1", "resetPos2", "resetPos3", "playerReset", "player") instance=ExtResource("7_s2vfm")]
+[node name="Reset" parent="Preview/SubViewportContainer/SubViewport" unique_id=935272242 node_paths=PackedStringArray("enemyDummy1", "enemyDummy2", "enemyDummy3", "resetPos1", "resetPos2", "resetPos3", "playerReset", "player") instance=ExtResource("7_s2vfm")]
+enemyDummy1 = NodePath("../Enemy")
+enemyDummy2 = NodePath("../Enemy2")
+enemyDummy3 = NodePath("../Enemy3")
 resetPos1 = NodePath("../Marker3D2")
 resetPos2 = NodePath("../Marker3D")
 resetPos3 = NodePath("../Marker3D3")
@@ -107,6 +110,12 @@ player = NodePath("../Cowboy")
 
 [node name="Enemy" parent="Preview/SubViewportContainer/SubViewport" unique_id=457208653 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, -4, 1, -6)
+
+[node name="Enemy2" parent="Preview/SubViewportContainer/SubViewport" unique_id=943017416 instance=ExtResource("16_cg3hj")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, -12, 1, -6)
+
+[node name="Enemy3" parent="Preview/SubViewportContainer/SubViewport" unique_id=1913382893 instance=ExtResource("16_cg3hj")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 5, 1, -6)
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" unique_id=1881110884 instance=ExtResource("9_sw35u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49479, 1.496, 2.00658)
@@ -134,7 +143,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.43216, 1.45085, -6)
 gizmo_extents = 5.83
 
 [node name="Cowboy" parent="Preview/SubViewportContainer/SubViewport" unique_id=375016865 instance=ExtResource("10_wbl5e")]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -4.9971905, 1.6243083, -1.076)
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -4.9971905, 0.80488896, -1.076)
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1903846000]
 transform = Transform3D(6, 0, 0, 0, -2.62268e-07, 6, 0, -6, -2.62268e-07, -17.6236, -2.18461, -20.3883)

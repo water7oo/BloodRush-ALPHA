@@ -172,10 +172,10 @@ func _on_attack_box_area_entered(area):
 		return
 
 	if area.has_method("takeDamageEnemy") && area.current_health > 0:
-		area.takeDamageEnemy(Global.attackLauncherDamage)
+		area.takeDamageEnemy(PlayerAttackManager.LauncherAttackDamage)
 		Global.combo_hits.append({
 	"enemy": area,
-	"damage": 10,
+	"damage": PlayerAttackManager.LauncherAttackDamage,
 	"attack_type": "attackLauncher",
 	"timestamp": Time.get_ticks_msec()
 })
