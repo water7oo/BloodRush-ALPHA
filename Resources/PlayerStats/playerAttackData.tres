@@ -1,0 +1,7 @@
+[gd_resource type="Resource" format=3 uid="uid://ckx3dpag2g4ov"]
+
+[ext_resource type="Script" uid="uid://bcbamkw4vjdx" path="res://Resources/PlayerStats/PlayerStatsScripts/playerAttackData.gd" id="1_md77p"]
+
+[resource]
+script = ExtResource("1_md77p")
+knockback_direction = Vector3(0, 0, 0.5)

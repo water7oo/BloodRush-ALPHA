@@ -5,45 +5,9 @@ extends LimboState
 @export var attack_box_debug: Node
 @export var ComboConfirmFX: GPUParticles3D
 
-
+@export var attackData: Resource
 
 @onready var gameJuice = get_node("/root/GameJuice")
-
-
-
-@export var DECELERATION: float = Global.DECELERATION + 100
-@export var attack_power: float = 10.0
-@export var animation_request: StringName
-@export var next_attack_state: StringName  
-@export var combo_window_duration: float = 0.4  
-@export var attack_duration: float = 0.4  
-@export var hit_cooldown_amount: float = 0.2
-@export var attack_cooldown_duration: float = 0.5
-
-@export var enemyTargetLength: float = 0.4
-@export var enemyTargetMagnitude: float = 0.01
-@export var enemyTargetHitStop: float = 0.4
-
-@export var knockback_force: float = 12.0
-@export var knockback_direction: Vector3 = Vector3(0, 1, 0.5) 
-
-var enemies_hit:= {}
-
-var jump_cancel_timer: float = 0.0
-@export var jump_cancel_window: float = 0.25
-
-var preserved_velocity: Vector3 = Vector3.ZERO
-var combo_timer: float = 0.0
-var can_chain_attack: bool = false  
-var isHit: bool = false
-
-@export var recovery_timer: float = 0.0
-@export var recovery_duration: float = 0.3
-@export var hit_recovery_duration: float = 0.1
-
-var can_cancel: bool = false
-var cancel_timer: float = 0.0
-@export var cancel_window: float = 0.2
 
 @export var hit1Sound: AudioStreamPlayer
 @export var hit2Sound: AudioStreamPlayer
@@ -51,95 +15,49 @@ var cancel_timer: float = 0.0
 @export var hit4Sound: AudioStreamPlayer
 @export var hit5GuardSOund: AudioStreamPlayer
 
-var buffered_input := false
 
-var current_combo_count = Global.combo_hits.size()
-var last_enemy_hit = Global.combo_hits[-1]["enemy"] if current_combo_count > 0 else null
 
 func _enter() -> void:
-	enemies_hit.clear()
+	attackData.enemies_hit.clear()
 	if attack_box:
 		attack_box_debug.visible = true
 		attack_box_col.visible = true
 		attack_box.monitoring = true  # Enable hitbox
 		attack_box.connect("area_entered", Callable(self, "_on_attack_box_area_entered"), CONNECT_DEFERRED)
 
-	preserved_velocity = agent.velocity
+	attackData.preserved_velocity = agent.velocity
 	print("Current Attack State:", agent.state_machine.get_active_state())
 	_start_attack()
 
 func _update(delta: float) -> void:
-	_process_attack(delta)
+	attackData._process_attack(delta,agent)
 	if Input.is_action_just_pressed("attack_medium_1"):
-		buffered_input = true
+		attackData.buffered_input = true
 
 	agent.move_and_slide()
 
 func can_start_attack() -> bool:
 	return Global.attack_cooldown_timer <= 0.0 and not Global.is_attacking
 
-func _process_attack(delta: float) -> void:
-	if Global.attack_cooldown_timer > 0.0:
-		Global.attack_cooldown_timer -= delta
-	if recovery_timer > 0.0:
-		recovery_timer -= delta
-	if combo_timer > 0.0:
-		combo_timer -= delta
-	if can_cancel:
-		cancel_timer -= delta
-		if cancel_timer <= 0:
-			can_cancel = false
 
-	if buffered_input and can_cancel:
-		buffered_input = false
-		_exit_attack_state()
-		agent.state_machine.dispatch(next_attack_state)
-		return
-		
-	if Global.attack_cooldown_timer <= 0.0 and recovery_timer <= 0.0:
-		buffered_input = false
-		can_chain_attack = true
-		if can_chain_attack && Input.is_action_just_pressed("attack_medium_1"):
-			_exit_attack_state()
-			agent.state_machine.dispatch(next_attack_state)
-		else:
-			_exit_attack_state()
-			agent.state_machine.dispatch("to_idle")
-		
-		return
-
-		buffered_input = false
-
-
-
-	# Gravity and velocity
-	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
-	if agent.is_on_floor():
-		agent.velocity.x = move_toward(agent.velocity.x, 0, DECELERATION * delta)
-		agent.velocity.z = move_toward(agent.velocity.z, 0, DECELERATION * delta)
-	else:
-		agent.velocity.x = lerp(agent.velocity.x, preserved_velocity.x, 0.1)
-		agent.velocity.z = lerp(agent.velocity.z, preserved_velocity.z, 0.1)
-
-	agent.move_and_slide()
 
 
 
 func _start_attack() -> void:
-	enemies_hit.clear()
+	attackData.enemies_hit.clear()
 	#animationTree.set("parameters/AttackShot/request", 1)
 
 	Global.is_attacking = true
-	isHit = false
-	Global.attack_cooldown_timer = attack_duration
-	combo_timer = combo_window_duration
-	recovery_timer = recovery_duration  
+	attackData.isHit = false
+	Global.attack_cooldown_timer = attackData.attack_duration
+	attackData.combo_timer = attackData.combo_window_duration
+	attackData.recovery_timer = attackData.recovery_duration  
 
-	can_chain_attack = false
-	can_cancel = false
+	attackData.can_chain_attack = false
+	attackData.can_cancel = false
 
 	# Set next attack in combo chain
-	next_attack_state = "to_mediumAttack"  # Light -> Medium
+	attackData.next_attack_state = "to_mediumAttack"  # Light -> Medium
 
 func show_combo_fx() -> void:
 	if ComboConfirmFX:
@@ -149,7 +67,7 @@ func show_combo_fx() -> void:
 		
 func _on_attack_box_area_entered(area):
 	var areaParent = area.get_parent()
-	if isHit:
+	if attackData.isHit:
 		return
 
 	if areaParent.has_method("takeDamageEnemy") && areaParent.enemyStats.current_health > 0 && areaParent.enemyStats.isDead == false && areaParent.enemyStats.isGuarding == false:
@@ -161,23 +79,22 @@ func _on_attack_box_area_entered(area):
 	"attack_type": "attackLight",
 	"timestamp": Time.get_ticks_msec()
 })
-		
-		isHit = true
-		can_chain_attack = true
-		recovery_timer = hit_recovery_duration
-		cancel_timer = cancel_window
-		can_cancel = true
-		cancel_timer = cancel_window
+		attackData.isHit = true
+		attackData.can_chain_attack = true
+		attackData.recovery_timer = attackData.hit_recovery_duration
+		attackData.cancel_timer = attackData.cancel_window
+		attackData.can_cancel = true
+		attackData.cancel_timer = attackData.cancel_window
 		attack_box.monitoring = false
 		var enemy = area
 		while enemy and not (enemy is CharacterBody3D):
 			enemy = enemy.get_parent()
-		if area in enemies_hit:
+		if area in attackData.enemies_hit:
 			return
-		enemies_hit[area] = true 
+		attackData.enemies_hit[area] = true 
 		Global.isHit = true
 		hit1Sound.play()
-		Global.attack_cooldown_timer = min(Global.attack_cooldown_timer, hit_cooldown_amount)
+		Global.attack_cooldown_timer = min(Global.attack_cooldown_timer, attackData.hit_cooldown_amount)
 
 #		change this so it doesnt rely on the node name, only the node type
 		if enemy.has_node("EnemyMesh"):
@@ -191,12 +108,12 @@ func _on_attack_box_area_entered(area):
 
 		var saved_velocity = agent.velocity
 		agent.velocity = Vector3.ZERO
-		can_cancel = true
+		attackData.can_cancel = true
 		
 		areaParent.enemyStats.enemyWasHit = true
 		
-		gameJuice.objectShake(enemy, enemyTargetLength, enemyTargetMagnitude)
-		await gameJuice.hitstop(enemyTargetHitStop)
+		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
+		await gameJuice.hitstop(attackData.enemyTargetHitStop)
 
 		areaParent.enemyStats.enemyWasHit = false
 
@@ -218,22 +135,10 @@ func _on_attack_box_area_entered(area):
 			gameJuice.knockback(
 				enemy,
 				agent,
-				knockback_force,
-				knockback_direction
+				attackData.knockback_force,
+				attackData.knockback_direction
 			)
 	elif areaParent.has_method("takeGuardDamageEnemy") && areaParent.enemyStats.isGuarding:
 		areaParent.takeGuardDamageEnemy(PlayerAttackManager.lightAttackDamage)
 		print("GUARDING!!")
 		pass
-
-func _exit_attack_state() -> void:
-	Global.is_attacking = false
-	
-	if attack_box and attack_box.is_connected("area_entered", Callable(self, "_on_attack_box_area_entered")):
-		attack_box.disconnect("area_entered", Callable(self, "_on_attack_box_area_entered"))
-
-	attack_box_debug.visible = false
-	attack_box_col.visible = false
-	isHit = false
-	if attack_box:
-		attack_box.monitoring = false

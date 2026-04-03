@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://dd5untx5oxewc" path="res://Scripts/States/attack_medium_state.gd" id="11_m03mu"]
 [ext_resource type="Script" uid="uid://dx1tx542bb2tb" path="res://Scripts/States/air_attack_state.gd" id="11_why3t"]
 [ext_resource type="Script" uid="uid://coaor0yqhgel0" path="res://Scripts/States/attack_heavy_state.gd" id="12_m03mu"]
+[ext_resource type="Resource" uid="uid://ckx3dpag2g4ov" path="res://Resources/PlayerStats/playerAttackData.tres" id="14_0ei8l"]
 [ext_resource type="Script" uid="uid://c0fmcpcbdnh3w" path="res://Scripts/States/air_attack_medium_state.gd" id="15_0rtpi"]
 [ext_resource type="Script" uid="uid://dexogtbtatw6s" path="res://Player/attackUpperState.gd" id="16_4mqd1"]
 [ext_resource type="Script" uid="uid://dhkxh7d1i5toa" path="res://Scripts/States/air_attack_heavy_state.gd" id="16_aggol"]
@@ -452,15 +453,7 @@ attack_box = NodePath("../../RootNode/AttackBox")
 attack_box_col = NodePath("../../RootNode/AttackBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AttackBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
-next_attack_state = &"to_mediumAttack"
-attack_duration = 0.1
-attack_cooldown_duration = 0.3
-enemyTargetLength = 0.01
-enemyTargetMagnitude = 0.1
-enemyTargetHitStop = 0.15
-knockback_force = 2.0
-knockback_direction = Vector3(0, 0, 1)
-recovery_duration = 0.15
+attackData = ExtResource("14_0ei8l")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
