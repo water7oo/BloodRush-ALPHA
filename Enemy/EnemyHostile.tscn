@@ -25,6 +25,22 @@
 [ext_resource type="Script" uid="uid://colgt8jseih4h" path="res://Scripts/enemyStates/death_stateEnemy.gd" id="11_ulp1q"]
 [ext_resource type="Texture2D" uid="uid://dburebixgi0qs" path="res://My Textures/Sprite_FX_Blast_0017.png" id="13_tuc0k"]
 [ext_resource type="Script" uid="uid://djfdwolmvokwk" path="res://Enemy/noticePlayer.gd" id="13_ulp1q"]
+[ext_resource type="Resource" uid="uid://cdrmc6otk3eol" path="res://Resources/EnemyStats/enemyStats.tres" id="21_i335x"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_0hvkj"]
+viewport_path = NodePath("HealthBar/SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hvkj"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_866rt"]
+bg_color = Color(0.97766954, 0.10013088, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u8c5v"]
+size = Vector3(0.660662, 1.02917, 0.50911)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4svdh"]
+size = Vector3(0.540073, 1.0587474, 0.760075)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3ae78"]
 render_priority = 0
@@ -39,15 +55,6 @@ diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("3_tuc0k")
 texture_filter = 0
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_0hvkj"]
-viewport_path = NodePath("HealthBar/SubViewport")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hvkj"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_866rt"]
-bg_color = Color(0.97766954, 0.10013088, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ra2eo"]
 render_priority = 0
@@ -336,12 +343,6 @@ _data = {
 &"SpinOut": SubResource("Animation_866rt")
 }
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_u8c5v"]
-size = Vector3(0.660662, 1.02917, 0.50911)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_4svdh"]
-size = Vector3(0.540073, 1.0587474, 0.760075)
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yoo35"]
 radius = 0.4897461
 height = 1.8114686
@@ -398,8 +399,68 @@ anim_speed_max = 1.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_0hvkj"]
 
-[node name="Enemy" type="CharacterBody3D" unique_id=457208653 groups=["Enemies"]]
+[node name="Enemy" type="CharacterBody3D" unique_id=457208653 node_paths=PackedStringArray("enemyHealthManagerNode", "deathSound") groups=["Enemies"]]
 script = ExtResource("1_a6utb")
+enemyHealthManagerNode = NodePath("enemyHurtBox")
+deathSound = NodePath("deathSound")
+enemyStats = ExtResource("21_i335x")
+
+[node name="enemyNameLabel" type="Label3D" parent="." unique_id=593637493]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0328918, 0)
+billboard = 1
+texture_filter = 0
+text = "--"
+font_size = 130
+outline_size = 22
+uppercase = true
+
+[node name="StateDebug" type="Label3D" parent="." unique_id=668979859]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.797259, 0)
+pixel_size = 0.003
+billboard = 1
+texture_filter = 0
+text = "State debug"
+font_size = 130
+outline_size = 22
+uppercase = true
+
+[node name="HealthBar" type="Sprite3D" parent="." unique_id=886727701]
+transform = Transform3D(5.824551, 0, 0, 0, 0.35277504, 0, 0, 0, 1.0000001, 0, 4.393954, 0)
+billboard = 1
+no_depth_test = true
+texture = SubResource("ViewportTexture_0hvkj")
+
+[node name="SubViewport" type="SubViewport" parent="HealthBar" unique_id=713179497]
+transparent_bg = true
+size = Vector2i(39, 106)
+
+[node name="ProgressBar" type="ProgressBar" parent="HealthBar/SubViewport" unique_id=822217650]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_0hvkj")
+theme_override_styles/fill = SubResource("StyleBoxFlat_866rt")
+
+[node name="enemyHurtBox" type="Area3D" parent="." unique_id=415868738]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.82950103, 0.336345)
+script = ExtResource("9_n3h2g")
+enemyStats = ExtResource("21_i335x")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="enemyHurtBox" unique_id=1395692564]
+transform = Transform3D(3.99981, 0, 0, 0, 3.99958, -0.0579429, 0, 0.0579429, 3.99958, 0.0154045, 0.992098, -0.193714)
+shape = SubResource("BoxShape3D_u8c5v")
+
+[node name="enemyBox" type="Area3D" parent="." unique_id=1258361166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3290921, 0.144857)
+gravity_space_override = 1
+script = ExtResource("11_a6utb")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="enemyBox" unique_id=1405604518]
+transform = Transform3D(3.995, 0, 0, 0, 3.993695, -0.102098525, 0, 0.102098525, 3.993695, 0.0026256703, 1.515825, -0.12583798)
+shape = SubResource("BoxShape3D_4svdh")
 
 [node name="LimboHSM" type="LimboHSM" parent="." unique_id=284204221]
 
@@ -438,26 +499,6 @@ transform = Transform3D(0.21499997, 0, 0, 0, 0.21499997, 0, 0, 0, 0.21499997, 0,
 mesh = ExtResource("2_tuc0k")
 surface_material_override/0 = SubResource("StandardMaterial3D_wyb1b")
 script = ExtResource("4_wyb1b")
-
-[node name="HealthBar" type="Sprite3D" parent="." unique_id=886727701]
-transform = Transform3D(5.824551, 0, 0, 0, 0.35277504, 0, 0, 0, 1.0000001, 0, 4.393954, 0)
-billboard = 1
-no_depth_test = true
-texture = SubResource("ViewportTexture_0hvkj")
-
-[node name="SubViewport" type="SubViewport" parent="HealthBar" unique_id=713179497]
-transparent_bg = true
-size = Vector2i(39, 106)
-
-[node name="ProgressBar" type="ProgressBar" parent="HealthBar/SubViewport" unique_id=822217650]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 1
-theme_override_styles/background = SubResource("StyleBoxFlat_0hvkj")
-theme_override_styles/fill = SubResource("StyleBoxFlat_866rt")
 
 [node name="EnemyHealthBar" type="MeshInstance3D" parent="." unique_id=1367893088]
 transform = Transform3D(5.824551, 0, 0, 0, 0.35277504, 0, 0, 0, 1.0000001, 0, 4.2640905, 0)
@@ -687,23 +728,6 @@ parameters/Blend2/blend_amount = 0.0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2111857369]
 libraries/ = SubResource("AnimationLibrary_3ae78")
 
-[node name="enemyHurtBox" type="Area3D" parent="." unique_id=415868738]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.82950103, 0.336345)
-script = ExtResource("9_n3h2g")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="enemyHurtBox" unique_id=1395692564]
-transform = Transform3D(3.99981, 0, 0, 0, 3.99958, -0.0579429, 0, 0.0579429, 3.99958, 0.0154045, 0.992098, -0.193714)
-shape = SubResource("BoxShape3D_u8c5v")
-
-[node name="enemyBox" type="Area3D" parent="." unique_id=1258361166]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3290921, 0.144857)
-gravity_space_override = 1
-script = ExtResource("11_a6utb")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="enemyBox" unique_id=1405604518]
-transform = Transform3D(3.995, 0, 0, 0, 3.993695, -0.102098525, 0, 0.102098525, 3.993695, 0.0026256703, 1.515825, -0.12583798)
-shape = SubResource("BoxShape3D_4svdh")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=545622494]
 process_mode = 3
 transform = Transform3D(2.2, 0, 0, 0, 2.2, 0, 0, 0, 2.2, 0, 1.8983731, -0.0626284)
@@ -713,29 +737,10 @@ shape = SubResource("CapsuleShape3D_yoo35")
 process_callback = 0
 autostart = true
 
-[node name="health_label" type="Label3D" parent="." unique_id=593637493]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0328918, 0)
-billboard = 1
-texture_filter = 0
-text = "fighter"
-font_size = 130
-outline_size = 22
-uppercase = true
-
-[node name="StateDebug" type="Label3D" parent="." unique_id=668979859]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.797259, 0)
-pixel_size = 0.003
-billboard = 1
-texture_filter = 0
-text = "State debug"
-font_size = 130
-outline_size = 22
-uppercase = true
-
 [node name="deathSound" type="AudioStreamPlayer" parent="." unique_id=498826232]
 stream = ExtResource("11_tuc0k")
-volume_db = -21.347
-pitch_scale = 0.43
+volume_db = 7.226
+pitch_scale = 0.68
 
 [node name="slideDust" type="GPUParticles3D" parent="." unique_id=191014370]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
@@ -764,6 +769,8 @@ draw_pass_1 = SubResource("QuadMesh_o88hp")
 
 [node name="NoticePlayer" type="Area3D" parent="." unique_id=2071341225]
 visible = false
+monitoring = false
+monitorable = false
 script = ExtResource("13_ulp1q")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NoticePlayer" unique_id=1122049651]

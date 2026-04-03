@@ -22,6 +22,9 @@ var x_cam_rot_dist: float = 10
 var original_global_transform: Transform3D
 var target_node: Node3D
 
+
+@export var enemyStats: Resource
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	target_node = get_node(target) as Node3D
@@ -111,9 +114,10 @@ func applyShake(period, magnitude):
 	self.transform = initial_transform
 
 func playShake():
-	if EnemyHealthManager.taking_damage == true:
-		applyShake(.02,0.08)
-		pass
-	if PlayerHealthManager.taking_damage == true:
-		applyShake(.02,0.08)
-		pass
+	if enemyStats:
+		if enemyStats.taking_damage == true:
+			applyShake(.02,0.08)
+			pass
+		if enemyStats.taking_damage == true:
+			applyShake(.02,0.08)
+			pass

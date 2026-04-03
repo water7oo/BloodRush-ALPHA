@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://7l5yih8w56c3"]
 
 [ext_resource type="Script" uid="uid://b0vlvthw3ye25" path="res://Scripts/follow_cam.gd" id="1_hwm0y"]
+[ext_resource type="Resource" uid="uid://cdrmc6otk3eol" path="res://Resources/EnemyStats/enemyStats.tres" id="2_qloqc"]
 [ext_resource type="Shader" uid="uid://xtbp2rolummv" path="res://Shaders/OUTLINE_2.1.gdshader" id="2_ye0eu"]
 [ext_resource type="Script" uid="uid://cn6f1nyulomnm" path="res://Scripts/gameJuice.gd" id="3_sswrb"]
 [ext_resource type="PackedScene" uid="uid://3jvyp4is0xns" path="res://Enviroment/bush.tscn" id="3_ye0eu"]
@@ -30,6 +31,7 @@ process_mode = 3
 script = ExtResource("1_hwm0y")
 enabled = true
 spring_arm_pivot = NodePath("SpringArmPivot")
+enemyStats = ExtResource("2_qloqc")
 
 [node name="SpringArmPivot" type="Node3D" parent="." unique_id=1208215425 groups=["camera"]]
 

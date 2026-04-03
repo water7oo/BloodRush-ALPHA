@@ -1,8 +1,5 @@
 extends Node
 
-# Adds flavor to the game and makes stuff feel good to hit
-var impact = true
-
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	pass

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" format=3 uid="uid://cdrmc6otk3eol"]
+
+[ext_resource type="Script" uid="uid://ccfr6qljiobv4" path="res://Resources/EnemyStats/EnemyStatsScripts/enemyStats.gd" id="1_km6ar"]
+
+[resource]
+script = ExtResource("1_km6ar")
+current_health = 25.0
+max_health = 100.0

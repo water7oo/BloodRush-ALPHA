@@ -24,12 +24,12 @@ run/stretch/scale=1.0
 
 [autoload]
 
-MainEnemy="*uid://bs0oo1mwxyf4u"
 FollowCam="*res://Scripts/follow_cam.gd"
 enemy="*res://Scripts/enemy.gd"
 EnemyHealthManager="*res://Scripts/enemyHealthManager.gd"
 PlayerHealthManager="*res://Scripts/playerHealthManager.gd"
 PlayerAttackManager="*uid://7nffybofk8fa"
+MainEnemy="uid://bs0oo1mwxyf4u"
 GameJuice="*res://Scripts/gameJuice.gd"
 Global="*res://Scripts/States/Global.gd"
 

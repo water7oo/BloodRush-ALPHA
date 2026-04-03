@@ -1,5 +1,7 @@
 extends CharacterBody3D
+class_name EnemyClass
 
+@onready var gameJuice = get_node("/root/GameJuice")
 @onready var state_machine: LimboHSM = $LimboHSM
 @onready var idle_state: LimboState = $LimboHSM/IdleState
 @onready var attack_state: LimboState = $LimboHSM/AttackState
@@ -20,7 +22,21 @@ extends CharacterBody3D
 
 @onready var stateDebug = $StateDebug
 
+@export var enemyHealthManagerNode: Area3D
+@export var deathSound = AudioStreamPlayer
+@onready var EnemyHealthBar = $HealthBar/SubViewport/ProgressBar
+@onready var enemyHurtBox = $enemyHurtBox
+
+
+@export var enemyStats: Resource
+@onready var enemyNameLabel = $enemyNameLabel
+
 func _ready():
+	if enemyStats:
+		startHealth()
+		print("Enemy Health: " + str(enemyStats.current_health))
+
+		
 	if state_machine:
 		initialize_state_machine()
 	pass
@@ -36,12 +52,30 @@ func initialize_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, hitstun_state, "to_hitstun")
 	state_machine.add_transition(state_machine.ANYSTATE, guard_state, "to_guard")
 	
-	state_machine.initial_state = idle_state  
+
+
+	print("Guarding: " + str(enemyStats.isGuarding))
+	if enemyStats.isDead == true:
+		enemyStats.current_health = 0.0
+		enemyStats.max_health = 0.0
+		EnemyHealthBar.value = 0.0
+		print("enter death")
+		state_machine.initial_state = death_state
+	elif enemyStats.isGuarding == true:
+		print("enter guard")
+		enemyStats.enemyWasHit = false
+		state_machine.initial_state = guard_state
+	else:
+		print("enter idle")
+		state_machine.initial_state = idle_state  
+
+
 	state_machine.initialize(self)
 	state_machine.set_active(true)
-	pass
+	
 
 func _process(delta: float) -> void:
+	
 	if state_machine:
 		updateStateMachineDebug()
 		stateDebugging()
@@ -50,22 +84,79 @@ func _process(delta: float) -> void:
 	
 func updateStateMachineDebug():
 	stateDebug.text = str(state_machine.get_active_state())
+	
+	if enemyNameLabel.text:
+		enemyNameLabel.text = enemyStats.Name
+	else:
+		enemyNameLabel.text = "NO NAME GIVEN"
 		
-
 func stateDebugging():
-	if EnemyHealthManager.enemyWasHit == true:
+	if enemyStats.enemyWasHit == true && enemyStats.isGuarding == false:
 		state_machine.dispatch("to_hitstun")
 
-	if EnemyHealthManager.isDead == true || isDeathDebug == true:
+	if enemyStats.isDead == true || isDeathDebug == true:
 		state_machine.dispatch("to_death")
 		
 	if isAlwaysGuardDebug == true:
-		EnemyHealthManager.isGuarding = true
+		enemyStats.isGuarding = true
 		state_machine.dispatch("to_guard")
 
 	if isAlwaysAliveDebug == true:
-		EnemyHealthManager.current_health = EnemyHealthManager.max_health
+		enemyStats.current_health = enemyStats.max_health
 
+func startHealth():
+		enemyStats.max_health = enemyStats.current_health
+		
+		if EnemyHealthBar:
+			EnemyHealthBar.max_value = enemyStats.max_health
+			EnemyHealthBar.value = enemyStats.current_health
+			EnemyHealthBar.min_value = 0.0
+			print("Health bar found!!")
+		else:
+			print("Health bar not found")
+			
+
+func takeDamageEnemy(damage: float) -> void:
+		if enemyStats.isDead == false:
+			
+			enemyStats.current_health = clamp(enemyStats.current_health - damage, 0.0, enemyStats.max_health)
+			print("Enemy Health: " +str(enemyStats.current_health))
+			if EnemyHealthBar:
+				EnemyHealthBar.value = enemyStats.current_health
+
+			if enemyStats.current_health <= 0:
+				state_machine.dispatch("to_death")
+				enemyHurtBox.monitoring = false
+				enemyHurtBox.monitorable = false
+				$deathSound.play()
+			else:
+				enemyHurtBox.monitoring = true
+				enemyHurtBox.monitorable = true
+				print("enemy is alive")
+		else:
+			damage -= damage
+		
+func takeGuardDamageEnemy(damage: float) -> void:
+	if enemyStats.isDead == false:
+		if enemyStats.isGuarding == true:
+			damage -= enemyStats.GuardDamage
+			enemyStats.current_health = clamp(enemyStats.current_health - damage, 0.0, enemyStats.max_health)
+			print("Enemy Guarding player")
+		
+		if EnemyHealthBar:
+			EnemyHealthBar.value = enemyStats.current_health
+
+		if enemyStats.current_health <= 0:
+			state_machine.dispatch("to_death")
+			enemyHurtBox.monitoring = false
+			enemyHurtBox.monitorable = false
+			$deathSound.play()
+		else:
+			enemyHurtBox.monitoring = true
+			enemyHurtBox.monitorable = true
+			print("enemy is alive")
+			
+			
 func _physics_process(delta: float) -> void:
 	Gravity(delta)
 	move_and_slide()

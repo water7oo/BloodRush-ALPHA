@@ -1,14 +1,28 @@
 extends LimboState
 
 @onready var state_machine: LimboHSM = $LimboHSM
+@onready var EnemyMesh = $"../../EnemyMesh"
+@onready var EnemyMeshMat
 
-
-# A toggle that makes the enemy guard against the player
+@onready var parent = $"../.."
 
 
 func _enter() -> void:
-	pass 
+	print("insid guard")
+	parent.enemyStats.isGuarding = true 
+	if EnemyMesh:
+		EnemyMeshMat = EnemyMesh.get_active_material(0)
+		
+		
+	onGuardMaterialSwap()
 
+		
+
+
+func onGuardMaterialSwap():
+	if EnemyMeshMat is StandardMaterial3D:
+		EnemyMeshMat.albedo_color = Color(0.0, 0.911, 0.929, 0.98)
 
 func _exit() -> void:
+	print("leaving guard")
 	pass
