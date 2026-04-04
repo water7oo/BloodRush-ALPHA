@@ -26,8 +26,10 @@ var last_enemy_hit = Global.combo_hits[-1]["enemy"] if current_combo_count > 0 e
 
 
 func _enter() -> void:
-	enemies_hit.clear()
-
+	attackData.enemies_hit.clear()
+	attackData = attackData.duplicate()
+	Global.is_attacking = true
+	
 	if attack_box:
 		attack_debug.visible = true
 		attack_box_col.visible = true
@@ -44,7 +46,10 @@ func _update(delta: float) -> void:
 	agent.move_and_slide()
 
 # -----------------------
-
+func can_start_attack() -> bool:
+	return attackData.attack_cooldown_timer <= 0.0 and not Global.is_attacking
+	
+	
 func _process_attack(delta: float) -> void:
 	if attackData.attack_cooldown_timer > 0.0:
 		attackData.attack_cooldown_timer -= delta
@@ -73,20 +78,18 @@ func _process_attack(delta: float) -> void:
 			_exit_attack_state()
 			agent.state_machine.dispatch("to_idle")
 		
+		attackData.buffered_input = false
 		return
 
-		attackData.buffered_input = false
+	# Apply gravity
+	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
 
-	# Gravity and velocity
-	agent.velocity.y -= (Global.CUSTOM_GRAVITY) * delta
 	if agent.is_on_floor():
 		agent.velocity.x = move_toward(agent.velocity.x, 0, attackData.ATTACK_DECELERATION * delta)
 		agent.velocity.z = move_toward(agent.velocity.z, 0, attackData.ATTACK_DECELERATION * delta)
-	else:
-		agent.velocity.x = lerp(agent.velocity.x, agent.velocity.x * .5, 0.1)
-		agent.velocity.z = lerp(agent.velocity.z, agent.velocity.z * .5, 0.1)
+			
 
-	agent.move_and_slide()
+
 
 func _start_attack() -> void:
 	attackData.enemies_hit.clear()
@@ -186,7 +189,7 @@ func _on_attack_box_area_entered(area):
 
 func _exit_attack_state() -> void:
 	Global.is_attacking = false
-	
+	attackData.attack_cooldown_timer = 0.0
 	if attack_box and attack_box.is_connected("area_entered", Callable(self, "_on_attack_box_area_entered")):
 		attack_box.disconnect("area_entered", Callable(self, "_on_attack_box_area_entered"))
 

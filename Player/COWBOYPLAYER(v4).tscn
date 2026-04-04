@@ -24,7 +24,6 @@
 [ext_resource type="Resource" uid="uid://cphhcsqaqq1im" path="res://Resources/PlayerStats/movementResources/jumpResource.tres" id="11_yxw21"]
 [ext_resource type="Script" uid="uid://coaor0yqhgel0" path="res://Scripts/States/attack_heavy_state.gd" id="12_m03mu"]
 [ext_resource type="Resource" uid="uid://0p8t68c3kbwh" path="res://Resources/PlayerStats/movementResources/runjumpResource.tres" id="13_q8lqs"]
-[ext_resource type="Resource" uid="uid://ckx3dpag2g4ov" path="res://Resources/PlayerStats/playerAttackData.tres" id="14_0ei8l"]
 [ext_resource type="Script" uid="uid://c0fmcpcbdnh3w" path="res://Scripts/States/air_attack_medium_state.gd" id="15_0rtpi"]
 [ext_resource type="Resource" uid="uid://br6owr61u8ys5" path="res://Resources/PlayerStats/movementResources/dodgeResource.tres" id="15_anpul"]
 [ext_resource type="Script" uid="uid://dexogtbtatw6s" path="res://Player/attackUpperState.gd" id="16_4mqd1"]
@@ -43,19 +42,17 @@
 [ext_resource type="AudioStream" uid="uid://cgi2lemllrga2" path="res://Sounds/dodge1.wav" id="25_owvjx"]
 [ext_resource type="AudioStream" uid="uid://ctlry7okk0ea" path="res://Sounds/jump.wav" id="25_ud7yb"]
 [ext_resource type="AudioStream" uid="uid://rwhetch2imdf" path="res://Sounds/Land1.wav" id="25_uf676"]
+[ext_resource type="Script" uid="uid://bcbamkw4vjdx" path="res://Resources/PlayerStats/PlayerStatsScripts/playerAttackData.gd" id="27_3pvmt"]
 [ext_resource type="AudioStream" uid="uid://c5k8fbxm7e1d7" path="res://Sounds/Raygun Empty.wav" id="31_wtaik"]
 [ext_resource type="AudioStream" uid="uid://5ii0pco4segn" path="res://Sounds/jump3.wav" id="32_0rtpi"]
 [ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="33_aggol"]
 [ext_resource type="Material" uid="uid://bvipd0cuplg0p" path="res://MaterialTextures/gameplayer.tres" id="37_xsw6c"]
-[ext_resource type="PackedScene" uid="uid://c5tb3qneywfkf" path="res://Player/player1.tscn" id="38_frjtj"]
 [ext_resource type="Script" uid="uid://7nffybofk8fa" path="res://Scripts/playerAttackManager.gd" id="40_taog0"]
 [ext_resource type="FontFile" uid="uid://cg2l5vxyisqd1" path="res://ui/mario-kart-ds-oultine-font/mario-kart-ds-oultine-font.ttf" id="50_3pvmt"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fvqnm"]
 custom_solver_bias = 0.305
 height = 1.698853
-
-[sub_resource type="QuadMesh" id="QuadMesh_frjtj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gsih2"]
 bg_color = Color(0.407843, 0.776471, 0, 1)
@@ -69,6 +66,110 @@ border_width_bottom = 3
 border_color = Color(0, 0, 0, 1)
 corner_radius_bottom_right = 340
 anti_aliasing = false
+
+[sub_resource type="Resource" id="Resource_6qy8x"]
+script = ExtResource("27_3pvmt")
+attack_power = 5.0
+next_attack_state = &"to_mediumAttack"
+attack_duration = 0.1
+hit_cooldown_amount = 0.25
+enemyTargetLength = 0.3
+enemyTargetMagnitude = 0.02
+enemyTargetHitStop = 0.01
+knockback_force = 3.5
+knockback_direction = Vector3(0, 0, 1)
+cancel_window = 0.4
+
+[sub_resource type="Resource" id="Resource_djth4"]
+script = ExtResource("27_3pvmt")
+attack_power = 5.0
+next_attack_state = &"to_heavyAttack"
+attack_duration = 0.1
+hit_cooldown_amount = 0.25
+enemyTargetLength = 0.3
+enemyTargetMagnitude = 0.02
+enemyTargetHitStop = 0.01
+knockback_force = 3.5
+knockback_direction = Vector3(0, 0, 1)
+cancel_window = 0.4
+
+[sub_resource type="Resource" id="Resource_bo7ab"]
+script = ExtResource("27_3pvmt")
+attack_power = 5.0
+next_attack_state = &"to_attackUpper"
+attack_duration = 0.1
+hit_cooldown_amount = 0.25
+enemyTargetLength = 0.3
+enemyTargetMagnitude = 0.02
+enemyTargetHitStop = 0.01
+knockback_force = 3.5
+knockback_direction = Vector3(0, 0, 1)
+cancel_window = 0.4
+
+[sub_resource type="Resource" id="Resource_x7j1i"]
+script = ExtResource("27_3pvmt")
+attack_power = 5.0
+next_attack_state = &"to_jump"
+attack_duration = 0.1
+hit_cooldown_amount = 0.25
+enemyTargetLength = 0.3
+enemyTargetMagnitude = 0.02
+enemyTargetHitStop = 0.01
+knockback_force = 3.5
+knockback_direction = Vector3(0, 0, 1)
+cancel_window = 0.4
+
+[sub_resource type="Resource" id="Resource_gia8r"]
+script = ExtResource("27_3pvmt")
+attack_power = 5.0
+next_attack_state = &"to_airMediumAttack"
+attack_duration = 0.1
+hit_cooldown_amount = 0.25
+enemyTargetLength = 0.3
+enemyTargetMagnitude = 0.02
+enemyTargetHitStop = 0.01
+knockback_force = 3.5
+knockback_direction = Vector3(0, 0, 1)
+cancel_window = 0.4
+
+[sub_resource type="Resource" id="Resource_0rctv"]
+script = ExtResource("27_3pvmt")
+attack_power = 5.0
+next_attack_state = &"to_airHeavyAttack"
+attack_duration = 0.1
+hit_cooldown_amount = 0.25
+enemyTargetLength = 0.3
+enemyTargetMagnitude = 0.02
+enemyTargetHitStop = 0.01
+knockback_force = 3.5
+knockback_direction = Vector3(0, 0, 1)
+cancel_window = 0.4
+
+[sub_resource type="Resource" id="Resource_0sosj"]
+script = ExtResource("27_3pvmt")
+attack_power = 5.0
+next_attack_state = &"to_airSlamAttack"
+attack_duration = 0.1
+hit_cooldown_amount = 0.25
+enemyTargetLength = 0.3
+enemyTargetMagnitude = 0.02
+enemyTargetHitStop = 0.01
+knockback_force = 3.5
+knockback_direction = Vector3(0, 0, 1)
+cancel_window = 0.4
+
+[sub_resource type="Resource" id="Resource_h8tk8"]
+script = ExtResource("27_3pvmt")
+attack_power = 5.0
+next_attack_state = &"to_idle"
+attack_duration = 0.1
+hit_cooldown_amount = 0.25
+enemyTargetLength = 0.3
+enemyTargetMagnitude = 0.02
+enemyTargetHitStop = 0.01
+knockback_force = 3.5
+knockback_direction = Vector3(0, 0, 1)
+cancel_window = 0.4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ud7yb"]
 transparency = 1
@@ -311,6 +412,12 @@ scale_curve = SubResource("CurveTexture_30grb")
 color_ramp = SubResource("GradientTexture1D_7nwl5")
 alpha_curve = SubResource("CurveTexture_cygmk")
 
+[sub_resource type="QuadMesh" id="QuadMesh_frjtj"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6qy8x"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6qy8x"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_yxw21"]
 size = Vector3(1.2064209, 0.93969727, 1)
 
@@ -410,11 +517,6 @@ shape = SubResource("CapsuleShape3D_fvqnm")
 debug_color = Color(4.04298e-06, 0.588061, 0.758272, 1)
 debug_fill = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=992140820]
-visible = false
-material_override = ExtResource("37_xsw6c")
-mesh = SubResource("QuadMesh_frjtj")
-
 [node name="player_health_label" type="ProgressBar" parent="." unique_id=1777002807]
 z_index = 1
 texture_filter = 3
@@ -460,6 +562,18 @@ offset_bottom = 24.0
 theme_override_styles/background = ExtResource("5_t0q8v")
 theme_override_styles/fill = SubResource("StyleBoxFlat_6qy8x")
 value = 0.0
+
+[node name="AttackCooldown" type="Label" parent="." unique_id=65783702]
+offset_left = 7.0
+offset_top = 611.0
+offset_right = 239.0
+offset_bottom = 668.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("33_aggol")
+theme_override_font_sizes/font_size = 18
+text = "attack cooldown timer:  0.0"
 
 [node name="ComboCounter2" type="Label" parent="." unique_id=726421045]
 offset_left = 748.0
@@ -536,7 +650,7 @@ attack_box = NodePath("../../RootNode/AttackBox")
 attack_box_col = NodePath("../../RootNode/AttackBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AttackBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
-attackData = ExtResource("14_0ei8l")
+attackData = SubResource("Resource_6qy8x")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -549,8 +663,7 @@ attack_box = NodePath("../../RootNode/AttackMedium")
 attack_box_col = NodePath("../../RootNode/AttackMedium/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AttackMedium/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
-attackData = ExtResource("14_0ei8l")
-next_attack_state = &"to_heavyAttack"
+attackData = SubResource("Resource_djth4")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -562,7 +675,7 @@ attack_box = NodePath("../../RootNode/AttackHeavy")
 attack_box_col = NodePath("../../RootNode/AttackHeavy/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AttackHeavy/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
-attackData = ExtResource("14_0ei8l")
+attackData = SubResource("Resource_bo7ab")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -574,7 +687,7 @@ attack_box = NodePath("../../RootNode/AttackUpperBox")
 attack_box_col = NodePath("../../RootNode/AttackUpperBox/CollisionShape3D")
 attack_debug = NodePath("../../RootNode/AttackUpperBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
-attackData = ExtResource("14_0ei8l")
+attackData = SubResource("Resource_x7j1i")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -587,7 +700,7 @@ attack_box = NodePath("../../RootNode/AirAttackBox")
 attack_box_col = NodePath("../../RootNode/AirAttackBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AirAttackBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
-attackData = ExtResource("14_0ei8l")
+attackData = SubResource("Resource_gia8r")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -599,7 +712,7 @@ attack_box = NodePath("../../RootNode/AirAttackMediumBox")
 attack_box_col = NodePath("../../RootNode/AirAttackMediumBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AirAttackMediumBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
-attackData = ExtResource("14_0ei8l")
+attackData = SubResource("Resource_0rctv")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -610,7 +723,7 @@ attack_box = NodePath("../../RootNode/AirAttackHeavyBox")
 attack_box_col = NodePath("../../RootNode/AirAttackHeavyBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AirAttackHeavyBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
-attackData = ExtResource("14_0ei8l")
+attackData = SubResource("Resource_0sosj")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -622,7 +735,7 @@ attack_box = NodePath("../../RootNode/AirAttackSlamBox")
 attack_box_col = NodePath("../../RootNode/AirAttackSlamBox/CollisionShape3D")
 attack_debug = NodePath("../../RootNode/AirAttackSlamBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
-attackData = ExtResource("14_0ei8l")
+attackData = SubResource("Resource_h8tk8")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -765,8 +878,24 @@ volume_db = -16.868
 
 [node name="RootNode" type="Node3D" parent="." unique_id=1429141220]
 
-[node name="playerBody" parent="RootNode" unique_id=265813638 instance=ExtResource("38_frjtj")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RootNode" unique_id=992140820]
+transform = Transform3D(1.905, 0, 0, 0, 3.9991162, 0, 0, 0, 1.905, 0, 2.0421567, 0)
+visible = false
+material_override = ExtResource("37_xsw6c")
+mesh = SubResource("QuadMesh_frjtj")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="RootNode" unique_id=1453727548]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.9871702, 0)
+material_override = ExtResource("37_xsw6c")
+mesh = SubResource("CapsuleMesh_6qy8x")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="RootNode" unique_id=1955938355]
+transform = Transform3D(1.315, 0, 0, 0, 1.315, 0, 0, 0, 1.315, -0.14825249, 2.4223123, -1)
+material_override = ExtResource("37_xsw6c")
+mesh = SubResource("BoxMesh_6qy8x")
+skeleton = NodePath("../..")
 
 [node name="HurtBox" type="Area3D" parent="RootNode" unique_id=363235003 groups=["player"]]
 script = ExtResource("5_vjco1")

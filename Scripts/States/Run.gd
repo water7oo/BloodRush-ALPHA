@@ -43,12 +43,14 @@ func player_run(delta: float) -> void:
 	if has_input and Global.can_sprint:
 		Global.is_sprinting = true
 		Global.sprint_timer += delta
+
 		armature.rotation.y = lerp_angle(
 			armature.rotation.y,
 			atan2(-direction.x, -direction.z),
 			runResource.RUN_armature_rot_speed
 		)
 
+		# FAST acceleration
 		Global.current_speed = move_toward(
 			Global.current_speed,
 			runResource.RUN_MAX_SPEED,
@@ -57,30 +59,37 @@ func player_run(delta: float) -> void:
 
 	else:
 		Global.is_sprinting = false
+
 		Global.current_speed = move_toward(
 			Global.current_speed,
 			0,
 			runResource.RUN_DECELERATION * delta
 		)
-		agent.state_machine.dispatch("to_idle")
 
+	# Apply movement DIRECTLY (no double smoothing)
 	var target_velocity = direction * Global.current_speed
-
-	var t = 1.0 - exp(-runResource.inertia_blend * delta)
-	velocity = velocity.lerp(target_velocity, t)
+	velocity.x = target_velocity.x
+	velocity.z = target_velocity.z
 
 	velocity.y = agent.velocity.y
-
 	agent.velocity = velocity
+	
+	var target_rotation = atan2(direction.x, direction.z)
 
-	if Input.is_action_just_released("move_sprint") && has_input:
-		agent.state_machine.dispatch("to_walk")
-
-	elif Input.is_action_pressed("move_crouch"):
+	if velocity.length() > 0.1:
+		var angle_diff = velocity.normalized().dot(direction)
+		if angle_diff < 0:
+			velocity *= 0.8
+				
+				
+	if Input.is_action_pressed("move_crouch") && agent.is_on_floor():
 		agent.state_machine.dispatch("to_crouch")
 
-	elif Input.is_action_just_released("move_sprint") and has_input:
+	elif Input.is_action_just_released("move_sprint") && has_input && agent.is_on_floor():
 		agent.state_machine.dispatch("to_walk")
+
+	elif not has_input && agent.is_on_floor():
+		agent.state_machine.dispatch("to_idle")
 
 
 func initialize_runJump(delta: float) -> void:

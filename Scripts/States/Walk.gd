@@ -46,7 +46,14 @@ func player_movement(delta: float) -> void:
 		# Frame-rate independent smoothing
 		var t = 1.0 - exp(-walkResource.inertia_blend * delta)
 		velocity = velocity.lerp(direction * Global.BASE_SPEED, t)
+		
+		var target_rotation = atan2(direction.x, direction.z)
 
+		if velocity.length() > 0.1:
+			var angle_diff = velocity.normalized().dot(direction)
+			if angle_diff < 0:
+				velocity *= 0.8
+		
 	else:
 		Global.is_moving = false
 		moveDust.emitting = false

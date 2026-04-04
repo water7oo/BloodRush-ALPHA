@@ -49,13 +49,12 @@ func player_runjump(delta: float) -> void:
 
 	# Preserve momentum and blend movement mid-air
 	if direction != Vector3.ZERO:
-		var angle_diff = agent.velocity.normalized().dot(direction)
+		var target_rotation = atan2(direction.x, direction.z)
 
-		# If changing direction sharply mid-air, slow down slightly for smoother transition
-		if angle_diff < 0 and agent.velocity.length() >= Global.BASE_SPEED * 0.9:
-			agent.velocity.x = move_toward(agent.velocity.x, 0, runJumpResource.air_momentum_deceleration * delta)
-			agent.velocity.z = move_toward(agent.velocity.z, 0, runJumpResource.air_momentum_deceleration * delta)
-
+		if velocity.length() > 0.1:
+			var angle_diff = velocity.normalized().dot(direction)
+			if angle_diff < 0:
+				velocity *= 0.8
 		# Blend smoothly towards new direction
 		agent.velocity.x = lerp(agent.velocity.x, direction.x * Global.BASE_SPEED, runJumpResource.air_momentum_acceleration * delta)
 		agent.velocity.z = lerp(agent.velocity.z, direction.z * Global.BASE_SPEED, runJumpResource.air_momentum_acceleration * delta)

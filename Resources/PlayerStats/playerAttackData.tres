@@ -4,7 +4,6 @@
 
 [resource]
 script = ExtResource("1_md77p")
-attack_cooldown_duration = 0.3
 attack_power = 5.0
 next_attack_state = &"to_mediumAttack"
 attack_duration = 0.1

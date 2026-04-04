@@ -1,7 +1,7 @@
 extends Resource
 
 @export var attack_cooldown_timer: float = 0.0
-@export var attack_cooldown_duration: float = 1
+@export var attack_cooldown_duration: float = .3
 @export var attack_power: float = 10.0
 @export var animation_request: StringName
 @export var next_attack_state: StringName  

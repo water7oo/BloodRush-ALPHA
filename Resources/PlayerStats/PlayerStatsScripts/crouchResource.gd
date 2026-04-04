@@ -12,6 +12,7 @@ var DECELERATION: float = Global.DECELERATION
 var BASE_DECELERATION: float = Global.BASE_DECELERATION
 
 @export var CROUCH_ACCELERATION: float = Global.BASE_ACCELERATION - 10
+@export var CROUCH_DECELERATION: float = Global.BASE_DECELERATION - 10
 @export var momentum_deceleration: float = DECELERATION - 5
 @export var momentum_acceleration: float = ACCELERATION + 5
 @export var inertia_blend: float = 4

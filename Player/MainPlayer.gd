@@ -34,7 +34,7 @@ var input_buffer_time := 0.2
 var input_queue: Array = []
 
 
-
+@onready var AttackCooldownLabel = $AttackCooldown
 
 
 func _ready():
@@ -53,7 +53,7 @@ func initialize_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, air_attack_state, "to_airAttack")
 	state_machine.add_transition(state_machine.ANYSTATE, air_attackMedium_state, "to_airMediumAttack")
 	state_machine.add_transition(state_machine.ANYSTATE, air_attackHeavy_state, "to_airHeavyAttack")
-	state_machine.add_transition(state_machine.ANYSTATE, attack_slamAir_state, "to_airSLamAttack")
+	state_machine.add_transition(state_machine.ANYSTATE, attack_slamAir_state, "to_airSlamAttack")
 	
 	
 	state_machine.add_transition(state_machine.ANYSTATE, guard_state, "to_guard")
@@ -122,6 +122,8 @@ func _physics_process(delta: float) -> void:
 	stateDebugLabel.text = ("STATE DEBUG: " + str(state_machine.get_active_state()).to_upper())
 	playerSpeedLabel.value = velocity.length()
 	playerSpeedLabel.max_value = Global.MAX_SPEED
+	
+	AttackCooldownLabel.text = "attack cooldown timer: " + str(attack_state.attackData.attack_cooldown_timer)
 	handle_attack_input()
 	
 
@@ -169,10 +171,10 @@ func handle_attack_input() -> void:
 	clean_inputs()
 
 	var is_air = not is_on_floor()
-
-
+	
 	if has_input("medium") and has_input("heavy") and attack_state.attackData.attack_cooldown_timer <= 0:
 		if not Global.is_attacking or can_buffer_attack():
+			
 			state_machine.dispatch("to_attackUpper" if not is_air else "to_airSLamAttack")
 			attack_state.attackData.attack_cooldown_timer = attack_state.attackData.attack_cooldown_duration
 			consume_inputs(["medium", "heavy"])

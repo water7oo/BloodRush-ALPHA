@@ -24,6 +24,9 @@ var last_enemy_hit = Global.combo_hits[-1]["enemy"] if current_combo_count > 0 e
 
 func _enter() -> void:
 	attackData.enemies_hit.clear()
+	attackData = attackData.duplicate()
+	Global.is_attacking = true
+	
 	if attack_box:
 		attack_box_debug.visible = true
 		attack_box_col.visible = true
@@ -33,6 +36,7 @@ func _enter() -> void:
 	attackData.preserved_velocity = agent.velocity
 	print("Current Attack State:", agent.state_machine.get_active_state())
 	_start_attack()
+
 
 func _update(delta: float) -> void:
 	_process_attack(delta)
@@ -72,13 +76,11 @@ func _process_attack(delta: float) -> void:
 			_exit_attack_state()
 			agent.state_machine.dispatch("to_idle")
 		
-		return
-
 		attackData.buffered_input = false
-
-
-
-		# Apply gravity
+		return
+		
+		
+	# Apply gravity
 	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
 
 	if agent.is_on_floor():
@@ -103,14 +105,14 @@ func _start_attack() -> void:
 	attackData.next_attack_state = "to_mediumAttack"  # Light -> Medium
 	
 	
-	agent.velocity.x = attackData.preserved_velocity.x
-	agent.velocity.z = attackData.preserved_velocity.z
-	
-	var forward = agent.transform.basis.z
-	forward.y = 0
-	forward = forward.normalized()
-
-	agent.velocity += forward * attackData.attackDamage
+	#agent.velocity.x = attackData.preserved_velocity.x
+	#agent.velocity.z = attackData.preserved_velocity.z
+	#
+	#var forward = agent.transform.basis.z
+	#forward.y = 0
+	#forward = forward.normalized()
+#
+	#agent.velocity += forward * attackData.attackDamage
 
 func show_combo_fx() -> void:
 	if ComboConfirmFX:
@@ -198,7 +200,7 @@ func _on_attack_box_area_entered(area):
 
 func _exit_attack_state() -> void:
 	Global.is_attacking = false
-	
+	attackData.attack_cooldown_timer = 0.0
 	if attack_box and attack_box.is_connected("area_entered", Callable(self, "_on_attack_box_area_entered")):
 		attack_box.disconnect("area_entered", Callable(self, "_on_attack_box_area_entered"))
 

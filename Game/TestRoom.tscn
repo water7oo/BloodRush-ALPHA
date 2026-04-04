@@ -21,7 +21,9 @@
 background_mode = 2
 background_color = Color(1, 1, 1, 1)
 sky = ExtResource("1_iu1ym")
-ambient_light_source = 2
+ambient_light_source = 3
+ambient_light_color = Color(0.70380783, 0.70380783, 0.70380783, 1)
+ambient_light_sky_contribution = 0.0
 glow_intensity = 4.66
 volumetric_fog_density = 0.0167
 volumetric_fog_albedo = Color(0.456267, 1, 0.98943, 1)
@@ -175,7 +177,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.43216, 1.45085, -6)
 gizmo_extents = 5.83
 
 [node name="Cowboy" parent="Preview/SubViewportContainer/SubViewport" unique_id=375016865 instance=ExtResource("10_wbl5e")]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -4.9971905, 0.80488896, -1.076)
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -4.9971905, 0.80488896, -1.076)
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1903846000]
 transform = Transform3D(6, 0, 0, 0, -2.62268e-07, 6, 0, -6, -2.62268e-07, -17.6236, -2.18461, -20.3883)
@@ -191,9 +193,25 @@ use_collision = true
 collision_layer = 3
 collision_mask = 3
 
+[node name="MeshInstance3D5" type="CSGBox3D" parent="Preview/SubViewportContainer/SubViewport/Floor" unique_id=2015343716]
+transform = Transform3D(-222.73535, -0.109856084, 1.9888872e-05, 0.00044738207, 2.3857515e-07, 9.931586, -0.027989557, 0.40995362, -4.3412345e-07, 29.830515, 0.10126981, 0.5180632)
+size = Vector3(0.28482318, 0.114513, 0.21254435)
+
+[node name="MeshInstance3D6" type="CSGBox3D" parent="Preview/SubViewportContainer/SubViewport/Floor" unique_id=621434009]
+transform = Transform3D(222.73665, -8.363614e-07, 1.989691e-05, -0.00044604964, -1.8253964e-08, 9.9356, -0.00044604967, -0.4176403, -4.3429893e-07, 29.830523, 0.08964505, -1.3066566)
+size = Vector3(0.28482318, 0.114513, 0.20869914)
+
+[node name="MeshInstance3D7" type="CSGBox3D" parent="Preview/SubViewportContainer/SubViewport/Floor" unique_id=1500424965]
+transform = Transform3D(-222.73396, -0.10947736, -1.747394e-12, -0.027539074, 0.4085437, -8.6842e-07, -5.5944506e-06, -3.846698e-08, -9.933565, 29.83052, -0.95541084, -0.38261428)
+size = Vector3(0.28482318, 0.114513, 0.18985923)
+
+[node name="MeshInstance3D8" type="CSGBox3D" parent="Preview/SubViewportContainer/SubViewport/Floor" unique_id=1077241081]
+transform = Transform3D(-222.73396, -0.10947736, -1.747394e-12, -0.027539074, 0.4085437, -8.6842e-07, -5.5944506e-06, -3.846698e-08, -9.933565, 29.83052, 1.1461537, -0.4117167)
+size = Vector3(0.28482318, 0.114513, 0.18399985)
+
 [node name="MeshInstance3D" type="CSGBox3D" parent="Preview/SubViewportContainer/SubViewport/Floor" unique_id=1454563573]
-transform = Transform3D(11.342, 2.5302143e-09, 0, 1.7763568e-15, 9.38252, 0, 0, 0, 8.72365, -2.1243448, 0.038513485, -0.34110194)
-size = Vector3(0.28482318, 0.114513, 0.092585)
+transform = Transform3D(11.342, 1.3624231e-09, 0, 1.7763568e-15, 9.38252, 0, 0, 0, 8.72365, -2.1243448, 0.10278894, -0.40036875)
+size = Vector3(0.28482318, 0.22885904, 0.21113761)
 
 [node name="bushALL" type="Node3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=2073376120]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2829, 0, 3.53464)

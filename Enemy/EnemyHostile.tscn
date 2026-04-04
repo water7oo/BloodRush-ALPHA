@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://colgt8jseih4h" path="res://Scripts/enemyStates/death_stateEnemy.gd" id="11_ulp1q"]
 [ext_resource type="Texture2D" uid="uid://dburebixgi0qs" path="res://My Textures/Sprite_FX_Blast_0017.png" id="13_tuc0k"]
 [ext_resource type="Script" uid="uid://djfdwolmvokwk" path="res://Enemy/noticePlayer.gd" id="13_ulp1q"]
+[ext_resource type="Shader" uid="uid://b1ud5q41710hr" path="res://Shaders/OUTLINES.gdshader" id="17_1dgx4"]
 [ext_resource type="Resource" uid="uid://cdrmc6otk3eol" path="res://Resources/EnemyStats/enemyStats.tres" id="21_i335x"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_0hvkj"]
@@ -42,8 +43,15 @@ size = Vector3(0.660662, 1.02917, 0.50911)
 [sub_resource type="BoxShape3D" id="BoxShape3D_4svdh"]
 size = Vector3(0.540073, 1.0587474, 0.760075)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6g3nf"]
+render_priority = 0
+shader = ExtResource("17_1dgx4")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/outline_width = 1.0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3ae78"]
 render_priority = 0
+next_pass = SubResource("ShaderMaterial_6g3nf")
 shader = ExtResource("4_a6utb")
 shader_parameter/flash = 0.0
 shader_parameter/custom_color = Color(1, 1, 1, 1)
