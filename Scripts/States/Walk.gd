@@ -5,22 +5,16 @@ extends LimboState
 
 
 
-@export var JUMP_VELOCITY: float = 12.0  # Increased for better jump height
-const CUSTOM_GRAVITY: float = 30.0  # Keeps the character from feeling too floaty
-@export var air_timer: float = 0.0
-@export var jump_timer: float = 0.0
-@export var jump_counter: float = 0
-@export var can_jump: bool = true
-var last_ground_position = Vector3.ZERO
-
 @onready var moveDust = $"../../move_dust"
 
-var current_speed: float = 0.0
-var is_moving: bool = false
-var target_speed: float = Global.MAX_SPEED
+
+@export var walkResource: Resource
+
 var velocity = Vector3.ZERO
 
 func _enter() -> void:
+	if agent:
+		velocity = agent.velocity
 	print("Current State:", agent.state_machine.get_active_state())
 
 func _update(delta: float) -> void:
@@ -33,45 +27,34 @@ func _update(delta: float) -> void:
 	agent.move_and_slide()
 
 func player_movement(delta: float) -> void:
-	
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+
 	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 
-	if direction != Vector3.ZERO && Global.can_move:
-		is_moving = true
-		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
-		Global.target_blend_amount = 0.0
-		Global.current_blend_amount = lerp(Global.current_blend_amount, Global.target_blend_amount, Global.blend_lerp_speed * delta)
-		#animationTree.set("parameters/Ground_Blend/blend_amount", 1)
+	if direction != Vector3.ZERO and Global.can_move:
+		Global.is_moving = true
 		moveDust.emitting = true
 
-		var target_rotation = atan2(direction.x, direction.z)
+		# Smooth rotation (FIXED)
+		armature.rotation.y = lerp_angle(
+			armature.rotation.y,
+			atan2(-direction.x, -direction.z),
+			Global.armature_rot_speed
+		)
 
-		# **Calculate the angle between current velocity and new direction**
-		var angle_diff = velocity.normalized().dot(direction)
-		
-		# If the dot product is negative (angle > 90°), apply stronger deceleration
-		if angle_diff < 0:
-			current_speed = move_toward(current_speed, 0, Global.momentum_deceleration * delta)
-
-		# Blend movement instead of instantly switching direction
-		velocity = velocity.lerp(direction * target_speed, Global.inertia_blend * delta)
+		# Frame-rate independent smoothing
+		var t = 1.0 - exp(-walkResource.inertia_blend * delta)
+		velocity = velocity.lerp(direction * Global.BASE_SPEED, t)
 
 	else:
-		is_moving = false
-		current_speed = 0
+		Global.is_moving = false
 		moveDust.emitting = false
+
 		velocity.x = move_toward(velocity.x, 0, Global.BASE_DECELERATION * delta)
 		velocity.z = move_toward(velocity.z, 0, Global.BASE_DECELERATION * delta)
 
-	velocity.y = agent.velocity.y  
-
-	if velocity.length() <= 0:
-		agent.state_machine.dispatch("to_idle")
-	elif Input.is_action_pressed("move_crouch"):
-		agent.state_machine.dispatch("to_crouch")
-
+	velocity.y = agent.velocity.y
 	agent.velocity = velocity
 
 
@@ -89,7 +72,7 @@ func _unhandled_input(event):
 func initialize_jump(delta: float) -> void:
 	if Input.is_action_just_pressed("move_jump") and agent.is_on_floor():
 		agent.state_machine.dispatch("to_jump")
-		#agent.velocity.y = Global.JUMP_VELOCITY
+		#agent.velocity.y = walkResource.JUMP_VELOCITY
 
 func initialize_run(delta: float)-> void:
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")

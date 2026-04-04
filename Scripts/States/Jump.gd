@@ -4,18 +4,7 @@ extends LimboState
 @onready var state_machine: LimboHSM = $LimboHSM
 
 @export var jump1Sound: AudioStreamPlayer
-@export var BASE_SPEED: float = 6.0  
-@export var MAX_SPEED: float = Global.MAX_SPEED - 3
-@export var ACCELERATION: float = Global.ACCELERATION - 5
-@export var DECELERATION: float = Global.DECELERATION + 50  # Adjusted to allow smoother momentum retention
-@export var momentum_deceleration: float = 1  
 @export var land1Sound: AudioStreamPlayer
-var was_on_floor: bool = false
-
-var air_timer: float = 0.0
-var jump_timer: float = 0.0
-var jump_counter: int = 0
-var can_jump: bool = true
 
 var velocity = Vector3.ZERO
 
@@ -23,18 +12,22 @@ var velocity = Vector3.ZERO
 @export var landDust: GPUParticles3D
 
 
+@export var jumpResource: Resource
+
 func _enter() -> void:
+	if agent:
+		velocity = agent.velocity
 	if moveDust.emitting:
 		moveDust.emitting = false
 	jump1Sound.play()
 	print("Current State:", agent.state_machine.get_active_state())
 	if agent.is_on_floor():
-		agent.velocity.y = Global.JUMP_VELOCITY
+		agent.velocity.y = jumpResource.JUMP_VELOCITY
 	#animationTree.set("parameters/Jump_Blend/blend_amount", 1)
 	
-	air_timer = 0.0
-	jump_timer = 0.0
-	jump_counter = 0
+	Global.air_timer = 0.0
+	Global.jump_timer = 0.0
+	Global.jump_counter = 0
 
 func _update(delta: float) -> void:
 	player_jump(delta)
@@ -43,52 +36,73 @@ func _update(delta: float) -> void:
 	var is_on_floor = agent.is_on_floor()
 	
 	if agent.state_machine.get_active_state() == self:
-		if is_on_floor and not was_on_floor:
+		if is_on_floor and not Global.was_on_floor:
 			land1Sound.play()
 			landDust.restart()
 			landDust.emitting = true
-			Global.attackAir_cooldown_timer = 0
-			Global.attackMediumAir_cooldown_timer = 0
-			Global.attackHeavyAir_cooldown_timer = 0
-			Global.attackAirSlam_cooldown_timer = 0
-			
-			
-			Global.attack_cooldown_timer = 0
-			Global.attackMedium_cooldown_timer = 0
-			Global.attackHeavy_cooldown_timer = 0
-			Global.attackUpper_cooldown_timer = 0
+			#jumpResource.attackAir_cooldown_timer = 0
+			#jumpResource.attackMediumAir_cooldown_timer = 0
+			#jumpResource.attackHeavyAir_cooldown_timer = 0
+			#jumpResource.attackAirSlam_cooldown_timer = 0
+			#
+			#
+			#jumpResource.attack_cooldown_timer = 0
+			#jumpResource.attackMedium_cooldown_timer = 0
+			#jumpResource.attackHeavy_cooldown_timer = 0
+			#jumpResource.attackUpper_cooldown_timer = 0
 			agent.state_machine.dispatch("to_idle")
 		
 
-	was_on_floor = is_on_floor
+	Global.was_on_floor = is_on_floor
 
 func player_jump(delta: float) -> void:
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 
-	# Preserve momentum mid-air
-	if direction != Vector3.ZERO:
-		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-direction.x, -direction.z), Global.armature_rot_speed)
+	var has_input = direction != Vector3.ZERO
 
-		# Maintain forward momentum but allow direction blending
-		agent.velocity.x = lerp(agent.velocity.x, direction.x * BASE_SPEED, Global.air_momentum_acceleration * delta)
-		agent.velocity.z = lerp(agent.velocity.z, direction.z * BASE_SPEED, Global.air_momentum_acceleration * delta)
+	if has_input:
+		# FIXED rotation
+		armature.rotation.y = lerp_angle(
+			armature.rotation.y,
+			atan2(-direction.x, -direction.z),
+			Global.armature_rot_speed
+		)
 
-	# Landing logic with smooth deceleration instead of hard stop
+		var target_velocity = direction * jumpResource.AIR_MAX_SPEED
+
+		var t = 1.0 - exp(-jumpResource.air_momentum_acceleration * delta)
+
+		velocity.x = lerp(velocity.x, target_velocity.x, t)
+		velocity.z = lerp(velocity.z, target_velocity.z, t)
+	if not has_input:
+		velocity.x = move_toward(velocity.x, 0, jumpResource.AIR_DRAG * delta)
+		velocity.z = move_toward(velocity.z, 0, jumpResource.AIR_DRAG * delta)
+		
+		
+	var horizontal = Vector2(velocity.x, velocity.z)
+	if horizontal.length() > jumpResource.AIR_MAX_SPEED:
+		horizontal = horizontal.normalized() * jumpResource.AIR_MAX_SPEED
+		velocity.x = horizontal.x
+		velocity.z = horizontal.y
+		
+		
+	# Preserve gravity
+	velocity.y = agent.velocity.y
+	agent.velocity = velocity
+
 	if agent.is_on_floor():
-		#animationTree.set("parameters/Jump_Blend/blend_amount", -1)
-		# Reduce velocity smoothly rather than stopping immediately
-		agent.velocity.x = move_toward(agent.velocity.x, agent.velocity.x * 0.5, 20 * delta)
-		agent.velocity.z = move_toward(agent.velocity.z, agent.velocity.z * 0.5, 20 * delta)
+		velocity.x *= jumpResource.LANDING_DAMPING
+		velocity.z *= jumpResource.LANDING_DAMPING
 
-		# Transition to appropriate state
-		if input_dir != Vector2.ZERO:
-			agent.state_machine.dispatch("to_walk")
-		elif Input.is_action_pressed("move_crouch"):
+		# Transition
+		if Input.is_action_pressed("move_crouch"):
 			agent.state_machine.dispatch("to_crouch")
-		#elif input_dir == Vector2.ZERO:
-			#agent.state_machine.dispatch("to_idle")
+		elif has_input:
+			agent.state_machine.dispatch("to_walk")
+		else:
+			agent.state_machine.dispatch("to_idle")
 
 
 # Falling check

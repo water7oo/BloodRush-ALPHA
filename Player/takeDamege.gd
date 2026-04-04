@@ -15,6 +15,8 @@ extends LimboState
 
 var taking_damage := false
 var hitstun_timer := 0.1
+@export var playerResource: Resource
+
 
 func _enter() -> void:
 	taking_damage = true
@@ -24,7 +26,7 @@ func _enter() -> void:
 		if current_state.has_method("_exit_attack_state"):
 			current_state._exit_attack_state()
 
-	Global.can_move = false
+	playerResource.can_move = false
 
 	#animationTree.set("parameters/Jump_Blend/blend_amount", -1)
 	#animationTree.set("parameters/Ground_Blend/blend_amount", -1)

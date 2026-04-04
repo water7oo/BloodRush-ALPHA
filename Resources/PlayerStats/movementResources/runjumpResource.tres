@@ -1,0 +1,6 @@
+[gd_resource type="Resource" format=3 uid="uid://0p8t68c3kbwh"]
+
+[ext_resource type="Script" uid="uid://cwqcd4tcb8bli" path="res://Resources/PlayerStats/PlayerStatsScripts/runjumpResource.gd" id="1_y02d7"]
+
+[resource]
+script = ExtResource("1_y02d7")

@@ -4,4 +4,14 @@
 
 [resource]
 script = ExtResource("1_md77p")
-knockback_direction = Vector3(0, 0, 0.5)
+attack_cooldown_duration = 0.3
+attack_power = 5.0
+next_attack_state = &"to_mediumAttack"
+attack_duration = 0.1
+hit_cooldown_amount = 0.25
+enemyTargetLength = 0.3
+enemyTargetMagnitude = 0.02
+enemyTargetHitStop = 0.01
+knockback_force = 3.5
+knockback_direction = Vector3(0, 0, 1)
+cancel_window = 0.4

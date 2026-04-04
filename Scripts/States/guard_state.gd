@@ -3,16 +3,17 @@ extends LimboState
 @onready var armature = $"../../RootNode"
 @onready var state_machine: LimboHSM = $LimboHSM
 
-var BASE_SPEED: float = Global.BASE_SPEED - 8  # Slightly slower than walking
-var DECELERATION: float = Global.DECELERATION - 5  
-
 var velocity = Vector3.ZERO
 var is_moving: bool = false
 
 @export var GuardActivateSound: AudioStreamPlayer
+@export var guardResource: Resource
+
 
 func _enter() -> void:
-	
+	if agent:
+		velocity = agent.velocity
+		
 	GuardActivateSound.play()
 	print("Current State:", agent.state_machine.get_active_state())
 
@@ -29,26 +30,42 @@ func player_movement(delta: float) -> void:
 	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 
-	#animationTree.set("parameters/Ground_Blend/blend_amount", 0)  # Crouch animation
+	var has_input = direction != Vector3.ZERO and Global.can_move
 
-	if direction != Vector3.ZERO:
-		is_moving = true
-		#armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
+	if has_input:
+		Global.is_moving = true
 
-		# Smooth transition into crouch movement, blending previous momentum
-		velocity = velocity.lerp(direction * BASE_SPEED, Global.inertia_blend * delta)
+		armature.rotation.y = lerp_angle(
+			armature.rotation.y,
+			atan2(-direction.x, -direction.z),
+			.1
+		)
+
+		Global.current_speed = move_toward(
+			Global.current_speed,
+			guardResource.GUARD_BASE_SPEED,
+			guardResource.GUARD_ACCELERATION * delta
+		)
+
 	else:
-		is_moving = false
-		velocity.x = move_toward(velocity.x, 0, DECELERATION * delta)
-		velocity.z = move_toward(velocity.z, 0, DECELERATION * delta)
+		Global.is_moving = false
 
-	velocity.y = agent.velocity.y  # Preserve vertical movement
+		Global.current_speed = move_toward(
+			Global.current_speed,
+			0,
+			guardResource.GUARD_DECELERATION * delta
+		)
+
+	var target_velocity = direction * Global.current_speed
+
+	var t = 1.0 - exp(-guardResource.inertia_blend * delta)
+	velocity = velocity.lerp(target_velocity, t)
+
+	velocity.y = agent.velocity.y
 	agent.velocity = velocity
 
-
 	if Input.is_action_just_released("defend_guard"):
-		#animationTree.set("parameters/Ground_Blend/blend_amount", 1)  # Return to standing animation
-		if input_dir == Vector2.ZERO:
+		if Global.current_speed < 0.1:
 			agent.state_machine.dispatch("to_idle")
 		else:
 			agent.state_machine.dispatch("to_walk")

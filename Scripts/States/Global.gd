@@ -5,73 +5,59 @@ extends Node
 @onready var enemyHealthMan = get_node("/root/EnemyHealthManager")
 @onready var gameJuice = get_node("/root/GameJuice")
 
-
-var global_data = GlobalResource.new()
-@export var CUSTOM_GRAVITY: float = 35.0
-var camera = preload("res://Player/PlayerCamera.tscn").instantiate()
-var spring_arm_pivot = camera.get_node("SpringArmPivot")
-var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
-
 var current_blend_amount = 0.0
 var target_blend_amount = 0.0
 var blend_lerp_speed = 10.0  
 
 @export var mouse_sensitivity: float = 0.005
 
-@export var armature_rot_speed: float = .7
-@export var armature_default_rot_speed: float = .7
-@onready var armature = $Armature_001
+@export var armature_rot_speed: float = .1
+@export var armature_default_rot_speed: float = .001
 
-#Walk State Base movement values
-@export var BASE_SPEED: float = 11.0
-@export var MAX_SPEED: float = 15.0  # Reduce slightly for better control
-@export var ACCELERATION: float = 50.0  # Slightly higher for snappier movement
-@export var DECELERATION: float = 60.0  # Increase for quicker stopping
-@export var BASE_DECELERATION: float = 60.0  # Matches normal deceleration
-@export var momentum_deceleration: float = DECELERATION - 5
-@export var momentum_acceleration: float = ACCELERATION + 100
-@export var inertia_blend: float = 4
+@export var CUSTOM_GRAVITY: float = 35.0
+var camera = preload("res://Player/PlayerCamera.tscn").instantiate()
+var spring_arm_pivot = camera.get_node("SpringArmPivot")
+var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
 
 
-@export var run_inertia_blend: float = inertia_blend/1.5
 
-@export var run_momentum_acceleration: float = momentum_acceleration - 2
-@export var run_momentum_deceleration: float = momentum_deceleration - 2
-@export var air_momentum_acceleration: float = momentum_acceleration - 2
-@export var air_momentum_deceleration: float = momentum_deceleration - 2
+var can_move: bool = true
+var is_in_air: bool = false
+var can_sprint: bool = true
+var is_sprinting: bool = false
+var sprint_timer: float = 0.0
+var is_dodging: bool = false
+var can_dodge: bool = true
+var last_ground_position = Vector3.ZERO
+var current_speed: float = 0.0
 
-@export var attack_cooldown_timer: float = 0.0
-@export var attack_cooldown_duration: float = 1
+var is_moving: bool = false
+var was_on_floor: bool = false
 
-@export var attackAir_cooldown_timer: float = 0.0
-@export var attackAir_cooldown_duration: float = 1
+var is_attacking: bool = false
+var can_chain_attack: bool = false  
+var isHit: bool = false
+var can_cancel: bool = false
+var cancel_timer: float = 0.0
 
-@export var attackMedium_cooldown_timer: float = 0.0
-@export var attackMedium_cooldown_duration: float = 1
 
-@export var attackMediumAir_cooldown_timer: float = 0.0
-@export var attackMediumAir_cooldown_duration: float = 1
-
-@export var attackHeavy_cooldown_timer: float = 0.0
-@export var attackHeavy_cooldown_duration: float = 1
-
-@export var attackHeavyAir_cooldown_timer: float = 0.0
-@export var attackHeavyAir_cooldown_duration: float = 1
-
-@export var attackUpper_cooldown_timer: float = 0.0
-@export var attackUpper_cooldown_duration: float = 1
-
-@export var attackAirSlam_cooldown_timer: float = 0.0
-@export var attackAirSlam_cooldown_duration: float = 1
+var air_timer: float = 0.0
+var jump_timer: float = 0.0
+var jump_counter: float = 0
+var can_jump: bool = true
 
 # Move these to playerAttackManager
 var combo_hits: Array = []
-var combo_reset_time: float = 1
+@export var combo_reset_time: float = 1
 var combo_timer: float = 0.0
 
-var can_move: bool = true
-var last_enemy_hit = null
-var is_attacking: bool = false
-var isHit = false
 
-@export var JUMP_VELOCITY: float = 12.0  
+@export var BASE_SPEED: float = 15.0
+@export var MAX_SPEED: float = 20.0  # Reduce slightly for better control
+@export var ACCELERATION: float = 1.0  # Slightly higher for snappier movement
+@export var DECELERATION: float = 1.0  # Increase for quicker stopping
+@export var BASE_ACCELERATION: float = 35.0  # Matches normal deceleration
+@export var BASE_DECELERATION: float = 50.0
+
+@export var momentum_deceleration: float = DECELERATION - 5
+@export var momentum_acceleration: float = ACCELERATION + 2

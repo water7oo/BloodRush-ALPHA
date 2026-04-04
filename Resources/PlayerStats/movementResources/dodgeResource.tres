@@ -1,0 +1,6 @@
+[gd_resource type="Resource" format=3 uid="uid://br6owr61u8ys5"]
+
+[ext_resource type="Script" uid="uid://dgniw5egbdgnv" path="res://Resources/PlayerStats/PlayerStatsScripts/dodgeResource.gd" id="1_8jjda"]
+
+[resource]
+script = ExtResource("1_8jjda")

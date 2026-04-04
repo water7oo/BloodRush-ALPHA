@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://0uit2uoqa8jf"]
+
+[ext_resource type="Script" uid="uid://koftfua0m5rm" path="res://Resources/PlayerStats/PlayerStatsScripts/crouchResource.gd" id="1_04wpf"]
+
+[resource]
+script = ExtResource("1_04wpf")
+CROUCH_SPEED = null
+BASE_DECELERATION = null
+momentum_deceleration = null
+momentum_acceleration = null
+inertia_blend = 2.0

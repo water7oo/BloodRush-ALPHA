@@ -3,13 +3,16 @@ extends LimboState
 @onready var armature = $"../../RootNode"
 @onready var state_machine: LimboHSM = $LimboHSM
 
-@export var BASE_SPEED: float = Global.BASE_SPEED - 2  # Slightly slower than walking
-@export var DECELERATION: float = Global.DECELERATION - 5  
-
 var velocity = Vector3.ZERO
+
 var is_moving: bool = false
 
+
+@export var crouchResource: Resource
+
 func _enter() -> void:
+	if agent:
+		velocity = agent.velocity
 	print("Current State:", agent.state_machine.get_active_state())
 
 	# Preserve momentum from the previous state
@@ -25,26 +28,49 @@ func player_movement(delta: float) -> void:
 	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 
-	#animationTree.set("parameters/Ground_Blend/blend_amount", 0)  # Crouch animation
+	var has_input = direction != Vector3.ZERO and Global.can_move
 
-	if direction != Vector3.ZERO:
-		is_moving = true
-		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-velocity.x, -velocity.z), Global.armature_rot_speed)
+	if has_input:
+		Global.is_moving = true
 
-		# Smooth transition into crouch movement, blending previous momentum
-		velocity = velocity.lerp(direction * BASE_SPEED, Global.inertia_blend * delta)
+		armature.rotation.y = lerp_angle(
+			armature.rotation.y,
+			atan2(-direction.x, -direction.z),
+			Global.armature_rot_speed
+		)
+
+		Global.target_blend_amount = 0.0
+		Global.current_blend_amount = lerp(
+			Global.current_blend_amount,
+			Global.target_blend_amount,
+			Global.blend_lerp_speed * delta
+		)
+
+		Global.current_speed = move_toward(
+			Global.current_speed,
+			crouchResource.CROUCH_SPEED,
+			crouchResource.CROUCH_ACCELERATION * delta
+		)
+
 	else:
-		is_moving = false
-		velocity.x = move_toward(velocity.x, 0, DECELERATION * delta)
-		velocity.z = move_toward(velocity.z, 0, DECELERATION * delta)
+		Global.is_moving = false
 
-	velocity.y = agent.velocity.y  # Preserve vertical movement
+		Global.current_speed = move_toward(
+			Global.current_speed,
+			0,
+			crouchResource.CROUCH_DECELERATION * delta
+		)
+
+	var target_velocity = direction * Global.current_speed
+
+	var t = 1.0 - exp(-crouchResource.inertia_blend * delta)
+	velocity = velocity.lerp(target_velocity, t)
+
+	velocity.y = agent.velocity.y
 	agent.velocity = velocity
 
-	# Transition back to standing
 	if Input.is_action_just_released("move_crouch"):
-		#animationTree.set("parameters/Ground_Blend/blend_amount", 1)  # Return to standing animation
-		if input_dir == Vector2.ZERO:
+		if Global.current_speed < 0.1:
 			agent.state_machine.dispatch("to_idle")
 		else:
 			agent.state_machine.dispatch("to_walk")

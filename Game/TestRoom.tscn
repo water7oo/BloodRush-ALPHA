@@ -44,22 +44,21 @@ shader_parameter/clipPosition = 0.2
 [sub_resource type="Resource" id="Resource_cg3hj"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 50.0
+current_health = 500.0
 max_health = 100.0
-isGuarding = true
 Name = "Fighter"
 
 [sub_resource type="Resource" id="Resource_ai8yb"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 50.0
+current_health = 500.0
 max_health = 100.0
 Name = "Ranger"
 
 [sub_resource type="Resource" id="Resource_i1la3"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 25.0
+current_health = 500.0
 max_health = 100.0
 Name = "Bullseye"
 
@@ -127,8 +126,10 @@ mouse_filter = 1
 mouse_force_pass_scroll_events = false
 color = Color(0, 0, 0, 1)
 
-[node name="Reset" parent="Preview/SubViewportContainer/SubViewport" unique_id=935272242 node_paths=PackedStringArray("enemyDummy1", "resetPos1", "resetPos2", "resetPos3", "playerReset", "player") instance=ExtResource("7_s2vfm")]
+[node name="Reset" parent="Preview/SubViewportContainer/SubViewport" unique_id=935272242 node_paths=PackedStringArray("enemyDummy1", "enemyDummy2", "enemyDummy3", "resetPos1", "resetPos2", "resetPos3", "playerReset", "player") instance=ExtResource("7_s2vfm")]
 enemyDummy1 = NodePath("../Enemy")
+enemyDummy2 = NodePath("../Enemy2")
+enemyDummy3 = NodePath("../Enemy3")
 resetPos1 = NodePath("../Marker3D2")
 resetPos2 = NodePath("../Marker3D")
 resetPos3 = NodePath("../Marker3D3")

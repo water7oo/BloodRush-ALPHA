@@ -3,15 +3,17 @@ extends LimboState
 @export var animation_player: AnimationPlayer
 @export var animation: StringName
 @onready var state_machine: LimboHSM = $LimboHSM
+@onready var armature = $"../../RootNode/Armature"
 
 
-
-@export var BASE_SPEED: float = Global.BASE_SPEED - 5
-@export var DECELERATION: float = Global.DECELERATION - 5 
+@export var idleResource: Resource
 
 var preserved_velocity: Vector3 = Vector3.ZERO
+var velocity = Vector3.ZERO
 
 func _enter() -> void:
+	if agent:
+		velocity = agent.velocity
 	print("Current State:", agent.state_machine.get_active_state())
 	# Preserve momentum when entering idle state
 	preserved_velocity = agent.velocity
@@ -33,13 +35,13 @@ func player_idle(delta: float) -> void:
 
 	if direction.length() > 0:
 		# Player is moving, switch to walk state
-		agent.velocity.x = direction.x * BASE_SPEED
-		agent.velocity.z = direction.z * BASE_SPEED
+		agent.velocity.x = direction.x * Global.BASE_SPEED
+		agent.velocity.z = direction.z * Global.BASE_SPEED
 		agent.state_machine.dispatch("to_walk")  
 	else:
 		# Apply sliding effect by gradually reducing velocity
-		agent.velocity.x = move_toward(agent.velocity.x, 0, DECELERATION * delta)
-		agent.velocity.z = move_toward(agent.velocity.z, 0, DECELERATION * delta)
+		agent.velocity.x = move_toward(agent.velocity.x, 0, Global.DECELERATION * delta)
+		agent.velocity.z = move_toward(agent.velocity.z, 0, Global.DECELERATION * delta)
 
 		# Ensure the transition looks smooth
 		Global.target_blend_amount = 0.0
@@ -60,12 +62,12 @@ func initialize_guard(delta: float) -> void:
 		
 		
 func _process(delta: float) -> void:
-	if Global.attack_cooldown_timer > 0:
-		Global.attack_cooldown_timer -= delta
-	if Global.attackMedium_cooldown_timer > 0:
-		Global.attackMedium_cooldown_timer -= delta
-	if Global.attackHeavy_cooldown_timer > 0:
-		Global.attackHeavy_cooldown_timer -= delta
-	if Global.attackUpper_cooldown_timer > 0:
-		Global.attackUpper_cooldown_timer -= delta
-	
+	#if Global.attack_cooldown_timer > 0:
+		#Global.attack_cooldown_timer -= delta
+	#if Global.attackMedium_cooldown_timer > 0:
+		#Global.attackMedium_cooldown_timer -= delta
+	#if Global.attackHeavy_cooldown_timer > 0:
+		#Global.attackHeavy_cooldown_timer -= delta
+	#if Global.attackUpper_cooldown_timer > 0:
+		#Global.attackUpper_cooldown_timer -= delta
+	pass

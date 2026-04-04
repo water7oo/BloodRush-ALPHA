@@ -4,36 +4,22 @@ extends LimboState
 @onready var armature = $"../../RootNode"
 
 
-@export var runJumpMultiplier: float = 1.5
-@export var JUMP_VELOCITY: float = Global.JUMP_VELOCITY * runJumpMultiplier
-@export var BASE_SPEED: float = Global.MAX_SPEED
-
-@export var air_timer: float = 0.0
-@export var jump_timer: float = 0.0
-@export var jump_counter: int = 0
-@export var can_jump: bool = true
-var last_ground_position = Vector3.ZERO
-
-@export var MAX_SPEED: float = Global.MAX_SPEED - 3
-@export var ACCELERATION: float = Global.ACCELERATION - 5
-@export var DECELERATION: float = Global.DECELERATION + 100  # Higher deceleration for more "floaty" air control
-@export var momentum_deceleration: float = 0.7  # Slightly lower momentum deceleration for smoother control in the air
-
-
-
-var current_speed: float = 0.0
-var is_moving: bool = false
-var target_speed: float = MAX_SPEED
 var velocity = Vector3.ZERO
 
+
+@export var runJumpResource: Resource
+
+
 func _enter() -> void:
+	if agent:
+		velocity = agent.velocity
 	print("Current State:", agent.state_machine.get_active_state())
-	agent.velocity.y = JUMP_VELOCITY
+	agent.velocity.y = runJumpResource.JUMP_VELOCITY
 	#animationTree.set("parameters/Jump_Blend/blend_amount", 1)
 	# Reset timers and jump counter
-	air_timer = 0.0
-	jump_timer = 0.0
-	jump_counter = 0
+	Global.air_timer = 0.0
+	Global.jump_timer = 0.0
+	Global.jump_counter = 0
 
 func _update(delta: float) -> void:
 	player_runjump(delta)
@@ -50,29 +36,29 @@ func player_runjump(delta: float) -> void:
 		armature.rotation.y = lerp_angle(armature.rotation.y, atan2(-direction.x, -direction.z), Global.armature_rot_speed)
 
 	# Handle jumping mechanics
-	if Input.is_action_pressed("move_jump") and can_jump:
-		jump_timer += delta
-		air_timer += delta
-		if jump_timer <= 0.4:  # Short-duration jump
-			agent.velocity.y = Global.JUMP_VELOCITY  # Apply jump force
+	if Input.is_action_pressed("move_jump") and Global.can_jump:
+		Global.jump_timer += delta
+		Global.air_timer += delta
+		if Global.jump_timer <= 0.4:  # Short-duration jump
+			agent.velocity.y = runJumpResource.JUMP_VELOCITY  # Apply jump force
 			Global.target_blend_amount = 0.0
 			Global.current_blend_amount = lerp(Global.current_blend_amount, Global.target_blend_amount, Global.blend_lerp_speed * delta)
 
-			can_jump = false
-			jump_counter += 1
+			Global.can_jump = false
+			Global.jump_counter += 1
 
 	# Preserve momentum and blend movement mid-air
 	if direction != Vector3.ZERO:
 		var angle_diff = agent.velocity.normalized().dot(direction)
 
 		# If changing direction sharply mid-air, slow down slightly for smoother transition
-		if angle_diff < 0 and agent.velocity.length() >= BASE_SPEED * 0.9:
-			agent.velocity.x = move_toward(agent.velocity.x, 0, Global.air_momentum_deceleration * delta)
-			agent.velocity.z = move_toward(agent.velocity.z, 0, Global.air_momentum_deceleration * delta)
+		if angle_diff < 0 and agent.velocity.length() >= Global.BASE_SPEED * 0.9:
+			agent.velocity.x = move_toward(agent.velocity.x, 0, runJumpResource.air_momentum_deceleration * delta)
+			agent.velocity.z = move_toward(agent.velocity.z, 0, runJumpResource.air_momentum_deceleration * delta)
 
 		# Blend smoothly towards new direction
-		agent.velocity.x = lerp(agent.velocity.x, direction.x * BASE_SPEED, Global.air_momentum_acceleration * delta)
-		agent.velocity.z = lerp(agent.velocity.z, direction.z * BASE_SPEED, Global.air_momentum_acceleration * delta)
+		agent.velocity.x = lerp(agent.velocity.x, direction.x * Global.BASE_SPEED, runJumpResource.air_momentum_acceleration * delta)
+		agent.velocity.z = lerp(agent.velocity.z, direction.z * Global.BASE_SPEED, runJumpResource.air_momentum_acceleration * delta)
 
 
 	if not agent.is_on_floor() and agent.velocity.y < 0:
@@ -81,8 +67,8 @@ func player_runjump(delta: float) -> void:
 		
 	# Landing logic
 	if agent.is_on_floor():
-		jump_timer = 0.0
-		air_timer = 0.0
+		Global.jump_timer = 0.0
+		Global.air_timer = 0.0
 		#animationTree.set("parameters/Jump_Blend/blend_amount", -1)
 		# Gradually slow down after landing instead of an abrupt stop
 		agent.velocity.x = move_toward(agent.velocity.x, 0, 100 * delta)

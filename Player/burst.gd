@@ -3,49 +3,34 @@ extends LimboState
 @onready var armature = $"../../RootNode/Armature"
 @export var Dodge1Sound: AudioStreamPlayer
 
-
-var is_dodging: bool = false
-var can_dodge: bool = true
-var dodge_cooldown_timer: float = 0.0
-var spinDodge_timer_cooldown: float = 0.0
-var last_ground_position = Vector3.ZERO
-
-@export var BASE_SPEED: float = 6.0
-@export var DODGE_SPEED: float = 20.0
-@export var ACCELERATION: float = 50.0
-@export var DECELERATION: float = 25.0
-@export var DODGE_ACCELERATION: float = 100.0
-@export var DODGE_DECELERATION: float = 50.0
-@export var DODGE_LERP_VAL: float = 3
-@export var BASE_DECELERATION: float = 25.0
-
-@export var dodge_cooldown: float = 0.5
-@export var spinDodge_reset: float = 0.3
-
-var dodge_direction = Vector3.ZERO
+@export var dodgeResource: Resource
+var velocity = Vector3.ZERO
 
 func _enter() -> void:
+	if agent:
+		velocity = agent.velocity
+		
 	Dodge1Sound.play()
 	#animationTree.set("parameters/Ground_Blend2/blend_amount", 1)
-	is_dodging = true
-	can_dodge = false
-	last_ground_position = agent.global_transform.origin
+	Global.is_dodging = true
+	Global.can_dodge = false
+	Global.last_ground_position = agent.global_transform.origin
 	# Get movement input for dodge direction
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	dodge_direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	dodge_direction = dodge_direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
+	dodgeResource.dodge_direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	dodgeResource.dodge_direction = dodgeResource.dodge_direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 	
 	# If no input, dodge forward
-	if dodge_direction == Vector3.ZERO:
-		dodge_direction = -agent.transform.basis.z
+	if dodgeResource.dodge_direction == Vector3.ZERO:
+		dodgeResource.dodge_direction = -agent.transform.basis.z
 
 	# Apply Dodge Velocity
-	agent.velocity = dodge_direction * DODGE_SPEED
+	agent.velocity = dodgeResource.dodge_direction * dodgeResource.DODGE_SPEED
 	
-	ACCELERATION = DODGE_ACCELERATION
-	DECELERATION = DODGE_DECELERATION
-	dodge_cooldown_timer = dodge_cooldown  
-	spinDodge_timer_cooldown = spinDodge_reset
+	Global.ACCELERATION = dodgeResource.DODGE_ACCELERATION
+	Global.DECELERATION = dodgeResource.DODGE_DECELERATION
+	dodgeResource.dodge_cooldown_timer = dodgeResource.dodge_cooldown  
+	dodgeResource.spinDodge_timer_cooldown = dodgeResource.spinDodge_reset
 	
 	AirWaveEffect()
 	GroundSparkEffect()
@@ -55,14 +40,14 @@ func _update(delta: float) -> void:
 	agent.move_and_slide()
 
 func player_burst(delta: float) -> void:
-	dodge_cooldown_timer -= delta
-	spinDodge_timer_cooldown -= delta
+	dodgeResource.dodge_cooldown_timer -= delta
+	dodgeResource.spinDodge_timer_cooldown -= delta
 
 	# Gradually slow down the dodge
-	agent.velocity = agent.velocity.lerp(Vector3.ZERO, DODGE_LERP_VAL * delta)
+	agent.velocity = agent.velocity.lerp(Vector3.ZERO, dodgeResource.DODGE_LERP_VAL * delta)
 
 	# End dodge and transition based on input
-	if dodge_cooldown_timer <= 0:
+	if dodgeResource.dodge_cooldown_timer <= 0:
 		if Input.get_vector("move_left", "move_right", "move_forward", "move_back") != Vector2.ZERO:
 			agent.state_machine.dispatch("to_walk")
 		else:

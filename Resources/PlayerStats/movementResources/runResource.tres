@@ -1,0 +1,8 @@
+[gd_resource type="Resource" format=3 uid="uid://dvcwmdnje3u0k"]
+
+[ext_resource type="Script" uid="uid://cui8gt5y781qq" path="res://Resources/PlayerStats/PlayerStatsScripts/runResource.gd" id="1_n3afw"]
+
+[resource]
+script = ExtResource("1_n3afw")
+RUN_armature_rot_speed = 0.5
+armature_default_rot_speed = 0.5

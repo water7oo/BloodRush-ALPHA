@@ -1,0 +1,15 @@
+[gd_resource type="Resource" format=3 uid="uid://b4mjxjmss4k68"]
+
+[ext_resource type="Script" uid="uid://b4paidpfkv8th" path="res://Resources/PlayerStats/PlayerStatsScripts/walkResource.gd" id="1_7ahqq"]
+
+[resource]
+script = ExtResource("1_7ahqq")
+BASE_SPEED = null
+MAX_SPEED = null
+ACCELERATION = null
+DECELERATION = null
+BASE_DECELERATION = null
+momentum_deceleration = null
+momentum_acceleration = null
+air_momentum_acceleration = null
+air_momentum_deceleration = null

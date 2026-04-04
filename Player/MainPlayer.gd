@@ -28,6 +28,7 @@ extends CharacterBody3D
 @onready var take_damage_state = $LimboHSM/TakeDamageState
 @onready var recover_state = $LimboHSM/RecoverState
 @onready var stateDebugLabel = $"State debug"
+@onready var playerSpeedLabel = $PlayerSpeedLabel/PlayerSpeed
 var input_buffer := {}
 var input_buffer_time := 0.2
 var input_queue: Array = []
@@ -104,10 +105,10 @@ func initialize_state_machine():
 
 func _process(delta: float) -> void:
 	if Global.combo_hits.size() >= 2:
-		$ComboCounter.visible = true
-		$ComboCounter.text = "x" + str(Global.combo_hits.size())
+		$ComboCounter2.visible = true
+		$ComboCounter2.text = "X" + str(Global.combo_hits.size())
 	else:
-		$ComboCounter.visible = false
+		$ComboCounter2.visible = false
 		
 	if Global.combo_hits.size() > 0:
 		Global.combo_timer += delta
@@ -119,6 +120,8 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	playerGravity(delta)
 	stateDebugLabel.text = ("STATE DEBUG: " + str(state_machine.get_active_state()).to_upper())
+	playerSpeedLabel.value = velocity.length()
+	playerSpeedLabel.max_value = Global.MAX_SPEED
 	handle_attack_input()
 	
 
@@ -168,35 +171,31 @@ func handle_attack_input() -> void:
 	var is_air = not is_on_floor()
 
 
-	# ✅ LAUNCHER (priority move)
-	if has_input("medium") and has_input("heavy") and Global.attackUpper_cooldown_timer <= 0:
+	if has_input("medium") and has_input("heavy") and attack_state.attackData.attack_cooldown_timer <= 0:
 		if not Global.is_attacking or can_buffer_attack():
 			state_machine.dispatch("to_attackUpper" if not is_air else "to_airSLamAttack")
-			Global.attackUpper_cooldown_timer = Global.attackUpper_cooldown_duration
+			attack_state.attackData.attack_cooldown_timer = attack_state.attackData.attack_cooldown_duration
 			consume_inputs(["medium", "heavy"])
 			return
 
-	# ✅ LIGHT
-	if has_input("light") and Global.attack_cooldown_timer <= 0:
+	if has_input("light") and attack_state.attackData.attack_cooldown_timer <= 0:
 		if not Global.is_attacking or can_buffer_attack():
 			state_machine.dispatch("to_airAttack" if is_air else "to_attack")
-			Global.attack_cooldown_timer = Global.attack_cooldown_duration
+			attack_state.attackData.attack_cooldown_timer = attack_state.attackData.attack_cooldown_duration
 			consume_inputs(["light"])
 			return
 
-	# ✅ MEDIUM
-	if has_input("medium") and Global.attackMedium_cooldown_timer <= 0:
+	if has_input("medium") and attack_state.attackData.attack_cooldown_timer <= 0:
 		if not Global.is_attacking or can_buffer_attack():
 			state_machine.dispatch("to_airMediumAttack" if is_air else "to_mediumAttack")
-			Global.attackMedium_cooldown_timer = Global.attackMedium_cooldown_duration
+			attack_state.attackData.attack_cooldown_timer = attack_state.attackData.attack_cooldown_duration
 			consume_inputs(["medium"])
 			return
 
-	# ✅ HEAVY
-	if has_input("heavy") and Global.attackHeavy_cooldown_timer <= 0:
+	if has_input("heavy") and attack_state.attackData.attack_cooldown_timer<= 0:
 		if not Global.is_attacking or can_buffer_attack():
 			state_machine.dispatch("to_airHeavyAttack" if is_air else "to_heavyAttack")
-			Global.attackHeavy_cooldown_timer = Global.attackHeavy_cooldown_duration
+			attack_state.attackData.attack_cooldown_timer = attack_state.attackData.attack_cooldown_duration
 			consume_inputs(["heavy"])
 			return
 		
@@ -211,7 +210,7 @@ func playerGravity(delta: float) -> void:
 
 func _on_hurt_box_area_entered(area):
 	if area.name == "enemyBox":
-		Global.last_enemy_hit = area.get_parent()  # Set the enemy that hit the player
+		#Global.last_enemy_hit = area.get_parent()  # Set the enemy that hit the player
 		
 		# Optionally, transition to TakeDamage state
 		state_machine.dispatch("to_damaged")
