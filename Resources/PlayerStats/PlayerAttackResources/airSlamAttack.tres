@@ -1,0 +1,6 @@
+[gd_resource type="Resource" format=3 uid="uid://8cmnlxlyoxcv"]
+
+[ext_resource type="Script" uid="uid://2titomn5chw0" path="res://Resources/PlayerStats/PlayerAttackResources/playerattackDataScripts/airSlamAttackData.gd" id="1_hvjs4"]
+
+[resource]
+script = ExtResource("1_hvjs4")

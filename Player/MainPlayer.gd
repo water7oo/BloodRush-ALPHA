@@ -35,7 +35,7 @@ var input_queue: Array = []
 
 
 @onready var AttackCooldownLabel = $AttackCooldown
-
+@onready var CanCancelDebug = $CanCancelDebug
 
 func _ready():
 	initialize_state_machine()
@@ -122,7 +122,7 @@ func _physics_process(delta: float) -> void:
 	stateDebugLabel.text = ("STATE DEBUG: " + str(state_machine.get_active_state()).to_upper())
 	playerSpeedLabel.value = velocity.length()
 	playerSpeedLabel.max_value = Global.MAX_SPEED
-	
+	CanCancelDebug.text = ("Can Attack Cancel: " + str(Global.can_cancel))
 	AttackCooldownLabel.text = "attack cooldown timer: " + str(attack_state.attackData.attack_cooldown_timer)
 	handle_attack_input()
 	

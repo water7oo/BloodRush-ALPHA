@@ -1,0 +1,6 @@
+[gd_resource type="Resource" format=3 uid="uid://vkv84edlgvsg"]
+
+[ext_resource type="Script" uid="uid://btmkr3444gsth" path="res://Resources/PlayerStats/PlayerAttackResources/playerattackDataScripts/mediumAttackData.gd" id="1_7gs8h"]
+
+[resource]
+script = ExtResource("1_7gs8h")

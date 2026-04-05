@@ -1,0 +1,6 @@
+[gd_resource type="Resource" format=3 uid="uid://cg3xiw0dbo88m"]
+
+[ext_resource type="Script" uid="uid://d0eiavdgkrff5" path="res://Resources/PlayerStats/PlayerAttackResources/playerattackDataScripts/heavyAirAttackData.gd" id="1_jjsol"]
+
+[resource]
+script = ExtResource("1_jjsol")

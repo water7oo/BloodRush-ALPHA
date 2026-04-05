@@ -26,7 +26,6 @@ var last_enemy_hit = Global.combo_hits[-1]["enemy"] if current_combo_count > 0 e
 
 func _enter() -> void:
 	attackData.enemies_hit.clear()
-	attackData = attackData.duplicate()
 	Global.is_attacking = true
 	
 	if attack_box:

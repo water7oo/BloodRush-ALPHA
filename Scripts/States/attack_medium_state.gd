@@ -21,7 +21,6 @@ var last_enemy_hit = Global.combo_hits[-1]["enemy"] if current_combo_count > 0 e
 
 func _enter() -> void:
 	attackData.enemies_hit.clear()
-	attackData = attackData.duplicate()
 	Global.is_attacking = true
 	
 	if attack_box:
@@ -33,9 +32,10 @@ func _enter() -> void:
 	preserved_velocity = agent.velocity
 	_start_attack()
 
+
 func _update(delta: float) -> void:
 	_process_attack(delta)
-	
+	print("attack timer: " + str(attackData.attack_cooldown_timer))
 	if Input.is_action_just_pressed("attack_heavy_1"):
 		attackData.buffered_input = true
 	agent.move_and_slide()
@@ -187,6 +187,7 @@ func _on_attack_box_area_entered(area):
 func _exit_attack_state() -> void:
 	Global.is_attacking = false
 	attackData.attack_cooldown_timer = 0.0
+	print("attack timer: " + str(attackData.attack_cooldown_timer))
 	if attack_box and attack_box.is_connected("area_entered", Callable(self, "_on_attack_box_area_entered")):
 		attack_box.disconnect("area_entered", Callable(self, "_on_attack_box_area_entered"))
 
