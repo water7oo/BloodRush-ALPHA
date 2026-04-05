@@ -39,7 +39,7 @@ var can_chain_attack: bool = false
 var isHit: bool = false
 var can_cancel: bool = false
 var cancel_timer: float = 0.0
-
+var has_attacked: bool = false
 
 var air_timer: float = 0.0
 var jump_timer: float = 0.0
@@ -52,12 +52,12 @@ var combo_hits: Array = []
 var combo_timer: float = 0.0
 
 
-@export var BASE_SPEED: float = 8.0
-@export var MAX_SPEED: float = 18.0  # Reduce slightly for better control
+@export var BASE_SPEED: float = 15.0
+@export var MAX_SPEED: float = 30.0  # Reduce slightly for better control
 @export var ACCELERATION: float = 60.0  # Slightly higher for snappier movement
 @export var DECELERATION: float = 70.0  # Increase for quicker stopping
-@export var BASE_ACCELERATION: float = 50.0  # Matches normal deceleration
-@export var BASE_DECELERATION: float = 80.0
+@export var BASE_ACCELERATION: float = 70.0  # Matches normal deceleration
+@export var BASE_DECELERATION: float = 70.0
 
 @export var momentum_deceleration: float = DECELERATION
 @export var momentum_acceleration: float = ACCELERATION

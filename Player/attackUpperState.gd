@@ -9,9 +9,6 @@ extends LimboState
 @onready var gameJuice = get_node("/root/GameJuice")
 
 
-
-
-
 @export var hit1Sound: AudioStreamPlayer
 @export var hit2Sound: AudioStreamPlayer
 @export var hit3Sound: AudioStreamPlayer

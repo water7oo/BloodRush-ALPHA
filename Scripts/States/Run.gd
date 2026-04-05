@@ -79,7 +79,7 @@ func player_run(delta: float) -> void:
 	if velocity.length() > 0.1:
 		var angle_diff = velocity.normalized().dot(direction)
 		if angle_diff < 0:
-			velocity *= 0.8
+			velocity *= 0.2
 				
 				
 	if Input.is_action_pressed("move_crouch") && agent.is_on_floor():

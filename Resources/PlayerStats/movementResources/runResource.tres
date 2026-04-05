@@ -4,5 +4,12 @@
 
 [resource]
 script = ExtResource("1_n3afw")
-RUN_armature_rot_speed = 0.5
-armature_default_rot_speed = 0.5
+RUN_ACCELERATION = null
+RUN_DECELERATION = null
+RUN_BASE_ACCELERATION = null
+RUN_BASE_DECELERATION = null
+RUN_BASE_DASH_ACCELERATION = null
+RUN_BASE_DASH_DECELERATION = null
+DASH_ACCELERATION = null
+DASH_DECELERATION = null
+DASH_MAX_SPEED = null

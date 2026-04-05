@@ -60,14 +60,6 @@ func initialize_guard(delta: float) -> void:
 	if Input.is_action_just_pressed("defend_guard"):
 		agent.state_machine.dispatch("to_guard")
 		
-		
 func _process(delta: float) -> void:
-	#if Global.attack_cooldown_timer > 0:
-		#Global.attack_cooldown_timer -= delta
-	#if Global.attackMedium_cooldown_timer > 0:
-		#Global.attackMedium_cooldown_timer -= delta
-	#if Global.attackHeavy_cooldown_timer > 0:
-		#Global.attackHeavy_cooldown_timer -= delta
-	#if Global.attackUpper_cooldown_timer > 0:
-		#Global.attackUpper_cooldown_timer -= delta
+	#agent.attack_state.attack_timer = 0.0
 	pass

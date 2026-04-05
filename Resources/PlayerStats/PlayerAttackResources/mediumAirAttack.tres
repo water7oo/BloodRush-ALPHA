@@ -4,3 +4,4 @@
 
 [resource]
 script = ExtResource("1_647gg")
+next_attack_state = &"to_airHeavyAttack"

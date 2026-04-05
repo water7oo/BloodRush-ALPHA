@@ -4,3 +4,4 @@
 
 [resource]
 script = ExtResource("1_dg80q")
+next_attack_state = &"to_jump"

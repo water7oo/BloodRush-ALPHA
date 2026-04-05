@@ -34,7 +34,9 @@ var input_buffer_time := 0.2
 var input_queue: Array = []
 
 
-@onready var AttackCooldownLabel = $AttackCooldown
+@onready var lightAttackTimer = $AttackCooldown
+@onready var mediumAttackTimer = $AttackCooldownMedium
+@onready var heavyAttackTimer = $AttackCooldownHeavy
 @onready var CanCancelDebug = $CanCancelDebug
 
 func _ready():
@@ -123,7 +125,9 @@ func _physics_process(delta: float) -> void:
 	playerSpeedLabel.value = velocity.length()
 	playerSpeedLabel.max_value = Global.MAX_SPEED
 	CanCancelDebug.text = ("Can Attack Cancel: " + str(Global.can_cancel))
-	AttackCooldownLabel.text = "attack cooldown timer: " + str(attack_state.attackData.attack_cooldown_timer)
+	lightAttackTimer.text = ("light attack timer: " + str(attack_state.attack_timer))
+	mediumAttackTimer.text = ("medium attack timer: " + str(attackMedium_state.attack_timer))
+	heavyAttackTimer.text = ("heavy attack timer: " + str(attackHeavy_state.attack_timer))
 	handle_attack_input()
 	
 
@@ -132,12 +136,18 @@ func record_inputs():
 
 	if Input.is_action_just_pressed("attack_light_1"):
 		input_queue.append({"type": "light", "time": time})
+		if !is_on_floor():
+			input_queue.append({"type": "airlight", "time": time})
 
 	if Input.is_action_just_pressed("attack_medium_1"):
 		input_queue.append({"type": "medium", "time": time})
+		if !is_on_floor():
+			input_queue.append({"type": "airmedium", "time": time})
 
 	if Input.is_action_just_pressed("attack_heavy_1"):
 		input_queue.append({"type": "heavy", "time": time})
+		if !is_on_floor():
+			input_queue.append({"type": "airheavy", "time": time})
 		
 
 func clean_inputs():
@@ -172,34 +182,44 @@ func handle_attack_input() -> void:
 
 	var is_air = not is_on_floor()
 	
-	if has_input("medium") and has_input("heavy") and attack_state.attackData.attack_cooldown_timer <= 0:
+	if has_input("heavy") and attackHeavy_state.attack_timer <= 0:
 		if not Global.is_attacking or can_buffer_attack():
-			
-			state_machine.dispatch("to_attackUpper" if not is_air else "to_airSLamAttack")
-			attack_state.attackData.attack_cooldown_timer = attack_state.attackData.attack_cooldown_duration
-			consume_inputs(["medium", "heavy"])
-			return
+			if is_air:
+				state_machine.dispatch("to_airHeavyAttack")
+				air_attackHeavy_state.attack_timer = air_attackHeavy_state.attackData.recovery_duration
+				consume_inputs(["airheavy", "heavy"])
+			else:
+				state_machine.dispatch("to_heavyAttack")
+				attackHeavy_state.attack_timer = attackHeavy_state.attackData.recovery_duration
+				consume_inputs(["heavy"])
+				
+			return # EXIT after success
 
-	if has_input("light") and attack_state.attackData.attack_cooldown_timer <= 0:
+	if has_input("medium") and attackMedium_state.attack_timer <= 0:
 		if not Global.is_attacking or can_buffer_attack():
-			state_machine.dispatch("to_airAttack" if is_air else "to_attack")
-			attack_state.attackData.attack_cooldown_timer = attack_state.attackData.attack_cooldown_duration
-			consume_inputs(["light"])
-			return
+			if is_air:
+				state_machine.dispatch("to_airMediumAttack")
+				air_attackMedium_state.attack_timer = air_attackMedium_state.attackData.recovery_duration
+				consume_inputs(["airmedium", "medium"])
+			else:
+				state_machine.dispatch("to_mediumAttack")
+				attackMedium_state.attack_timer = attackMedium_state.attackData.recovery_duration
+				consume_inputs(["medium"])
+				
+			return # EXIT after success
 
-	if has_input("medium") and attack_state.attackData.attack_cooldown_timer <= 0:
+	if has_input("light") and attack_state.attack_timer <= 0:
 		if not Global.is_attacking or can_buffer_attack():
-			state_machine.dispatch("to_airMediumAttack" if is_air else "to_mediumAttack")
-			attack_state.attackData.attack_cooldown_timer = attack_state.attackData.attack_cooldown_duration
-			consume_inputs(["medium"])
-			return
-
-	if has_input("heavy") and attack_state.attackData.attack_cooldown_timer<= 0:
-		if not Global.is_attacking or can_buffer_attack():
-			state_machine.dispatch("to_airHeavyAttack" if is_air else "to_heavyAttack")
-			attack_state.attackData.attack_cooldown_timer = attack_state.attackData.attack_cooldown_duration
-			consume_inputs(["heavy"])
-			return
+			if is_air:
+				state_machine.dispatch("to_airAttack")
+				air_attack_state.attack_timer = air_attack_state.attackData.recovery_duration
+				consume_inputs(["airlight", "light"])
+			else:
+				state_machine.dispatch("to_attack")
+				attack_state.attack_timer = attack_state.attackData.recovery_duration
+				consume_inputs(["light"])
+				
+			return # EXIT after success
 		
 func playerCamera(delta: float) -> void:
 	pass

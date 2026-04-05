@@ -53,6 +53,7 @@ func player_movement(delta: float) -> void:
 			var angle_diff = velocity.normalized().dot(direction)
 			if angle_diff < 0:
 				velocity *= 0.8
+				
 		
 	else:
 		Global.is_moving = false

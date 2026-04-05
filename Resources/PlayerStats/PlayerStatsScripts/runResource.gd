@@ -11,7 +11,7 @@ var target_speed: float = Global.MAX_SPEED
 @export var mouse_sensitivity: float = 0.005
 
 @export var RUN_armature_rot_speed: float = .1
-@export var armature_default_rot_speed: float = .001
+@export var armature_default_rot_speed: float = .1
 
 
 @export var runAdditive: float = 10
@@ -29,7 +29,7 @@ var runMultiplier: float = 1.5
 @export var DASH_DECELERATION: float = Global.DECELERATION
 @export var DASH_MAX_SPEED: float = Global.MAX_SPEED
 
-@export var run_momentum_acceleration: float = 60.0
-@export var run_momentum_deceleration: float = 80.0
+@export var run_momentum_acceleration: float = 40.0
+@export var run_momentum_deceleration: float = 20.0
 
 @export var inertia_blend: float = 12
