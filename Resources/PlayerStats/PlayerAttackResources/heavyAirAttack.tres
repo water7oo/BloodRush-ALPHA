@@ -4,3 +4,10 @@
 
 [resource]
 script = ExtResource("1_jjsol")
+startup_duration = 0.2
+active_duration = 0.5
+recovery_duration = 0.6
+attackDamage = 20.0
+enemyTargetMagnitude = 0.1
+enemyTargetHitStop = 0.7
+knockback_force = 4.0

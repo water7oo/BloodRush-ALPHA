@@ -4,4 +4,11 @@
 
 [resource]
 script = ExtResource("1_dg80q")
+startup_duration = 0.6
+recovery_duration = 0.5
+attackDamage = 21.0
+enemyTargetMagnitude = 0.1
+enemyTargetHitStop = 0.7
+knockback_force = 4.0
+knockback_direction = Vector3(0, 1, 1)
 next_attack_state = &"to_jump"

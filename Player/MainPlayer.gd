@@ -195,7 +195,7 @@ func handle_attack_input() -> void:
 				
 			return # EXIT after success
 
-	if has_input("medium") and attackMedium_state.attack_timer <= 0:
+	if has_input("medium") and attackMedium_state.attack_timer <= 0 :
 		if not Global.is_attacking or can_buffer_attack():
 			if is_air:
 				state_machine.dispatch("to_airMediumAttack")

@@ -10,7 +10,7 @@ var DECELERATION: float = Global.DECELERATION
 
 var momentum_deceleration: float = DECELERATION - 10
 var momentum_acceleration: float = ACCELERATION + 5
-var inertia_blend: float = 4
+@export var inertia_blend: float = 4
 
 
 var air_momentum_acceleration: float = momentum_acceleration - 2

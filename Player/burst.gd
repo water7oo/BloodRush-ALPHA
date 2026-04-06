@@ -10,6 +10,9 @@ func _enter() -> void:
 	if agent:
 		velocity = agent.velocity
 		
+		velocity.x = 0
+		velocity.z = 0
+		
 	Dodge1Sound.play()
 	#animationTree.set("parameters/Ground_Blend2/blend_amount", 1)
 	Global.is_dodging = true

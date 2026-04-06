@@ -4,4 +4,8 @@
 
 [resource]
 script = ExtResource("1_y5oga")
+startup_duration = 0.05
+enemyTargetLength = 0.2
+enemyTargetMagnitude = 0.05
+enemyTargetHitStop = 0.2
 next_attack_state = &"to_airMediumAttack"

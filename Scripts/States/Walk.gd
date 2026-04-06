@@ -15,6 +15,9 @@ var velocity = Vector3.ZERO
 func _enter() -> void:
 	if agent:
 		velocity = agent.velocity
+		
+		velocity.x = 0
+		velocity.z = 0
 	print("Current State:", agent.state_machine.get_active_state())
 
 func _update(delta: float) -> void:
@@ -61,6 +64,7 @@ func player_movement(delta: float) -> void:
 
 		velocity.x = move_toward(velocity.x, 0, Global.BASE_DECELERATION * delta)
 		velocity.z = move_toward(velocity.z, 0, Global.BASE_DECELERATION * delta)
+		agent.state_machine.dispatch("to_idle")
 
 	velocity.y = agent.velocity.y
 	agent.velocity = velocity

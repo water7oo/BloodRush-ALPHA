@@ -4,3 +4,11 @@
 
 [resource]
 script = ExtResource("1_hvjs4")
+startup_duration = 0.4
+recovery_duration = 1.0
+attackDamage = 20.0
+enemyTargetLength = 0.6
+enemyTargetMagnitude = 0.1
+enemyTargetHitStop = 0.8
+knockback_force = 6.0
+knockback_direction = Vector3(0, 0, -1)

@@ -17,6 +17,9 @@ var velocity = Vector3.ZERO
 func _enter() -> void:
 	if agent:
 		velocity = agent.velocity
+		
+		velocity.x = 0
+		velocity.z = 0
 	print("Current State:", agent.state_machine.get_active_state())
 	pass
 	

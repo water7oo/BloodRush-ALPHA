@@ -27,17 +27,15 @@ func _enter() -> void:
 	Global.is_attacking = true
 	Global.isHit = false
 	
-	# total timeline = attack + recovery
+	await get_tree().create_timer(attackData.startup_duration).timeout
+
 	attack_timer = attackData.active_duration + attackData.recovery_duration
-	
-	preserved_velocity = agent.velocity
-	
 	_enable_hitbox()
 	_start_attack()
 
 
 func _update(delta: float) -> void:
-	attack_timer -= delta
+	attack_timer = max(attack_timer - delta, 0.0)
 	
 	# buffer input
 	if Input.is_action_just_pressed("attack_heavy_1"):
@@ -66,16 +64,20 @@ func _process_cancel_window():
 
 
 func _end_or_chain():
-	if buffered_input:
+	if (buffered_input || Global.isHit) && Global.can_cancel:
 		_chain_attack()
 	else:
 		_exit_attack_state()
+		await get_tree().create_timer(attackData.recovery_duration).timeout
 		agent.state_machine.dispatch("to_idle")
 
 
 func _chain_attack():
 	_exit_attack_state()
-	agent.state_machine.dispatch(attackData.next_attack_state)
+	attackData.startup_duration = 0.0
+	attack_timer = 0.0
+	if buffered_input:
+		agent.state_machine.dispatch(attackData.next_attack_state)
 
 func _start_attack() -> void:
 	Global.combo_timer = attackData.combo_window_duration
@@ -85,6 +87,7 @@ func _start_attack() -> void:
 
 func _enable_hitbox():
 	if attack_box:
+		print("active")
 		attack_box_debug.visible = true
 		attack_box_col.visible = true
 		attack_box.monitoring = true
@@ -93,6 +96,7 @@ func _enable_hitbox():
 
 func _disable_hitbox():
 	if attack_box:
+		print("inactive")
 		attack_box.monitoring = false
 		attack_box_debug.visible = false
 		attack_box_col.visible = false
@@ -118,7 +122,7 @@ func _on_attack_box_area_entered(area):
 		Global.combo_hits.append({
 			"enemy": area,
 			"damage": attackData.attackDamage,
-			"attack_type": "attackMedium",
+			"attack_type": "attackLight",
 			"timestamp": Time.get_ticks_msec()
 		})
 

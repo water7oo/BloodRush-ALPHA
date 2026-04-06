@@ -27,17 +27,15 @@ func _enter() -> void:
 	Global.is_attacking = true
 	Global.isHit = false
 	
-	# total timeline = attack + recovery
+	await get_tree().create_timer(attackData.startup_duration).timeout
+
 	attack_timer = attackData.active_duration + attackData.recovery_duration
-	
-	preserved_velocity = agent.velocity
-	
 	_enable_hitbox()
 	_start_attack()
 
 
 func _update(delta: float) -> void:
-	attack_timer -= delta
+	attack_timer = max(attack_timer - delta, 0.0)
 	
 	# buffer input
 	if Input.is_action_just_pressed("attack_medium_1") && Input.is_action_just_pressed("attack_heavy_1"):
@@ -66,16 +64,20 @@ func _process_cancel_window():
 
 
 func _end_or_chain():
-	if buffered_input:
+	if (buffered_input || Global.isHit) && Global.can_cancel:
 		_chain_attack()
 	else:
 		_exit_attack_state()
+		await get_tree().create_timer(attackData.recovery_duration).timeout
 		agent.state_machine.dispatch("to_idle")
 
 
 func _chain_attack():
 	_exit_attack_state()
-	agent.state_machine.dispatch(attackData.next_attack_state)
+	attackData.startup_duration = 0.0
+	attack_timer = 0.0
+	if buffered_input:
+		agent.state_machine.dispatch(attackData.next_attack_state)
 
 func _start_attack() -> void:
 	Global.combo_timer = attackData.combo_window_duration

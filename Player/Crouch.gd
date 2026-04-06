@@ -13,6 +13,9 @@ var is_moving: bool = false
 func _enter() -> void:
 	if agent:
 		velocity = agent.velocity
+		
+		velocity.x = 0
+		velocity.z = 0
 	print("Current State:", agent.state_machine.get_active_state())
 
 	# Preserve momentum from the previous state

@@ -4,4 +4,11 @@
 
 [resource]
 script = ExtResource("1_7gs8h")
+recovery_duration = 0.4
+attackDamage = 15.0
+enemyTargetLength = 0.25
+enemyTargetMagnitude = 0.07
+enemyTargetHitStop = 0.25
+knockback_force = 3.5
+ATTACK_DECELERATION = 1.0
 next_attack_state = &"to_heavyAttack"

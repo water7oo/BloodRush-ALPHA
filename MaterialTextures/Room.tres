@@ -1,12 +1,12 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://dcuvjs33ebpe3"]
 
-[ext_resource type="Texture2D" uid="uid://bdkrvec3wh6qh" path="res://My Textures/TextureGrid_32_devLight.png" id="1_v6veh"]
+[ext_resource type="Texture2D" uid="uid://bqcs3j00sa7kh" path="res://My Textures/CheckeredPattern.png" id="1_v6veh"]
 
 [resource]
 diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("1_v6veh")
 roughness = 0.0
-uv1_scale = Vector3(10.12, 10.12, 10.12)
+uv1_scale = Vector3(2, 2, 2)
 uv1_triplanar_sharpness = 0.233259
 texture_filter = 0

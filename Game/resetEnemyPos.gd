@@ -22,5 +22,8 @@ func _process(delta: float) -> void:
 		enemyDummy2.position = resetPos2.position
 		enemyDummy3.position = resetPos3.position
 		player.position = playerReset.position
-		
+	
+	
+	if Input.is_action_just_pressed("resetScene"):
+		get_tree().reload_current_scene()
 	pass

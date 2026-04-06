@@ -4,12 +4,4 @@
 
 [resource]
 script = ExtResource("1_7ahqq")
-BASE_SPEED = null
-MAX_SPEED = null
-ACCELERATION = null
-DECELERATION = null
-BASE_DECELERATION = null
-momentum_deceleration = null
-momentum_acceleration = null
-air_momentum_acceleration = null
-air_momentum_deceleration = null
+inertia_blend = 5.0

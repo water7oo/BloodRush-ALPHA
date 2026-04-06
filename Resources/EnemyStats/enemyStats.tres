@@ -6,3 +6,4 @@
 script = ExtResource("1_km6ar")
 current_health = 25.0
 max_health = 100.0
+isHit = false
