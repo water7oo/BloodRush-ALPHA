@@ -4,5 +4,6 @@
 
 [resource]
 script = ExtResource("1_uh4tp")
+CUSTOM_GRAVITY = 35.0
 air_momentum_acceleration = null
 air_momentum_deceleration = null

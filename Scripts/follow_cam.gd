@@ -24,7 +24,7 @@ var target_node: Node3D
 
 
 @export var enemyStats: Resource
-
+var isLookingAtTarget = false
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	target_node = get_node(target) as Node3D
@@ -58,23 +58,6 @@ func _unhandled_input(event):
 			
 			spring_arm_pivot.rotation.x = rotation_x
 			spring_arm_pivot.rotation.y = rotation_y
-		
-		#
-		#if rotation_x <= -1:
-			#camera.set_fov(40)
-		#elif rotation_x >= 0:
-			#camera.set_fov(30)
-		#else:
-			#camera.set_fov(40)
-		
-	#if Input.get_action_strength("cam_down"):
-		#spring_arm_pivot.rotation.x -= joystick_sensitivity
-	#if Input.get_action_strength("cam_up"):
-		#spring_arm_pivot.rotation.x += joystick_sensitivity 
-	#if Input.get_action_strength("cam_right"):
-		#spring_arm_pivot.rotation.y -= joystick_sensitivity 
-	#if Input.get_action_strength("cam_left"):
-		#spring_arm_pivot.rotation.y += joystick_sensitivity 
 
 func _physics_process(delta):
 	var real_delta = delta / Engine.time_scale if Engine.time_scale > 0 else 0.016
@@ -121,3 +104,23 @@ func playShake():
 		if enemyStats.taking_damage == true:
 			applyShake(.02,0.08)
 			pass
+
+
+func _on_area_3d_area_entered(area: Area3D) -> void:
+	if area.name == "enemyBox":
+		isLookingAtTarget = true
+		#var averagePosX = (position.x + area.position.x)/2
+		#var averagePosY = (position.y + area.position.y)/2
+		#spring_arm_pivot.rotation.x = move_toward(spring_arm_pivot.rotation.x, averagePosX, delta)
+		#spring_arm_pivot.rotation.y = move_toward(spring_arm_pivot.rotation.y, averagePosY, delta)
+		#
+		$"Current Target".text = ("current target: " + str(area))
+		$Reticle.text = "༝"
+
+
+func _on_area_3d_area_exited(area: Area3D) -> void:
+	if area.name == "enemyBox":
+		isLookingAtTarget = false
+		$Reticle.text = "⊙"
+		$"Current Target".text = ("current target: none")
+	pass # Replace with function body.

@@ -5,6 +5,7 @@
 [ext_resource type="Shader" uid="uid://xtbp2rolummv" path="res://Shaders/OUTLINE_2.1.gdshader" id="2_ye0eu"]
 [ext_resource type="Script" uid="uid://cn6f1nyulomnm" path="res://Scripts/gameJuice.gd" id="3_sswrb"]
 [ext_resource type="PackedScene" uid="uid://3jvyp4is0xns" path="res://Enviroment/bush.tscn" id="3_ye0eu"]
+[ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="6_ql8h7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_td6vy"]
 render_priority = 0
@@ -19,6 +20,9 @@ shader_parameter/outline_end = 2.4
 size = Vector2(2, 2)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7gdqc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qloqc"]
+size = Vector3(1, 1, 404.59393)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wivcw"]
 
@@ -64,6 +68,12 @@ material_override = SubResource("ShaderMaterial_7gdqc")
 mesh = SubResource("QuadMesh_n1m7q")
 skeleton = NodePath("../../../../..")
 
+[node name="Area3D" type="Area3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D" unique_id=677920083]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D/Area3D" unique_id=1212740348]
+transform = Transform3D(0.1, 0, 0, 0, 0.09999982, -1.0617077e-07, 0, 1.0617077e-07, 0.09999982, 0, 1.7166138e-05, -21.386953)
+shape = SubResource("BoxShape3D_qloqc")
+
 [node name="Marker3D" type="Marker3D" parent="SpringArmPivot" unique_id=688075516]
 transform = Transform3D(1, 0, 0, 9.31323e-10, 1, 1.49012e-08, 7.45058e-09, -1.49012e-08, 1, -2.79397e-08, 4.47035e-08, 9.68575e-08)
 visible = false
@@ -93,3 +103,40 @@ speed_scale = 1.5
 [node name="GameJuice" type="Node3D" parent="AnimationPlayer" unique_id=2004426651]
 transform = Transform3D(1, 2.32831e-10, 0, 0, 1, -1.86265e-09, 7.45058e-09, 1.86265e-09, 1, 1.86265e-09, -1.19209e-07, 0.0591607)
 script = ExtResource("3_sswrb")
+
+[node name="Reticle" type="Label" parent="." unique_id=1607169781]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_ql8h7")
+theme_override_font_sizes/font_size = 60
+text = "⊙"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Current Target" type="Label" parent="." unique_id=223141332]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -391.0
+offset_top = -232.0
+offset_right = -391.0
+offset_bottom = -232.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_ql8h7")
+theme_override_font_sizes/font_size = 24
+text = "current target: none"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="area_entered" from="SpringArmPivot/SpringArm3D/Margin/Camera3D/Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="SpringArmPivot/SpringArm3D/Margin/Camera3D/Area3D" to="." method="_on_area_3d_area_exited"]

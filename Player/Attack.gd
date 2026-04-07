@@ -79,6 +79,7 @@ func _process_cancel_window():
 func _end_or_chain():
 	if combo_timer >= 0.0:
 		if (buffered_input || Global.isHit) && Global.can_cancel:
+			$"../../ComboConfirm1".emitting = true
 			_chain_attack()
 	else:
 		Global.can_cancel = false
@@ -169,7 +170,7 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
-		gameJuice.hitstop(attackData.enemyTargetHitStop)
+		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
 
 		areaParent.enemyStats.enemyWasHit = false
 
@@ -227,8 +228,7 @@ func _on_attack_box_area_entered(area):
 			areaParent.enemyStats.enemyWasHit = true
 
 			gameJuice.objectShake(enemy, attackData.enemyTargetGuardLength, attackData.enemyTargetGuardMagnitude)
-			gameJuice.hitstop(attackData.enemyTargetGuardedHitstop)
-
+			gameJuice.hitstop(attackData.enemyTargetGuardedHitstop, [agent, enemy])
 			areaParent.enemyStats.enemyWasHit = false
 
 			var hit1Effect = enemy.find_child("hit1", true, false)

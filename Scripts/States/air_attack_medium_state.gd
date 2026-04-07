@@ -13,7 +13,7 @@ extends LimboState
 @export var hit2Sound: AudioStreamPlayer
 @export var hit3Sound: AudioStreamPlayer
 @export var hit4Sound: AudioStreamPlayer
-@export var hit5GuardSOund: AudioStreamPlayer
+@export var hit5GuardSound: AudioStreamPlayer
 
 var attack_timer: float = 0.0
 var combo_timer: float = 0.0
@@ -167,7 +167,7 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
-		gameJuice.hitstop(attackData.enemyTargetHitStop)
+		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
 
 		areaParent.enemyStats.enemyWasHit = false
 
@@ -187,8 +187,62 @@ func _on_attack_box_area_entered(area):
 				attackData.knockback_direction
 			)
 
-	elif areaParent.has_method("takeGuardDamageEnemy") and areaParent.enemyStats.isGuarding:
-		areaParent.takeGuardDamageEnemy(attackData.attackDamage)
+	elif areaParent.has_method("takeGuardDamageEnemy") and areaParent.enemyStats.isGuarding and areaParent.enemyStats.current_health > 0 and not areaParent.enemyStats.isDead:
+			areaParent.takeDamageEnemy(attackData.attackDamage * .5)
+
+			Global.isHit = true
+			Global.can_chain_attack = true
+			Global.can_cancel = true
+			Global.cancel_timer = attackData.combo_window_duration
+
+			attack_box.monitoring = false
+
+			var enemy = area
+			while enemy and not (enemy is CharacterBody3D):
+				enemy = enemy.get_parent()
+
+			if area in enemies_hit:
+				return
+
+			enemies_hit[area] = true
+
+			hit5GuardSound.play()
+	#		change this so it doesnt rely on the node name, only the node type
+			if enemy.has_node("EnemyMesh"):
+				var mesh = enemy.get_node("EnemyMesh")
+				mesh.trigger_guardFlash()
+				await get_tree().process_frame
+
+			var saved_velocity = agent.velocity
+			agent.velocity = Vector3.ZERO
+
+			areaParent.enemyStats.enemyWasHit = true
+
+			gameJuice.objectShake(enemy, attackData.enemyTargetGuardLength, attackData.enemyTargetGuardMagnitude)
+			gameJuice.hitstop(attackData.enemyTargetGuardedHitstop, [agent, enemy])
+			areaParent.enemyStats.enemyWasHit = false
+
+			var hit1Effect = enemy.find_child("hit1", true, false)
+			if hit1Effect is GPUParticles3D:
+				hit1Effect.restart()
+				hit1Effect.emitting = true
+				hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
+			
+			var hit2Effect = enemy.find_child("hit2", true, false)
+			if hit2Effect is GPUParticles3D:
+				hit2Effect.restart()
+				hit2Effect.emitting = true
+				hit2Effect.process_mode = Node.PROCESS_MODE_ALWAYS
+
+			agent.velocity = saved_velocity
+
+			if enemy is CharacterBody3D:
+				gameJuice.knockback(
+					enemy,
+					agent,
+					attackData.guardedknockbackForce,
+					attackData.guardedknockbackDirection
+				)
 
 
 func _apply_physics(delta: float):

@@ -6,17 +6,21 @@ func _ready():
 
 var is_in_hitstop := false
 
-func hitstop(duration: float) -> void:
+func hitstop(duration: float, targets: Array) -> void:
 	if is_in_hitstop:
-		await get_tree().create_timer(duration, true, false, true).timeout
+		await get_tree().create_timer(duration).timeout
 		return
 	
-	print("stop engine")
 	is_in_hitstop = true
-	Engine.time_scale = 0.05
-	await get_tree().create_timer(duration, true, false, true).timeout
-	print("reset engine")
-	Engine.time_scale = 1.0
+	
+	for t in targets:
+		t.process_mode = Node.PROCESS_MODE_DISABLED
+	
+	await get_tree().create_timer(duration).timeout
+	
+	for t in targets:
+		t.process_mode = Node.PROCESS_MODE_INHERIT
+	
 	is_in_hitstop = false
 
 # Pause functionality (called by hitStop)

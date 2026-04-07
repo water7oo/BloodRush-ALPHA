@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://colgt8jseih4h" path="res://Scripts/enemyStates/death_stateEnemy.gd" id="11_ulp1q"]
 [ext_resource type="Texture2D" uid="uid://dburebixgi0qs" path="res://My Textures/Sprite_FX_Blast_0017.png" id="13_tuc0k"]
 [ext_resource type="Script" uid="uid://djfdwolmvokwk" path="res://Enemy/noticePlayer.gd" id="13_ulp1q"]
+[ext_resource type="Shader" uid="uid://bpu5grc6v8hhm" path="res://FX/flashing.gdshader" id="15_fauao"]
 [ext_resource type="Shader" uid="uid://b1ud5q41710hr" path="res://Shaders/OUTLINES.gdshader" id="17_1dgx4"]
 [ext_resource type="Resource" uid="uid://cdrmc6otk3eol" path="res://Resources/EnemyStats/enemyStats.tres" id="21_i335x"]
 [ext_resource type="Texture2D" uid="uid://c1sktcvm2d8el" path="res://FX/Sprite_FX_Blast_0010.png2.png" id="26_6g3nf"]
@@ -43,6 +44,16 @@ size = Vector3(0.660662, 1.02917, 0.50911)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4svdh"]
 size = Vector3(0.540073, 1.0587474, 0.760075)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4topa"]
+shader = ExtResource("15_fauao")
+shader_parameter/color_a = Color(0.5400679, 0.89538556, 0.99999994, 1)
+shader_parameter/color_b = Color(1, 1, 1, 0)
+shader_parameter/colors_affect_alpha = true
+shader_parameter/flash_amount = 1.0
+shader_parameter/flash_speed = 1.0
+shader_parameter/transparency = 0.9499999787656
+shader_parameter/intensity = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6g3nf"]
 render_priority = 0
@@ -531,6 +542,7 @@ script = ExtResource("11_ulp1q")
 
 [node name="EnemyMesh" type="MeshInstance3D" parent="." unique_id=295370142]
 transform = Transform3D(0.21499997, 0, 0, 0, 0.21499997, 0, 0, 0, 0.21499997, 0, 1.5785499, 0)
+material_overlay = SubResource("ShaderMaterial_4topa")
 mesh = ExtResource("2_tuc0k")
 surface_material_override/0 = SubResource("StandardMaterial3D_wyb1b")
 script = ExtResource("4_wyb1b")
