@@ -30,7 +30,7 @@ extends CharacterBody3D
 @onready var stateDebugLabel = $"State debug"
 @onready var playerSpeedLabel = $PlayerSpeedLabel/PlayerSpeed
 var input_buffer := {}
-var input_buffer_time := 0.2
+var input_buffer_time := .7
 var input_queue: Array = []
 
 
@@ -192,6 +192,7 @@ func try_attack(data: Dictionary, is_air: bool) -> bool:
 		if not Global.is_attacking or can_buffer_attack():
 			state_machine.dispatch(data.air_transition if is_air else data.ground_transition)
 			state.attack_timer = state.attackData.recovery_duration
+			print("black cloverrr")
 			
 			consume_inputs([data.air, data.ground] if is_air else [data.ground])
 			return true

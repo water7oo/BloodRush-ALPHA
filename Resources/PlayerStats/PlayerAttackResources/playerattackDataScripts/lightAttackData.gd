@@ -25,3 +25,6 @@ var enemyTargetGuardedHitstop: float = enemyTargetHitStop * .1
 @export var guardedknockbackDirection: Vector3 = Vector3(0, 0, .5)
 @export var knockback_force_guardRate = .7
 var guardedknockbackForce: float = knockback_force * knockback_force_guardRate
+
+
+@export var comboknockbackForce: float = knockback_force * .2

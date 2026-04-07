@@ -280,7 +280,7 @@ curve = SubResource("Curve_wtaik")
 [sub_resource type="Gradient" id="Gradient_frjtj"]
 interpolation_mode = 1
 offsets = PackedFloat32Array(0.9930556, 1)
-colors = PackedColorArray(0.9999996, 0.5748939, 0.058366597, 1, 1, 1, 1, 1)
+colors = PackedColorArray(1, 0.53513944, 0.581478, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_wtaik"]
 gradient = SubResource("Gradient_frjtj")
@@ -296,8 +296,8 @@ curve = SubResource("Curve_pxxsk")
 angle_min = -180.0
 angle_max = 180.0
 gravity = Vector3(0, 0, 0)
-scale_min = 7.0
-scale_max = 7.0
+scale_min = 10.0
+scale_max = 10.0
 scale_curve = SubResource("CurveTexture_7nwl5")
 color_ramp = SubResource("GradientTexture1D_wtaik")
 alpha_curve = SubResource("CurveTexture_taog0")
@@ -821,7 +821,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 material_override = SubResource("ShaderMaterial_ud7yb")
 emitting = false
 amount = 1
-lifetime = 0.2
+lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_yxw21")
@@ -887,7 +887,6 @@ volume_db = -16.868
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RootNode" unique_id=992140820]
 transform = Transform3D(1.905, 0, 0, 0, 3.9991162, 0, 0, 0, 1.905, 0, 2.0421567, 0)
-visible = false
 material_override = ExtResource("37_xsw6c")
 mesh = SubResource("QuadMesh_frjtj")
 skeleton = NodePath("../..")
@@ -1038,6 +1037,7 @@ mesh = SubResource("BoxMesh_uf676")
 
 [node name="player" parent="RootNode" unique_id=265813638 instance=ExtResource("58_wa0mo")]
 transform = Transform3D(-5.2453668e-08, 0, 1.2, 0, 1.2, 0, -1.2, 0, -5.2453668e-08, 0, 0, 0)
+visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1293275304]
 

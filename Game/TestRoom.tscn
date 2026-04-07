@@ -37,8 +37,8 @@ volumetric_fog_emission_energy = 122.2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ov31c"]
 shader = ExtResource("2_2nta8")
-shader_parameter/change_color_depth = true
-shader_parameter/target_color_depth = 5
+shader_parameter/change_color_depth = false
+shader_parameter/target_color_depth = 4
 shader_parameter/dithering = true
 shader_parameter/scale_resolution = true
 shader_parameter/target_resolution_scale = 1
@@ -1150,6 +1150,7 @@ transform = Transform3D(-4.3711417e-08, 0, -1, 0, 1, 0, 1, 0, -4.3711417e-08, -0
 
 [node name="Grass2" type="CSGCombiner3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=134538573]
 transform = Transform3D(-4.3431637e-06, -99.36001, 0, -4.5603215e-06, 1.9933797e-13, 36, -104.328, 4.560322e-06, -1.57361e-06, -3.87281, -0.12619686, -7.0384555)
+visible = false
 material_override = SubResource("ShaderMaterial_hmdq7")
 use_collision = true
 
@@ -1159,6 +1160,7 @@ size = Vector3(0.50606614, 0.49026626, 0.0250138)
 
 [node name="MiniPark Patch" type="MeshInstance3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1540349953]
 transform = Transform3D(99.36001, 0, 0, 0, -4.6513096e-06, 36, 0, -106.40956, -1.57361e-06, -3.87281, 0.7085867, -7.688995)
+visible = false
 material_override = SubResource("ShaderMaterial_wbl5e")
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Preview/SubViewportContainer/SubViewport/MiniPark Patch" unique_id=353571634]

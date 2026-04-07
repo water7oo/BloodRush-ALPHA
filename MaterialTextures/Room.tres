@@ -9,4 +9,4 @@ albedo_texture = ExtResource("1_v6veh")
 roughness = 0.0
 uv1_scale = Vector3(4, 4, 4)
 uv1_triplanar_sharpness = 0.233259
-texture_filter = 0
+texture_filter = 4
