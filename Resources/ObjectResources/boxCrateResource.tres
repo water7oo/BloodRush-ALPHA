@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://c8vmiwhac3wjc"]
+
+[ext_resource type="Script" uid="uid://bgukb4hmyjy3b" path="res://Resources/ObjectResources/objectscriptResource/boxCrateResource.gd" id="1_waek6"]
+
+[resource]
+script = ExtResource("1_waek6")
+current_health = 10.0
+max_health = 10.0
+Name = "Box"
+GuardDamage = 0
+isHit = false

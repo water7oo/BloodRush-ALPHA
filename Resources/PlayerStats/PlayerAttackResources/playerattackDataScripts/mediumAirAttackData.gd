@@ -17,3 +17,11 @@ extends Resource
 @export var ATTACK_DECELERATION: float = 60.0
 
 @export var next_attack_state: StringName
+
+var enemyTargetGuardLength: float = enemyTargetLength * .2
+var enemyTargetGuardMagnitude: float = enemyTargetMagnitude * .1
+var enemyTargetGuardedHitstop: float = enemyTargetHitStop * .1
+
+@export var guardedknockbackDirection: Vector3 = Vector3(0, 0, .5)
+@export var knockback_force_guardRate = .7
+var guardedknockbackForce: float = knockback_force * knockback_force_guardRate

@@ -20,3 +20,11 @@ extends Resource
 
 @export var jumpCancelDelayDuration: float = 0.1
 @export var jumpCancelTimerDuration: float = 0.3
+
+var enemyTargetGuardLength: float = enemyTargetLength * .2
+var enemyTargetGuardMagnitude: float = enemyTargetMagnitude * .1
+var enemyTargetGuardedHitstop: float = enemyTargetHitStop * .1
+
+@export var guardedknockbackDirection: Vector3 = Vector3(0, 0, .5)
+@export var knockback_force_guardRate = .7
+var guardedknockbackForce: float = knockback_force * knockback_force_guardRate

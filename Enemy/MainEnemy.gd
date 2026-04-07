@@ -1,5 +1,5 @@
 extends CharacterBody3D
-class_name EnemyClass
+
 
 @onready var gameJuice = get_node("/root/GameJuice")
 @onready var state_machine: LimboHSM = $LimboHSM
@@ -136,6 +136,7 @@ func takeDamageEnemy(damage: float) -> void:
 		else:
 			damage -= damage
 		
+
 func takeGuardDamageEnemy(damage: float) -> void:
 	if enemyStats.isDead == false:
 		if enemyStats.isGuarding == true:

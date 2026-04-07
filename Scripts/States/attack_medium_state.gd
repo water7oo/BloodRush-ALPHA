@@ -13,7 +13,7 @@ extends LimboState
 @export var hit2Sound: AudioStreamPlayer
 @export var hit3Sound: AudioStreamPlayer
 @export var hit4Sound: AudioStreamPlayer
-@export var hit5GuardSOund: AudioStreamPlayer
+@export var hit5GuardSound: AudioStreamPlayer
 
 var attack_timer: float = 0.0
 var combo_timer: float = 0.0
@@ -22,6 +22,9 @@ var enemies_hit := {}
 var preserved_velocity: Vector3 = Vector3.ZERO
 var startup_timer := 0.0
 var in_startup := true
+
+var heavy_pressed_time = -1
+var combo_window = 0.2 
 
 func _enter() -> void:
 	print("entering attack state")
@@ -37,9 +40,24 @@ func _enter() -> void:
 
 
 func _update(delta: float) -> void:
-	# buffer input
 	if Input.is_action_just_pressed("attack_heavy_1"):
+		heavy_pressed_time = Time.get_ticks_msec() / 1000.0
+
+	if Input.is_action_just_pressed("attack_medium_1"):
+		var now = Time.get_ticks_msec() / 1000.0
+		
+		# Check for medium+heavy within combo window
+		if now - heavy_pressed_time <= combo_window:
+			# Combo detected → trigger Upper Attack
+			buffered_input = true
+			attackData.next_attack_state = "to_attackUpper"  # Ground Upper Attack
+		else:
+			# Regular heavy attack
+			buffered_input = false
+			attackData.next_attack_state = ""  # or your normal heavy follow-up
+	elif Input.is_action_just_pressed("attack_heavy_1"):
 		buffered_input = true
+		attackData.next_attack_state = "to_heavyAttack"
 	
 	
 	attack_timer = max(attack_timer - delta, 0.0)
@@ -189,8 +207,57 @@ func _on_attack_box_area_entered(area):
 				attackData.knockback_direction
 			)
 
-	elif areaParent.has_method("takeGuardDamageEnemy") and areaParent.enemyStats.isGuarding:
-		areaParent.takeGuardDamageEnemy(attackData.attackDamage)
+	elif areaParent.has_method("takeGuardDamageEnemy") and areaParent.enemyStats.isGuarding and areaParent.enemyStats.current_health > 0 and not areaParent.enemyStats.isDead:
+			areaParent.takeDamageEnemy(attackData.attackDamage * .5)
+
+			Global.isHit = true
+			Global.can_chain_attack = true
+			Global.can_cancel = true
+			Global.cancel_timer = attackData.combo_window_duration
+
+			attack_box.monitoring = false
+
+			var enemy = area
+			while enemy and not (enemy is CharacterBody3D):
+				enemy = enemy.get_parent()
+
+			if area in enemies_hit:
+				return
+
+			enemies_hit[area] = true
+
+			hit5GuardSound.play()
+	#		change this so it doesnt rely on the node name, only the node type
+			if enemy.has_node("EnemyMesh"):
+				var mesh = enemy.get_node("EnemyMesh")
+				mesh.trigger_guardFlash()
+				await get_tree().process_frame
+
+			var saved_velocity = agent.velocity
+			agent.velocity = Vector3.ZERO
+
+			areaParent.enemyStats.enemyWasHit = true
+
+			gameJuice.objectShake(enemy, attackData.enemyTargetGuardLength, attackData.enemyTargetGuardMagnitude)
+			gameJuice.hitstop(attackData.enemyTargetGuardedHitstop)
+
+			areaParent.enemyStats.enemyWasHit = false
+
+			var hit1Effect = enemy.find_child("hit1", true, false)
+			if hit1Effect is GPUParticles3D:
+				hit1Effect.restart()
+				hit1Effect.emitting = true
+				hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
+
+			agent.velocity = saved_velocity
+
+			if enemy is CharacterBody3D:
+				gameJuice.knockback(
+					enemy,
+					agent,
+					attackData.guardedknockbackForce,
+					attackData.guardedknockbackDirection
+				)
 
 
 func _apply_physics(delta: float):

@@ -6,6 +6,7 @@ extends LimboState
 
 @onready var parent = $"../.."
 
+@onready var guardDamage = 5.0
 
 func _enter() -> void:
 	print("insid guard")

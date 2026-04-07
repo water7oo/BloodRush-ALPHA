@@ -27,6 +27,7 @@
 [ext_resource type="Script" uid="uid://djfdwolmvokwk" path="res://Enemy/noticePlayer.gd" id="13_ulp1q"]
 [ext_resource type="Shader" uid="uid://b1ud5q41710hr" path="res://Shaders/OUTLINES.gdshader" id="17_1dgx4"]
 [ext_resource type="Resource" uid="uid://cdrmc6otk3eol" path="res://Resources/EnemyStats/enemyStats.tres" id="21_i335x"]
+[ext_resource type="Texture2D" uid="uid://c1sktcvm2d8el" path="res://FX/Sprite_FX_Blast_0010.png2.png" id="26_6g3nf"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_0hvkj"]
 viewport_path = NodePath("HealthBar/SubViewport")
@@ -379,6 +380,32 @@ anim_speed_min = 1.0
 anim_speed_max = 1.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_5xtnc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fauao"]
+transparency = 1
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("26_6g3nf")
+uv1_scale = Vector3(0.61, 0.61, 0.61)
+uv1_offset = Vector3(0.175, 0.28, -0.045)
+texture_filter = 0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 5
+particles_anim_loop = true
+proximity_fade_distance = 52.8
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4topa"]
+gravity = Vector3(0, 0, 0)
+scale_min = 10.0
+scale_max = 10.0
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_rlw8d"]
+size = Vector2(1, 0.285)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6utb"]
 transparency = 1
@@ -762,6 +789,19 @@ fixed_fps = 60
 trail_lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_en0dp")
 draw_pass_1 = SubResource("QuadMesh_5xtnc")
+
+[node name="hit2" type="GPUParticles3D" parent="." unique_id=1137587798]
+process_mode = 3
+transform = Transform3D(0.0625, 0, 0, 0, 0.0625, 0, 0, 0, 0.0625, 0, 2.492775, -0.04246056)
+visible = false
+material_override = SubResource("StandardMaterial3D_fauao")
+emitting = false
+amount = 1
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_4topa")
+draw_pass_1 = SubResource("QuadMesh_rlw8d")
 
 [node name="hit1" type="GPUParticles3D" parent="." unique_id=303269608]
 process_mode = 3
