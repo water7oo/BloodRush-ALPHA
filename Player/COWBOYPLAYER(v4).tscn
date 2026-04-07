@@ -57,7 +57,6 @@
 [ext_resource type="Script" uid="uid://7nffybofk8fa" path="res://Scripts/playerAttackManager.gd" id="40_taog0"]
 [ext_resource type="Texture2D" uid="uid://c1sktcvm2d8el" path="res://FX/Sprite_FX_Blast_0010.png2.png" id="45_h8tk8"]
 [ext_resource type="FontFile" uid="uid://cg2l5vxyisqd1" path="res://ui/mario-kart-ds-oultine-font/mario-kart-ds-oultine-font.ttf" id="50_3pvmt"]
-[ext_resource type="PackedScene" uid="uid://c5tb3qneywfkf" path="res://Player/player1.tscn" id="58_wa0mo"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fvqnm"]
 custom_solver_bias = 0.305
@@ -1034,10 +1033,6 @@ transform = Transform3D(2.10476, 0, 0, 0, -0.86000013, -2.2915032, 0, 1.4895637,
 visible = false
 material_override = SubResource("StandardMaterial3D_3mcw4")
 mesh = SubResource("BoxMesh_uf676")
-
-[node name="player" parent="RootNode" unique_id=265813638 instance=ExtResource("58_wa0mo")]
-transform = Transform3D(-5.2453668e-08, 0, 1.2, 0, 1.2, 0, -1.2, 0, -5.2453668e-08, 0, 0, 0)
-visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1293275304]
 
