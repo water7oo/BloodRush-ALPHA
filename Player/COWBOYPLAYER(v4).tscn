@@ -502,11 +502,35 @@ theme_override_fonts/font = ExtResource("33_aggol")
 theme_override_font_sizes/font_size = 18
 text = "heavy attack timer: 0.0"
 
-[node name="CanCancelDebug" type="Label" parent="." unique_id=1398711414]
+[node name="JumpCancelTimer" type="Label" parent="." unique_id=1566231279]
 offset_left = 7.0
-offset_top = 531.0
+offset_top = 505.0
 offset_right = 239.0
-offset_bottom = 588.0
+offset_bottom = 562.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("33_aggol")
+theme_override_font_sizes/font_size = 18
+text = "jump cancel timer: 0.0"
+
+[node name="JumpCancelDelay" type="Label" parent="." unique_id=183067521]
+offset_left = 7.0
+offset_top = 521.0
+offset_right = 239.0
+offset_bottom = 578.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("33_aggol")
+theme_override_font_sizes/font_size = 18
+text = "jump cancel delay: 0.0"
+
+[node name="CanCancelDebug" type="Label" parent="." unique_id=1398711414]
+offset_left = 5.0
+offset_top = 375.0
+offset_right = 237.0
+offset_bottom = 432.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -622,17 +646,19 @@ hit3Sound = NodePath("../../hit3Sound")
 hit4Sound = NodePath("../../hit4Sound")
 hit5GuardSOund = NodePath("../../hit5GuardHitSound")
 
-[node name="AttackUpperState" type="LimboState" parent="LimboHSM" unique_id=1882753718 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound")]
+[node name="AttackUpperState" type="LimboState" parent="LimboHSM" unique_id=1882753718 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "jumpCancelFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSOund")]
 script = ExtResource("16_4mqd1")
 attack_box = NodePath("../../RootNode/AttackUpperBox")
 attack_box_col = NodePath("../../RootNode/AttackUpperBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AttackUpperBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
+jumpCancelFX = NodePath("../../JumpCancel1")
 attackData = ExtResource("31_ori5w")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
 hit4Sound = NodePath("../../hit4Sound")
+hit5GuardSOund = NodePath("../../hit5GuardHitSound")
 
 [node name="AirAttackState" type="LimboState" parent="LimboHSM" unique_id=990125352 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSOund")]
 script = ExtResource("11_why3t")

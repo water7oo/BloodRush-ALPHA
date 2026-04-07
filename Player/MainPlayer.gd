@@ -38,6 +38,8 @@ var input_queue: Array = []
 @onready var mediumAttackTimer = $AttackCooldownMedium
 @onready var heavyAttackTimer = $AttackCooldownHeavy
 @onready var CanCancelDebug = $CanCancelDebug
+@onready var jumpCancelTimer = $JumpCancelTimer
+@onready var jumpCancelDelay = $JumpCancelDelay
 
 func _ready():
 	initialize_state_machine()
@@ -128,6 +130,10 @@ func _physics_process(delta: float) -> void:
 	lightAttackTimer.text = ("light attack timer: " + str(attack_state.attack_timer))
 	mediumAttackTimer.text = ("medium attack timer: " + str(attackMedium_state.attack_timer))
 	heavyAttackTimer.text = ("heavy attack timer: " + str(attackHeavy_state.attack_timer))
+	
+	jumpCancelTimer.text = ("jump cancel timer: " + str(attack_upper_state.jump_cancel_timer))
+	jumpCancelDelay.text = ("jump cancel delay: " + str(attack_upper_state.jumpCancelDelay))
+	
 	handle_attack_input()
 	
 

@@ -1,7 +1,8 @@
 extends Resource
 
 # Jumping
-@export var JUMP_VELOCITY: float = 12.0  # Increased for better jump height
+@export var JUMP_VELOCITY: float = 12.0 
+@export var DEFAULT_JUMP_VELOCITY: float = 12.0  
 @export var CUSTOM_GRAVITY: float = 30.0  # Keeps the character from feeling too floaty
 @export var can_jump: bool = true
 

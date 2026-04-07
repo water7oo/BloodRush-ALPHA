@@ -23,11 +23,11 @@ func _enter() -> void:
 	print("Current State:", agent.state_machine.get_active_state())
 	if agent.is_on_floor():
 		agent.velocity.y = jumpResource.JUMP_VELOCITY
-	#animationTree.set("parameters/Jump_Blend/blend_amount", 1)
 	
 	Global.air_timer = 0.0
 	Global.jump_timer = 0.0
 	Global.jump_counter = 0
+	jumpResource.JUMP_VELOCITY = jumpResource.DEFAULT_JUMP_VELOCITY
 
 func _update(delta: float) -> void:
 	player_jump(delta)

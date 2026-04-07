@@ -17,3 +17,6 @@ extends Resource
 @export var ATTACK_DECELERATION: float = 60.0
 
 @export var next_attack_state: StringName
+
+@export var jumpCancelDelayDuration: float = 0.1
+@export var jumpCancelTimerDuration: float = 0.3

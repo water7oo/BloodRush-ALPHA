@@ -4,7 +4,7 @@ extends LimboState
 @export var attack_box_col: Node
 @export var attack_box_debug: Node
 @export var ComboConfirmFX: GPUParticles3D
-
+@export var jumpCancelFX: GPUParticles3D
 @export var attackData: Resource
 
 @onready var gameJuice = get_node("/root/GameJuice")
@@ -17,11 +17,17 @@ extends LimboState
 
 var attack_timer: float = 0.0
 var combo_timer: float = 0.0
+var jumpCancelDelay: float = 0.0
+var jump_cancel_timer: float = 0.0
+
+
 var buffered_input := false
 var enemies_hit := {}
 var preserved_velocity: Vector3 = Vector3.ZERO
 var startup_timer := 0.0
 var in_startup := true
+var isJumpCancel = false
+var canJumpCancel = false
 
 func _enter() -> void:
 	print("entering attack state")
@@ -30,13 +36,20 @@ func _enter() -> void:
 	
 	Global.is_attacking = true
 	Global.isHit = false
-	
+	isJumpCancel = false
 	startup_timer = attackData.startup_duration
+	attackData.recovery_duration = 0.5
 	in_startup = true
+	canJumpCancel = false
 	attack_timer = 0.0
+	
+	agent.jump_state.jumpResource.JUMP_VELOCITY = agent.jump_state.jumpResource.DEFAULT_JUMP_VELOCITY
+	jumpCancelDelay = attackData.jumpCancelDelayDuration
+	jump_cancel_timer = attackData.jumpCancelTimerDuration
 
 
 func _update(delta: float) -> void:
+	
 	# buffer input
 	if Input.is_action_just_pressed("move_jump"):
 		buffered_input = true
@@ -59,11 +72,25 @@ func _update(delta: float) -> void:
 			_enable_hitbox()
 			_start_attack()
 		return
-		
-	_process_cancel_window()	
+	
+	
+	
+	if Global.can_chain_attack == true:
+		runJumpTimers(delta)
+	
+	_process_cancel_window()
 	_apply_physics(delta)
 	agent.move_and_slide()
 
+func runJumpTimers(delta: float):
+	print("can jump cancel " + str(canJumpCancel))
+	jumpCancelDelay = max(jumpCancelDelay - delta, 0.0)
+	
+	
+	if jumpCancelDelay <= 0:
+		jump_cancel_timer = max(jump_cancel_timer - delta, 0.0)
+		canJumpCancel = true
+		
 func is_in_attack_phase() -> bool:
 	return attack_timer > attackData.recovery_duration
 
@@ -90,8 +117,17 @@ func _chain_attack():
 	_exit_attack_state()
 	attackData.startup_duration = 0.0
 	attack_timer = 0.0
-	if buffered_input:
+	
+	_jumpCancel()
+
+
+func _jumpCancel():
+	if Input.is_action_just_pressed("move_jump") && canJumpCancel == true && jumpCancelFX:
+		agent.jump_state.jumpResource.JUMP_VELOCITY += 5
+		jumpCancelFX.emitting = true
 		agent.state_machine.dispatch(attackData.next_attack_state)
+	else:
+		agent.jump_state.jumpResource.JUMP_VELOCITY = agent.jump_state.jumpResource.DEFAULT_JUMP_VELOCITY
 
 func _start_attack() -> void:
 	Global.combo_timer = attackData.combo_window_duration
@@ -207,4 +243,5 @@ func _exit_attack_state() -> void:
 	Global.is_attacking = false
 	Global.isHit = false
 	combo_timer = 0.0
+	agent.jump_state.jumpResource.JUMP_VELOCITY = agent.jump_state.jumpResource.DEFAULT_JUMP_VELOCITY
 	_disable_hitbox()
