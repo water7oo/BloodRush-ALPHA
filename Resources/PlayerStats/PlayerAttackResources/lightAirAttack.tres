@@ -12,3 +12,4 @@ enemyTargetMagnitude = 0.05
 enemyTargetHitStop = 0.2
 ATTACK_DECELERATION = 30.0
 next_attack_state = &"to_airMediumAttack"
+comboknockbackForceRate = 0.5

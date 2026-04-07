@@ -10,6 +10,7 @@ extends Resource
 @export var enemyTargetMagnitude: float = 0.01
 @export var enemyTargetHitStop: float = 0.4
 
+@export var Default_knockback_force: float = 3.0
 @export var knockback_force: float = 3.0
 @export var knockback_direction: Vector3 = Vector3(0, 0, 1)
 
@@ -27,4 +28,5 @@ var enemyTargetGuardedHitstop: float = enemyTargetHitStop * .1
 var guardedknockbackForce: float = knockback_force * knockback_force_guardRate
 
 
-@export var comboknockbackForce: float = knockback_force * .2
+var comboknockbackForce: float = knockback_force * comboknockbackForceRate
+@export var comboknockbackForceRate: float = .2

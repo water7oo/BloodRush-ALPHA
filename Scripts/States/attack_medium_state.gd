@@ -137,6 +137,7 @@ func _disable_hitbox():
 			attack_box.disconnect("area_entered", Callable(self, "_on_attack_box_area_entered"))
 
 
+		
 
 func _on_attack_box_area_entered(area):
 	var areaParent = area.get_parent()
@@ -257,12 +258,17 @@ func _on_attack_box_area_entered(area):
 			agent.velocity = saved_velocity
 
 			if enemy is CharacterBody3D:
-				gameJuice.knockback(
-					enemy,
-					agent,
-					attackData.guardedknockbackForce,
-					attackData.guardedknockbackDirection
-				)
+				if Global.combo_hits.size() == 1:
+					gameJuice.knockback(
+						enemy,
+						agent,
+						attackData.guardedknockbackForce,
+						attackData.guardedknockbackDirection
+					)
+			
+				else:
+					gameJuice.knockback(enemy,agent,attackData.comboknockbackForce,attackData.knockback_direction)
+					print("combo knockback")
 
 
 func _apply_physics(delta: float):

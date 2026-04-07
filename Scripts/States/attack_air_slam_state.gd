@@ -61,6 +61,7 @@ func _update(delta: float) -> void:
 		return
 		
 	_process_cancel_window()	
+	_comboKnockBack()
 	_apply_physics(delta)
 	agent.move_and_slide()
 
@@ -119,7 +120,12 @@ func _disable_hitbox():
 			attack_box.disconnect("area_entered", Callable(self, "_on_attack_box_area_entered"))
 
 
-
+func _comboKnockBack():
+	if Global.combo_hits.size() >= 2:
+		attackData.knockback_force = attackData.comboknockbackForce
+	else:
+		attackData.knockback_force = attackData.Default_knockback_force
+		
 func _on_attack_box_area_entered(area):
 	var areaParent = area.get_parent()
 

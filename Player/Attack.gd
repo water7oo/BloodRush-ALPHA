@@ -23,6 +23,7 @@ var preserved_velocity: Vector3 = Vector3.ZERO
 var startup_timer := 0.0
 var in_startup := true
 
+
 func _enter() -> void:
 	print("entering attack state")
 	enemies_hit.clear()
@@ -60,7 +61,7 @@ func _update(delta: float) -> void:
 			_start_attack()
 		return
 		
-	_process_cancel_window()	
+	_process_cancel_window()
 	_apply_physics(delta)
 	agent.move_and_slide()
 
@@ -133,7 +134,7 @@ func _on_attack_box_area_entered(area):
 	and not areaParent.enemyStats.isGuarding:
 
 		areaParent.takeDamageEnemy(attackData.attackDamage)
-
+		areaParent.look_at(areaParent.rotation, agent.rotation, 0.1)
 		Global.combo_hits.append({
 			"enemy": area,
 			"damage": attackData.attackDamage,
@@ -195,6 +196,13 @@ func _on_attack_box_area_entered(area):
 				attackData.knockback_force,
 				attackData.knockback_direction
 			)
+		elif Global.combo_hits.size() >= 2:
+					gameJuice.knockback(
+			enemy,
+			agent,
+			attackData.comboknockbackForce,
+			attackData.knockback_direction
+		)
 
 	elif areaParent.has_method("takeGuardDamageEnemy") and areaParent.enemyStats.isGuarding and areaParent.enemyStats.current_health > 0 and not areaParent.enemyStats.isDead:
 			areaParent.takeDamageEnemy(attackData.attackDamage * .5)
@@ -246,12 +254,17 @@ func _on_attack_box_area_entered(area):
 			agent.velocity = saved_velocity
 
 			if enemy is CharacterBody3D:
-				gameJuice.knockback(
-					enemy,
-					agent,
-					attackData.guardedknockbackForce,
-					attackData.guardedknockbackDirection
-				)
+				if Global.combo_hits.size() == 1:
+					gameJuice.knockback(
+						enemy,
+						agent,
+						attackData.guardedknockbackForce,
+						attackData.guardedknockbackDirection
+					)
+			
+				else:
+					gameJuice.knockback(enemy,agent,attackData.comboknockbackForce,attackData.knockback_direction)
+					print("combo knockback")
 
 
 func _apply_physics(delta: float):
