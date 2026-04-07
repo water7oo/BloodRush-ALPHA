@@ -16,41 +16,72 @@ extends LimboState
 @export var hit5GuardSOund: AudioStreamPlayer
 
 var attack_timer: float = 0.0
+var combo_timer: float = 0.0
 var buffered_input := false
 var enemies_hit := {}
 var preserved_velocity: Vector3 = Vector3.ZERO
+var startup_timer := 0.0
+var in_startup := true
+
+var medium_pressed_time = -1
+var combo_window = 0.2 
 
 func _enter() -> void:
+	print("entering attack state")
 	enemies_hit.clear()
 	buffered_input = false
 	
 	Global.is_attacking = true
 	Global.isHit = false
 	
-	await get_tree().create_timer(attackData.startup_duration).timeout
-
-	attack_timer = attackData.active_duration + attackData.recovery_duration
-	_enable_hitbox()
-	_start_attack()
+	startup_timer = attackData.startup_duration
+	in_startup = true
+	attack_timer = 0.0
 
 
 func _update(delta: float) -> void:
+	if Input.is_action_just_pressed("attack_medium_1"):
+		medium_pressed_time = Time.get_ticks_msec() / 1000.0
+
+	if Input.is_action_just_pressed("attack_heavy_1"):
+		var now = Time.get_ticks_msec() / 1000.0
+		
+		# Check for medium+heavy within combo window
+		if now - medium_pressed_time <= combo_window:
+			# Combo detected → trigger Upper Attack
+			buffered_input = true
+			attackData.next_attack_state = "to_attackUpper"  # Ground Upper Attack
+		else:
+			# Regular heavy attack
+			buffered_input = false
+			attackData.next_attack_state = ""  # or your normal heavy follow-up
+	
+	
 	attack_timer = max(attack_timer - delta, 0.0)
-	
-	# buffer input
-	if Input.is_action_just_pressed("attack_medium_1") && Input.is_action_just_pressed("attack_heavy_1"):
-		buffered_input = true
-	
-	_process_cancel_window()
-	
-	# attack finished
 	if attack_timer <= 0.0:
-		_end_or_chain()
-		return
+		if (buffered_input || Global.isHit) && Global.can_cancel:
+			_chain_attack()
+		else:
+			_exit_attack_state()
+			agent.state_machine.dispatch("to_idle")
 	
+
+	if in_startup:
+		startup_timer -= delta
+		if startup_timer <= 0:
+			in_startup = false
+			attack_timer = attackData.active_duration + attackData.recovery_duration
+			_enable_hitbox()
+			_start_attack()
+		return
+
+
+	_process_cancel_window()
 	_apply_physics(delta)
 	agent.move_and_slide()
 
+		
+		
 func is_in_attack_phase() -> bool:
 	return attack_timer > attackData.recovery_duration
 
@@ -64,11 +95,12 @@ func _process_cancel_window():
 
 
 func _end_or_chain():
-	if (buffered_input || Global.isHit) && Global.can_cancel:
-		_chain_attack()
+	if combo_timer >= 0.0:
+		if (buffered_input || Global.isHit) && Global.can_cancel:
+			_chain_attack()
 	else:
+		Global.can_cancel = false
 		_exit_attack_state()
-		await get_tree().create_timer(attackData.recovery_duration).timeout
 		agent.state_machine.dispatch("to_idle")
 
 
@@ -87,6 +119,7 @@ func _start_attack() -> void:
 
 func _enable_hitbox():
 	if attack_box:
+		print("active")
 		attack_box_debug.visible = true
 		attack_box_col.visible = true
 		attack_box.monitoring = true
@@ -95,6 +128,7 @@ func _enable_hitbox():
 
 func _disable_hitbox():
 	if attack_box:
+		print("inactive")
 		attack_box.monitoring = false
 		attack_box_debug.visible = false
 		attack_box_col.visible = false
@@ -146,14 +180,14 @@ func _on_attack_box_area_entered(area):
 			var mesh = enemy.get_node("EnemyMesh")
 			mesh.trigger_flash()
 			await get_tree().process_frame
-		# ---------------- VFX / HITSTOP ----------------
+
 		var saved_velocity = agent.velocity
 		agent.velocity = Vector3.ZERO
 
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
-		await gameJuice.hitstop(attackData.enemyTargetHitStop)
+		gameJuice.hitstop(attackData.enemyTargetHitStop)
 
 		areaParent.enemyStats.enemyWasHit = false
 
@@ -172,6 +206,7 @@ func _on_attack_box_area_entered(area):
 				attackData.knockback_force,
 				attackData.knockback_direction
 			)
+			
 
 	elif areaParent.has_method("takeGuardDamageEnemy") and areaParent.enemyStats.isGuarding:
 		areaParent.takeGuardDamageEnemy(attackData.attackDamage)
@@ -187,7 +222,8 @@ func _apply_physics(delta: float):
 		agent.velocity.z = move_toward(agent.velocity.z, 0, attackData.ATTACK_DECELERATION * delta)
 
 func _exit_attack_state() -> void:
+	print("clearing attack state")
 	Global.is_attacking = false
 	Global.isHit = false
-	
+	combo_timer = 0.0
 	_disable_hitbox()

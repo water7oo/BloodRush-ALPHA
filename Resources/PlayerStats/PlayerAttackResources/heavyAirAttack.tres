@@ -11,3 +11,4 @@ attackDamage = 20.0
 enemyTargetMagnitude = 0.1
 enemyTargetHitStop = 0.7
 knockback_force = 4.0
+next_attack_state = &"to_airSlamAttack"

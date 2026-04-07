@@ -16,38 +16,51 @@ extends LimboState
 @export var hit5GuardSOund: AudioStreamPlayer
 
 var attack_timer: float = 0.0
+var combo_timer: float = 0.0
 var buffered_input := false
 var enemies_hit := {}
 var preserved_velocity: Vector3 = Vector3.ZERO
+var startup_timer := 0.0
+var in_startup := true
 
 func _enter() -> void:
+	print("entering attack state")
 	enemies_hit.clear()
 	buffered_input = false
 	
 	Global.is_attacking = true
 	Global.isHit = false
 	
-	await get_tree().create_timer(attackData.startup_duration).timeout
-
-	attack_timer = attackData.active_duration + attackData.recovery_duration
-	_enable_hitbox()
-	_start_attack()
+	startup_timer = attackData.startup_duration
+	in_startup = true
+	attack_timer = 0.0
 
 
 func _update(delta: float) -> void:
-	attack_timer = max(attack_timer - delta, 0.0)
-	
 	# buffer input
 	if Input.is_action_just_pressed("attack_heavy_1"):
 		buffered_input = true
 	
-	_process_cancel_window()
 	
-	# attack finished
+	attack_timer = max(attack_timer - delta, 0.0)
 	if attack_timer <= 0.0:
-		_end_or_chain()
-		return
+		if (buffered_input || Global.isHit) && Global.can_cancel:
+			_chain_attack()
+		else:
+			_exit_attack_state()
+			agent.state_machine.dispatch("to_idle")
 	
+
+	if in_startup:
+		startup_timer -= delta
+		if startup_timer <= 0:
+			in_startup = false
+			attack_timer = attackData.active_duration + attackData.recovery_duration
+			_enable_hitbox()
+			_start_attack()
+		return
+		
+	_process_cancel_window()	
 	_apply_physics(delta)
 	agent.move_and_slide()
 
@@ -64,11 +77,12 @@ func _process_cancel_window():
 
 
 func _end_or_chain():
-	if (buffered_input || Global.isHit) && Global.can_cancel:
-		_chain_attack()
+	if combo_timer >= 0.0:
+		if (buffered_input || Global.isHit) && Global.can_cancel:
+			_chain_attack()
 	else:
+		Global.can_cancel = false
 		_exit_attack_state()
-		await get_tree().create_timer(attackData.recovery_duration).timeout
 		agent.state_machine.dispatch("to_idle")
 
 
@@ -148,14 +162,14 @@ func _on_attack_box_area_entered(area):
 			var mesh = enemy.get_node("EnemyMesh")
 			mesh.trigger_flash()
 			await get_tree().process_frame
-		# ---------------- VFX / HITSTOP ----------------
+
 		var saved_velocity = agent.velocity
 		agent.velocity = Vector3.ZERO
 
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
-		await gameJuice.hitstop(attackData.enemyTargetHitStop)
+		gameJuice.hitstop(attackData.enemyTargetHitStop)
 
 		areaParent.enemyStats.enemyWasHit = false
 
@@ -189,7 +203,8 @@ func _apply_physics(delta: float):
 		agent.velocity.z = move_toward(agent.velocity.z, 0, attackData.ATTACK_DECELERATION * delta)
 
 func _exit_attack_state() -> void:
+	print("clearing attack state")
 	Global.is_attacking = false
 	Global.isHit = false
-	
+	combo_timer = 0.0
 	_disable_hitbox()

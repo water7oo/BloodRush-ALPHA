@@ -131,95 +131,118 @@ func _physics_process(delta: float) -> void:
 	handle_attack_input()
 	
 
+const ATTACK_TYPES = {
+	"attack_light_1":  { "ground": "light",  "air": "airlight" },
+	"attack_medium_1": { "ground": "medium", "air": "airmedium" },
+	"attack_heavy_1":  { "ground": "heavy",  "air": "airheavy" }
+}
+
 func record_inputs():
-	var time = Time.get_ticks_msec() / 1000.0
+	var time := Time.get_ticks_msec() / 1000.0
+	var is_air := not is_on_floor()
 
-	if Input.is_action_just_pressed("attack_light_1"):
-		input_queue.append({"type": "light", "time": time})
-		if !is_on_floor():
-			input_queue.append({"type": "airlight", "time": time})
+	for action in ATTACK_TYPES.keys():
+		if Input.is_action_just_pressed(action):
+			var types = ATTACK_TYPES[action]
+			input_queue.append({ "type": types.ground, "time": time })
+			
+			if is_air:
+				input_queue.append({ "type": types.air, "time": time })
 
-	if Input.is_action_just_pressed("attack_medium_1"):
-		input_queue.append({"type": "medium", "time": time})
-		if !is_on_floor():
-			input_queue.append({"type": "airmedium", "time": time})
-
-	if Input.is_action_just_pressed("attack_heavy_1"):
-		input_queue.append({"type": "heavy", "time": time})
-		if !is_on_floor():
-			input_queue.append({"type": "airheavy", "time": time})
-		
 
 func clean_inputs():
-	var current_time = Time.get_ticks_msec() / 1000.0
+	var current_time := Time.get_ticks_msec() / 1000.0
 	
 	input_queue = input_queue.filter(func(i):
 		return current_time - i.time <= input_buffer_time
 	)
 
+
 func has_input(type: String) -> bool:
-	for i in input_queue:
-		if i.type == type:
-			return true
-	return false
-	
+	return input_queue.any(func(i): return i.type == type)
+
+func has_inputs(types: Array) -> bool:
+	# Return true if ALL types exist in the input_queue
+	for t in types:
+		if not has_input(t):
+			return false
+	return true
+
 func consume_inputs(types: Array):
 	input_queue = input_queue.filter(func(i):
-		return not i.type in types
-	)
+		return not i.type in types)
+
 
 func can_buffer_attack() -> bool:
 	var state = state_machine.get_active_state()
+	return state.has_method("can_cancel") and state.can_cancel
 
-	if state.has_method("can_cancel") and state.can_cancel:
-		return true
-		
+
+func try_attack(data: Dictionary, is_air: bool) -> bool:
+	var type = data.air if is_air else data.ground
+	var state = data.air_state if is_air else data.ground_state
+	
+	if has_input(type) and state.attack_timer <= 0:
+		if not Global.is_attacking or can_buffer_attack():
+			state_machine.dispatch(data.air_transition if is_air else data.ground_transition)
+			state.attack_timer = state.attackData.recovery_duration
+			
+			consume_inputs([data.air, data.ground] if is_air else [data.ground])
+			return true
+			
 	return false
+
 
 func handle_attack_input() -> void:
 	record_inputs()
 	clean_inputs()
 
-	var is_air = not is_on_floor()
-	
-	if has_input("heavy") and attackHeavy_state.attack_timer <= 0:
-		if not Global.is_attacking or can_buffer_attack():
-			if is_air:
-				state_machine.dispatch("to_airHeavyAttack")
-				air_attackHeavy_state.attack_timer = air_attackHeavy_state.attackData.recovery_duration
-				consume_inputs(["airheavy", "heavy"])
-			else:
-				state_machine.dispatch("to_heavyAttack")
-				attackHeavy_state.attack_timer = attackHeavy_state.attackData.recovery_duration
-				consume_inputs(["heavy"])
-				
-			return # EXIT after success
+	var is_air := not is_on_floor()
 
-	if has_input("medium") and attackMedium_state.attack_timer <= 0 :
-		if not Global.is_attacking or can_buffer_attack():
-			if is_air:
-				state_machine.dispatch("to_airMediumAttack")
-				air_attackMedium_state.attack_timer = air_attackMedium_state.attackData.recovery_duration
-				consume_inputs(["airmedium", "medium"])
-			else:
-				state_machine.dispatch("to_mediumAttack")
-				attackMedium_state.attack_timer = attackMedium_state.attackData.recovery_duration
-				consume_inputs(["medium"])
-				
-			return # EXIT after success
 
-	if has_input("light") and attack_state.attack_timer <= 0:
+	if has_inputs(["medium", "heavy"]):
 		if not Global.is_attacking or can_buffer_attack():
 			if is_air:
-				state_machine.dispatch("to_airAttack")
-				air_attack_state.attack_timer = air_attack_state.attackData.recovery_duration
-				consume_inputs(["airlight", "light"])
+				state_machine.dispatch("to_airSlamAttack")
+				attack_slamAir_state.attack_timer = attack_slamAir_state.attackData.recovery_duration
+				consume_inputs(["airmedium", "airheavy", "medium", "heavy"])
 			else:
-				state_machine.dispatch("to_attack")
-				attack_state.attack_timer = attack_state.attackData.recovery_duration
-				consume_inputs(["light"])
-				
-			return # EXIT after success
+				state_machine.dispatch("to_attackUpper")
+				attack_upper_state.attack_timer = attack_upper_state.attackData.recovery_duration
+				consume_inputs(["medium", "heavy"])
+			return  # exit after success
+			
+			
+	var attacks = [
+		{
+			"ground": "heavy",
+			"air": "airheavy",
+			"ground_state": attackHeavy_state,
+			"air_state": air_attackHeavy_state,
+			"ground_transition": "to_heavyAttack",
+			"air_transition": "to_airHeavyAttack"
+		},
+		{
+			"ground": "medium",
+			"air": "airmedium",
+			"ground_state": attackMedium_state,
+			"air_state": air_attackMedium_state,
+			"ground_transition": "to_mediumAttack",
+			"air_transition": "to_airMediumAttack"
+		},
+		{
+			"ground": "light",
+			"air": "airlight",
+			"ground_state": attack_state,
+			"air_state": air_attack_state,
+			"ground_transition": "to_attack",
+			"air_transition": "to_airAttack"
+		}
+	]
+
+	for attack in attacks:
+		if try_attack(attack, is_air):
+			return
 		
 func playerCamera(delta: float) -> void:
 	pass
