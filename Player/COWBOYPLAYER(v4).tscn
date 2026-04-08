@@ -411,6 +411,7 @@ albedo_color = Color(1, 0.20999998, 0.8025, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_wtaik"]
 
 [node name="Cowboy" type="CharacterBody3D" unique_id=401760427 groups=["player"]]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
 wall_min_slide_angle = 0.0
 floor_constant_speed = true
 script = ExtResource("1_vkma1")
@@ -672,6 +673,7 @@ hit4Sound = NodePath("../../hit4Sound")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
 
 [node name="AttackUpperState" type="LimboState" parent="LimboHSM" unique_id=1882753718 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "jumpCancelFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSound")]
+process_mode = 3
 script = ExtResource("16_4mqd1")
 attack_box = NodePath("../../RootNode/AttackUpperBox")
 attack_box_col = NodePath("../../RootNode/AttackUpperBox/CollisionShape3D")
@@ -896,17 +898,17 @@ material_override = ExtResource("37_xsw6c")
 mesh = SubResource("QuadMesh_frjtj")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="RootNode" unique_id=1453727548]
+[node name="playerProtoMesh" type="MeshInstance3D" parent="RootNode" unique_id=1453727548]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.9871702, 0)
 material_override = ExtResource("37_xsw6c")
 mesh = SubResource("CapsuleMesh_6qy8x")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="RootNode" unique_id=1955938355]
-transform = Transform3D(1.315, 0, 0, 0, 1.315, 0, 0, 0, 1.315, -0.14825249, 2.4223123, -1)
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="RootNode/playerProtoMesh" unique_id=1955938355]
+transform = Transform3D(0.6575, 0, 0, 0, 0.6575, 0, 0, 0, 0.6575, -0.07412624, 0.21757102, -0.5)
 material_override = ExtResource("37_xsw6c")
 mesh = SubResource("BoxMesh_6qy8x")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
 [node name="HurtBox" type="Area3D" parent="RootNode" unique_id=363235003 groups=["player"]]
 script = ExtResource("5_vjco1")

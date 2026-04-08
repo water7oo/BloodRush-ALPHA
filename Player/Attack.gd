@@ -120,8 +120,57 @@ func _disable_hitbox():
 		if attack_box.is_connected("area_entered", Callable(self, "_on_attack_box_area_entered")):
 			attack_box.disconnect("area_entered", Callable(self, "_on_attack_box_area_entered"))
 
+func rotate_to_target(areaParent):
+	var playerMesh = agent.get_node("RootNode")
+	
+	if playerMesh:
+		var dir = areaParent.global_position - playerMesh.global_position
+		
+		dir.y = 0
+		
+		if dir.length() < 0.001:
+			return
+		
+		dir = dir.normalized()
+		
+		# Compute yaw (Y rotation)
+		var target_yaw = atan2(-dir.x, -dir.z)
+		
+		# Smoothly rotate only Y
+		playerMesh.rotation.y = lerp_angle(
+			playerMesh.rotation.y,
+			target_yaw,
+			1
+		)
+	else:
+		print("no visual node")
 
-
+func rotateEnemy_to_player(agent, areaParent):
+	var enemyMesh = areaParent
+	
+	if enemyMesh:
+		var dir = agent.global_position - enemyMesh.global_position
+		
+		dir.y = 0
+		
+		if dir.length() < 0.001:
+			return
+		
+		dir = dir.normalized()
+		
+		# Compute yaw (Y rotation)
+		var target_yaw = atan2(-dir.x, -dir.z)
+		
+		# Smoothly rotate only Y
+		enemyMesh.rotation.y = lerp_angle(
+			enemyMesh.rotation.y,
+			target_yaw,
+			1
+		)
+	else:
+		print("no visual node")
+		
+		
 func _on_attack_box_area_entered(area):
 	var areaParent = area.get_parent()
 
@@ -134,7 +183,9 @@ func _on_attack_box_area_entered(area):
 	and not areaParent.enemyStats.isGuarding:
 
 		areaParent.takeDamageEnemy(attackData.attackDamage)
-		areaParent.look_at(areaParent.rotation, agent.rotation, 0.1)
+		rotateEnemy_to_player(agent, areaParent)
+		rotate_to_target(areaParent)
+		
 		Global.combo_hits.append({
 			"enemy": area,
 			"damage": attackData.attackDamage,
@@ -159,7 +210,7 @@ func _on_attack_box_area_entered(area):
 		enemies_hit[area] = true
 
 		hit1Sound.play()
-#		change this so it doesnt rely on the node name, only the node type
+
 		if enemy.has_node("EnemyMesh"):
 			var mesh = enemy.get_node("EnemyMesh")
 			mesh.trigger_flash()
@@ -189,20 +240,24 @@ func _on_attack_box_area_entered(area):
 			
 		agent.velocity = saved_velocity
 
+		var combo_count = Global.combo_hits.size()
 		if enemy is CharacterBody3D:
-			gameJuice.knockback(
-				enemy,
-				agent,
-				attackData.knockback_force,
-				attackData.knockback_direction
-			)
-		elif Global.combo_hits.size() >= 2:
-					gameJuice.knockback(
-			enemy,
-			agent,
-			attackData.comboknockbackForce,
-			attackData.knockback_direction
-		)
+			if combo_count == 1:
+				print("regular knockback")
+				gameJuice.knockback(
+					enemy,
+					agent,
+					attackData.knockback_force,
+					attackData.knockback_direction
+				)
+			elif combo_count >= 2:
+				print("combo knockback")
+				gameJuice.knockback(
+					enemy,
+					agent,
+					attackData.comboknockbackForce,
+					attackData.knockback_direction
+				)
 
 	elif areaParent.has_method("takeGuardDamageEnemy") and areaParent.enemyStats.isGuarding and areaParent.enemyStats.current_health > 0 and not areaParent.enemyStats.isDead:
 			areaParent.takeDamageEnemy(attackData.attackDamage * .5)
@@ -262,9 +317,6 @@ func _on_attack_box_area_entered(area):
 						attackData.guardedknockbackDirection
 					)
 			
-				else:
-					gameJuice.knockback(enemy,agent,attackData.comboknockbackForce,attackData.knockback_direction)
-					print("combo knockback")
 
 
 func _apply_physics(delta: float):

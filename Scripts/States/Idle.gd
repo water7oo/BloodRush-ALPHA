@@ -1,5 +1,6 @@
 extends LimboState
 
+
 @export var animation_player: AnimationPlayer
 @export var animation: StringName
 @onready var state_machine: LimboHSM = $LimboHSM
@@ -59,7 +60,7 @@ func initialize_crouch(delta: float) -> void:
 func initialize_guard(delta: float) -> void:
 	if Input.is_action_just_pressed("defend_guard"):
 		agent.state_machine.dispatch("to_guard")
-		
+
+	
 func _process(delta: float) -> void:
-	#agent.attack_state.attack_timer = 0.0
 	pass

@@ -6,5 +6,4 @@ diffuse_mode = 3
 specular_mode = 1
 heightmap_scale = 4.935
 uv2_triplanar_sharpness = 0.933033
-billboard_mode = 1
 billboard_keep_scale = true

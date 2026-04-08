@@ -4,10 +4,10 @@
 
 [resource]
 script = ExtResource("1_70lbc")
-startup_duration = 0.08
-active_duration = 0.5
+startup_duration = 0.07
+active_duration = 0.45
 attackDamage = 20.0
-combo_window_duration = 0.6
+combo_window_duration = 0.8
 enemyTargetLength = 0.3
 enemyTargetMagnitude = 0.1
 enemyTargetHitStop = 0.35
