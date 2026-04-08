@@ -36,3 +36,6 @@ var comboknockbackForce: float = knockback_force * comboknockbackForceRate
 @export var comboknockbackForceRate: float = .2
 
 var isMultiHit = false
+
+@export var max_hits: int = 5
+@export var time_between_hits: float = .15

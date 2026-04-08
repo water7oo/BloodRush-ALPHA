@@ -35,4 +35,8 @@ var guardedknockbackForce: float = knockback_force * knockback_force_guardRate
 var comboknockbackForce: float = knockback_force * comboknockbackForceRate
 @export var comboknockbackForceRate: float = .2
 
+var hit_count: int = 0
+@export var max_hits: int = 5
+@export var time_between_hits: float = .05
+
 var isMultiHit = true

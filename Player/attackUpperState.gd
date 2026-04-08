@@ -93,7 +93,6 @@ func _update(delta: float) -> void:
 				attack_timer = attackData.active_duration + attackData.recovery_duration
 				_enable_hitbox()
 				_start_attack()
-		return
 	
 	
 	
@@ -167,19 +166,27 @@ func _enable_hitbox():
 			attack_box.monitoring = true
 			attack_box.connect("area_entered", Callable(self, "_on_attack_box_area_entered"), CONNECT_DEFERRED)
 		else:
-			print("MULTIIIIIIIIIIIIIII")
-			attack_box_debug.visible = true
-			attack_box_col.visible = true
-			attack_box.monitoring = true
-			attack_box.connect("area_entered", Callable(self, "_on_attack_box_area_entered"), CONNECT_DEFERRED)
-			await get_tree().create_timer(.2).timeout
-			_disable_hitbox()
-			await get_tree().create_timer(.2).timeout
-			attack_box_debug.visible = true
-			attack_box_col.visible = true
-			attack_box.monitoring = true
-			attack_box.connect("area_entered", Callable(self, "_on_attack_box_area_entered"), CONNECT_DEFERRED)
+			multi_hit()
+			
 
+func _OnHitbox():
+	if attack_box:
+		print("active")
+		attack_box_debug.visible = true
+		attack_box_col.visible = true
+		attack_box.monitoring = true
+		attack_box.connect("area_entered", Callable(self, "_on_attack_box_area_entered"), CONNECT_DEFERRED)
+
+func multi_hit():
+	for i in range(1, attackData.max_hits + 1):
+		_OnHitbox()
+		Global.isHit = false
+		await get_tree().create_timer(attackData.time_between_hits).timeout
+		enemies_hit.clear()
+		_disable_hitbox()
+		Global.isHit = true
+		await get_tree().create_timer(attackData.time_between_hits).timeout
+		
 func _disable_hitbox():
 	if attack_box:
 		print("inactive")
