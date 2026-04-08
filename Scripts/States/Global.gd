@@ -51,6 +51,7 @@ var combo_hits: Array = []
 @export var combo_reset_time: float = 1
 var combo_timer: float = 0.0
 
+var isMultiHitUpper = false
 
 @export var BASE_SPEED: float = 15.0
 @export var MAX_SPEED: float = 30.0  # Reduce slightly for better control

@@ -57,7 +57,6 @@ func knockback(enemy: CharacterBody3D, attacker: Node3D, force: float, direction
 	enemy.velocity = final_dir * force* force
 
 func objectShake(target, period, magnitude):
-	# Object shake logic to add "impact" feel
 	var initial_transform = target.transform
 	var elapsed_time = 0.0
 
@@ -67,9 +66,12 @@ func objectShake(target, period, magnitude):
 			randf_range(-magnitude, magnitude),
 			0.0
 		)
+		
+		if target:
+			target.transform.origin = initial_transform.origin + offset
+			elapsed_time += get_process_delta_time()
+			await get_tree().process_frame  # Use await here as well
 
-		target.transform.origin = initial_transform.origin + offset
-		elapsed_time += get_process_delta_time()
-		await get_tree().process_frame  # Use await here as well
-
-	target.transform = initial_transform
+	if target:
+		
+		target.transform = initial_transform

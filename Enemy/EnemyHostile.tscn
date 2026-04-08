@@ -21,13 +21,13 @@
 [ext_resource type="Script" uid="uid://243s2o7tfme2" path="res://Enemy/guard_stateEnemy.gd" id="10_n48et"]
 [ext_resource type="Script" uid="uid://2mcfdc31nc4h" path="res://Enemy/enemyAttack.gd" id="11_a6utb"]
 [ext_resource type="Texture2D" uid="uid://bieag6y18328y" path="res://FX/Explosion_Sheet.png" id="11_oiwxk"]
-[ext_resource type="AudioStream" uid="uid://cf1i4kbxr2n4y" path="res://Sounds/hitHard1.wav" id="11_tuc0k"]
 [ext_resource type="Script" uid="uid://colgt8jseih4h" path="res://Scripts/enemyStates/death_stateEnemy.gd" id="11_ulp1q"]
 [ext_resource type="Texture2D" uid="uid://dburebixgi0qs" path="res://My Textures/Sprite_FX_Blast_0017.png" id="13_tuc0k"]
 [ext_resource type="Script" uid="uid://djfdwolmvokwk" path="res://Enemy/noticePlayer.gd" id="13_ulp1q"]
 [ext_resource type="Shader" uid="uid://bpu5grc6v8hhm" path="res://FX/flashing.gdshader" id="15_fauao"]
 [ext_resource type="Shader" uid="uid://b1ud5q41710hr" path="res://Shaders/OUTLINES.gdshader" id="17_1dgx4"]
 [ext_resource type="Resource" uid="uid://cdrmc6otk3eol" path="res://Resources/EnemyStats/enemyStats.tres" id="21_i335x"]
+[ext_resource type="AudioStream" uid="uid://b6sn7x5hdlq8h" path="res://Sounds/deadCombo1.wav" id="25_fauao"]
 [ext_resource type="Texture2D" uid="uid://c1sktcvm2d8el" path="res://FX/Sprite_FX_Blast_0010.png2.png" id="26_6g3nf"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_0hvkj"]
@@ -537,8 +537,9 @@ script = ExtResource("9_oiwxk")
 [node name="GuardState" type="LimboState" parent="LimboHSM" unique_id=567036237]
 script = ExtResource("10_n48et")
 
-[node name="DeathState" type="LimboState" parent="LimboHSM" unique_id=1007315524]
+[node name="DeathState" type="LimboState" parent="LimboHSM" unique_id=1007315524 node_paths=PackedStringArray("deathSound")]
 script = ExtResource("11_ulp1q")
+deathSound = NodePath("../../deathSound")
 
 [node name="EnemyMesh" type="MeshInstance3D" parent="." unique_id=295370142]
 transform = Transform3D(-0.21499997, 0, -1.8795895e-08, 0, 0.21499997, 0, 1.8795895e-08, 0, -0.21499997, 0, 1.5785499, 0)
@@ -785,9 +786,8 @@ process_callback = 0
 autostart = true
 
 [node name="deathSound" type="AudioStreamPlayer" parent="." unique_id=498826232]
-stream = ExtResource("11_tuc0k")
-volume_db = 7.226
-pitch_scale = 0.68
+stream = ExtResource("25_fauao")
+pitch_scale = 0.77
 
 [node name="slideDust" type="GPUParticles3D" parent="." unique_id=191014370]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)

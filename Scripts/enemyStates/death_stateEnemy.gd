@@ -6,14 +6,18 @@ extends LimboState
 @onready var EnemyMesh = $"../../EnemyMesh"
 @onready var EnemyMeshMat
 @onready var parent = $"../.."
-
+@export var deathSound: AudioStreamPlayer
 
 # If enemy health reaches 0, enter this state and never exit
 
 func _enter() -> void:
+	
 	if EnemyMesh:
 		EnemyMeshMat = EnemyMesh.get_active_material(0)
 		onDeathMaterialSwap()
+	
+	if deathSound:
+		deathSound.play()
 		
 		
 	parent.enemyStats.isDead = true
@@ -22,7 +26,14 @@ func _enter() -> void:
 	if enemyHitBox:
 		enemyHitBox.monitoring = false
 		enemyHitBox.monitorable = false
-	pass 
+	
+	
+	
+	await get_tree().create_timer(.3).timeout
+	agent.set_physics_process(false)
+	agent.set_process(false)
+	$"../..".queue_free()
+	
 
 
 func onDeathMaterialSwap():

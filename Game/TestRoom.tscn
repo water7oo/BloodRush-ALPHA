@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Player/PlayerCamera.tscn" id="9_sw35u"]
 [ext_resource type="PackedScene" uid="uid://bd7ld70r6m4sa" path="res://Enemy/Box.tscn" id="10_ai8yb"]
 [ext_resource type="PackedScene" uid="uid://bgkmd80vrnlao" path="res://Player/COWBOYPLAYER(v4).tscn" id="10_wbl5e"]
+[ext_resource type="PackedScene" uid="uid://ickviuufl64q" path="res://Swappables/SwappedAttacks/upperSwap1.tscn" id="12_bsi3r"]
+[ext_resource type="PackedScene" uid="uid://yos5axl07j0c" path="res://Swappables/SwappedAttacks/upperSwap2.tscn" id="12_n5x20"]
 [ext_resource type="Shader" uid="uid://bimv0japa4qaw" path="res://addons/GrassDylearn/Shaders/Floor.gdshader" id="14_hmdq7"]
 [ext_resource type="PackedScene" uid="uid://c6fb8qtkqsif8" path="res://Enemy/EnemyHostile.tscn" id="16_cg3hj"]
 [ext_resource type="Texture2D" uid="uid://vqml4pj02ucs" path="res://addons/GrassDylearn/Textures and Materials/Albedo2Noise.tres" id="17_8ulvh"]
@@ -65,28 +67,37 @@ Name = "Box"
 GuardDamage = 0
 isHit = false
 
-[sub_resource type="Resource" id="Resource_0ltp8"]
+[sub_resource type="Resource" id="Resource_bsi3r"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 999.0
 max_health = 999.0
 Name = "Fighter"
 
-[sub_resource type="Resource" id="Resource_n5x20"]
+[sub_resource type="Resource" id="Resource_2nta8"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 500.0
-max_health = 500.0
+current_health = 999.0
+max_health = 999.0
 Name = "Ranger"
 
-[sub_resource type="Resource" id="Resource_bsi3r"]
+[sub_resource type="Resource" id="Resource_8ulvh"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 100.0
-max_health = 100.0
+current_health = 999.0
+max_health = 999.0
+isGuarding = true
+Name = "GUARDING"
+GuardDamage = 4
+
+[sub_resource type="Resource" id="Resource_nvdy2"]
+resource_local_to_scene = true
+script = ExtResource("9_cg3hj")
+current_health = 999.0
+max_health = 999.0
 Name = "Bullseye"
 
-[sub_resource type="Resource" id="Resource_2nta8"]
+[sub_resource type="Resource" id="Resource_swveh"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 25.0
@@ -751,21 +762,31 @@ enemyStats = SubResource("Resource_iu1ym")
 
 [node name="Enemy" parent="Preview/SubViewportContainer/SubViewport" unique_id=1935452947 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.9, 0, -7.86805e-08, 0, 0.9, 0, 7.86805e-08, 0, -0.9, -4, 1, -6)
-enemyStats = SubResource("Resource_0ltp8")
+enemyStats = SubResource("Resource_bsi3r")
 
 [node name="Enemy2" parent="Preview/SubViewportContainer/SubViewport" unique_id=697327262 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.007853877, 0, -0.8999657, 0, 0.9, 0, 0.8999657, 0, -0.007853877, -10, 1, -2)
-enemyStats = SubResource("Resource_n5x20")
+enemyStats = SubResource("Resource_2nta8")
+
+[node name="Enemy4" parent="Preview/SubViewportContainer/SubViewport" unique_id=457208653 instance=ExtResource("16_cg3hj")]
+transform = Transform3D(-0.007853877, 0, -0.8999657, 0, 0.9, 0, 0.8999657, 0, -0.007853877, -4, 1, 5)
+enemyStats = SubResource("Resource_8ulvh")
 
 [node name="Enemy3" parent="Preview/SubViewportContainer/SubViewport" unique_id=467869146 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(0.1252558, 0, 0.89124125, 0, 0.9, 0, -0.89124125, 0, 0.1252558, 1, 1, -3)
-enemyStats = SubResource("Resource_bsi3r")
+enemyStats = SubResource("Resource_nvdy2")
+
+[node name="UpperSwap3" parent="Preview/SubViewportContainer/SubViewport" unique_id=1806891305 instance=ExtResource("12_bsi3r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.4599857, 0)
+
+[node name="UpperSwap2" parent="Preview/SubViewportContainer/SubViewport" unique_id=1324330705 instance=ExtResource("12_n5x20")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.49479, 1.496, -2.99342)
 
 [node name="CameraSet" parent="Preview/SubViewportContainer/SubViewport" unique_id=1881110884 instance=ExtResource("9_sw35u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49479, 1.496, 2.00658)
 target = NodePath("../Cowboy")
 speed = 4.0
-enemyStats = SubResource("Resource_2nta8")
+enemyStats = SubResource("Resource_swveh")
 
 [node name="CamTarget2" type="Marker3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=2034139925]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.53036, 3.74131, 8.49949)
@@ -1158,7 +1179,7 @@ transform = Transform3D(1, -1.030287e-13, 0, 0, 1, -3.4146016e-20, 0, -8.4703295
 size = Vector3(0.50606614, 0.49026626, 0.0250138)
 
 [node name="MiniPark Patch" type="MeshInstance3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1540349953]
-transform = Transform3D(99.36001, 0, 0, 0, -4.6513096e-06, 36, 0, -106.40956, -1.57361e-06, -3.87281, 0.7085867, -7.688995)
+transform = Transform3D(99.36001, 0, 0, 0, -4.6513096e-06, 36, 0, -106.40956, -1.57361e-06, -3.87281, 0.37299776, -7.688995)
 material_override = SubResource("ShaderMaterial_wbl5e")
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Preview/SubViewportContainer/SubViewport/MiniPark Patch" unique_id=353571634]

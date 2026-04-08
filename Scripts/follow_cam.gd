@@ -36,7 +36,7 @@ func _unhandled_input(event):
 	if Input.is_action_just_pressed("quit_game"):
 		print("Quit Game")
 		get_tree().quit()
-	
+		
 	if Input.is_action_just_pressed("mouse_show"):
 		# Toggle the visibility of the mouse
 		if is_mouse_visible:
@@ -47,7 +47,6 @@ func _unhandled_input(event):
 		# Update the state
 		is_mouse_visible = !is_mouse_visible
 		
-
 	if event is InputEventMouseMotion:
 			var rotation_x = spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity
 			var rotation_y = spring_arm_pivot.rotation.y - event.relative.x * mouse_sensitivity
@@ -74,9 +73,11 @@ func _process(delta: float) -> void:
 func followTarget(delta):
 	if not enabled or not target_node:
 		return
-
-	var new_global_transform = global_transform.interpolate_with(target_node.global_transform, speed * delta)
-	global_transform.origin = new_global_transform.origin
+	else:
+		var new_global_transform = global_transform.interpolate_with(target_node.global_transform, speed * delta)
+		global_transform.origin = new_global_transform.origin
+	
+	
 	
 
 func applyShake(period, magnitude):

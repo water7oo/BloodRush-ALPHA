@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://ickviuufl64q"]
+
+[ext_resource type="Script" uid="uid://c78j4g7f4qquj" path="res://Swappables/upper_swap_2.gd" id="1_nwu4h"]
+[ext_resource type="Shader" uid="uid://b1ud5q41710hr" path="res://Shaders/OUTLINES.gdshader" id="2_uc1ia"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y0pnp"]
+render_priority = 0
+shader = ExtResource("2_uc1ia")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/outline_width = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b6n5p"]
+next_pass = SubResource("ShaderMaterial_y0pnp")
+albedo_color = Color(3.1766297e-06, 0.88236153, 0.30058965, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jhy58"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nsh0k"]
+
+[node name="UpperSwap2" type="Node3D" unique_id=1806891305]
+script = ExtResource("1_nwu4h")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=630153978]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50356144, 0)
+material_override = SubResource("StandardMaterial3D_b6n5p")
+mesh = SubResource("BoxMesh_jhy58")
+
+[node name="UpperSwap1" type="Area3D" parent="." unique_id=1694662564]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5279027, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="UpperSwap1" unique_id=691453558]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+shape = SubResource("BoxShape3D_nsh0k")
+
+[node name="StateDebug" type="Label3D" parent="." unique_id=1299953859]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7972589, 0)
+pixel_size = 0.003
+billboard = 1
+texture_filter = 0
+text = "UpperAttack1"
+font_size = 130
+outline_size = 22
+uppercase = true

@@ -1,4 +1,4 @@
-class_name UpperAttackData
+class_name UpperAttackData2
 extends Resource
 
 
@@ -35,4 +35,4 @@ var guardedknockbackForce: float = knockback_force * knockback_force_guardRate
 var comboknockbackForce: float = knockback_force * comboknockbackForceRate
 @export var comboknockbackForceRate: float = .2
 
-var isMultiHit = false
+var isMultiHit = true

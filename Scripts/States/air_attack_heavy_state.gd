@@ -242,7 +242,7 @@ func _on_attack_box_area_entered(area):
 
 		enemies_hit[area] = true
 
-		hit1Sound.play()
+		hit3Sound.play()
 #		change this so it doesnt rely on the node name, only the node type
 		if enemy.has_node("EnemyMesh"):
 			var mesh = enemy.get_node("EnemyMesh")

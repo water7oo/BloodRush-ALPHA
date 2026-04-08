@@ -1,6 +1,15 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://bvipd0cuplg0p"]
 
+[ext_resource type="Shader" uid="uid://b1ud5q41710hr" path="res://Shaders/OUTLINES.gdshader" id="1_eb2xy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_leb7f"]
+render_priority = 0
+shader = ExtResource("1_eb2xy")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/outline_width = 1.0
+
 [resource]
+next_pass = SubResource("ShaderMaterial_leb7f")
 shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1

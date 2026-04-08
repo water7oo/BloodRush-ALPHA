@@ -37,9 +37,11 @@ var input_queue: Array = []
 @onready var lightAttackTimer = $AttackCooldown
 @onready var mediumAttackTimer = $AttackCooldownMedium
 @onready var heavyAttackTimer = $AttackCooldownHeavy
+@onready var upperAttackTimer = $AttackCooldownUpper
 @onready var CanCancelDebug = $CanCancelDebug
 @onready var jumpCancelTimer = $JumpCancelTimer
 @onready var jumpCancelDelay = $JumpCancelDelay
+@onready var UpperSwapDebug = $UpperSwapDebug
 
 func _ready():
 	initialize_state_machine()
@@ -130,9 +132,12 @@ func _physics_process(delta: float) -> void:
 	lightAttackTimer.text = ("light attack timer: " + str(attack_state.attack_timer))
 	mediumAttackTimer.text = ("medium attack timer: " + str(attackMedium_state.attack_timer))
 	heavyAttackTimer.text = ("heavy attack timer: " + str(attackHeavy_state.attack_timer))
-	
+	upperAttackTimer.text = ("upper attack timer: " + str(attack_upper_state.attack_timer))
 	jumpCancelTimer.text = ("jump cancel timer: " + str(attack_upper_state.jump_cancel_timer))
 	jumpCancelDelay.text = ("jump cancel delay: " + str(attack_upper_state.jumpCancelDelay))
+	
+	var clean_name = attack_upper_state.attackData.resource_path.get_file().get_basename()
+	UpperSwapDebug.text = "upperswap: " + clean_name
 	
 	handle_attack_input()
 	

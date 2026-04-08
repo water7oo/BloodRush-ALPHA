@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://ckvxfd6pdd8du" path="res://My Textures/2ndPassAnimations_PixelTextureGrid_32.png" id="22_cje1g"]
 [ext_resource type="Texture2D" uid="uid://r03mrngq4wtn" path="res://My Textures/2ndPassAnimations_PixelTextureGrid_48.png" id="23_bi1tq"]
 [ext_resource type="AudioStream" uid="uid://b5mfwun7w8tya" path="res://Sounds/snd_switchpull_n.wav" id="24_4mcia"]
+[ext_resource type="AudioStream" uid="uid://80h5goafphae" path="res://Sounds/hit2.wav" id="24_uivup"]
 [ext_resource type="Texture2D" uid="uid://bieag6y18328y" path="res://FX/Explosion_Sheet.png" id="25_nrx2w"]
 [ext_resource type="Texture2D" uid="uid://c1sktcvm2d8el" path="res://FX/Sprite_FX_Blast_0010.png2.png" id="26_cvx5d"]
 [ext_resource type="Texture2D" uid="uid://dburebixgi0qs" path="res://My Textures/Sprite_FX_Blast_0017.png" id="27_jkmgu"]
@@ -563,8 +564,9 @@ script = ExtResource("12_yu82i")
 [node name="GuardState" type="LimboState" parent="LimboHSM" unique_id=567036237]
 script = ExtResource("13_bq205")
 
-[node name="DeathState" type="LimboState" parent="LimboHSM" unique_id=1007315524]
+[node name="DeathState" type="LimboState" parent="LimboHSM" unique_id=1007315524 node_paths=PackedStringArray("deathSound")]
 script = ExtResource("14_7uxuj")
+deathSound = NodePath("../../deathSound")
 
 [node name="EnemyMesh" type="MeshInstance3D" parent="." unique_id=295370142]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.0002588, 0)
@@ -812,10 +814,13 @@ autostart = true
 
 [node name="deathSound" type="AudioStreamPlayer" parent="." unique_id=498826232]
 stream = ExtResource("24_4mcia")
+volume_db = -15.097
+pitch_scale = 0.68
 
 [node name="crateHitSound1" type="AudioStreamPlayer" parent="." unique_id=518640816]
-stream = ExtResource("24_4mcia")
-pitch_scale = 0.49
+stream = ExtResource("24_uivup")
+volume_db = -6.71
+pitch_scale = 0.58
 
 [node name="slideDust" type="GPUParticles3D" parent="." unique_id=191014370]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)

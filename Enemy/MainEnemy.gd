@@ -128,7 +128,6 @@ func takeDamageEnemy(damage: float) -> void:
 				state_machine.dispatch("to_death")
 				enemyHurtBox.monitoring = false
 				enemyHurtBox.monitorable = false
-				$deathSound.play()
 			else:
 				enemyHurtBox.monitoring = true
 				enemyHurtBox.monitorable = true

@@ -62,7 +62,6 @@ func _update(delta: float) -> void:
 		
 	_process_cancel_window()
 	_comboKnockBack()	
-	_landCancel()
 	_apply_physics(delta)
 	agent.move_and_slide()
 

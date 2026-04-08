@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="UpperAttackData2" format=3 uid="uid://cvan58wg3c2e6"]
+
+[ext_resource type="Script" uid="uid://br8hdmg8rhvkn" path="res://Resources/PlayerStats/PlayerAttackResources/playerattackDataScripts/upperAttackData2.gd" id="1_ocpy0"]
+
+[resource]
+script = ExtResource("1_ocpy0")
+startup_duration = 0.08
+active_duration = 4.0
+recovery_duration = 0.5
+attackDamage = 3.0
+combo_window_duration = 0.8
+enemyTargetLength = 0.2
+enemyTargetMagnitude = 0.1
+enemyTargetHitStop = 0.3
+Default_knockback_force = 3.5
+knockback_force = 4.0
+knockback_direction = Vector3(0, 1, 0.3)
+ATTACK_DECELERATION = 30.0
+next_attack_state = &"to_jump"
+jumpCancelDelayDuration = 0.001
+jumpCancelTimerDuration = 0.7

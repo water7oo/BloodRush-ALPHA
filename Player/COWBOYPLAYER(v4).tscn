@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://b8jrqb4iqjbm4" path="res://Scripts/States/Run.gd" id="5_wlkfw"]
 [ext_resource type="Resource" uid="uid://b0flergp2dxmx" path="res://Resources/PlayerStats/movementResources/idleResource.tres" id="6_7nwl5"]
 [ext_resource type="Script" uid="uid://d02xavwj8xmcu" path="res://Player/burst.gd" id="7_1mupm"]
+[ext_resource type="Script" uid="uid://bdc2gmi0d6g2a" path="res://Swappables/swappable_launch.gd" id="7_h8tk8"]
 [ext_resource type="Script" uid="uid://c7wq57pjqc84x" path="res://Scripts/States/RunJump.gd" id="8_ec3d6"]
 [ext_resource type="Script" uid="uid://bw7q8jcgsl3m8" path="res://Player/Crouch.gd" id="8_gexv5"]
 [ext_resource type="Resource" uid="uid://dvcwmdnje3u0k" path="res://Resources/PlayerStats/movementResources/runResource.tres" id="8_yxw21"]
@@ -33,21 +34,19 @@
 [ext_resource type="Texture2D" uid="uid://bieag6y18328y" path="res://FX/Explosion_Sheet.png" id="19_o7idq"]
 [ext_resource type="Texture2D" uid="uid://d31cga1rg0od0" path="res://FX/Sprite_FX_Dust_0009.png" id="20_4hbvs"]
 [ext_resource type="Script" uid="uid://xv42vaodptix" path="res://Scripts/States/guard_state.gd" id="21_frjtj"]
-[ext_resource type="AudioStream" uid="uid://80h5goafphae" path="res://Sounds/hit2.wav" id="22_why3t"]
 [ext_resource type="AudioStream" uid="uid://cf1i4kbxr2n4y" path="res://Sounds/hitHard1.wav" id="23_4eq7b"]
 [ext_resource type="AudioStream" uid="uid://cr7tudn7s2g83" path="res://Sounds/hit4.wav" id="23_aggol"]
 [ext_resource type="Texture2D" uid="uid://h0pqkcu5k018" path="res://FX/T_flare2.png" id="23_wtaik"]
 [ext_resource type="Texture2D" uid="uid://dburebixgi0qs" path="res://My Textures/Sprite_FX_Blast_0017.png" id="23_xsw6c"]
-[ext_resource type="AudioStream" uid="uid://cbrdbfe75vcpd" path="res://Sounds/hit5.wav" id="24_4eq7b"]
 [ext_resource type="Resource" uid="uid://cwhykd3syxftb" path="res://Resources/PlayerStats/PlayerAttackResources/lightAttack.tres" id="25_0sosj"]
 [ext_resource type="AudioStream" uid="uid://cgi2lemllrga2" path="res://Sounds/dodge1.wav" id="25_owvjx"]
 [ext_resource type="AudioStream" uid="uid://ctlry7okk0ea" path="res://Sounds/jump.wav" id="25_ud7yb"]
 [ext_resource type="AudioStream" uid="uid://rwhetch2imdf" path="res://Sounds/Land1.wav" id="25_uf676"]
 [ext_resource type="Resource" uid="uid://vkv84edlgvsg" path="res://Resources/PlayerStats/PlayerAttackResources/mediumAttack.tres" id="27_h8tk8"]
 [ext_resource type="Resource" uid="uid://dccd8cyx3axdo" path="res://Resources/PlayerStats/PlayerAttackResources/heavyAttack.tres" id="29_wa0mo"]
-[ext_resource type="Resource" uid="uid://duhw8slvomv5b" path="res://Resources/PlayerStats/PlayerAttackResources/upperAttack.tres" id="31_ori5w"]
 [ext_resource type="AudioStream" uid="uid://c5k8fbxm7e1d7" path="res://Sounds/Raygun Empty.wav" id="31_wtaik"]
 [ext_resource type="AudioStream" uid="uid://5ii0pco4segn" path="res://Sounds/jump3.wav" id="32_0rtpi"]
+[ext_resource type="Resource" uid="uid://cvan58wg3c2e6" path="res://Resources/PlayerStats/PlayerAttackResources/upperAttack2.tres" id="32_h8tk8"]
 [ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="33_aggol"]
 [ext_resource type="Resource" uid="uid://conrunlpvwldv" path="res://Resources/PlayerStats/PlayerAttackResources/lightAirAttack.tres" id="33_vkj36"]
 [ext_resource type="Resource" uid="uid://eeey76odwk12" path="res://Resources/PlayerStats/PlayerAttackResources/mediumAirAttack.tres" id="35_3gnjc"]
@@ -56,6 +55,7 @@
 [ext_resource type="Resource" uid="uid://8cmnlxlyoxcv" path="res://Resources/PlayerStats/PlayerAttackResources/airSlamAttack.tres" id="39_3pi6o"]
 [ext_resource type="Script" uid="uid://7nffybofk8fa" path="res://Scripts/playerAttackManager.gd" id="40_taog0"]
 [ext_resource type="Texture2D" uid="uid://c1sktcvm2d8el" path="res://FX/Sprite_FX_Blast_0010.png2.png" id="45_h8tk8"]
+[ext_resource type="AudioStream" uid="uid://cms7gbyvyntgw" path="res://Sounds/hit6.wav" id="48_0rctv"]
 [ext_resource type="FontFile" uid="uid://cg2l5vxyisqd1" path="res://ui/mario-kart-ds-oultine-font/mario-kart-ds-oultine-font.ttf" id="50_3pvmt"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fvqnm"]
@@ -398,7 +398,7 @@ size = Vector3(1, 1.0542603, 0.81715393)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4mqd1"]
 shading_mode = 0
-albedo_color = Color(0, 0.9, 0.7499999, 1)
+albedo_color = Color(0, 0.87393767, 0.9569208, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7nwl5"]
 size = Vector3(1, 1.125, 0.9111328)
@@ -415,18 +415,6 @@ transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0, 0)
 wall_min_slide_angle = 0.0
 floor_constant_speed = true
 script = ExtResource("1_vkma1")
-
-[node name="State debug" type="Label" parent="." unique_id=331578538]
-offset_left = 6.0
-offset_top = 52.0
-offset_right = 138.0
-offset_bottom = 109.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("33_aggol")
-theme_override_font_sizes/font_size = 18
-text = "STATE DEBUG:"
 
 [node name="ComboCounter" type="Label3D" parent="." unique_id=35302991]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 4.3974996, 0)
@@ -467,6 +455,18 @@ offset_right = 360.0
 offset_bottom = 680.0
 theme_override_styles/background = ExtResource("5_t0q8v")
 theme_override_styles/fill = ExtResource("5_ucyed")
+
+[node name="State debug" type="Label" parent="." unique_id=331578538]
+offset_left = 6.0
+offset_top = 52.0
+offset_right = 138.0
+offset_bottom = 109.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("33_aggol")
+theme_override_font_sizes/font_size = 18
+text = "STATE DEBUG:"
 
 [node name="PlayerSpeedLabel" type="Label" parent="." unique_id=1420026072]
 offset_left = 4.0
@@ -528,6 +528,18 @@ theme_override_fonts/font = ExtResource("33_aggol")
 theme_override_font_sizes/font_size = 18
 text = "heavy attack timer: 0.0"
 
+[node name="AttackCooldownUpper" type="Label" parent="." unique_id=292498035]
+offset_left = 7.0
+offset_top = 555.0
+offset_right = 239.0
+offset_bottom = 612.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("33_aggol")
+theme_override_font_sizes/font_size = 18
+text = "upper attack timer: 0.0"
+
 [node name="JumpCancelTimer" type="Label" parent="." unique_id=1566231279]
 offset_left = 7.0
 offset_top = 505.0
@@ -553,16 +565,16 @@ theme_override_font_sizes/font_size = 18
 text = "jump cancel delay: 0.0"
 
 [node name="CanCancelDebug" type="Label" parent="." unique_id=1398711414]
-offset_left = 5.0
-offset_top = 375.0
-offset_right = 237.0
-offset_bottom = 432.0
+offset_left = 7.0
+offset_top = 483.0
+offset_right = 239.0
+offset_bottom = 540.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("33_aggol")
 theme_override_font_sizes/font_size = 18
-text = "Can Cancel: false"
+text = "can cancel: false"
 
 [node name="ComboCounter2" type="Label" parent="." unique_id=726421045]
 offset_left = 748.0
@@ -576,7 +588,20 @@ theme_override_fonts/font = ExtResource("50_3pvmt")
 theme_override_font_sizes/font_size = 110
 text = "X000"
 
+[node name="UpperSwapDebug" type="Label" parent="." unique_id=1814843878]
+offset_left = 6.0
+offset_top = 448.0
+offset_right = 927.0
+offset_bottom = 595.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("33_aggol")
+theme_override_font_sizes/font_size = 33
+text = "upperswap:  00"
+
 [node name="Swappable Launch" type="Node" parent="." unique_id=1097230123]
+script = ExtResource("7_h8tk8")
 
 [node name="Swappable Slam" type="Node" parent="." unique_id=82713219]
 
@@ -672,15 +697,18 @@ hit3Sound = NodePath("../../hit3Sound")
 hit4Sound = NodePath("../../hit4Sound")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
 
-[node name="AttackUpperState" type="LimboState" parent="LimboHSM" unique_id=1882753718 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "jumpCancelFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSound")]
+[node name="AttackUpperState" type="LimboState" parent="LimboHSM" unique_id=1882753718 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "attack_box2", "attack_box_col2", "attack_box_debug2", "ComboConfirmFX", "jumpCancelFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSound")]
 process_mode = 3
 script = ExtResource("16_4mqd1")
 attack_box = NodePath("../../RootNode/AttackUpperBox")
 attack_box_col = NodePath("../../RootNode/AttackUpperBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AttackUpperBox/Attack_Debug")
+attack_box2 = NodePath("../../RootNode/AttackUpperBox2")
+attack_box_col2 = NodePath("../../RootNode/AttackUpperBox2/CollisionShape3D")
+attack_box_debug2 = NodePath("../../RootNode/AttackUpperBox2/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
 jumpCancelFX = NodePath("../../JumpCancel1")
-attackData = ExtResource("31_ori5w")
+attackData = ExtResource("32_h8tk8")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -694,7 +722,7 @@ attack_box_col = NodePath("../../RootNode/AirAttackBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AirAttackBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
 attackData = ExtResource("33_vkj36")
-hit1Sound = NodePath("../../hit1Sound")
+hit1Sound = NodePath("../../hit1Sound2")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
 hit4Sound = NodePath("../../hit4Sound")
@@ -708,7 +736,7 @@ attack_box_debug = NodePath("../../RootNode/AirAttackMediumBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
 attackData = ExtResource("35_3gnjc")
 hit1Sound = NodePath("../../hit1Sound")
-hit2Sound = NodePath("../../hit2Sound")
+hit2Sound = NodePath("../../hit2Sound2")
 hit3Sound = NodePath("../../hit3Sound")
 hit4Sound = NodePath("../../hit4Sound")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
@@ -722,7 +750,7 @@ ComboConfirmFX = NodePath("../../ComboConfirm1")
 attackData = ExtResource("37_tdu7r")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
-hit3Sound = NodePath("../../hit3Sound")
+hit3Sound = NodePath("../../hit3Sound2")
 hit4Sound = NodePath("../../hit4Sound")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
 
@@ -736,7 +764,7 @@ attackData = ExtResource("39_3pi6o")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
-hit4Sound = NodePath("../../hit4Sound")
+hit4Sound = NodePath("../../hit4Sound2")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
 
 [node name="TakeDamageState" type="LimboState" parent="LimboHSM" unique_id=278158561]
@@ -846,21 +874,45 @@ draw_pass_1 = SubResource("QuadMesh_56u1a")
 
 [node name="hit1Sound" type="AudioStreamPlayer" parent="." unique_id=1287895694]
 process_mode = 3
-stream = ExtResource("22_why3t")
-pitch_scale = 1.65
+stream = ExtResource("23_aggol")
 
 [node name="hit2Sound" type="AudioStreamPlayer" parent="." unique_id=1313085057]
 process_mode = 3
 stream = ExtResource("23_aggol")
-pitch_scale = 0.72
+pitch_scale = 0.76
 
 [node name="hit3Sound" type="AudioStreamPlayer" parent="." unique_id=341554967]
 process_mode = 3
-stream = ExtResource("23_4eq7b")
+stream = ExtResource("23_aggol")
+pitch_scale = 0.5
 
 [node name="hit4Sound" type="AudioStreamPlayer" parent="." unique_id=665712956]
 process_mode = 3
-stream = ExtResource("24_4eq7b")
+stream = ExtResource("23_aggol")
+pitch_scale = 0.36
+
+[node name="hit1Sound2" type="AudioStreamPlayer" parent="." unique_id=1842447516]
+process_mode = 3
+stream = ExtResource("48_0rctv")
+volume_db = -12.0
+pitch_scale = 1.11
+
+[node name="hit2Sound2" type="AudioStreamPlayer" parent="." unique_id=1586881741]
+process_mode = 3
+stream = ExtResource("48_0rctv")
+volume_db = -12.0
+pitch_scale = 0.76
+
+[node name="hit3Sound2" type="AudioStreamPlayer" parent="." unique_id=351935253]
+process_mode = 3
+stream = ExtResource("48_0rctv")
+volume_db = -12.0
+pitch_scale = 0.5
+
+[node name="hit4Sound2" type="AudioStreamPlayer" parent="." unique_id=306353880]
+process_mode = 3
+stream = ExtResource("23_4eq7b")
+pitch_scale = 1.33
 
 [node name="hit5GuardHitSound" type="AudioStreamPlayer" parent="." unique_id=1292964290]
 process_mode = 3
@@ -1025,6 +1077,21 @@ visible = false
 material_override = SubResource("StandardMaterial3D_4mqd1")
 mesh = SubResource("BoxMesh_uf676")
 
+[node name="AttackUpperBox2" type="Area3D" parent="RootNode" unique_id=219792082]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5133755, -1.5815301)
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackUpperBox2" unique_id=413620503]
+transform = Transform3D(3.788567, 0, 0, 0, 0.2090584, -7.646002, 0, 0.78021705, 2.04874, 0, 2.8254046, -1.788545)
+visible = false
+shape = SubResource("BoxShape3D_pxxsk")
+
+[node name="Attack_Debug" type="MeshInstance3D" parent="RootNode/AttackUpperBox2" unique_id=1638586592]
+transform = Transform3D(3.788567, 0, 0, 0, 0.14847784, -7.052321, 0, 0.5541272, 1.8896642, 0, 2.5421247, -1.5194098)
+visible = false
+material_override = SubResource("StandardMaterial3D_4mqd1")
+mesh = SubResource("BoxMesh_uf676")
+
 [node name="AirAttackSlamBox" type="Area3D" parent="RootNode" unique_id=726601377]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2)
 monitoring = false
@@ -1059,6 +1126,7 @@ transform = Transform3D(18.025, 0, 0, 0, 18.025, 0, 0, 0, 18.025, 0, 0, 0)
 shape = SubResource("SphereShape3D_wtaik")
 
 [connection signal="area_entered" from="RootNode/HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="area_entered" from="RootNode/HurtBox" to="Swappable Launch" method="_on_hurt_box_area_entered"]
 [connection signal="area_exited" from="RootNode/HurtBox" to="." method="_on_hurt_box_area_exited"]
 [connection signal="area_entered" from="RootNode/AttackBox" to="." method="_on_attack_box_area_entered"]
 [connection signal="area_exited" from="RootNode/AttackBox" to="." method="_on_attack_box_area_exited"]
