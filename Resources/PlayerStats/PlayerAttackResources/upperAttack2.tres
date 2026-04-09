@@ -5,16 +5,18 @@
 [resource]
 script = ExtResource("1_ocpy0")
 startup_duration = 0.08
-active_duration = 0.9
+active_duration = 0.5
 attackDamage = 2.0
 combo_window_duration = 0.8
 enemyTargetLength = 0.2
 enemyTargetMagnitude = 0.1
-enemyTargetHitStop = 0.3
+enemyTargetHitStop = 0.1
 Default_knockback_force = 3.5
+knockback_force = 4.0
 knockback_direction = Vector3(0, 1, 0.3)
 ATTACK_DECELERATION = 30.0
 next_attack_state = &"to_jump"
 jumpCancelDelayDuration = 0.001
 jumpCancelTimerDuration = 0.7
-time_between_hits = 0.15
+max_hits = 6
+time_between_hits = 0.1

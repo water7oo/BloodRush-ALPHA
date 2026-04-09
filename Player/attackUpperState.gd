@@ -1,5 +1,8 @@
 extends LimboState
 
+
+@onready var player = $"../../RootNode/player2"
+@onready var animation_player = player.get_node("AnimationPlayer")
 @export var attack_box: Node
 @export var attack_box_col: Node
 @export var attack_box_debug: Node
@@ -20,6 +23,9 @@ extends LimboState
 @export var hit4Sound: AudioStreamPlayer
 @export var hit5GuardSound: AudioStreamPlayer
 
+@export var multiHit1Sound: AudioStreamPlayer
+@export var multiHit1FinishSound: AudioStreamPlayer
+
 var attack_timer: float = 0.0
 var combo_timer: float = 0.0
 var jumpCancelDelay: float = 0.0
@@ -35,12 +41,20 @@ var isJumpCancel = false
 var canJumpCancel = false
 
 func _enter() -> void:
-	print(attackData)
+	if attackData == load("res://Resources/PlayerStats/PlayerAttackResources/upperAttack2.tres"):
+		Global.isMultiHitUpper = true
+		animation_player.speed_scale = 7.0
+		animation_player.play("SLIDE")
+	else:
+		Global.isMultiHitUpper = false
+		animation_player.speed_scale = 12.0
+		animation_player.play("Launcher")
 	if Global.isMultiHitUpper:
 		attack_box = $"../../RootNode/AttackUpperBox2"
 		attack_box_col = $"../../RootNode/AttackUpperBox2/CollisionShape3D"
 		attack_box_debug = $"../../RootNode/AttackUpperBox2/Attack_Debug"
 		print("Multi-hit upper attack")
+		
 	else:
 		attack_box = $"../../RootNode/AttackUpperBox"
 		attack_box_col = $"../../RootNode/AttackUpperBox/CollisionShape3D"
@@ -178,13 +192,28 @@ func _OnHitbox():
 		attack_box.connect("area_entered", Callable(self, "_on_attack_box_area_entered"), CONNECT_DEFERRED)
 
 func multi_hit():
-	for i in range(1, attackData.max_hits + 1):
-		_OnHitbox()
-		Global.isHit = false
-		await get_tree().create_timer(attackData.time_between_hits).timeout
+	for i in range(attackData.max_hits):
+		
 		enemies_hit.clear()
+		Global.isHit = false
+		_OnHitbox()
+
+		for frame in range(3): 
+			await get_tree().physics_frame
+
+		if Global.isHit:
+			if multiHit1Sound && multiHit1FinishSound:
+				if i >= attackData.max_hits - 1:
+					print("misha")
+					
+					multiHit1FinishSound.pitch_scale = randf_range(0.2, 1.1)
+					multiHit1FinishSound.play()
+				else:
+					multiHit1Sound.pitch_scale = randf_range(0.6, 1.2)
+					multiHit1Sound.play()
+					
+					
 		_disable_hitbox()
-		Global.isHit = true
 		await get_tree().create_timer(attackData.time_between_hits).timeout
 		
 func _disable_hitbox():
@@ -254,13 +283,16 @@ func rotateEnemy_to_player(agent, areaParent):
 func _on_attack_box_area_entered(area):
 	var areaParent = area.get_parent()
 
-	if Global.isHit:
-		return
-
+	if enemies_hit.has(areaParent):
+			return
+			
+	enemies_hit[areaParent] = true
 	if areaParent.has_method("takeDamageEnemy") \
 	and areaParent.enemyStats.current_health > 0 \
 	and not areaParent.enemyStats.isDead \
 	and not areaParent.enemyStats.isGuarding:
+
+
 
 		areaParent.takeDamageEnemy(attackData.attackDamage)
 		rotateEnemy_to_player(agent, areaParent)
@@ -288,9 +320,10 @@ func _on_attack_box_area_entered(area):
 		if area in enemies_hit:
 			return
 
-		enemies_hit[area] = true
-
-		hit4Sound.play()
+		
+		if !Global.isMultiHitUpper:
+			hit4Sound.play()
+		
 #		change this so it doesnt rely on the node name, only the node type
 		if enemy.has_node("EnemyMesh"):
 			var mesh = enemy.get_node("EnemyMesh")
@@ -313,6 +346,11 @@ func _on_attack_box_area_entered(area):
 			hit1Effect.emitting = true
 			hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 
+		var hit2Effect = enemy.find_child("hit2", true, false)
+		if hit2Effect is GPUParticles3D:
+			hit2Effect.restart()
+			hit2Effect.emitting = true
+			hit2Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 		agent.velocity = saved_velocity
 
 		var combo_count = Global.combo_hits.size()
@@ -336,6 +374,8 @@ func _on_attack_box_area_entered(area):
 	elif areaParent.has_method("takeGuardDamageEnemy") and areaParent.enemyStats.isGuarding and areaParent.enemyStats.current_health > 0 and not areaParent.enemyStats.isDead:
 			areaParent.takeDamageEnemy(attackData.attackDamage * .5)
 
+			rotateEnemy_to_player(agent, areaParent)
+			rotate_to_target(areaParent)
 			Global.isHit = true
 			Global.can_chain_attack = true
 			Global.can_cancel = true
@@ -352,6 +392,7 @@ func _on_attack_box_area_entered(area):
 
 			enemies_hit[area] = true
 
+			hit5GuardSound.pitch_scale = randf_range(.3, 1.5)
 			hit5GuardSound.play()
 	#		change this so it doesnt rely on the node name, only the node type
 			if enemy.has_node("EnemyMesh"):
@@ -405,6 +446,8 @@ func _apply_physics(delta: float):
 
 func _exit_attack_state() -> void:
 	print("clearing attack state")
+	animation_player.speed_scale = 7.0
+	animation_player.stop()
 	Global.is_attacking = false
 	Global.isHit = false
 	combo_timer = 0.0

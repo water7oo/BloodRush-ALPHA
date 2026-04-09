@@ -42,6 +42,7 @@ var input_queue: Array = []
 @onready var jumpCancelTimer = $JumpCancelTimer
 @onready var jumpCancelDelay = $JumpCancelDelay
 @onready var UpperSwapDebug = $UpperSwapDebug
+@onready var comboCounter = $ComboCounter2
 
 func _ready():
 	initialize_state_machine()
@@ -111,10 +112,11 @@ func initialize_state_machine():
 
 func _process(delta: float) -> void:
 	if Global.combo_hits.size() >= 2:
-		$ComboCounter2.visible = true
-		$ComboCounter2.text = "X" + str(Global.combo_hits.size())
+		comboCounter.get_child(0).visible = true
+		comboCounter.get_child(0).text = "X" + str(Global.combo_hits.size())
+		#comboCounter.get_child(0).shakeTween()
 	else:
-		$ComboCounter2.visible = false
+		comboCounter.get_child(0).visible = false
 		
 	if Global.combo_hits.size() > 0:
 		Global.combo_timer += delta

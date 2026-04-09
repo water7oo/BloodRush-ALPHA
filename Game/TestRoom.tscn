@@ -53,8 +53,8 @@ shader_parameter/clipPosition = 0.2
 
 [sub_resource type="Resource" id="Resource_hmdq7"]
 script = ExtResource("9_i1la3")
-current_health = 50.0
-max_health = 50.0
+current_health = 250.0
+max_health = 250.0
 Name = "Box"
 GuardDamage = 0
 isHit = false
@@ -757,23 +757,23 @@ transform = Transform3D(0.9935402, 0, -0.113480665, 0, 1, 0, 0.113480665, 0, 0.9
 enemyStats = SubResource("Resource_hmdq7")
 
 [node name="Box5" parent="Preview/SubViewportContainer/SubViewport" unique_id=1152080316 instance=ExtResource("10_ai8yb")]
-transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, -6.6517897, 0.366858, -18)
+transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, -17.65179, 0.366858, -10)
 enemyStats = SubResource("Resource_iu1ym")
 
 [node name="Enemy" parent="Preview/SubViewportContainer/SubViewport" unique_id=1935452947 instance=ExtResource("16_cg3hj")]
-transform = Transform3D(-0.9, 0, -7.86805e-08, 0, 0.9, 0, 7.86805e-08, 0, -0.9, -4, 1, -6)
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -4, 1, -6)
 enemyStats = SubResource("Resource_bsi3r")
 
 [node name="Enemy2" parent="Preview/SubViewportContainer/SubViewport" unique_id=697327262 instance=ExtResource("16_cg3hj")]
-transform = Transform3D(-0.007853877, 0, -0.8999657, 0, 0.9, 0, 0.8999657, 0, -0.007853877, -10, 1, -2)
+transform = Transform3D(-0.96363044, 0, 0.26723835, 0, 1, 0, -0.26723835, 0, -0.96363044, -10, 1, -13)
 enemyStats = SubResource("Resource_2nta8")
 
 [node name="Enemy4" parent="Preview/SubViewportContainer/SubViewport" unique_id=457208653 instance=ExtResource("16_cg3hj")]
-transform = Transform3D(-0.007853877, 0, -0.8999657, 0, 0.9, 0, 0.8999657, 0, -0.007853877, -4, 1, 5)
+transform = Transform3D(-0.00872653, 0, -0.9999619, 0, 1, 0, 0.9999619, 0, -0.00872653, -4, 1, 5)
 enemyStats = SubResource("Resource_8ulvh")
 
 [node name="Enemy3" parent="Preview/SubViewportContainer/SubViewport" unique_id=467869146 instance=ExtResource("16_cg3hj")]
-transform = Transform3D(0.1252558, 0, 0.89124125, 0, 0.9, 0, -0.89124125, 0, 0.1252558, 1, 1, -3)
+transform = Transform3D(0.1391731, 0, 0.99026805, 0, 1, 0, -0.99026805, 0, 0.1391731, 1, 1, -3)
 enemyStats = SubResource("Resource_nvdy2")
 
 [node name="UpperSwap3" parent="Preview/SubViewportContainer/SubViewport" unique_id=1806891305 instance=ExtResource("12_bsi3r")]
@@ -809,7 +809,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.43216, 1.45085, -6)
 gizmo_extents = 5.83
 
 [node name="Cowboy" parent="Preview/SubViewportContainer/SubViewport" unique_id=375016865 instance=ExtResource("10_wbl5e")]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -4.9971905, 0.80488896, -1.076)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -4.9971905, 0.80488896, -1.076)
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1903846000]
 transform = Transform3D(6, 0, 0, 0, -2.62268e-07, 6, 0, -6, -2.62268e-07, -17.6236, -2.18461, -20.3883)
@@ -853,53 +853,52 @@ size = Vector3(4, 0.22885904, 0.21113761)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2829, 0, 3.53464)
 
 [node name="bush2" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=1842368341 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(1.1476, 0.235687, -0.879594, 0, -1.41508, -0.37917, -0.910623, 0.297022, -1.1085, -13.2879, 1.40399, 6.7397)
+transform = Transform3D(1.1476, 0.235687, -0.879594, 0, -1.41508, -0.37917, -0.910623, 0.297022, -1.1085, -9.2879, 1.40399, 12.739699)
 
 [node name="bush7" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=2040072812 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(1.72948, 0.162559, -0.606678, -1.7242e-07, -1.7773, -0.476227, -0.62808, 0.447624, -1.67055, -7.28794, 1.40399, 7.0087)
+transform = Transform3D(1.72948, 0.162559, -0.606678, -1.7242e-07, -1.7773, -0.476227, -0.62808, 0.447624, -1.67055, -7.28794, 1.40399, 12.008699)
 
 [node name="bush20" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=1606939533 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(1.96937, -0.0902521, 0.336824, -2.91701e-07, -1.93185, -0.517638, 0.348706, 0.50971, -1.90226, -29.9986, 1.40399, 1.0087)
+transform = Transform3D(4.5578747, 0.102356486, -0.38200146, -6.67267e-07, -4.41911, -1.1840991, -0.3954769, 1.1796668, -4.4025683, -37.40387, 1.40399, -32.0696)
 
 [node name="bush19" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=666567945 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(0.496906, 0.726336, -2.71072, -4.15675e-07, -2.75289, -0.737635, -2.80635, 0.128609, -0.479974, -30.9986, 1.40399, 4.0087)
+transform = Transform3D(-0.395476, 1.1796644, -4.4025693, -6.6726716e-07, -4.419111, -1.1840967, -4.5578747, -0.10235605, 0.38200068, -37.593334, 1.40399, -28.913004)
 
 [node name="bush8" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=852388281 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(2.00207, 0.188179, -0.702296, -3.10662e-07, -2.05742, -0.551285, -0.72707, 0.518173, -1.93385, 0.729566, 1.40399, 4.9759)
+transform = Transform3D(2.00207, 0.188179, -0.702296, -3.10662e-07, -2.05742, -0.551285, -0.72707, 0.518173, -1.93385, 0.7295656, 1.40399, 10.9759)
 
 [node name="bush9" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=5612417 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(2.00207, 0.188179, -0.702296, -3.10662e-07, -2.05742, -0.551285, -0.72707, 0.518173, -1.93385, 3.72957, 1.40399, 1.9759)
+transform = Transform3D(2.00207, 0.188179, -0.702296, -3.10662e-07, -2.05742, -0.551285, -0.72707, 0.518173, -1.93385, 3.7295704, 1.40399, 7.9758997)
 
 [node name="bush10" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=1429662893 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(2.69342, -0.167413, 0.624792, -3.89917e-07, -2.67561, -0.716929, 0.646832, 0.697109, -2.60164, 6.31231, 1.40399, 3.0747)
+transform = Transform3D(2.6934202, -0.167413, 0.624792, -4.095893e-07, -2.6756098, -0.7169289, 0.646832, 0.6971089, -2.60164, 6.312311, 1.40399, 8.0747)
 
 [node name="bush11" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=1943906502 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(2.69342, -0.167413, 0.624792, -3.89917e-07, -2.67561, -0.716929, 0.646832, 0.697109, -2.60164, 3.99169, 1.40399, 5.5485)
+transform = Transform3D(2.69342, -0.167413, 0.624792, -3.89917e-07, -2.67561, -0.716929, 0.646832, 0.697109, -2.60164, 3.9916897, 1.40399, 11.5485)
 
 [node name="bush12" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=710857573 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(3.65119, -0.226944, 0.846965, -5.4767e-07, -3.62705, -0.971866, 0.876843, 0.944997, -3.52678, 7.22747, 1.40399, 4.8683)
+transform = Transform3D(3.65119, -0.226944, 0.846965, -5.4767e-07, -3.62705, -0.971866, 0.876843, 0.944997, -3.52678, 7.2274704, 1.40399, 10.8682995)
 
 [node name="bush3" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=1152781005 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(-2.86033e-07, -0.754458, 2.81567, -2.46154e-07, -2.81567, -0.754458, 2.915, -3.11797e-07, 2.12577e-07, -29.6831, 1.48134, -25.7755)
+transform = Transform3D(-0.6351806, -0.73420876, 2.748579, 0.006470156, -2.8166168, -0.7508881, 2.8449473, -0.15751824, 0.6153725, -38.67095, 1.4448897, -31.681217)
 
 [node name="bush13" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=1485533220 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(-0.7544577, -0.72875035, 2.719728, -2.46154e-07, -2.8156698, -0.75445795, 2.8156736, -0.1952684, 0.7287491, -27.6831, 1.48134, -28.7755)
+transform = Transform3D(-1.3551049, -0.66797996, 2.4929302, -2.6713244e-07, -2.81567, -0.75445807, 2.5808752, -0.35072744, 1.308929, -36.060257, 1.4448897, -34.16804)
 
 [node name="bush4" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=780822769 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(-8.45815e-08, -0.500815, 1.86907, 0, -1.86907, -0.500815, 1.935, -2.18913e-08, 8.16995e-08, -23.6932, 1.48134, -26.704)
+transform = Transform3D(-0.4254684, -0.48855847, 1.823328, 1.7186252e-15, -1.86907, -0.500815, 1.8876444, -0.11011935, 0.4109717, -32.62348, 1.4448897, -31.269936)
 
 [node name="bush5" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=1205259639 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(-1.36825, -0.35413, 1.32163, 1.71863e-15, -1.86907, -0.500815, 1.36825, -0.35413, 1.32163, -29.2931, 1.48134, -22.5587)
+transform = Transform3D(-1.6356158, -0.26759714, 0.9986851, 1.71863e-15, -1.86907, -0.500815, 1.0339135, -0.42332953, 1.5798858, -38.997803, 1.4448897, -28.45739)
 
 [node name="bush6" parent="Preview/SubViewportContainer/SubViewport/bushALL" unique_id=2072649784 instance=ExtResource("23_fbm6c")]
-transform = Transform3D(-8.45815e-08, -0.500815, 1.86907, 0, -1.86907, -0.500815, 1.935, -2.18913e-08, 8.16995e-08, 2.70689, 1.48134, -25.5287)
+transform = Transform3D(-3.7876075e-07, -0.99904, 3.728474, -3.2595355e-07, -3.728474, -0.99904, 3.86, -4.1287734e-07, 2.8149196e-07, 8.70689, 0.38293707, -33.5287)
 
 [node name="TreeALL" type="Node3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1519983082]
 transform = Transform3D(0.8, 0, 1.39875e-07, 0, 0.8, 0, -1.39875e-07, 0, 0.8, 1.4635, 0.762087, 6.34689)
-visible = false
 
 [node name="treeTogether" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=108988001]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 6.20353, 0, 2.45274, 0, 4.49285, 13.3661, -0.394139, 13.9552)
+transform = Transform3D(4.49285, 0, -2.45274, 0, 6.20353, 0, 2.45274, 0, 4.49285, 20.866104, -1.1785572, 2.705202)
 
 [node name="bush" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether" unique_id=781292331 instance=ExtResource("23_fbm6c")]
 transform = Transform3D(0.947537, 0.013811, -0.0262128, -1.26641e-07, -0.838706, -0.4419, -0.0296286, 0.441684, -0.838297, -0.0330524, 1.30435, 0.00733137)
@@ -911,7 +910,7 @@ transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
 transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
 
 [node name="treeTogether5" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=1331873088]
-transform = Transform3D(0.122291, 0, -5.11729, 0, 7.97232, 0, 5.11729, 0, 0.122291, 14.3198, -0.394139, 17.5907)
+transform = Transform3D(0.122291, 0, -5.11729, 0, 7.972321, 0, 5.11729, 0, 0.122291, 9.319805, -1.3757315, 12.5907)
 
 [node name="bush" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether5" unique_id=173572003 instance=ExtResource("23_fbm6c")]
 transform = Transform3D(0.947537, 0.013811, -0.0262128, -1.26641e-07, -0.838706, -0.4419, -0.0296286, 0.441685, -0.838297, -0.0327253, 1.30384, 0.00777936)
@@ -923,7 +922,7 @@ transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
 transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
 
 [node name="treeTogether6" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=107414491]
-transform = Transform3D(0.122291, 0, -5.11729, 0, 7.97232, 0, 5.11729, 0, 0.122291, 18.0698, -0.394139, 13.3964)
+transform = Transform3D(0.122291, 0, -5.11729, 0, 7.9723206, 0, 5.11729, 0, 0.122291, 18.0698, -0.39413893, 9.6464)
 
 [node name="bush" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether6" unique_id=2023092648 instance=ExtResource("23_fbm6c")]
 transform = Transform3D(0.947537, 0.013811, -0.0262128, -1.26641e-07, -0.838706, -0.4419, -0.0296286, 0.441684, -0.838297, -0.0330524, 1.30435, 0.00733137)
@@ -934,26 +933,8 @@ transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
 [node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether6" unique_id=202029681 instance=ExtResource("25_c8r2n")]
 transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
 
-[node name="treeTogether2" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=82893166]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 5.11875, 0, 2.45274, 0, 4.49285, -24.4302, -0.394139, 17.7828)
-
-[node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether2" unique_id=229032066 instance=ExtResource("24_40guh")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
-
-[node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether2" unique_id=1392950051 instance=ExtResource("25_c8r2n")]
-transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
-
-[node name="treeTogether7" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=1599804341]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 6.71095, 0, 2.45274, 0, 4.49285, -20.3337, -0.394139, 17.7828)
-
-[node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether7" unique_id=2072357043 instance=ExtResource("24_40guh")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
-
-[node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether7" unique_id=431428255 instance=ExtResource("25_c8r2n")]
-transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
-
 [node name="treeTogether8" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=1209645162]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 6.71095, 0, 2.45274, 0, 4.49285, 18.4163, -0.394139, -30.9672)
+transform = Transform3D(4.49285, 0, -2.45274, 0, 6.71095, 0, 2.45274, 0, 4.49285, 22.166298, -1.1548352, -39.717205)
 
 [node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether8" unique_id=480217468 instance=ExtResource("24_40guh")]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
@@ -961,98 +942,8 @@ transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
 [node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether8" unique_id=1403662517 instance=ExtResource("25_c8r2n")]
 transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
 
-[node name="treeTogether11" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=2095089779]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 6.71095, 0, 2.45274, 0, 4.49285, -79.0837, -5.39414, 16.5328)
-
-[node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether11" unique_id=73209816 instance=ExtResource("24_40guh")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
-
-[node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether11" unique_id=1975359028 instance=ExtResource("25_c8r2n")]
-transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
-
-[node name="treeTogether12" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=1018894352]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 6.71095, 0, 2.45274, 0, 4.49285, -84.0837, -6.64414, -14.7172)
-
-[node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether12" unique_id=737240636 instance=ExtResource("24_40guh")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
-
-[node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether12" unique_id=886548883 instance=ExtResource("25_c8r2n")]
-transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
-
-[node name="treeTogether13" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=1754506263]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 6.71095, 0, 2.45274, 0, 4.49285, -55.3337, -6.67033, -28.4672)
-
-[node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether13" unique_id=2139537043 instance=ExtResource("24_40guh")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
-
-[node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether13" unique_id=1317481577 instance=ExtResource("25_c8r2n")]
-transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
-
-[node name="treeTogether14" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=36018274]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 6.71095, 0, 2.45274, 0, 4.49285, -64.0837, -6.77868, 17.7828)
-
-[node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether14" unique_id=1169382906 instance=ExtResource("24_40guh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.186263, 0)
-
-[node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether14" unique_id=870930032 instance=ExtResource("25_c8r2n")]
-transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
-
-[node name="treeTogether15" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=1120301934]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 6.71095, 0, 2.45274, 0, 4.49285, -56.5837, -5.39414, 10.2828)
-
-[node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether15" unique_id=542155570 instance=ExtResource("24_40guh")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
-
-[node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether15" unique_id=1032735811 instance=ExtResource("25_c8r2n")]
-transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, -0.186263, 0)
-
-[node name="treeTogether16" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=525897978]
-transform = Transform3D(2.66455, 0, -4.37056, 0, 10.7375, 0, 4.37056, 0, 2.66455, -59.0837, -7.11127, 15.2828)
-
-[node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether16" unique_id=720144461 instance=ExtResource("24_40guh")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
-
-[node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether16" unique_id=1401941275 instance=ExtResource("25_c8r2n")]
-transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
-
-[node name="treeTogether17" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=545087584]
-transform = Transform3D(2.66455, 0, -4.37056, 0, 10.7375, 0, 4.37056, 0, 2.66455, -61.5837, -6.64414, -30.9672)
-
-[node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether17" unique_id=509774507 instance=ExtResource("24_40guh")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
-
-[node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether17" unique_id=1651077375 instance=ExtResource("25_c8r2n")]
-transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
-
-[node name="treeTogether18" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=867887733]
-transform = Transform3D(2.10974, 0, -5.86325, 0, 10.7375, 0, 3.46052, 0, 3.57458, -51.5837, -6.64414, -30.9672)
-
-[node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether18" unique_id=1735893370 instance=ExtResource("24_40guh")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
-
-[node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether18" unique_id=2020739272 instance=ExtResource("25_c8r2n")]
-transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
-
-[node name="treeTogether9" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=832641610]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 5.62655, 0, 2.45274, 0, 4.49285, -8.29649, -0.394139, 19.9032)
-
-[node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether9" unique_id=771011155 instance=ExtResource("24_40guh")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
-
-[node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether9" unique_id=529695406 instance=ExtResource("25_c8r2n")]
-transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
-
-[node name="treeTogether10" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=876986571]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 5.62655, 0, 2.45274, 0, 4.49285, 5.45351, -0.394139, 19.9032)
-
-[node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether10" unique_id=1765600267 instance=ExtResource("24_40guh")]
-transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
-
-[node name="trunk" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether10" unique_id=1718280046 instance=ExtResource("25_c8r2n")]
-transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
-
 [node name="treeTogether3" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=62469321]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 5.11875, 0, 2.45274, 0, 4.49285, -24.4302, -0.394139, -34.7172)
+transform = Transform3D(4.49285, 0, -2.45274, 0, 5.118751, 0, 2.45274, 0, 4.49285, -31.930206, -0.39413893, -39.7172)
 
 [node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether3" unique_id=566721973 instance=ExtResource("24_40guh")]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
@@ -1061,7 +952,7 @@ transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
 transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
 
 [node name="treeTogether4" type="Node3D" parent="Preview/SubViewportContainer/SubViewport/TreeALL" unique_id=900886592]
-transform = Transform3D(4.49285, 0, -2.45274, 0, 5.11875, 0, 2.45274, 0, 4.49285, 18.0698, -0.394139, -34.7172)
+transform = Transform3D(4.49285, 0, -2.45274, 0, 5.118751, 0, 2.45274, 0, 4.49285, 19.3198, -0.91499525, -42.217205)
 
 [node name="treeHEAD" parent="Preview/SubViewportContainer/SubViewport/TreeALL/treeTogether4" unique_id=2141542653 instance=ExtResource("24_40guh")]
 transform = Transform3D(0.469472, 0, -0.882948, 0, 1, 0, 0.882948, 0, 0.469472, 0, 0, 0)
@@ -1171,6 +1062,7 @@ transform = Transform3D(-4.3711417e-08, 0, -1, 0, 1, 0, 1, 0, -4.3711417e-08, -0
 
 [node name="Grass2" type="CSGCombiner3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=134538573]
 transform = Transform3D(-4.3431637e-06, -99.36001, 0, -4.5603215e-06, 1.9933797e-13, 36, -104.328, 4.560322e-06, -1.57361e-06, -3.87281, -0.12619686, -7.0384555)
+visible = false
 material_override = SubResource("ShaderMaterial_hmdq7")
 use_collision = true
 
@@ -1180,6 +1072,7 @@ size = Vector3(0.50606614, 0.49026626, 0.0250138)
 
 [node name="MiniPark Patch" type="MeshInstance3D" parent="Preview/SubViewportContainer/SubViewport" unique_id=1540349953]
 transform = Transform3D(99.36001, 0, 0, 0, -4.6513096e-06, 36, 0, -106.40956, -1.57361e-06, -3.87281, 0.37299776, -7.688995)
+visible = false
 material_override = SubResource("ShaderMaterial_wbl5e")
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Preview/SubViewportContainer/SubViewport/MiniPark Patch" unique_id=353571634]

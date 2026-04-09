@@ -1,5 +1,7 @@
 extends LimboState
 
+@onready var player = $"../../RootNode/player2"
+@onready var animation_player = player.get_node("AnimationPlayer")
 @onready var armature = $"../../RootNode/Armature"
 @export var Dodge1Sound: AudioStreamPlayer
 
@@ -12,7 +14,10 @@ func _enter() -> void:
 		
 		velocity.x = 0
 		velocity.z = 0
-		
+	
+	
+	if animation_player:
+		animation_player.play("SLIDE")
 	Dodge1Sound.play()
 	#animationTree.set("parameters/Ground_Blend2/blend_amount", 1)
 	Global.is_dodging = true
@@ -35,7 +40,6 @@ func _enter() -> void:
 	dodgeResource.dodge_cooldown_timer = dodgeResource.dodge_cooldown  
 	dodgeResource.spinDodge_timer_cooldown = dodgeResource.spinDodge_reset
 	
-	AirWaveEffect()
 	GroundSparkEffect()
 
 func _update(delta: float) -> void:

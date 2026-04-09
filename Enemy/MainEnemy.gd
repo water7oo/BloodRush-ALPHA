@@ -120,6 +120,17 @@ func takeDamageEnemy(damage: float) -> void:
 		if enemyStats.isDead == false:
 			
 			enemyStats.current_health = clamp(enemyStats.current_health - damage, 0.0, enemyStats.max_health)
+			
+			
+			var randomNum = randi_range(1, 3)
+			
+			if randomNum == 1:
+				$AnimationPlayer.play("takeDamage1")
+			elif randomNum == 2:
+				$AnimationPlayer.play("takeDamage2")
+			elif randomNum == 3:
+				$AnimationPlayer.play("takeDamage3")
+				
 			print("Enemy Health: " +str(enemyStats.current_health))
 			if EnemyHealthBar:
 				EnemyHealthBar.value = enemyStats.current_health

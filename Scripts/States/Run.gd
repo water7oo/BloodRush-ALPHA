@@ -1,6 +1,7 @@
 extends LimboState
 
-@export var animation_player : AnimationPlayer
+@onready var player = $"../../RootNode/player2"
+@onready var animation_player = player.get_node("AnimationPlayer")
 @export var animation : StringName
 @onready var armature = $"../../RootNode"
 
@@ -21,6 +22,9 @@ func _enter() -> void:
 		velocity.x = 0
 		velocity.z = 0
 	print("Current State:", agent.state_machine.get_active_state())
+	
+	if animation_player:
+		animation_player.play("Run")
 	pass
 	
 func _update(delta: float) -> void:

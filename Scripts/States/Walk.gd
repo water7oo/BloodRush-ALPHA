@@ -1,8 +1,11 @@
 extends LimboState
 
+
+@onready var player = $"../../RootNode/player2"
+@onready var animation_player = player.get_node("AnimationPlayer")
 @onready var armature = $"../../RootNode"
 @onready var state_machine: LimboHSM = $LimboHSM
-
+@export var walkingSound: AudioStreamPlayer
 
 
 @onready var moveDust = $"../../move_dust"
@@ -19,6 +22,9 @@ func _enter() -> void:
 		velocity.x = 0
 		velocity.z = 0
 	print("Current State:", agent.state_machine.get_active_state())
+	
+	if animation_player:
+		animation_player.play("walking")
 
 func _update(delta: float) -> void:
 	player_movement(delta)
@@ -27,6 +33,7 @@ func _update(delta: float) -> void:
 	initialize_burst(delta)
 	initialize_crouch(delta)
 	initialize_guard(delta)
+	playWalkingSound()
 	agent.move_and_slide()
 
 func player_movement(delta: float) -> void:
@@ -69,7 +76,29 @@ func player_movement(delta: float) -> void:
 	velocity.y = agent.velocity.y
 	agent.velocity = velocity
 
+var left_foot_down = false
+var right_foot_down = false
 
+func playWalkingSound():
+	var left_ray = $player/Skeleton3D/BoneAttachment3D/leftFootRaycast
+	var right_ray = $player/Skeleton3D/BoneAttachment3D2/rightFootRaycast
+
+	if left_ray && left_ray.is_colliding():
+		if not left_foot_down: 
+			walkingSound.pitch_scale = randf_range(0.9, 1.1)
+			walkingSound.play()
+			left_foot_down = true
+	else:
+		left_foot_down = false 
+
+	if right_ray && right_ray.is_colliding():
+		if not right_foot_down:
+			walkingSound.pitch_scale = randf_range(0.9, 1.1)
+			walkingSound.play()
+			right_foot_down = true
+	else:
+		right_foot_down = false
+		
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 

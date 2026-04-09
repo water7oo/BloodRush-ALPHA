@@ -11,7 +11,7 @@ shader_parameter/outline_width = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b6n5p"]
 next_pass = SubResource("ShaderMaterial_y0pnp")
-albedo_color = Color(3.1766297e-06, 0.88236153, 0.30058965, 1)
+albedo_color = Color(0.745628, 0.7312574, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_jhy58"]
 

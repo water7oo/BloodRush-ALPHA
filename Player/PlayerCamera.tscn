@@ -119,6 +119,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Current Target" type="Label" parent="." unique_id=223141332]
+visible = false
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0

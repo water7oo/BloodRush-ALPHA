@@ -1,4 +1,4 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dltyulci0fcbh"]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dltyulci0fcbh"]
 
 [ext_resource type="Texture2D" uid="uid://bilphu4f2woud" path="res://FX/Dust_Wave2-e8432e9fa40c58d5df7e1588c66db668_DustLanding.png" id="1_5rl0l"]
 

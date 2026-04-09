@@ -20,8 +20,8 @@ extends Resource
 @export var next_attack_state: StringName
 
 var enemyTargetGuardLength: float = enemyTargetLength * .2
-var enemyTargetGuardMagnitude: float = enemyTargetMagnitude * .1
-var enemyTargetGuardedHitstop: float = enemyTargetHitStop * .1
+var enemyTargetGuardMagnitude: float = enemyTargetMagnitude * .5
+var enemyTargetGuardedHitstop: float = enemyTargetHitStop * .2
 
 @export var guardedknockbackDirection: Vector3 = Vector3(0, 0, .5)
 @export var knockback_force_guardRate = .7

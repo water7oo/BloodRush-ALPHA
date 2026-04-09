@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://g5ptkqitwrcd" path="res://Scripts/enemyStates/hit_stun_stateEnemy.gd" id="12_yu82i"]
 [ext_resource type="Script" uid="uid://243s2o7tfme2" path="res://Enemy/guard_stateEnemy.gd" id="13_bq205"]
 [ext_resource type="Script" uid="uid://colgt8jseih4h" path="res://Scripts/enemyStates/death_stateEnemy.gd" id="14_7uxuj"]
-[ext_resource type="Texture2D" uid="uid://vxaqyh7m4djc" path="res://My Textures/Untitled.pngwood2.png" id="15_tk8en"]
+[ext_resource type="Texture2D" uid="uid://c0r4gtqhfej2p" path="res://My Textures/bxor1.png" id="16_4mcia"]
 [ext_resource type="Shader" uid="uid://c8gnrj13ddg2o" path="res://FX/hitFlash.gdshader" id="18_k78fk"]
 [ext_resource type="Script" uid="uid://cm0rl70t4u6fn" path="res://FX/flashDamage.gd" id="19_lkyto"]
 [ext_resource type="Shader" uid="uid://c0ciodvcjfbyq" path="res://Shaders/3DHealthBars.gdshader" id="20_gvq4v"]
@@ -97,10 +97,11 @@ next_pass = SubResource("ShaderMaterial_4mcia")
 shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
-albedo_texture = ExtResource("15_tk8en")
-uv1_scale = Vector3(2, 2, 2)
-uv1_offset = Vector3(0, 2, 0)
-uv1_triplanar = true
+albedo_color = Color(0.9999997, 0.89958596, 0.8362151, 1)
+albedo_texture = ExtResource("16_4mcia")
+uv1_scale = Vector3(0.555, 0.555, 0.555)
+uv1_offset = Vector3(0, 0.125, 0)
+uv1_world_triplanar = true
 texture_filter = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ra2eo"]
@@ -480,6 +481,7 @@ crateHitSound1 = NodePath("crateHitSound1")
 
 [node name="enemyNameLabel" type="Label3D" parent="." unique_id=593637493]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0328918, 0)
+visible = false
 billboard = 1
 texture_filter = 0
 text = "--"
@@ -489,6 +491,7 @@ uppercase = true
 
 [node name="StateDebug" type="Label3D" parent="." unique_id=668979859]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7972589, 0)
+visible = false
 pixel_size = 0.003
 billboard = 1
 texture_filter = 0

@@ -4,3 +4,4 @@
 
 [resource]
 script = ExtResource("1_8jjda")
+DODGE_SPEED = 40.0

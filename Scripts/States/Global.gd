@@ -48,7 +48,7 @@ var can_jump: bool = true
 
 # Move these to playerAttackManager
 var combo_hits: Array = []
-@export var combo_reset_time: float = 1
+@export var combo_reset_time: float = 2
 var combo_timer: float = 0.0
 
 var isMultiHitUpper = false

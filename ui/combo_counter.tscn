@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://3uyo0xcpn6jw"]
+
+[ext_resource type="FontFile" uid="uid://cg2l5vxyisqd1" path="res://ui/mario-kart-ds-oultine-font/mario-kart-ds-oultine-font.ttf" id="1_4em0e"]
+[ext_resource type="Script" uid="uid://q5wemkhn1k25" path="res://ui/ComboLabel.gd" id="2_iaia8"]
+
+[node name="ComboCounter" type="Control" unique_id=733443350]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="." unique_id=1467398908]
+layout_mode = 0
+offset_left = 786.0
+offset_top = 576.0
+offset_right = 1158.0
+offset_bottom = 687.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_4em0e")
+theme_override_font_sizes/font_size = 110
+text = "X0"
+script = ExtResource("2_iaia8")

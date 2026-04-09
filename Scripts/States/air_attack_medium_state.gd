@@ -1,5 +1,8 @@
 extends LimboState
 
+
+@onready var player = $"../../RootNode/player2"
+@onready var animation_player = player.get_node("AnimationPlayer")
 @export var attack_box: Node
 @export var attack_box_col: Node
 @export var attack_box_debug: Node
@@ -35,6 +38,9 @@ func _enter() -> void:
 	in_startup = true
 	attack_timer = 0.0
 
+	if animation_player:
+		animation_player.speed_scale = 10.0
+		animation_player.play("attack2")
 
 func _update(delta: float) -> void:
 	# buffer input
@@ -226,6 +232,8 @@ func _on_attack_box_area_entered(area):
 
 		enemies_hit[area] = true
 
+
+		hit2Sound.pitch_scale = randf_range(.8, 1.1)
 		hit2Sound.play()
 #		change this so it doesnt rely on the node name, only the node type
 		if enemy.has_node("EnemyMesh"):
@@ -249,6 +257,11 @@ func _on_attack_box_area_entered(area):
 			hit1Effect.emitting = true
 			hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 
+		var hit2Effect = enemy.find_child("hit2", true, false)
+		if hit2Effect is GPUParticles3D:
+			hit2Effect.restart()
+			hit2Effect.emitting = true
+			hit2Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 		agent.velocity = saved_velocity
 
 		var combo_count = Global.combo_hits.size()
@@ -273,6 +286,8 @@ func _on_attack_box_area_entered(area):
 	elif areaParent.has_method("takeGuardDamageEnemy") and areaParent.enemyStats.isGuarding and areaParent.enemyStats.current_health > 0 and not areaParent.enemyStats.isDead:
 			areaParent.takeDamageEnemy(attackData.attackDamage * .5)
 
+			rotateEnemy_to_player(agent, areaParent)
+			rotate_to_target(areaParent)
 			Global.isHit = true
 			Global.can_chain_attack = true
 			Global.can_cancel = true
@@ -289,6 +304,7 @@ func _on_attack_box_area_entered(area):
 
 			enemies_hit[area] = true
 
+			hit5GuardSound.pitch_scale = randf_range(.3, 1.5)
 			hit5GuardSound.play()
 	#		change this so it doesnt rely on the node name, only the node type
 			if enemy.has_node("EnemyMesh"):
@@ -342,6 +358,8 @@ func _apply_physics(delta: float):
 
 func _exit_attack_state() -> void:
 	print("clearing attack state")
+	animation_player.speed_scale = 1.0
+	animation_player.stop()
 	Global.is_attacking = false
 	Global.isHit = false
 	combo_timer = 0.0

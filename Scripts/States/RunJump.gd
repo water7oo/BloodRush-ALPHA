@@ -1,5 +1,8 @@
 extends LimboState
 
+
+@onready var player = $"../../RootNode/player2"
+@onready var animation_player = player.get_node("AnimationPlayer")
 @onready var state_machine: LimboHSM = $LimboHSM
 @onready var armature = $"../../RootNode"
 
@@ -20,6 +23,9 @@ func _enter() -> void:
 	Global.air_timer = 0.0
 	Global.jump_timer = 0.0
 	Global.jump_counter = 0
+
+	if animation_player:
+		animation_player.play("jumpIdle")
 
 func _update(delta: float) -> void:
 	player_runjump(delta)

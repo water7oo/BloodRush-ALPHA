@@ -1,7 +1,8 @@
 extends LimboState
 
 
-@export var animation_player: AnimationPlayer
+@onready var player = $"../../RootNode/player2"
+@onready var animation_player = player.get_node("AnimationPlayer")
 @export var animation: StringName
 @onready var state_machine: LimboHSM = $LimboHSM
 @onready var armature = $"../../RootNode/Armature"
@@ -18,6 +19,10 @@ func _enter() -> void:
 	print("Current State:", agent.state_machine.get_active_state())
 	# Preserve momentum when entering idle state
 	preserved_velocity = agent.velocity
+	
+	
+	if animation_player:
+		animation_player.play("Idle")
 
 func _update(delta: float) -> void:
 	player_idle(delta)

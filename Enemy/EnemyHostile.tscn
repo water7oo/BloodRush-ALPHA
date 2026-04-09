@@ -324,6 +324,7 @@ animation = &"idle_low"
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_c683h"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ch611"]
+graph_offset = Vector2(-481.849, -75.81593)
 nodes/output/position = Vector2(500, 60)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_ea1wc")
 nodes/Animation/position = Vector2(-300, 120)
@@ -339,6 +340,18 @@ node_connections = [&"output", 0, &"Blend2 2", &"Blend2", 0, &"Animation", &"Ble
 
 [sub_resource type="Animation" id="Animation_0hvkj"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -3.1415925, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_866rt"]
 resource_name = "SpinOut"
@@ -357,10 +370,88 @@ tracks/0/keys = {
 "values": [Vector3(0, 0, 0), Vector3(12.566371, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_bljps"]
+resource_name = "airJuggle"
+length = 0.325
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.01, 0.3, 0.31),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.54105204, 0, 0), Vector3(-0.74351025, 0, -0.5061455), Vector3(-6.604326, 0, 0), Vector3(-4.178318, 0, 2.9321532)]
+}
+
+[sub_resource type="Animation" id="Animation_fauao"]
+resource_name = "takeDamage1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.4537856, -3.1415927, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemyMesh:mesh")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+
+[sub_resource type="Animation" id="Animation_4topa"]
+resource_name = "takeDamage2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.20071286, -3.1415927, -0.3926991)]
+}
+
+[sub_resource type="Animation" id="Animation_rlw8d"]
+resource_name = "takeDamage3"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.061086524, -3.1415927, 0.28797933)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3ae78"]
 _data = {
 &"RESET": SubResource("Animation_0hvkj"),
-&"SpinOut": SubResource("Animation_866rt")
+&"SpinOut": SubResource("Animation_866rt"),
+&"airJuggle": SubResource("Animation_bljps"),
+&"takeDamage1": SubResource("Animation_fauao"),
+&"takeDamage2": SubResource("Animation_4topa"),
+&"takeDamage3": SubResource("Animation_rlw8d")
 }
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yoo35"]
@@ -398,9 +489,9 @@ shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("26_6g3nf")
-uv1_scale = Vector3(0.61, 0.61, 0.61)
-uv1_offset = Vector3(0.175, 0.28, -0.045)
-texture_filter = 0
+uv1_scale = Vector3(0.65, 0.65, 0.65)
+uv1_offset = Vector3(0.175, 0.21, -0.045)
+texture_filter = 2
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1
@@ -410,8 +501,8 @@ proximity_fade_distance = 52.8
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4topa"]
 gravity = Vector3(0, 0, 0)
-scale_min = 10.0
-scale_max = 10.0
+scale_min = 5.0
+scale_max = 5.0
 anim_speed_min = 1.0
 anim_speed_max = 1.0
 
@@ -453,6 +544,7 @@ enemyStats = ExtResource("21_i335x")
 
 [node name="enemyNameLabel" type="Label3D" parent="." unique_id=593637493]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0328918, 0)
+visible = false
 billboard = 1
 texture_filter = 0
 text = "--"
@@ -462,6 +554,7 @@ uppercase = true
 
 [node name="StateDebug" type="Label3D" parent="." unique_id=668979859]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.797259, 0)
+visible = false
 pixel_size = 0.003
 billboard = 1
 texture_filter = 0
@@ -542,7 +635,7 @@ script = ExtResource("11_ulp1q")
 deathSound = NodePath("../../deathSound")
 
 [node name="EnemyMesh" type="MeshInstance3D" parent="." unique_id=295370142]
-transform = Transform3D(-0.21499997, 0, -1.8795895e-08, 0, 0.21499997, 0, 1.8795895e-08, 0, -0.21499997, 0, 1.5785499, 0)
+transform = Transform3D(-0.21499997, 0, -3.2464094e-08, 0, 0.21499997, 0, 3.2464094e-08, 0, -0.21499997, 0, 1.5785499, 0)
 material_overlay = SubResource("ShaderMaterial_4topa")
 mesh = ExtResource("2_tuc0k")
 surface_material_override/0 = SubResource("StandardMaterial3D_wyb1b")
@@ -805,11 +898,10 @@ draw_pass_1 = SubResource("QuadMesh_5xtnc")
 [node name="hit2" type="GPUParticles3D" parent="." unique_id=1137587798]
 process_mode = 3
 transform = Transform3D(0.0625, 0, 0, 0, 0.0625, 0, 0, 0, 0.0625, 0, 2.492775, -0.04246056)
-visible = false
 material_override = SubResource("StandardMaterial3D_fauao")
 emitting = false
 amount = 1
-lifetime = 0.2
+lifetime = 0.15000000000000002
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_4topa")

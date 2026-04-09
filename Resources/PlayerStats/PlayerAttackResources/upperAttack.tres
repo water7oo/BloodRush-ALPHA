@@ -1,4 +1,4 @@
-[gd_resource type="Resource" format=3 uid="uid://duhw8slvomv5b"]
+[gd_resource type="Resource" script_class="UpperAttackData" format=3 uid="uid://duhw8slvomv5b"]
 
 [ext_resource type="Script" uid="uid://dx0xju2fhtome" path="res://Resources/PlayerStats/PlayerAttackResources/playerattackDataScripts/upperAttackData.gd" id="1_dg80q"]
 
@@ -19,3 +19,5 @@ ATTACK_DECELERATION = 30.0
 next_attack_state = &"to_jump"
 jumpCancelDelayDuration = 0.001
 jumpCancelTimerDuration = 0.7
+max_hits = 6
+time_between_hits = 0.1

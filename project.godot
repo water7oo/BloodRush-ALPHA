@@ -32,6 +32,7 @@ PlayerAttackManager="*uid://7nffybofk8fa"
 MainEnemy="uid://bs0oo1mwxyf4u"
 GameJuice="*res://Scripts/gameJuice.gd"
 Global="*res://Scripts/States/Global.gd"
+TweenFX="*uid://d2n10rw2dnx8o"
 
 [display]
 
@@ -43,6 +44,10 @@ window/stretch/mode="viewport"
 
 movie_writer/movie_file="C:/Users/Gaming pc/Downloads/GODOT_RECORD2.mp4.avi"
 version_control/autoload_on_startup=true
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/TweenFX-main/addons/TweenFX/plugin.cfg")
 
 [input]
 

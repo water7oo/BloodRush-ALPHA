@@ -65,6 +65,9 @@ func _physics_process(delta):
 func _process(delta: float) -> void:
 	_unhandled_input(delta)
 	playShake()
+	
+	#if Global.isHit:
+		#applyShake(.04,0.08)
 	if Input.is_action_just_pressed("shake_test"):
 		applyShake(.04,0.08)
 		
