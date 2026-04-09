@@ -14,7 +14,7 @@ uniform float steepness : hint_range(1.0f, 8.0f) = 1.0f;
 varying vec3 normal;
 varying vec3 vertex_world;
 
-#include "res://Shaders/clouds.gdshaderinc"
+#include "res://addons/GrassDylearn/Shaders/clouds.gdshaderinc"
 
 void vertex() {
 	normal = NORMAL;

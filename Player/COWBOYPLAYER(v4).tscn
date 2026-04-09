@@ -787,6 +787,8 @@ knockback_direction = Vector3(0, 0, -1)
 [node name="RecoverState" type="LimboState" parent="LimboHSM" unique_id=1979648746]
 script = ExtResource("11_3apqd")
 
+[node name="GrabState" type="LimboState" parent="LimboHSM" unique_id=1755192759]
+
 [node name="move_dust" type="GPUParticles3D" parent="." unique_id=1083574215]
 process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.611789)

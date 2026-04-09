@@ -25,7 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://dburebixgi0qs" path="res://My Textures/Sprite_FX_Blast_0017.png" id="13_tuc0k"]
 [ext_resource type="Script" uid="uid://djfdwolmvokwk" path="res://Enemy/noticePlayer.gd" id="13_ulp1q"]
 [ext_resource type="Shader" uid="uid://bpu5grc6v8hhm" path="res://FX/flashing.gdshader" id="15_fauao"]
-[ext_resource type="Shader" uid="uid://b1ud5q41710hr" path="res://Shaders/OUTLINES.gdshader" id="17_1dgx4"]
+[ext_resource type="Shader" uid="uid://crwsrlgfy4fjb" path="res://addons/GrassDylearn/Shaders/Outline.gdshader" id="18_fauao"]
 [ext_resource type="Resource" uid="uid://cdrmc6otk3eol" path="res://Resources/EnemyStats/enemyStats.tres" id="21_i335x"]
 [ext_resource type="AudioStream" uid="uid://b6sn7x5hdlq8h" path="res://Sounds/deadCombo1.wav" id="25_fauao"]
 [ext_resource type="Texture2D" uid="uid://c1sktcvm2d8el" path="res://FX/Sprite_FX_Blast_0010.png2.png" id="26_6g3nf"]
@@ -57,9 +57,13 @@ shader_parameter/intensity = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6g3nf"]
 render_priority = 0
-shader = ExtResource("17_1dgx4")
-shader_parameter/outline_color = Color(0, 0, 0, 1)
-shader_parameter/outline_width = 1.0
+shader = ExtResource("18_fauao")
+shader_parameter/shadows_enabled = true
+shader_parameter/highlights_enabled = true
+shader_parameter/shadow_strength = 0.999999977648
+shader_parameter/highlight_strength = 0.1
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/shadow_color = Color(0.427493, 0.42749307, 0.42749307, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3ae78"]
 render_priority = 0

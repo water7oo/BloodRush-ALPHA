@@ -145,6 +145,7 @@ func takeDamageEnemy(damage: float) -> void:
 				print("enemy is alive")
 		else:
 			damage -= damage
+			$AnimationPlayer.play("RESET")
 		
 
 func takeGuardDamageEnemy(damage: float) -> void:

@@ -1,8 +1,44 @@
 [gd_scene format=3 uid="uid://5covdmtwkykp"]
 
 [ext_resource type="PackedScene" uid="uid://o5feoe0eslbg" path="res://Player/player.glb" id="1_l8h54"]
+[ext_resource type="Shader" uid="uid://cw2eeqmautiwo" path="res://addons/GrassDylearn/Shaders/ToonShader.gdshader" id="2_4ntmi"]
+[ext_resource type="Shader" uid="uid://crwsrlgfy4fjb" path="res://addons/GrassDylearn/Shaders/Outline.gdshader" id="2_btcbx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k53q1"]
+render_priority = 0
+shader = ExtResource("2_btcbx")
+shader_parameter/shadows_enabled = true
+shader_parameter/highlights_enabled = true
+shader_parameter/shadow_strength = 0.999999977648
+shader_parameter/highlight_strength = 0.0
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/shadow_color = Color(0.41598046, 0.41598043, 0.4159804, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gwnis"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_k53q1")
+shader = ExtResource("2_4ntmi")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/cuts = 1
+shader_parameter/wrap = -0.02499990618749992
+shader_parameter/steepness = 1.0
 
 [node name="player2" unique_id=1242418788 instance=ExtResource("1_l8h54")]
+
+[node name="Arms_003" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="0" unique_id=1346521901]
+material_override = SubResource("ShaderMaterial_gwnis")
+
+[node name="Feet_003" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="1" unique_id=805275072]
+material_override = SubResource("ShaderMaterial_gwnis")
+
+[node name="Hands_003" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="2" unique_id=303046098]
+material_override = SubResource("ShaderMaterial_gwnis")
+
+[node name="Head_Body_003" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="3" unique_id=617895174]
+material_override = SubResource("ShaderMaterial_gwnis")
+
+[node name="Legs_003" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="4" unique_id=735902224]
+material_override = SubResource("ShaderMaterial_gwnis")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="5" unique_id=1708127461]
 transform = Transform3D(-0.9078614, 0.36258894, 0.21051614, 0.41894266, 0.7646602, 0.48967522, 0.016577598, 0.53275126, -0.8461095, 31.511198, -1.5425675, -26.259106)

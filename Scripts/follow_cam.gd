@@ -47,7 +47,7 @@ func _unhandled_input(event):
 		# Update the state
 		is_mouse_visible = !is_mouse_visible
 		
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion && rotation:
 			var rotation_x = spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity
 			var rotation_y = spring_arm_pivot.rotation.y - event.relative.x * mouse_sensitivity
 			

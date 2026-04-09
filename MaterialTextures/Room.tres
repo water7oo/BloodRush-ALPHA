@@ -1,12 +1,11 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://dcuvjs33ebpe3"]
 
-[ext_resource type="Texture2D" uid="uid://bknh5febfwrw6" path="res://addons/kenney_prototype_textures/dark/texture_13.png" id="1_v6veh"]
+[ext_resource type="Texture2D" uid="uid://bgn7sbnl0c8r6" path="res://My Textures/grid.png" id="1_v6veh"]
 
 [resource]
 diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("1_v6veh")
 roughness = 0.0
-uv1_scale = Vector3(4, 4, 4)
 uv1_triplanar_sharpness = 0.233259
 texture_filter = 4
