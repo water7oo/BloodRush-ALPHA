@@ -40,7 +40,7 @@ func flash_white():
 func flash_guard():
 	if flash_mat:
 		flash_mat.set("shader_parameter/flash", 1.0)
-		flash_mat.set("shader_parameter/custom_color", Color(0.151, 0.385, 1.0, 1.0))
+		flash_mat.set("shader_parameter/custom_color", Color(0.822, 0.921, 1.0, 1.0))
 		await get_tree().create_timer(0.1, false).timeout
 		flash_mat.set("shader_parameter/custom_color", Color(1.0, 1.0, 1.0, 1.0))
 		flash_mat.set("shader_parameter/flash", 0.0)

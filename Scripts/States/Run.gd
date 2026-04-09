@@ -90,33 +90,41 @@ func player_run(delta: float) -> void:
 				
 				
 	if Input.is_action_pressed("move_crouch") && agent.is_on_floor():
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_crouch")
+		
 
 	elif Input.is_action_just_released("move_sprint") && has_input && agent.is_on_floor():
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_walk")
 
 	elif not has_input && agent.is_on_floor():
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_idle")
 
 
 func initialize_runJump(delta: float) -> void:
 	if Input.is_action_just_pressed("move_jump") and agent.is_on_floor():
 		#animationTree.set("parameters/Ground_Blend2/blend_amount", -1)
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_runJump")
 	pass
 
 func initialize_crouch(delta: float) -> void:
 	if Input.is_action_pressed("move_crouch"):
 		#animationTree.set("parameters/Ground_Blend/blend_amount", 0)
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_crouch")
 
 func initialize_attack(delta: float) -> void:
 	#pressing attack unsheathes katana and player is in attackmode
 	if Input.is_action_just_pressed("attack_light_1"):
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_attack")
 
 func initialize_guard(delta: float) -> void:
 	if Input.is_action_just_pressed("defend_guard"):
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_guard")
 
 func _exit() -> void:

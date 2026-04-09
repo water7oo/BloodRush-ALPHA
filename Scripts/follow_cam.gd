@@ -26,6 +26,9 @@ var target_node: Node3D
 @export var enemyStats: Resource
 var isLookingAtTarget = false
 func _ready():
+	Global.spring_arm_pivot = $SpringArmPivot
+	Global.spring_arm = $SpringArmPivot/SpringArm3D
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	target_node = get_node(target) as Node3D
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -47,23 +50,21 @@ func _unhandled_input(event):
 		# Update the state
 		is_mouse_visible = !is_mouse_visible
 		
-	if event is InputEventMouseMotion && rotation:
-			var rotation_x = spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity
-			var rotation_y = spring_arm_pivot.rotation.y - event.relative.x * mouse_sensitivity
+	if event is InputEventMouseMotion && Global.spring_arm_pivot && Global.game_paused == false:
+			var rotation_x = Global.spring_arm_pivot.rotation.x - event.relative.y * mouse_sensitivity
+			var rotation_y = Global.spring_arm_pivot.rotation.y - event.relative.x * mouse_sensitivity
 			
 			
 			rotation_x = clamp(rotation_x, deg_to_rad(y_cam_rot_dist), deg_to_rad(x_cam_rot_dist))
-			#rotation_x = clamp(rotation_x, deg_to_rad(-1), deg_to_rad(0))
 			
-			spring_arm_pivot.rotation.x = rotation_x
-			spring_arm_pivot.rotation.y = rotation_y
+			Global.spring_arm_pivot.rotation.x = rotation_x
+			Global.spring_arm_pivot.rotation.y = rotation_y
 
 func _physics_process(delta):
 	var real_delta = delta / Engine.time_scale if Engine.time_scale > 0 else 0.016
 	followTarget(real_delta)
 
 func _process(delta: float) -> void:
-	_unhandled_input(delta)
 	playShake()
 	
 	#if Global.isHit:
@@ -76,11 +77,43 @@ func _process(delta: float) -> void:
 func followTarget(delta):
 	if not enabled or not target_node:
 		return
-	else:
-		var new_global_transform = global_transform.interpolate_with(target_node.global_transform, speed * delta)
-		global_transform.origin = new_global_transform.origin
-	
-	
+
+	var pivot = Global.spring_arm_pivot
+	var player_pos = target_node.global_transform.origin
+
+	if Global.isHit and Global.combo_hits.size() > 0:
+		var last_hit = Global.combo_hits[Global.combo_hits.size() - 1]
+		var enemy = last_hit["enemy"]
+
+		if enemy:
+			var enemy_pos = enemy.global_transform.origin
+			
+			var midpoint = player_pos.lerp(enemy_pos, 0.4)
+
+			var distance = player_pos.distance_to(enemy_pos)
+			distance = clamp(distance, 2.0, 20.0)
+
+			var desired_position = midpoint
+
+			# Move pivot (NOT camera)
+			pivot.global_transform.origin = pivot.global_transform.origin.lerp(desired_position, 1 * delta)
+
+			# Rotate pivot only on Y
+			var direction = pivot.global_transform.origin - midpoint
+			direction.y = 0
+
+			if direction.length() > 0.01:
+				var target_yaw = atan2(direction.x, direction.z)
+				pivot.rotation.y = lerp_angle(pivot.rotation.y, target_yaw, 1 * delta)
+
+			# Lock tilt
+			pivot.rotation.x = deg_to_rad(-10)
+
+			return
+
+	# Normal follow
+	pivot.global_transform.origin = pivot.global_transform.origin.lerp(player_pos, speed * delta)
+
 	
 
 func applyShake(period, magnitude):

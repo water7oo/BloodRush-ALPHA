@@ -23,8 +23,7 @@ func _enter() -> void:
 		velocity.z = 0
 	print("Current State:", agent.state_machine.get_active_state())
 	
-	if animation_player:
-		animation_player.play("walking")
+
 
 func _update(delta: float) -> void:
 	player_movement(delta)
@@ -34,6 +33,10 @@ func _update(delta: float) -> void:
 	initialize_crouch(delta)
 	initialize_guard(delta)
 	playWalkingSound()
+	
+	if animation_player && Global.is_moving:
+		animation_player.speed_scale = velocity.length() * .5
+		animation_player.play("walking")
 	agent.move_and_slide()
 
 func player_movement(delta: float) -> void:
@@ -63,7 +66,6 @@ func player_movement(delta: float) -> void:
 			var angle_diff = velocity.normalized().dot(direction)
 			if angle_diff < 0:
 				velocity *= 0.8
-				
 		
 	else:
 		Global.is_moving = false
@@ -71,6 +73,7 @@ func player_movement(delta: float) -> void:
 
 		velocity.x = move_toward(velocity.x, 0, Global.BASE_DECELERATION * delta)
 		velocity.z = move_toward(velocity.z, 0, Global.BASE_DECELERATION * delta)
+		animation_player.stop()
 		agent.state_machine.dispatch("to_idle")
 
 	velocity.y = agent.velocity.y
@@ -113,7 +116,7 @@ func _unhandled_input(event):
 func initialize_jump(delta: float) -> void:
 	if Input.is_action_just_pressed("move_jump") and agent.is_on_floor():
 		agent.state_machine.dispatch("to_jump")
-		#agent.velocity.y = walkResource.JUMP_VELOCITY
+		moveDust.emitting = false
 
 func initialize_run(delta: float)-> void:
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
@@ -121,6 +124,7 @@ func initialize_run(delta: float)-> void:
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 	
 	if Input.is_action_pressed("move_sprint") && direction != Vector3.ZERO:
+		moveDust.emitting = false
 		agent.state_machine.dispatch("to_run")
 
 func initialize_burst(delta: float) -> void:

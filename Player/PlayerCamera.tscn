@@ -38,37 +38,38 @@ spring_arm_pivot = NodePath("SpringArmPivot")
 enemyStats = ExtResource("2_qloqc")
 
 [node name="SpringArmPivot" type="Node3D" parent="." unique_id=1208215425 groups=["camera"]]
+process_mode = 3
 
 [node name="SpringArm3D" type="SpringArm3D" parent="SpringArmPivot" unique_id=304660332]
+process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 0.959619, 0.281304, 0, -0.281304, 0.959619, 0, 0, 0)
 collision_mask = 255
 spring_length = 0.0
 margin = 0.0
 
 [node name="Margin" type="Node3D" parent="SpringArmPivot/SpringArm3D" unique_id=1220356171]
-transform = Transform3D(1, 0, 0, 0, 0.995733, -0.0922837, 0, 0.0922837, 0.995733, 0, 0, 0)
-
-[node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin" unique_id=1163280920]
 process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 0.9944002, 0.10567382, 0, -0.10567382, 0.9944002, 0, 5.969797, 28.19328)
-current = true
-fov = 45.9
-size = 5.762
+
+[node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin" unique_id=1148347368]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 0, 1.3226662, 27.481815)
+fov = 48.9
+size = 6.085
+near = 0.001
 
 [node name="Outline" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D" unique_id=1257294092]
-transform = Transform3D(6.67, 0, 0, 0, 6.54708, -1.27464, 0, 1.27464, 6.54708, 0.0447144, -0.107597, -1.45398)
 material_override = SubResource("ShaderMaterial_td6vy")
 mesh = SubResource("QuadMesh_n1m7q")
 skeleton = NodePath("../../../../..")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D" unique_id=1738410965]
-transform = Transform3D(2, -2.32831e-10, -5.96046e-08, 2.32831e-10, 2, 0, -3.46945e-18, 0, 2, 0.0447144, -0.215859, -0.899242)
 visible = false
 material_override = SubResource("ShaderMaterial_7gdqc")
 mesh = SubResource("QuadMesh_n1m7q")
 skeleton = NodePath("../../../../..")
 
 [node name="Area3D" type="Area3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D" unique_id=677920083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D/Area3D" unique_id=1212740348]
 transform = Transform3D(0.1, 0, 0, 0, 0.09999982, -1.0617077e-07, 0, 1.0617077e-07, 0.09999982, 0, 1.7166138e-05, -21.386953)
@@ -83,21 +84,21 @@ transform = Transform3D(0.445, 0, 0, 0, 0.444999, 0, 0, 0, 0.445, 0, 1.38965, 0.
 visible = false
 material_override = SubResource("ShaderMaterial_wivcw")
 mesh = SubResource("CapsuleMesh_a8st2")
-skeleton = NodePath("../SpringArm3D/Margin/Camera3D")
+skeleton = NodePath("")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="SpringArmPivot" unique_id=2072487226]
 transform = Transform3D(0.698, 0, 0, 0, 0.698, 0, 0, 0, 0.698, 0, 0, 0)
 visible = false
 material_override = SubResource("ShaderMaterial_wivcw")
 mesh = SubResource("BoxMesh_t12er")
-skeleton = NodePath("../SpringArm3D/Margin/Camera3D")
+skeleton = NodePath("")
 
 [node name="bush2" parent="." unique_id=887475478 instance=ExtResource("3_ye0eu")]
 transform = Transform3D(0.524971, -0.923009, 1.89245, 1.70508e-07, -1.95038, -0.951265, 2.10554, 0.230132, -0.47184, 0.069, 3.56781, -36.4612)
 visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1580383606]
-root_node = NodePath("../SpringArmPivot/SpringArm3D/Margin/Camera3D")
+root_node = NodePath("")
 speed_scale = 1.5
 
 [node name="GameJuice" type="Node3D" parent="AnimationPlayer" unique_id=2004426651]
@@ -105,12 +106,14 @@ transform = Transform3D(1, 2.32831e-10, 0, 0, 1, -1.86265e-09, 7.45058e-09, 1.86
 script = ExtResource("3_sswrb")
 
 [node name="Reticle" type="Label" parent="." unique_id=1607169781]
+z_index = 1
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("6_ql8h7")
 theme_override_font_sizes/font_size = 60
@@ -130,6 +133,7 @@ offset_right = -391.0
 offset_bottom = -232.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)

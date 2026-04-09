@@ -56,14 +56,17 @@ func player_idle(delta: float) -> void:
 
 func initialize_jump(delta: float) -> void:
 	if Input.is_action_just_pressed("move_jump"):
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_jump")
 		
 func initialize_crouch(delta: float) -> void:
 	if Input.is_action_pressed("move_crouch"):
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_crouch")
 
 func initialize_guard(delta: float) -> void:
 	if Input.is_action_just_pressed("defend_guard"):
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_guard")
 
 	

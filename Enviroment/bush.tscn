@@ -2,8 +2,20 @@
 
 [ext_resource type="PackedScene" uid="uid://bhx8oq4dcjxj6" path="res://Enviroment/bush.fbx" id="1_cp1h0"]
 [ext_resource type="Texture2D" uid="uid://cf1mluu3sk24v" path="res://Aesprite/Bush3.png" id="2_7pik4"]
+[ext_resource type="Shader" uid="uid://crwsrlgfy4fjb" path="res://addons/GrassDylearn/Shaders/Outline.gdshader" id="3_c7ywv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wrghe"]
+render_priority = 0
+shader = ExtResource("3_c7ywv")
+shader_parameter/shadows_enabled = true
+shader_parameter/highlights_enabled = false
+shader_parameter/shadow_strength = 0.999999977648
+shader_parameter/highlight_strength = 0.1
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/shadow_color = Color(0.23933, 0.42, 0.046200003, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c7ywv"]
+next_pass = SubResource("ShaderMaterial_wrghe")
 transparency = 3
 alpha_hash_scale = 1.33
 alpha_antialiasing_mode = 0
@@ -19,14 +31,14 @@ texture_filter = 0
 [node name="bush" unique_id=1485533220 instance=ExtResource("1_cp1h0")]
 transform = Transform3D(1, 0, 0, 0, -0.9659258, -0.25881913, 0, 0.25881913, -0.9659258, 0, 0, 0)
 
-[node name="Plane" parent="." index="0" unique_id=187779022]
+[node name="Plane" parent="." index="0" unique_id=1480938160]
 material_override = SubResource("StandardMaterial3D_c7ywv")
 
-[node name="Plane_001" parent="." index="1" unique_id=447258325]
+[node name="Plane_001" parent="." index="1" unique_id=1240179447]
 material_override = SubResource("StandardMaterial3D_c7ywv")
 
-[node name="Plane_002" parent="." index="2" unique_id=189854280]
+[node name="Plane_002" parent="." index="2" unique_id=1806422543]
 material_override = SubResource("StandardMaterial3D_c7ywv")
 
-[node name="Plane_003" parent="." index="3" unique_id=573082977]
+[node name="Plane_003" parent="." index="3" unique_id=450516642]
 material_override = SubResource("StandardMaterial3D_c7ywv")

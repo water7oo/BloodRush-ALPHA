@@ -5,6 +5,7 @@ extends Node
 @onready var enemyHealthMan = get_node("/root/EnemyHealthManager")
 @onready var gameJuice = get_node("/root/GameJuice")
 
+var game_paused = false
 var current_blend_amount = 0.0
 var target_blend_amount = 0.0
 var blend_lerp_speed = 10.0  
@@ -15,9 +16,8 @@ var blend_lerp_speed = 10.0
 @export var armature_default_rot_speed: float = .001
 
 @export var CUSTOM_GRAVITY: float = 30.0
-var camera = preload("res://Player/PlayerCamera.tscn").instantiate()
-var spring_arm_pivot = camera.get_node("SpringArmPivot")
-var spring_arm = camera.get_node("SpringArmPivot/SpringArm3D")
+var spring_arm_pivot: Node3D = null
+var spring_arm: Node3D = null
 
 
 

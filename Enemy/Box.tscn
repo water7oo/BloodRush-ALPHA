@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://243s2o7tfme2" path="res://Enemy/guard_stateEnemy.gd" id="13_bq205"]
 [ext_resource type="Script" uid="uid://colgt8jseih4h" path="res://Scripts/enemyStates/death_stateEnemy.gd" id="14_7uxuj"]
 [ext_resource type="Texture2D" uid="uid://c0r4gtqhfej2p" path="res://My Textures/bxor1.png" id="16_4mcia"]
+[ext_resource type="Shader" uid="uid://crwsrlgfy4fjb" path="res://addons/GrassDylearn/Shaders/Outline.gdshader" id="17_uivup"]
 [ext_resource type="Shader" uid="uid://c8gnrj13ddg2o" path="res://FX/hitFlash.gdshader" id="18_k78fk"]
 [ext_resource type="Script" uid="uid://cm0rl70t4u6fn" path="res://FX/flashDamage.gd" id="19_lkyto"]
 [ext_resource type="Shader" uid="uid://c0ciodvcjfbyq" path="res://Shaders/3DHealthBars.gdshader" id="20_gvq4v"]
@@ -54,36 +55,15 @@ size = Vector3(0.540073, 0.5010376, 0.5320598)
 
 [sub_resource type="BoxMesh" id="BoxMesh_lewuj"]
 
-[sub_resource type="Shader" id="Shader_tk8en"]
-code = "shader_type spatial;
-render_mode cull_front, unshaded;
-
-uniform vec4 outline_color : source_color;
-uniform float outline_width = 1.0;
-
-void vertex() {
-	vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
-	vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
-	
-	vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
-	
-	clip_position.xy += offset;
-	
-	POSITION = clip_position;
-}
-
-void fragment() {
-	ALBEDO = outline_color.rgb;
-	if (outline_color.a < 1.0) {
-		ALPHA = outline_color.a;
-	}
-}"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lewuj"]
 render_priority = 0
-shader = SubResource("Shader_tk8en")
-shader_parameter/outline_color = Color(0, 0, 0, 1)
-shader_parameter/outline_width = 1.0
+shader = ExtResource("17_uivup")
+shader_parameter/shadows_enabled = true
+shader_parameter/highlights_enabled = false
+shader_parameter/shadow_strength = 0.999999977648
+shader_parameter/highlight_strength = 0.1
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/shadow_color = Color(0.3872387, 0.16507825, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4mcia"]
 render_priority = 0

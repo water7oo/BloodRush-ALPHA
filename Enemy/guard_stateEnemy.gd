@@ -22,7 +22,7 @@ func _enter() -> void:
 
 func onGuardMaterialSwap():
 	if EnemyMeshMat is StandardMaterial3D:
-		EnemyMeshMat.albedo_color = Color(0.0, 0.911, 0.929, 0.98)
+		EnemyMeshMat.albedo_color = Color(0.721, 0.721, 0.721, 0.98)
 
 func _exit() -> void:
 	print("leaving guard")

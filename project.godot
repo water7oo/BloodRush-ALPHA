@@ -24,7 +24,6 @@ run/stretch/scale=1.0
 
 [autoload]
 
-FollowCam="*res://Scripts/follow_cam.gd"
 enemy="*res://Scripts/enemy.gd"
 EnemyHealthManager="*res://Scripts/enemyHealthManager.gd"
 PlayerHealthManager="*res://Scripts/playerHealthManager.gd"
@@ -33,6 +32,7 @@ MainEnemy="uid://bs0oo1mwxyf4u"
 GameJuice="*res://Scripts/gameJuice.gd"
 Global="*res://Scripts/States/Global.gd"
 TweenFX="*uid://d2n10rw2dnx8o"
+FollowCam="*res://Scripts/follow_cam.gd"
 
 [display]
 
