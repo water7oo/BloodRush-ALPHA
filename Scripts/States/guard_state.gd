@@ -18,7 +18,6 @@ func _enter() -> void:
 		velocity.z = 0
 		
 	GuardActivateSound.play()
-	print("Current State:", agent.state_machine.get_active_state())
 
 	# Preserve momentum from the previous state
 	velocity = agent.velocity

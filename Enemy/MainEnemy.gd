@@ -34,7 +34,6 @@ extends CharacterBody3D
 func _ready():
 	if enemyStats:
 		startHealth()
-		print("Enemy Health: " + str(enemyStats.current_health))
 
 		
 	if state_machine:
@@ -54,19 +53,19 @@ func initialize_state_machine():
 	
 
 
-	print("Guarding: " + str(enemyStats.isGuarding))
+
 	if enemyStats.isDead == true:
 		enemyStats.current_health = 0.0
 		enemyStats.max_health = 0.0
 		EnemyHealthBar.value = 0.0
-		print("enter death")
+
 		state_machine.initial_state = death_state
 	elif enemyStats.isGuarding == true:
-		print("enter guard")
+
 		enemyStats.enemyWasHit = false
 		state_machine.initial_state = guard_state
 	else:
-		print("enter idle")
+
 		state_machine.initial_state = idle_state  
 
 
@@ -111,7 +110,6 @@ func startHealth():
 			EnemyHealthBar.max_value = enemyStats.max_health
 			EnemyHealthBar.value = enemyStats.current_health
 			EnemyHealthBar.min_value = 0.0
-			print("Health bar found!!")
 		else:
 			print("Health bar not found")
 			
@@ -131,7 +129,7 @@ func takeDamageEnemy(damage: float) -> void:
 			elif randomNum == 3:
 				$AnimationPlayer.play("takeDamage3")
 				
-			print("Enemy Health: " +str(enemyStats.current_health))
+
 			if EnemyHealthBar:
 				EnemyHealthBar.value = enemyStats.current_health
 
@@ -142,7 +140,6 @@ func takeDamageEnemy(damage: float) -> void:
 			else:
 				enemyHurtBox.monitoring = true
 				enemyHurtBox.monitorable = true
-				print("enemy is alive")
 		else:
 			damage -= damage
 			$AnimationPlayer.play("RESET")
@@ -153,7 +150,6 @@ func takeGuardDamageEnemy(damage: float) -> void:
 		if enemyStats.isGuarding == true:
 			damage -= enemyStats.GuardDamage
 			enemyStats.current_health = clamp(enemyStats.current_health - damage, 0.0, enemyStats.max_health)
-			print("Enemy Guarding player")
 		
 		if EnemyHealthBar:
 			EnemyHealthBar.value = enemyStats.current_health
@@ -166,7 +162,6 @@ func takeGuardDamageEnemy(damage: float) -> void:
 		else:
 			enemyHurtBox.monitoring = true
 			enemyHurtBox.monitorable = true
-			print("enemy is alive")
 			
 			
 func _physics_process(delta: float) -> void:

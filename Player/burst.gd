@@ -41,7 +41,7 @@ func _enter() -> void:
 	dodgeResource.dodge_cooldown_timer = dodgeResource.dodge_cooldown  
 	dodgeResource.spinDodge_timer_cooldown = dodgeResource.spinDodge_reset
 	
-	GroundSparkEffect()
+
 
 func _update(delta: float) -> void:
 	player_burst(delta)
@@ -67,10 +67,4 @@ func player_burst(delta: float) -> void:
 
 func _exit() -> void:
 	#animationTree.set("parameters/Ground_Blend2/blend_amount", -1)
-	print("Exiting Burst State")
-
-func AirWaveEffect():
-	print("Air wave effect triggered")
-
-func GroundSparkEffect():
-	print("Ground spark effect triggered")
+	pass

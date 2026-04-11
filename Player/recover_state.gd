@@ -11,7 +11,6 @@ var preserved_velocity: Vector3 = Vector3.ZERO
 
 
 func _enter() -> void:
-	print("Current State:", agent.state_machine.get_active_state())
 	#animationTree.set("parameters/Ground_Blend/blend_amount", 0)
 	# Preserve momentum when entering idle state
 	#playerResource.can_move = false

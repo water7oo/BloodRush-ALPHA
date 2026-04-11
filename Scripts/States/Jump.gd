@@ -23,7 +23,6 @@ func _enter() -> void:
 	if moveDust.emitting:
 		moveDust.emitting = false
 	jump1Sound.play()
-	print("Current State:", agent.state_machine.get_active_state())
 	if agent.is_on_floor():
 		agent.velocity.y = jumpResource.JUMP_VELOCITY
 	

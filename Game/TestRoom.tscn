@@ -1,11 +1,11 @@
 [gd_scene format=4 uid="uid://8h730i8h4vc0"]
 
 [ext_resource type="Sky" uid="uid://cukdbb832rfga" path="res://Game/new_sky.tres" id="1_iu1ym"]
-[ext_resource type="Shader" uid="uid://cj820imnefddq" path="res://Shaders/1Bit3D_Shader.gdshader" id="2_2nta8"]
 [ext_resource type="PackedScene" uid="uid://byiwrnoah113n" path="res://ui/GameStartANIM.tscn" id="3_8ulvh"]
 [ext_resource type="PackedScene" uid="uid://by6p0ccfrdmgj" path="res://ui/FPS-Counter.tscn" id="4_nvdy2"]
+[ext_resource type="Shader" uid="uid://dhnqk3ljl48aa" path="res://FX/sceneTransition1.gdshader" id="5_hmdq7"]
 [ext_resource type="PackedScene" uid="uid://brejidgy2nq2j" path="res://ui/Pausing.tscn" id="5_swveh"]
-[ext_resource type="Shader" uid="uid://b1hg6btlggl78" path="res://Shaders/uhhhhh.gdshader" id="6_gdw0k"]
+[ext_resource type="Script" uid="uid://byp2l6m5moq11" path="res://ui/transition.gd" id="6_2nta8"]
 [ext_resource type="PackedScene" uid="uid://en5j5w4rjeu2" path="res://Game/ResetEnemy.tscn" id="7_s2vfm"]
 [ext_resource type="Script" uid="uid://ccfr6qljiobv4" path="res://Resources/EnemyStats/EnemyStatsScripts/enemyStats.gd" id="9_cg3hj"]
 [ext_resource type="Script" uid="uid://bgukb4hmyjy3b" path="res://Resources/ObjectResources/objectscriptResource/boxCrateResource.gd" id="9_i1la3"]
@@ -40,10 +40,11 @@ volumetric_fog_emission_energy = 122.2
 [sub_resource type="ViewportTexture" id="ViewportTexture_bsi3r"]
 viewport_path = NodePath("Preview/SubViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_md3uv"]
-shader = ExtResource("6_gdw0k")
-shader_parameter/speedScale = 0.0
-shader_parameter/clipPosition = 0.2
+[sub_resource type="Resource" id="Resource_bsi3r"]
+resource_local_to_scene = true
+script = ExtResource("9_cg3hj")
+current_health = 25.0
+max_health = 100.0
 
 [sub_resource type="Resource" id="Resource_hmdq7"]
 script = ExtResource("9_i1la3")
@@ -61,21 +62,21 @@ Name = "Box"
 GuardDamage = 0
 isHit = false
 
-[sub_resource type="Resource" id="Resource_bsi3r"]
+[sub_resource type="Resource" id="Resource_2nta8"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 999.0
 max_health = 999.0
 Name = "Fighter"
 
-[sub_resource type="Resource" id="Resource_2nta8"]
+[sub_resource type="Resource" id="Resource_8ulvh"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 999.0
 max_health = 999.0
 Name = "Ranger"
 
-[sub_resource type="Resource" id="Resource_8ulvh"]
+[sub_resource type="Resource" id="Resource_nvdy2"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 999.0
@@ -84,18 +85,12 @@ isGuarding = true
 Name = "GUARDING"
 GuardDamage = 4
 
-[sub_resource type="Resource" id="Resource_nvdy2"]
+[sub_resource type="Resource" id="Resource_swveh"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 999.0
 max_health = 999.0
 Name = "Bullseye"
-
-[sub_resource type="Resource" id="Resource_swveh"]
-resource_local_to_scene = true
-script = ExtResource("9_cg3hj")
-current_health = 25.0
-max_health = 100.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_b0ev0"]
 size = Vector3(0.209863, 0.2, 0.2)
@@ -681,14 +676,51 @@ shader_parameter/depth_falloff = 0.001
 
 [sub_resource type="QuadMesh" id="QuadMesh_8ulvh"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ov31c"]
-shader = ExtResource("2_2nta8")
-shader_parameter/change_color_depth = false
-shader_parameter/target_color_depth = 5
-shader_parameter/dithering = false
-shader_parameter/scale_resolution = false
-shader_parameter/target_resolution_scale = 3
-shader_parameter/enable_recolor = false
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iu1ym"]
+shader = ExtResource("5_hmdq7")
+shader_parameter/AspectRatio = 1.5
+shader_parameter/Diamonds = 10.0
+shader_parameter/pixel_size = 0.08
+shader_parameter/finalcolor = Color(0, 0, 0, 1)
+shader_parameter/finalalpha = 0.0
+shader_parameter/height = -0.12
+shader_parameter/disable_pixel = false
+
+[sub_resource type="Animation" id="Animation_bsi3r"]
+resource_name = "OPENER"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, -1.0]
+}
+
+[sub_resource type="Animation" id="Animation_hmdq7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.12]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hmdq7"]
+_data = {
+&"OPENER": SubResource("Animation_bsi3r"),
+&"RESET": SubResource("Animation_hmdq7")
+}
 
 [node name="TRAINING" type="Node3D" unique_id=334628358]
 
@@ -705,42 +737,34 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -2.0
+offset_right = 10.810059
+offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="ViewportTexture" type="Sprite2D" parent="Preview" unique_id=969107882]
 texture_filter = 1
-position = Vector2(512, 384)
+position = Vector2(640, 362)
+scale = Vector2(2, 2)
 texture = SubResource("ViewportTexture_bsi3r")
 
 [node name="SubViewport" type="SubViewport" parent="Preview" unique_id=608240882]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(1024, 768)
+size = Vector2i(640, 360)
 render_target_update_mode = 4
 
-[node name="Opener" parent="Preview/SubViewport" unique_id=1106475258 instance=ExtResource("3_8ulvh")]
-
-[node name="FpsCounter" parent="Preview/SubViewport" unique_id=754907745 instance=ExtResource("4_nvdy2")]
-position = Vector2(13, -10)
+[node name="CameraSet" parent="Preview/SubViewport" unique_id=1881110884 instance=ExtResource("9_sw35u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49479, 1.496, 2.00658)
+target = NodePath("../Cowboy")
+speed = 2.0
+enemyStats = SubResource("Resource_bsi3r")
 
 [node name="Pausing" parent="Preview/SubViewport" unique_id=515406776 instance=ExtResource("5_swveh")]
-
-[node name="ColorRect" type="ColorRect" parent="Preview/SubViewport" unique_id=510113303]
-visible = false
-material = SubResource("ShaderMaterial_md3uv")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-mouse_force_pass_scroll_events = false
-color = Color(0, 0, 0, 1)
 
 [node name="Reset" parent="Preview/SubViewport" unique_id=935272242 node_paths=PackedStringArray("enemyDummy1", "enemyDummy2", "enemyDummy3", "resetPos1", "resetPos2", "resetPos3", "playerReset", "player") instance=ExtResource("7_s2vfm")]
 enemyDummy1 = NodePath("../Enemy")
@@ -762,19 +786,19 @@ enemyStats = SubResource("Resource_iu1ym")
 
 [node name="Enemy" parent="Preview/SubViewport" unique_id=1935452947 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -4, 1, -6)
-enemyStats = SubResource("Resource_bsi3r")
+enemyStats = SubResource("Resource_2nta8")
 
 [node name="Enemy2" parent="Preview/SubViewport" unique_id=697327262 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.96363044, 0, 0.26723835, 0, 1, 0, -0.26723835, 0, -0.96363044, -10, 1, -13)
-enemyStats = SubResource("Resource_2nta8")
+enemyStats = SubResource("Resource_8ulvh")
 
 [node name="Enemy4" parent="Preview/SubViewport" unique_id=457208653 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.00872653, 0, -0.9999619, 0, 1, 0, 0.9999619, 0, -0.00872653, -4, 1, 5)
-enemyStats = SubResource("Resource_8ulvh")
+enemyStats = SubResource("Resource_nvdy2")
 
 [node name="Enemy3" parent="Preview/SubViewport" unique_id=467869146 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(0.1391731, 0, 0.99026805, 0, 1, 0, -0.99026805, 0, 0.1391731, 1, 1, -3)
-enemyStats = SubResource("Resource_nvdy2")
+enemyStats = SubResource("Resource_swveh")
 
 [node name="UpperSwap3" parent="Preview/SubViewport" unique_id=1806891305 instance=ExtResource("12_bsi3r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1.4599857, 0)
@@ -782,11 +806,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1.4599857, 0)
 [node name="UpperSwap2" parent="Preview/SubViewport" unique_id=1324330705 instance=ExtResource("12_n5x20")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.50521, 1.496, -2.99342)
 
-[node name="CameraSet" parent="Preview/SubViewport" unique_id=1881110884 instance=ExtResource("9_sw35u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49479, 1.496, 2.00658)
-target = NodePath("../Cowboy")
-speed = 3.0
-enemyStats = SubResource("Resource_swveh")
+[node name="Cowboy" parent="Preview/SubViewport" unique_id=375016865 instance=ExtResource("10_wbl5e")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -4.9971905, 0.80488896, -1.076)
 
 [node name="CamTarget2" type="Marker3D" parent="Preview/SubViewport" unique_id=2034139925]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.53036, 3.74131, 8.49949)
@@ -807,9 +828,6 @@ gizmo_extents = 5.83
 [node name="PlayerReset" type="Marker3D" parent="Preview/SubViewport" unique_id=1982135318]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.43216, 1.45085, -6)
 gizmo_extents = 5.83
-
-[node name="Cowboy" parent="Preview/SubViewport" unique_id=375016865 instance=ExtResource("10_wbl5e")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -4.9971905, 0.80488896, -1.076)
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="Preview/SubViewport" unique_id=1903846000]
 transform = Transform3D(6, 0, 0, 0, -2.62268e-07, 6, 0, -6, -2.62268e-07, -17.6236, -2.18461, -20.3883)
@@ -851,6 +869,7 @@ size = Vector3(4, 0.22885904, 0.21113761)
 
 [node name="bushALL" type="Node3D" parent="Preview/SubViewport" unique_id=2073376120]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.2829, 0, 3.53464)
+visible = false
 
 [node name="bush2" parent="Preview/SubViewport/bushALL" unique_id=1842368341 instance=ExtResource("23_fbm6c")]
 transform = Transform3D(1.1476, 0.235687, -0.879594, 0, -1.41508, -0.37917, -0.910623, 0.297022, -1.1085, -9.2879, 1.40399, 12.739699)
@@ -896,6 +915,7 @@ transform = Transform3D(-3.7876075e-07, -0.99904, 3.728474, -3.2595355e-07, -3.7
 
 [node name="TreeALL" type="Node3D" parent="Preview/SubViewport" unique_id=1519983082]
 transform = Transform3D(0.8, 0, 1.39875e-07, 0, 0.8, 0, -1.39875e-07, 0, 0.8, 1.4635, 0.762087, 6.34689)
+visible = false
 
 [node name="treeTogether" type="Node3D" parent="Preview/SubViewport/TreeALL" unique_id=108988001]
 transform = Transform3D(4.49285, 0, -2.45274, 0, 6.20353, 0, 2.45274, 0, 4.49285, 20.866104, -1.1785572, 2.705202)
@@ -1062,6 +1082,7 @@ transform = Transform3D(-4.3711417e-08, 0, -1, 0, 1, 0, 1, 0, -4.3711417e-08, -0
 
 [node name="Grass2" type="CSGCombiner3D" parent="Preview/SubViewport" unique_id=134538573]
 transform = Transform3D(-4.3431637e-06, -99.36001, 0, -4.5603215e-06, 1.9933797e-13, 36, -104.328, 4.560322e-06, -1.57361e-06, -3.87281, -0.12619686, -7.0384555)
+visible = false
 material_override = SubResource("ShaderMaterial_hmdq7")
 use_collision = true
 
@@ -1071,6 +1092,7 @@ size = Vector3(0.50606614, 0.49026626, 0.0250138)
 
 [node name="MiniPark Patch" type="MeshInstance3D" parent="Preview/SubViewport" unique_id=1540349953]
 transform = Transform3D(99.36001, 0, 0, 0, -4.6513096e-06, 36, 0, -106.40956, -1.57361e-06, -3.87281, 0.37299776, -7.688995)
+visible = false
 material_override = SubResource("ShaderMaterial_wbl5e")
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Preview/SubViewport/MiniPark Patch" unique_id=353571634]
@@ -1082,15 +1104,29 @@ transform = Transform3D(-85, 1.2834643e-05, 1.6832583e-13, 0, -3.715468e-06, 25.
 material_override = SubResource("ShaderMaterial_2nta8")
 mesh = SubResource("QuadMesh_8ulvh")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Preview" unique_id=1997814440]
+[node name="Opener" parent="Preview/SubViewport" unique_id=1106475258 instance=ExtResource("3_8ulvh")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.5, 0.5)
+
+[node name="FpsCounter" parent="Preview/SubViewport" unique_id=754907745 instance=ExtResource("4_nvdy2")]
+offset_left = 8.0
+offset_right = 8.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Transition" type="ColorRect" parent="Preview/SubViewport" unique_id=410716459]
 visible = false
-texture_filter = 1
-material = SubResource("ShaderMaterial_ov31c")
-layout_mode = 1
+material = SubResource("ShaderMaterial_iu1ym")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-stretch = true
-stretch_shrink = 6
+script = ExtResource("6_2nta8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Preview/SubViewport/Transition" unique_id=1782199946]
+libraries/ = SubResource("AnimationLibrary_hmdq7")
+autoplay = &"OPENER"

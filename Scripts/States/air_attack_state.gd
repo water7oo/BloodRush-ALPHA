@@ -27,7 +27,6 @@ var startup_timer := 0.0
 var in_startup := true
 
 func _enter() -> void:
-	print("entering attack state")
 	enemies_hit.clear()
 	buffered_input = false
 	
@@ -117,7 +116,6 @@ func _start_attack() -> void:
 
 func _enable_hitbox():
 	if attack_box:
-		print("active")
 		attack_box_debug.visible = true
 		attack_box_col.visible = true
 		attack_box.monitoring = true
@@ -126,7 +124,6 @@ func _enable_hitbox():
 
 func _disable_hitbox():
 	if attack_box:
-		print("inactive")
 		attack_box.monitoring = false
 		attack_box_debug.visible = false
 		attack_box_col.visible = false
@@ -168,7 +165,11 @@ func rotate_to_target(areaParent):
 		print("no visual node")
 			
 
-
+func comboAirStall(target, agent):
+	if Global.isHit:
+		target.velociy.y = 0.0
+		agent.velocity.y = 0.0
+	
 func rotateEnemy_to_player(agent, areaParent):
 	var enemyMesh = areaParent
 	
@@ -216,6 +217,8 @@ func _on_attack_box_area_entered(area):
 			"timestamp": Time.get_ticks_msec()
 		})
 
+
+		comboAirStall(areaParent, agent)
 		Global.isHit = true
 		Global.can_chain_attack = true
 		Global.can_cancel = true
@@ -268,7 +271,6 @@ func _on_attack_box_area_entered(area):
 		var combo_count = Global.combo_hits.size()
 		if enemy is CharacterBody3D:
 			if combo_count == 1:
-				print("regular knockback")
 				gameJuice.knockback(
 					enemy,
 					agent,
@@ -276,7 +278,6 @@ func _on_attack_box_area_entered(area):
 					attackData.knockback_direction
 				)
 			elif combo_count >= 2:
-				print("combo knockback")
 				gameJuice.knockback(
 					enemy,
 					agent,

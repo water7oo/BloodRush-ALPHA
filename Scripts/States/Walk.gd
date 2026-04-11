@@ -21,7 +21,6 @@ func _enter() -> void:
 		
 		velocity.x = 0
 		velocity.z = 0
-	print("Current State:", agent.state_machine.get_active_state())
 	
 
 

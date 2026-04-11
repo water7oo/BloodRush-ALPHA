@@ -13,13 +13,11 @@ func _process(delta):
 func pause_game(delta):
 		if Input.is_action_just_pressed("pause_button"):
 			if Global.game_paused:
-				print_debug("Unpausing game")
 				get_tree().paused = false
 				$PAUSEMENU.visible = false
 				Global.game_paused = false
 				Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 			else:
-				print_debug("Pausing game")
 				get_tree().paused = true
 				$PAUSEMENU.visible = true
 				Global.game_paused = true

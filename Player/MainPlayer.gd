@@ -27,22 +27,22 @@ extends CharacterBody3D
 
 @onready var take_damage_state = $LimboHSM/TakeDamageState
 @onready var recover_state = $LimboHSM/RecoverState
-@onready var stateDebugLabel = $"State debug"
-@onready var playerSpeedLabel = $PlayerSpeedLabel/PlayerSpeed
+@onready var stateDebugLabel = $"playerUI/State debug"
+@onready var playerSpeedLabel = $playerUI/PlayerSpeedLabel/PlayerSpeed
 var input_buffer := {}
 var input_buffer_time := .7
 var input_queue: Array = []
 
 
-@onready var lightAttackTimer = $AttackCooldown
-@onready var mediumAttackTimer = $AttackCooldownMedium
-@onready var heavyAttackTimer = $AttackCooldownHeavy
-@onready var upperAttackTimer = $AttackCooldownUpper
-@onready var CanCancelDebug = $CanCancelDebug
-@onready var jumpCancelTimer = $JumpCancelTimer
-@onready var jumpCancelDelay = $JumpCancelDelay
-@onready var UpperSwapDebug = $UpperSwapDebug
-@onready var comboCounter = $ComboCounter2
+@onready var lightAttackTimer = $playerUI/AttackCooldown
+@onready var mediumAttackTimer = $playerUI/AttackCooldownMedium
+@onready var heavyAttackTimer = $playerUI/AttackCooldownHeavy
+@onready var upperAttackTimer = $playerUI/AttackCooldownUpper
+@onready var CanCancelDebug = $playerUI/CanCancelDebug
+@onready var jumpCancelTimer = $playerUI/JumpCancelTimer
+@onready var jumpCancelDelay = $playerUI/JumpCancelDelay
+@onready var UpperSwapDebug = $playerUI/UpperSwapDebug
+@onready var comboCounter = $playerUI/ComboCounter2
 
 func _ready():
 	initialize_state_machine()
@@ -138,7 +138,7 @@ func _physics_process(delta: float) -> void:
 	jumpCancelTimer.text = ("jump cancel timer: " + str(attack_upper_state.jump_cancel_timer))
 	jumpCancelDelay.text = ("jump cancel delay: " + str(attack_upper_state.jumpCancelDelay))
 	
-	var clean_name = attack_upper_state.attackData.resource_path.get_file().get_basename()
+	var clean_name = attack_upper_state.attackData.resource_path.get_file().get_basename().to_lower()
 	UpperSwapDebug.text = "upperswap: " + clean_name
 	
 	handle_attack_input()
@@ -199,7 +199,6 @@ func try_attack(data: Dictionary, is_air: bool) -> bool:
 		if not Global.is_attacking or can_buffer_attack():
 			state_machine.dispatch(data.air_transition if is_air else data.ground_transition)
 			state.attack_timer = state.attackData.recovery_duration
-			print("black cloverrr")
 			
 			consume_inputs([data.air, data.ground] if is_air else [data.ground])
 			return true
@@ -277,5 +276,4 @@ func _on_hurt_box_area_entered(area):
 
 func _on_targeting_area_entered(area: Area3D) -> void:
 	if area.name == "enemyBox":
-		print("Locking on enemy")
-	pass # Replace with function body.
+		pass # Replace with function body.

@@ -118,7 +118,7 @@ func _update(delta: float) -> void:
 	agent.move_and_slide()
 
 func runJumpTimers(delta: float):
-	print("can jump cancel " + str(canJumpCancel))
+
 	jumpCancelDelay = max(jumpCancelDelay - delta, 0.0)
 	
 	
@@ -174,7 +174,7 @@ func _start_attack() -> void:
 func _enable_hitbox():
 	if attack_box:
 		if !Global.isMultiHitUpper:
-			print("active")
+
 			attack_box_debug.visible = true
 			attack_box_col.visible = true
 			attack_box.monitoring = true
@@ -185,7 +185,7 @@ func _enable_hitbox():
 
 func _OnHitbox():
 	if attack_box:
-		print("active")
+
 		attack_box_debug.visible = true
 		attack_box_col.visible = true
 		attack_box.monitoring = true
@@ -204,7 +204,7 @@ func multi_hit():
 		if Global.isHit:
 			if multiHit1Sound && multiHit1FinishSound:
 				if i >= attackData.max_hits - 1:
-					print("misha")
+
 					
 					multiHit1FinishSound.pitch_scale = randf_range(0.2, 1.1)
 					multiHit1FinishSound.play()
@@ -218,7 +218,7 @@ func multi_hit():
 		
 func _disable_hitbox():
 	if attack_box:
-		print("inactive")
+
 		attack_box.monitoring = false
 		attack_box_debug.visible = false
 		attack_box_col.visible = false
@@ -356,7 +356,7 @@ func _on_attack_box_area_entered(area):
 		var combo_count = Global.combo_hits.size()
 		if enemy is CharacterBody3D:
 			if combo_count == 1:
-				print("regular knockback")
+
 				gameJuice.knockback(
 					enemy,
 					agent,
@@ -426,7 +426,6 @@ func _on_attack_box_area_entered(area):
 			var combo_count = Global.combo_hits.size()
 			if enemy is CharacterBody3D:
 				if combo_count == 1:
-					print("regular knockback")
 					gameJuice.knockback(
 						enemy,
 						agent,
@@ -445,7 +444,6 @@ func _apply_physics(delta: float):
 		agent.velocity.z = move_toward(agent.velocity.z, 0, attackData.ATTACK_DECELERATION * delta)
 
 func _exit_attack_state() -> void:
-	print("clearing attack state")
 	animation_player.speed_scale = 7.0
 	animation_player.stop()
 	Global.is_attacking = false

@@ -88,7 +88,7 @@ func followTarget(delta):
 		if enemy:
 			var enemy_pos = enemy.global_transform.origin
 			
-			var midpoint = player_pos.lerp(enemy_pos, 0.4)
+			var midpoint = enemy_pos.lerp(player_pos, 0.4)
 
 			var distance = player_pos.distance_to(enemy_pos)
 			distance = clamp(distance, 2.0, 20.0)
@@ -96,18 +96,18 @@ func followTarget(delta):
 			var desired_position = midpoint
 
 			# Move pivot (NOT camera)
-			pivot.global_transform.origin = pivot.global_transform.origin.lerp(desired_position, 1 * delta)
+			pivot.global_transform.origin = pivot.global_transform.origin.lerp(desired_position, speed * delta)
 
 			# Rotate pivot only on Y
 			var direction = pivot.global_transform.origin - midpoint
 			direction.y = 0
 
-			if direction.length() > 0.01:
-				var target_yaw = atan2(direction.x, direction.z)
-				pivot.rotation.y = lerp_angle(pivot.rotation.y, target_yaw, 1 * delta)
-
-			# Lock tilt
-			pivot.rotation.x = deg_to_rad(-10)
+			#if direction.length() > 0.01:
+				#var target_yaw = atan2(direction.x, direction.z)
+				#pivot.rotation.y = lerp_angle(pivot.rotation.y, target_yaw, speed * delta)
+#
+			## Lock tilt
+			#pivot.rotation.x = deg_to_rad(-10)
 
 			return
 

@@ -52,8 +52,9 @@ process_mode = 3
 
 [node name="Camera3D" type="Camera3D" parent="SpringArmPivot/SpringArm3D/Margin" unique_id=1148347368]
 process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999998, 0, 1.3226662, 27.481815)
-fov = 48.9
+transform = Transform3D(1, 0, 0, 0, 0.99213415, -0.1251773, 0, 0.1251773, 0.99213415, 0, -0.9632492, 28.156315)
+current = true
+fov = 40.4
 size = 6.085
 near = 0.001
 
@@ -106,11 +107,16 @@ transform = Transform3D(1, 2.32831e-10, 0, 0, 1, -1.86265e-09, 7.45058e-09, 1.86
 script = ExtResource("3_sswrb")
 
 [node name="Reticle" type="Label" parent="." unique_id=1607169781]
-z_index = 1
 texture_filter = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -47.0
+offset_right = 26.0
+offset_bottom = 34.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -122,15 +128,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Current Target" type="Label" parent="." unique_id=223141332]
-visible = false
 texture_filter = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -391.0
-offset_top = -232.0
-offset_right = -391.0
-offset_bottom = -232.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -629.0
+offset_top = -223.0
+offset_right = -382.0
+offset_bottom = -190.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1

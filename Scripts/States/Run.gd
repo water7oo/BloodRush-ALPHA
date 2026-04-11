@@ -21,7 +21,6 @@ func _enter() -> void:
 		
 		velocity.x = 0
 		velocity.z = 0
-	print("Current State:", agent.state_machine.get_active_state())
 	
 	if animation_player:
 		animation_player.play("Run")
@@ -33,7 +32,6 @@ func _update(delta: float) -> void:
 	initialize_attack(delta)
 	initialize_crouch(delta)
 	initialize_guard(delta)
-	#print(velocity.length())
 	agent.move_and_slide()
 
 # Smooth run (Mario-esque momentum)

@@ -16,7 +16,6 @@ var velocity = Vector3.ZERO
 func _enter() -> void:
 	if agent:
 		velocity = agent.velocity
-	print("Current State:", agent.state_machine.get_active_state())
 	agent.velocity.y = runJumpResource.JUMP_VELOCITY
 	#animationTree.set("parameters/Jump_Blend/blend_amount", 1)
 	# Reset timers and jump counter
