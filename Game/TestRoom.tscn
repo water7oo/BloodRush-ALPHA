@@ -67,7 +67,7 @@ resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 999.0
 max_health = 999.0
-Name = "Fighter"
+Name = "Attacking"
 
 [sub_resource type="Resource" id="Resource_8ulvh"]
 resource_local_to_scene = true
@@ -679,7 +679,7 @@ shader_parameter/depth_falloff = 0.001
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iu1ym"]
 shader = ExtResource("5_hmdq7")
 shader_parameter/AspectRatio = 1.5
-shader_parameter/Diamonds = 10.0
+shader_parameter/Diamonds = 31.0
 shader_parameter/pixel_size = 0.08
 shader_parameter/finalcolor = Color(0, 0, 0, 1)
 shader_parameter/finalalpha = 0.0
@@ -688,6 +688,7 @@ shader_parameter/disable_pixel = false
 
 [sub_resource type="Animation" id="Animation_bsi3r"]
 resource_name = "OPENER"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -695,7 +696,7 @@ tracks/0/path = NodePath(".:material:shader_parameter/height")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [1.0, -1.0]
@@ -738,8 +739,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -2.0
-offset_right = 10.810059
-offset_bottom = 10.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -748,7 +748,7 @@ mouse_filter = 1
 
 [node name="ViewportTexture" type="Sprite2D" parent="Preview" unique_id=969107882]
 texture_filter = 1
-position = Vector2(640, 362)
+position = Vector2(640, 360)
 scale = Vector2(2, 2)
 texture = SubResource("ViewportTexture_bsi3r")
 
@@ -775,6 +775,9 @@ resetPos2 = NodePath("../Marker3D")
 resetPos3 = NodePath("../Marker3D3")
 playerReset = NodePath("../PlayerReset")
 player = NodePath("../Cowboy")
+
+[node name="Cowboy" parent="Preview/SubViewport" unique_id=375016865 instance=ExtResource("10_wbl5e")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -4.9971905, 0.80488896, -1.076)
 
 [node name="Box4" parent="Preview/SubViewport" unique_id=1616381138 instance=ExtResource("10_ai8yb")]
 transform = Transform3D(0.9935402, 0, -0.113480665, 0, 1, 0, 0.113480665, 0, 0.9935402, -20.308504, 0.366858, -7)
@@ -805,9 +808,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1.4599857, 0)
 
 [node name="UpperSwap2" parent="Preview/SubViewport" unique_id=1324330705 instance=ExtResource("12_n5x20")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.50521, 1.496, -2.99342)
-
-[node name="Cowboy" parent="Preview/SubViewport" unique_id=375016865 instance=ExtResource("10_wbl5e")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -4.9971905, 0.80488896, -1.076)
 
 [node name="CamTarget2" type="Marker3D" parent="Preview/SubViewport" unique_id=2034139925]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.53036, 3.74131, 8.49949)
@@ -1082,7 +1082,6 @@ transform = Transform3D(-4.3711417e-08, 0, -1, 0, 1, 0, 1, 0, -4.3711417e-08, -0
 
 [node name="Grass2" type="CSGCombiner3D" parent="Preview/SubViewport" unique_id=134538573]
 transform = Transform3D(-4.3431637e-06, -99.36001, 0, -4.5603215e-06, 1.9933797e-13, 36, -104.328, 4.560322e-06, -1.57361e-06, -3.87281, -0.12619686, -7.0384555)
-visible = false
 material_override = SubResource("ShaderMaterial_hmdq7")
 use_collision = true
 
@@ -1092,7 +1091,6 @@ size = Vector3(0.50606614, 0.49026626, 0.0250138)
 
 [node name="MiniPark Patch" type="MeshInstance3D" parent="Preview/SubViewport" unique_id=1540349953]
 transform = Transform3D(99.36001, 0, 0, 0, -4.6513096e-06, 36, 0, -106.40956, -1.57361e-06, -3.87281, 0.37299776, -7.688995)
-visible = false
 material_override = SubResource("ShaderMaterial_wbl5e")
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Preview/SubViewport/MiniPark Patch" unique_id=353571634]
@@ -1118,7 +1116,6 @@ offset_right = 8.0
 scale = Vector2(0.5, 0.5)
 
 [node name="Transition" type="ColorRect" parent="Preview/SubViewport" unique_id=410716459]
-visible = false
 material = SubResource("ShaderMaterial_iu1ym")
 anchors_preset = 15
 anchor_right = 1.0

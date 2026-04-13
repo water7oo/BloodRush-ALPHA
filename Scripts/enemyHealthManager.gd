@@ -44,18 +44,3 @@ func _ready():
 		#else:
 			#monitoring = true
 			#monitorable = true
-
-
-#func _process(delta: float) -> void:
-	#pass
-	#
-#func enemyDie():
-		#monitoring = false
-		#monitorable = false
-		#enemyStats.isDead = true
-		#deathSound.play()
-#
-#func onDeathMaterial():
-	#if EnemyMeshMat is StandardMaterial3D:
-		#if enemyStats.isDead == true:
-			#EnemyMeshMat.albedo_color = Color(0.49, 0.49, 0.49, 1.0)

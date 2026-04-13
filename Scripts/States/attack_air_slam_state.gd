@@ -69,6 +69,7 @@ func _update(delta: float) -> void:
 	_process_cancel_window()	
 	_comboKnockBack()
 	_apply_physics(delta)
+	_landCancel()
 	agent.move_and_slide()
 
 func _landCancel():
@@ -217,6 +218,9 @@ func _on_attack_box_area_entered(area):
 			"timestamp": Time.get_ticks_msec()
 		})
 
+
+		agent.updateComboCounterInstant(Global.combo_hits.size())
+		Global.combo_timer = Global.combo_reset_time
 		Global.isHit = true
 		Global.can_chain_attack = true
 		Global.can_cancel = true

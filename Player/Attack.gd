@@ -26,6 +26,7 @@ var preserved_velocity: Vector3 = Vector3.ZERO
 var startup_timer := 0.0
 var in_startup := true
 
+@onready var PlayerUI = $PlayerUI
 
 func _enter() -> void:
 	enemies_hit.clear()
@@ -196,7 +197,11 @@ func _on_attack_box_area_entered(area):
 			"attack_type": "attackLight",
 			"timestamp": Time.get_ticks_msec()
 		})
-
+		
+		#PlayerUI.get_node("ComboCounter2").get_child(0).text = "x" + str(Global.combo_hits.size())
+		agent.updateComboCounterInstant(Global.combo_hits.size())
+		Global.combo_timer = Global.combo_reset_time
+		
 		Global.isHit = true
 		Global.can_chain_attack = true
 		Global.can_cancel = true

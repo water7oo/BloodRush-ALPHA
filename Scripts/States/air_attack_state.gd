@@ -217,6 +217,8 @@ func _on_attack_box_area_entered(area):
 			"timestamp": Time.get_ticks_msec()
 		})
 
+		agent.updateComboCounterInstant(Global.combo_hits.size())
+		Global.combo_timer = Global.combo_reset_time
 
 		comboAirStall(areaParent, agent)
 		Global.isHit = true

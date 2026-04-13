@@ -205,7 +205,7 @@ func multi_hit():
 			if multiHit1Sound && multiHit1FinishSound:
 				if i >= attackData.max_hits - 1:
 
-					
+					Global.shakeTween($"../../PlayerUI".get_node("ComboCounter2"))
 					multiHit1FinishSound.pitch_scale = randf_range(0.2, 1.1)
 					multiHit1FinishSound.play()
 				else:
@@ -306,6 +306,8 @@ func _on_attack_box_area_entered(area):
 			"timestamp": Time.get_ticks_msec()
 		})
 
+		agent.updateComboCounterInstant(Global.combo_hits.size())
+		Global.combo_timer = Global.combo_reset_time
 		Global.isHit = true
 		Global.can_chain_attack = true
 		Global.can_cancel = true

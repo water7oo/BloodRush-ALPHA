@@ -20,6 +20,7 @@ extends CharacterBody3D
 @export var isAlwaysDodgeDebug: bool = false
 @export var isAlwaysAliveDebug: bool = false
 
+
 @onready var stateDebug = $StateDebug
 
 @export var enemyHealthManagerNode: Area3D
@@ -114,6 +115,7 @@ func startHealth():
 			print("Health bar not found")
 			
 
+
 func takeDamageEnemy(damage: float) -> void:
 		if enemyStats.isDead == false:
 			
@@ -163,7 +165,7 @@ func takeGuardDamageEnemy(damage: float) -> void:
 			enemyHurtBox.monitoring = true
 			enemyHurtBox.monitorable = true
 			
-			
+
 func _physics_process(delta: float) -> void:
 	Gravity(delta)
 	move_and_slide()

@@ -27,22 +27,22 @@ extends CharacterBody3D
 
 @onready var take_damage_state = $LimboHSM/TakeDamageState
 @onready var recover_state = $LimboHSM/RecoverState
-@onready var stateDebugLabel = $"playerUI/State debug"
-@onready var playerSpeedLabel = $playerUI/PlayerSpeedLabel/PlayerSpeed
 var input_buffer := {}
 var input_buffer_time := .7
 var input_queue: Array = []
 
-
-@onready var lightAttackTimer = $playerUI/AttackCooldown
-@onready var mediumAttackTimer = $playerUI/AttackCooldownMedium
-@onready var heavyAttackTimer = $playerUI/AttackCooldownHeavy
-@onready var upperAttackTimer = $playerUI/AttackCooldownUpper
-@onready var CanCancelDebug = $playerUI/CanCancelDebug
-@onready var jumpCancelTimer = $playerUI/JumpCancelTimer
-@onready var jumpCancelDelay = $playerUI/JumpCancelDelay
-@onready var UpperSwapDebug = $playerUI/UpperSwapDebug
-@onready var comboCounter = $playerUI/ComboCounter2
+@onready var PlayerUI = $PlayerUI
+@onready var stateDebugLabel = PlayerUI.get_node("State debug")
+@onready var playerSpeedLabel = PlayerUI.get_node("PlayerSpeedLabel/PlayerSpeed")
+@onready var lightAttackTimer = PlayerUI.get_node("AttackCooldown")
+@onready var mediumAttackTimer = PlayerUI.get_node("AttackCooldownMedium")
+@onready var heavyAttackTimer = PlayerUI.get_node("AttackCooldownHeavy")
+@onready var upperAttackTimer = PlayerUI.get_node("AttackCooldownUpper")
+@onready var CanCancelDebug = PlayerUI.get_node("CanCancelDebug")
+@onready var jumpCancelTimer = PlayerUI.get_node("JumpCancelTimer")
+@onready var jumpCancelDelay = PlayerUI.get_node("JumpCancelDelay")
+@onready var UpperSwapDebug = PlayerUI.get_node("UpperSwapDebug")
+@onready var comboCounter = PlayerUI.get_node("ComboCounter2")
 
 func _ready():
 	initialize_state_machine()
@@ -111,10 +111,16 @@ func initialize_state_machine():
 
 
 func _process(delta: float) -> void:
+	pass
+			
+
+func updateComboCounter(delta: float):
+	print(Global.combo_hits.size())
 	if Global.combo_hits.size() >= 2:
 		comboCounter.get_child(0).visible = true
 		comboCounter.get_child(0).text = "X" + str(Global.combo_hits.size())
-		#comboCounter.get_child(0).shakeTween()
+		if Global.isHit:
+			Global.shakeTween(comboCounter)
 	else:
 		comboCounter.get_child(0).visible = false
 		
@@ -123,14 +129,33 @@ func _process(delta: float) -> void:
 		if Global.combo_timer > Global.combo_reset_time:
 			Global.combo_hits.clear()
 			Global.combo_timer = 0.0
-			
+
+func updateComboCounterInstant(count):
+	if count >= 2 && Global.combo_timer > 0:
+		comboCounter.get_child(0).visible = true
+		comboCounter.get_child(0).text = "X" + str(count)
+		Global.shakeTween(comboCounter)
+	else:
+		comboCounter.get_child(0).visible = false
+
+
+func comboTimerCountdown(delta: float):
+	if Global.combo_hits.size() > 0:
+		Global.combo_timer -= delta
+
+		if Global.combo_timer <= 0:
+			Global.combo_hits.clear()
+			Global.combo_timer = 0.0
+
+			updateComboCounterInstant(0)
 			
 func _physics_process(delta: float) -> void:
 	playerGravity(delta)
-	stateDebugLabel.text = ("STATE DEBUG: " + str(state_machine.get_active_state()).to_upper())
+	comboTimerCountdown(delta)
+	stateDebugLabel.text = ("state debug: " + str(state_machine.get_active_state()).to_upper())
 	playerSpeedLabel.value = velocity.length()
 	playerSpeedLabel.max_value = Global.MAX_SPEED
-	CanCancelDebug.text = ("Can Attack Cancel: " + str(Global.can_cancel))
+	CanCancelDebug.text = ("can attack Cancel: " + str(Global.can_cancel))
 	lightAttackTimer.text = ("light attack timer: " + str(attack_state.attack_timer))
 	mediumAttackTimer.text = ("medium attack timer: " + str(attackMedium_state.attack_timer))
 	heavyAttackTimer.text = ("heavy attack timer: " + str(attackHeavy_state.attack_timer))

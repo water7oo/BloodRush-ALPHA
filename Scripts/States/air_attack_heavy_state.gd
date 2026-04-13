@@ -229,6 +229,9 @@ func _on_attack_box_area_entered(area):
 			"timestamp": Time.get_ticks_msec()
 		})
 
+
+		agent.updateComboCounterInstant(Global.combo_hits.size())
+		Global.combo_timer = Global.combo_reset_time
 		Global.isHit = true
 		Global.can_chain_attack = true
 		Global.can_cancel = true

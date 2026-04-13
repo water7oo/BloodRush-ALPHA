@@ -45,16 +45,7 @@ func _update(delta: float) -> void:
 			land1Sound.play()
 			landDust.restart()
 			landDust.emitting = true
-			#jumpResource.attackAir_cooldown_timer = 0
-			#jumpResource.attackMediumAir_cooldown_timer = 0
-			#jumpResource.attackHeavyAir_cooldown_timer = 0
-			#jumpResource.attackAirSlam_cooldown_timer = 0
-			#
-			#
-			#jumpResource.attack_cooldown_timer = 0
-			#jumpResource.attackMedium_cooldown_timer = 0
-			#jumpResource.attackHeavy_cooldown_timer = 0
-			#jumpResource.attackUpper_cooldown_timer = 0
+
 			agent.state_machine.dispatch("to_idle")
 		
 

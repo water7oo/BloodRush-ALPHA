@@ -33,12 +33,12 @@ GameJuice="*res://Scripts/gameJuice.gd"
 Global="*res://Scripts/States/Global.gd"
 TweenFX="*uid://d2n10rw2dnx8o"
 FollowCam="*res://Scripts/follow_cam.gd"
+ComboCounter="*uid://q5wemkhn1k25"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/stretch/mode="viewport"
 
 [editor]
 

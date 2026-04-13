@@ -8,6 +8,7 @@ extends Area3D
 
 
 func _on_area_entered(area: Area3D) -> void:
-	if area.name == "HurtBox":
+	if area.name == "HurtBox" && get_parent().enemyStats.isAttacking == true:
 		print("I HIT THE PLAYER!!")
+		area.takeDamage(get_parent().enemyStats.attackDamage)
 	pass # Replace with function body.

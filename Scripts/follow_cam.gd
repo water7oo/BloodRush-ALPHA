@@ -96,7 +96,8 @@ func followTarget(delta):
 			var desired_position = midpoint
 
 			# Move pivot (NOT camera)
-			pivot.global_transform.origin = pivot.global_transform.origin.lerp(desired_position, speed * delta)
+			pivot.global_transform.origin = pivot.global_transform.origin.lerp(desired_position, 7
+			 * delta)
 
 			# Rotate pivot only on Y
 			var direction = pivot.global_transform.origin - midpoint

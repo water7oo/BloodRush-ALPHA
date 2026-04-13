@@ -2,26 +2,26 @@ extends Area3D
 
 @onready var gameJuice = get_node("/root/GameJuice")
 
+@onready var PlayerUI = $"../../PlayerUI"
+@onready var healthBarUI = PlayerUI.get_node("player_health_label")
 
-
-var max_health = 10
+var max_health = 100
+var current_health = 10
 var taking_damage := false
 
 
 func _ready():
-	var health = max_health
 	pass
 
 
-func readHealth():
-	#print("Player health is currently " + str(health))
-	pass
-
-
-func takeDamage(health, attack_damage):
-	max_health = max_health - attack_damage
+func _process(delta):
+	if healthBarUI:
+		healthBarUI.value = current_health
 	
-	#print("Player IS TAKING DAMAGE " + str(max_health))
+func takeDamage(attack_damage):
+	current_health -= attack_damage
+	print("player has taken " + str(attack_damage) + " damage!")
+	
 	taking_damage = true
 	await get_tree().create_timer(.15).timeout
 	taking_damage = false

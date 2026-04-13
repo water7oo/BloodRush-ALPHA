@@ -205,19 +205,20 @@ func _on_attack_box_area_entered(area):
 	and not areaParent.enemyStats.isDead \
 	and not areaParent.enemyStats.isGuarding:
 
-		areaParent.takeDamageEnemy(attackData.attackDamage)
-		
-		rotateEnemy_to_player(agent, areaParent)
-		rotate_to_target(areaParent)
-		
-		
 		Global.combo_hits.append({
 			"enemy": area,
 			"damage": attackData.attackDamage,
 			"attack_type": "attackLight",
 			"timestamp": Time.get_ticks_msec()
 		})
+		
+		agent.updateComboCounterInstant(Global.combo_hits.size())
+		Global.combo_timer = Global.combo_reset_time
+		areaParent.takeDamageEnemy(attackData.attackDamage)
 
+		rotateEnemy_to_player(agent, areaParent)
+		rotate_to_target(areaParent)
+		
 		Global.isHit = true
 		Global.can_chain_attack = true
 		Global.can_cancel = true

@@ -48,7 +48,7 @@ var can_jump: bool = true
 
 # Move these to playerAttackManager
 var combo_hits: Array = []
-@export var combo_reset_time: float = 2
+@export var combo_reset_time: float = .8
 var combo_timer: float = 0.0
 
 var isMultiHitUpper = false
@@ -62,3 +62,13 @@ var isMultiHitUpper = false
 
 @export var momentum_deceleration: float = DECELERATION
 @export var momentum_acceleration: float = ACCELERATION
+
+var isComboUiShake = false
+var waslastframehit = false
+
+
+func shakeTween(node):
+	var strength = clamp(Global.combo_hits.size() * 2, 5, 20)
+	TweenFX.shake(node)
+	TweenFX.shake(node, 0.1, 8, strength)
+		
