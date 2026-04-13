@@ -44,6 +44,7 @@ var input_queue: Array = []
 @onready var UpperSwapDebug = PlayerUI.get_node("UpperSwapDebug")
 @onready var comboCounter = PlayerUI.get_node("ComboCounter2")
 
+
 func _ready():
 	initialize_state_machine()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -100,7 +101,7 @@ func initialize_state_machine():
 	
 	
 	state_machine.add_transition(take_damage_state, recover_state, "to_recover")
-
+	state_machine.add_transition(state_machine.ANYSTATE, take_damage_state, "to_damage")
 
 	state_machine.initial_state = idle_state  
 	state_machine.initialize(self)
@@ -166,6 +167,7 @@ func _physics_process(delta: float) -> void:
 	var clean_name = attack_upper_state.attackData.resource_path.get_file().get_basename().to_lower()
 	UpperSwapDebug.text = "upperswap: " + clean_name
 	
+	playerHitStun()
 	handle_attack_input()
 	
 
@@ -289,6 +291,9 @@ func playerGravity(delta: float) -> void:
 	if !is_on_floor():
 		velocity.y -= Global.CUSTOM_GRAVITY * delta
 
+func playerHitStun():
+	if Global.is_taking_damage == true:
+		state_machine.dispatch("to_damage")
 
 
 func _on_hurt_box_area_entered(area):

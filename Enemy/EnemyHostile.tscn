@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://d0r5hh1u8s67k" path="res://Scripts/enemyStates/run_stateEnemy.gd" id="4_jdsf8"]
 [ext_resource type="Script" uid="uid://cm0rl70t4u6fn" path="res://FX/flashDamage.gd" id="4_wyb1b"]
 [ext_resource type="Script" uid="uid://btwnm0lxd6k8k" path="res://Scripts/enemyStates/jump_stateEnemy.gd" id="5_djeph"]
-[ext_resource type="Shader" uid="uid://c0ciodvcjfbyq" path="res://Shaders/3DHealthBars.gdshader" id="5_o88hp"]
+[ext_resource type="Resource" uid="uid://bjw8a4lyjyyck" path="res://Resources/EnemyStats/enemyAttackStats.tres" id="5_fauao"]
 [ext_resource type="Script" uid="uid://doewkbikq4aok" path="res://Scripts/enemyStates/dodge_stateEnemy.gd" id="6_bq7li"]
 [ext_resource type="Material" uid="uid://kddykiqv2ir2" path="res://MaterialTextures/Enemy.tres" id="6_jdsf8"]
 [ext_resource type="Texture2D" uid="uid://ckvxfd6pdd8du" path="res://My Textures/2ndPassAnimations_PixelTextureGrid_32.png" id="7_djeph"]
@@ -43,6 +43,7 @@ bg_color = Color(0.97766954, 0.10013088, 0, 1)
 size = Vector3(0.660662, 1.02917, 0.50911)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_fauao"]
+height = 1.8026123
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4topa"]
 shader = ExtResource("15_fauao")
@@ -78,17 +79,6 @@ diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("3_tuc0k")
 texture_filter = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ra2eo"]
-render_priority = 0
-shader = ExtResource("5_o88hp")
-shader_parameter/bar_color = Color(0.6395921, 0.9038032, 0, 1)
-shader_parameter/bar_empty_color = Color(0.95, 0, 0, 1)
-shader_parameter/maxProg = 100.0
-shader_parameter/progress = 0.0
-
-[sub_resource type="QuadMesh" id="QuadMesh_l36fl"]
-size = Vector2(1.345, 0.125)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ffc8c"]
 resource_name = "2ndPassAnimations_Circle_008"
@@ -547,7 +537,6 @@ enemyStats = ExtResource("21_i335x")
 
 [node name="enemyNameLabel" type="Label3D" parent="." unique_id=593637493]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0328918, 0)
-visible = false
 billboard = 1
 texture_filter = 0
 text = "--"
@@ -596,10 +585,13 @@ transform = Transform3D(3.99981, 0, 0, 0, 3.99958, -0.0579429, 0, 0.0579429, 3.9
 shape = SubResource("BoxShape3D_u8c5v")
 
 [node name="enemyBox" type="Area3D" parent="." unique_id=1258361166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 gravity_space_override = 1
 script = ExtResource("11_a6utb")
+enemyAttackData = ExtResource("5_fauao")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="enemyBox" unique_id=1405604518]
+transform = Transform3D(2.555, 0, 0, 0, 2.555, 0, 0, 0, 2.555, 0, 0.70597684, 0)
 shape = SubResource("CylinderShape3D_fauao")
 
 [node name="LimboHSM" type="LimboHSM" parent="." unique_id=284204221]
@@ -641,11 +633,6 @@ material_overlay = SubResource("ShaderMaterial_4topa")
 mesh = ExtResource("2_tuc0k")
 surface_material_override/0 = SubResource("StandardMaterial3D_wyb1b")
 script = ExtResource("4_wyb1b")
-
-[node name="EnemyHealthBar" type="MeshInstance3D" parent="." unique_id=1367893088]
-transform = Transform3D(5.824551, 0, 0, 0, 0.35277504, 0, 0, 0, 1.0000001, 0, 4.2640905, 0)
-material_override = SubResource("ShaderMaterial_ra2eo")
-mesh = SubResource("QuadMesh_l36fl")
 
 [node name="RootNode" type="Node3D" parent="." unique_id=1805039592]
 

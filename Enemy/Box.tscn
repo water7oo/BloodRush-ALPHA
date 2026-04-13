@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://bgukb4hmyjy3b" path="res://Resources/ObjectResources/objectscriptResource/boxCrateResource.gd" id="2_lewuj"]
 [ext_resource type="Resource" uid="uid://cdrmc6otk3eol" path="res://Resources/EnemyStats/enemyStats.tres" id="2_uivup"]
 [ext_resource type="Script" uid="uid://ywk4flkanwe4" path="res://Scripts/enemyHealthManager.gd" id="3_sqgbd"]
-[ext_resource type="Script" uid="uid://2mcfdc31nc4h" path="res://Enemy/enemyAttack.gd" id="4_6pb8h"]
 [ext_resource type="Script" uid="uid://ca27x6ifxqwln" path="res://Scripts/enemyStates/idle_stateEnemy.gd" id="5_73rhh"]
 [ext_resource type="Script" uid="uid://dspxpwfwxbk5e" path="res://Scripts/enemyStates/walk_stateEnemy.gd" id="6_2w0aj"]
 [ext_resource type="Script" uid="uid://d0r5hh1u8s67k" path="res://Scripts/enemyStates/run_stateEnemy.gd" id="7_e87bs"]
@@ -512,7 +511,6 @@ shape = SubResource("BoxShape3D_u8c5v")
 [node name="enemyBox" type="Area3D" parent="." unique_id=1258361166]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3290921, 0.144857)
 gravity_space_override = 1
-script = ExtResource("4_6pb8h")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="enemyBox" unique_id=1405604518]
 transform = Transform3D(3.995, 0, 0, 0, 3.995, 0, 0, 0, 3.995, 0.0026256703, 0.7120077, -0.15430254)

@@ -35,6 +35,7 @@ var is_moving: bool = false
 var was_on_floor: bool = false
 
 var is_attacking: bool = false
+var is_taking_damage: bool = false
 var can_chain_attack: bool = false  
 var isHit: bool = false
 var can_cancel: bool = false
@@ -66,6 +67,9 @@ var isMultiHitUpper = false
 var isComboUiShake = false
 var waslastframehit = false
 
+var playerHitstop: float = 0.3
+var TargetLength: float = 0.3
+var TargetMagnitude: float = 0.5
 
 func shakeTween(node):
 	var strength = clamp(Global.combo_hits.size() * 2, 5, 20)

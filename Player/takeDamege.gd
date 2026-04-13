@@ -13,36 +13,22 @@ extends LimboState
 @export var knockback_force: float = 12.0
 @export var knockback_direction: Vector3 = Vector3(0, 1, 0.5)
 
-var taking_damage := false
-var hitstun_timer := 0.1
+var hitstun_duration = 0.5
+var hitstun_timer = 0.0
 @export var playerResource: Resource
 
 
 func _enter() -> void:
-	taking_damage = true
+	hitstun_timer = hitstun_duration
+	pass
 
-	var current_state = agent.state_machine.get_active_state()
-	if current_state != self:
-		if current_state.has_method("_exit_attack_state"):
-			current_state._exit_attack_state()
-
-	playerResource.can_move = false
-
-	#animationTree.set("parameters/Jump_Blend/blend_amount", -1)
-	#animationTree.set("parameters/Ground_Blend/blend_amount", -1)
-
-	pause()
-	gameJuice.objectShake(agent, shakeLength, shakeMagnitude)
-	$"../../hit1".emitting = true
-	await get_tree().create_timer(hitStopTime).timeout
-	unpause()
-
-	gameJuice.knockback(enemy, agent, knockback_force, knockback_direction)
-
-	agent.state_machine.dispatch("to_recover")
-
-func pause():
-	process_mode = PROCESS_MODE_DISABLED
-
-func unpause():
-	process_mode = PROCESS_MODE_INHERIT
+func _process(delta: float) -> void:
+	if Global.is_taking_damage:
+		hitstun_timer -= delta
+		gameJuice.objectShake(agent, Global.TargetLength, Global.TargetMagnitude)
+		if hitstun_timer <= 0:
+			_exit()
+	
+func _exit() -> void:
+	Global.is_taking_damage = false
+	pass

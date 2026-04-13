@@ -3,12 +3,18 @@ extends Area3D
 @onready var playerHealthMan = get_node("/root/PlayerHealthManager")
 @onready var enemyHealthMan = get_node("/root/EnemyHealthManager")
 
-
-@onready var gameJuice = get_node("/root/GameJuice")
-
+@export var enemyAttackData = Resource
 
 func _on_area_entered(area: Area3D) -> void:
-	if area.name == "HurtBox" && get_parent().enemyStats.isAttacking == true:
+	if area.name == "HurtBox" && get_parent().enemyStats.isAttacking && !Global.is_taking_damage:
 		print("I HIT THE PLAYER!!")
-		area.takeDamage(get_parent().enemyStats.attackDamage)
+		area.takeDamage(enemyAttackData.attackDamage)
+		GameJuice.hitstop(Global.playerHitstop, [self, area.get_parent()])
+		
+		#GameJuice.knockback(
+			#area.get_parent(),
+			#self,
+			#enemyAttackData.knockbackForce,
+			#enemyAttackData.knockbackDirection
+		#)
 	pass # Replace with function body.

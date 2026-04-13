@@ -58,7 +58,6 @@ mouse_filter = 1
 theme_override_styles/background = ExtResource("1_rib46")
 theme_override_styles/fill = SubResource("StyleBoxFlat_rj02x")
 step = 1.0
-value = 100.0
 show_percentage = false
 
 [node name="State debug" type="Label" parent="." unique_id=2051501831]

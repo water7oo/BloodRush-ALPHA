@@ -1,0 +1,7 @@
+[gd_resource type="Resource" format=3 uid="uid://bjw8a4lyjyyck"]
+
+[ext_resource type="Script" uid="uid://cgyoopwuvx535" path="res://Resources/EnemyStats/EnemyStatsScripts/enemyAttackStats.gd" id="1_atglf"]
+
+[resource]
+script = ExtResource("1_atglf")
+knockbackDirection = Vector3(0, 1, 1)

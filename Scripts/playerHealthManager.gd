@@ -2,26 +2,25 @@ extends Area3D
 
 @onready var gameJuice = get_node("/root/GameJuice")
 
-@onready var PlayerUI = $"../../PlayerUI"
-@onready var healthBarUI = PlayerUI.get_node("player_health_label")
+@export var PlayerUI: Control
 
-var max_health = 100
-var current_health = 10
-var taking_damage := false
-
+@export var max_health: float = 100.0
+@export var current_health: float = 10.0
+var taking_damage = false
 
 func _ready():
 	pass
 
-
 func _process(delta):
-	if healthBarUI:
-		healthBarUI.value = current_health
+	if PlayerUI:
+		PlayerUI.get_node("player_health_label").value = current_health
+	pass
 	
 func takeDamage(attack_damage):
 	current_health -= attack_damage
-	print("player has taken " + str(attack_damage) + " damage!")
 	
+	TweenFX.critical_hit(PlayerUI.get_node("player_health_label"), .2, Color(0.969, 0.187, 0.0, 1.0), 1.001)
+	TweenFX.shake(PlayerUI.get_node("player_health_label"), .5,3,5)
 	taking_damage = true
 	await get_tree().create_timer(.15).timeout
 	taking_damage = false
