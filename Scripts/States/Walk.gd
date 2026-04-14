@@ -86,6 +86,7 @@ func playWalkingSound():
 	var right_ray = $player/Skeleton3D/BoneAttachment3D2/rightFootRaycast
 
 	if left_ray && left_ray.is_colliding():
+		print("left foot collide")
 		if not left_foot_down: 
 			walkingSound.pitch_scale = randf_range(0.9, 1.1)
 			walkingSound.play()

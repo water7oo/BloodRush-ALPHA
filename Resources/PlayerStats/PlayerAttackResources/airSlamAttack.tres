@@ -16,4 +16,4 @@ Default_knockback_force = 5.0
 knockback_force = 5.0
 knockback_direction = Vector3(0, -1, 0.4)
 ATTACK_DECELERATION = 30.0
-comboknockbackForceRate = 0.5
+comboknockbackForceRate = 0.75

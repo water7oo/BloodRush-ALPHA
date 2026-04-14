@@ -67,7 +67,6 @@ resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 999.0
 max_health = 999.0
-isAttacking = true
 Name = "Attacking"
 
 [sub_resource type="Resource" id="Resource_8ulvh"]
@@ -729,6 +728,8 @@ _data = {
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=351352346]
 transform = Transform3D(1, 0, 0, 0, 0.0019374636, 0.99999815, 0, -0.99999815, 0.0019374636, 0, 20.500511, -6)
 shadow_enabled = true
+directional_shadow_fade_start = 0.885
+directional_shadow_pancake_size = 1024.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1349527202]
 environment = SubResource("Environment_trpa7")
@@ -749,7 +750,7 @@ mouse_filter = 1
 
 [node name="ViewportTexture" type="Sprite2D" parent="Preview" unique_id=969107882]
 texture_filter = 1
-position = Vector2(640, 360)
+position = Vector2(640, 362)
 scale = Vector2(2, 2)
 texture = SubResource("ViewportTexture_bsi3r")
 
@@ -778,7 +779,7 @@ playerReset = NodePath("../PlayerReset")
 player = NodePath("../Cowboy")
 
 [node name="Cowboy" parent="Preview/SubViewport" unique_id=375016865 instance=ExtResource("10_wbl5e")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -4.9971905, 0.80488896, -1.076)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -11.99719, 0.80488896, -1.076)
 
 [node name="Box4" parent="Preview/SubViewport" unique_id=1616381138 instance=ExtResource("10_ai8yb")]
 transform = Transform3D(0.9935402, 0, -0.113480665, 0, 1, 0, 0.113480665, 0, 0.9935402, -20.308504, 0.366858, -7)
@@ -786,6 +787,30 @@ enemyStats = SubResource("Resource_hmdq7")
 
 [node name="Box5" parent="Preview/SubViewport" unique_id=1152080316 instance=ExtResource("10_ai8yb")]
 transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, -17.65179, 0.366858, -10)
+enemyStats = SubResource("Resource_iu1ym")
+
+[node name="Box6" parent="Preview/SubViewport" unique_id=457208653 instance=ExtResource("10_ai8yb")]
+transform = Transform3D(0.36676097, 0, 0.93031526, 0, 1, 0, -0.93031526, 0, 0.36676097, -17.875063, 0.366858, 9.171321)
+enemyStats = SubResource("Resource_hmdq7")
+
+[node name="Box7" parent="Preview/SubViewport" unique_id=910892334 instance=ExtResource("10_ai8yb")]
+transform = Transform3D(0.7071067, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.7071067, -20.085232, 0.366858, 5.828676)
+enemyStats = SubResource("Resource_iu1ym")
+
+[node name="Box8" parent="Preview/SubViewport" unique_id=1510538740 instance=ExtResource("10_ai8yb")]
+transform = Transform3D(0.36676097, 0, 0.93031526, 0, 1, 0, -0.93031526, 0, 0.36676097, -17.875063, 2.366858, 9.171321)
+enemyStats = SubResource("Resource_hmdq7")
+
+[node name="Box9" parent="Preview/SubViewport" unique_id=701187630 instance=ExtResource("10_ai8yb")]
+transform = Transform3D(0.7071067, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.7071067, -20.085232, 2.366858, 5.828676)
+enemyStats = SubResource("Resource_iu1ym")
+
+[node name="Box10" parent="Preview/SubViewport" unique_id=1393416440 instance=ExtResource("10_ai8yb")]
+transform = Transform3D(0.36676097, 0, 0.93031526, 0, 1, 0, -0.93031526, 0, 0.36676097, -17.875063, 4.366858, 9.171321)
+enemyStats = SubResource("Resource_hmdq7")
+
+[node name="Box11" parent="Preview/SubViewport" unique_id=1834684279 instance=ExtResource("10_ai8yb")]
+transform = Transform3D(0.7071067, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.7071067, -20.085232, 4.366858, 5.828676)
 enemyStats = SubResource("Resource_iu1ym")
 
 [node name="Enemy" parent="Preview/SubViewport" unique_id=1935452947 instance=ExtResource("16_cg3hj")]
@@ -796,7 +821,7 @@ enemyStats = SubResource("Resource_2nta8")
 transform = Transform3D(-0.96363044, 0, 0.26723835, 0, 1, 0, -0.26723835, 0, -0.96363044, -10, 1, -13)
 enemyStats = SubResource("Resource_8ulvh")
 
-[node name="Enemy4" parent="Preview/SubViewport" unique_id=457208653 instance=ExtResource("16_cg3hj")]
+[node name="Enemy4" parent="Preview/SubViewport" unique_id=225199188 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.00872653, 0, -0.9999619, 0, 1, 0, 0.9999619, 0, -0.00872653, -4, 1, 5)
 enemyStats = SubResource("Resource_nvdy2")
 
@@ -845,20 +870,20 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="MeshInstance3D5" type="CSGBox3D" parent="Preview/SubViewport/Floor" unique_id=2015343716]
-transform = Transform3D(-222.73535, -0.109856084, 1.9888788e-05, 0.00044738207, 2.3857515e-07, 9.931586, -0.027989557, 0.40995362, -4.3412345e-07, 1.6252384, 0.10132642, 0.51451874)
-size = Vector3(0.53808594, 0.114513, 0.21254435)
+transform = Transform3D(-222.73535, -0.109856084, 1.9888788e-05, 0.00044738207, 2.3857515e-07, 9.931586, -0.027989557, 0.40995362, -4.3412345e-07, 1.6252384, 0.07599386, 0.5812768)
+size = Vector3(0.53808594, 0.114513, 0.22995493)
 
 [node name="MeshInstance3D6" type="CSGBox3D" parent="Preview/SubViewport/Floor" unique_id=621434009]
-transform = Transform3D(222.73665, -8.363614e-07, 1.989691e-05, -0.00044604964, -1.8253964e-08, 9.9356, -0.00044604967, -0.4176403, -4.3429893e-07, 4.3261127, 0.089696094, -1.3066051)
-size = Vector3(0.51383275, 0.114513, 0.20869914)
+transform = Transform3D(222.73665, -8.363614e-07, 1.989691e-05, -0.00044604964, -1.8253964e-08, 9.9356, -0.00044604967, -0.4176403, -4.3429893e-07, 4.3261127, 0.09823702, -1.3733628)
+size = Vector3(0.51383275, 0.114513, 0.234853)
 
 [node name="MeshInstance3D7" type="CSGBox3D" parent="Preview/SubViewport/Floor" unique_id=1500424965]
-transform = Transform3D(-222.73396, -0.10947736, -1.747394e-12, -0.027539074, 0.4085437, -8.6842e-07, -5.5944506e-06, -3.846698e-08, -9.933565, 3.5064197, -0.9586655, -0.3826149)
-size = Vector3(0.52119577, 0.114513, 0.18985923)
+transform = Transform3D(-222.73396, -0.10947736, -1.747394e-12, -0.027539074, 0.4085437, -8.6842e-07, -5.5944506e-06, -3.846698e-08, -9.933565, 3.5064197, -1.0427281, -0.3819065)
+size = Vector3(0.52119577, 0.114513, 0.20200582)
 
 [node name="MeshInstance3D8" type="CSGBox3D" parent="Preview/SubViewport/Floor" unique_id=1077241081]
-transform = Transform3D(-222.73396, -0.10947736, -1.747394e-12, -0.027539074, 0.4085437, -8.6842e-07, -5.5944506e-06, -3.846698e-08, -9.933565, 1.8614728, 1.1426955, -0.41171736)
-size = Vector3(0.5359663, 0.114513, 0.18399985)
+transform = Transform3D(-222.73396, -0.10947736, -1.747394e-12, -0.027539074, 0.4085437, -8.6842e-07, -5.5944506e-06, -3.846698e-08, -9.933565, 1.7014055, 1.2066685, -0.3796009)
+size = Vector3(0.5359663, 0.114513, 0.20039836)
 
 [node name="MeshInstance3D" type="CSGBox3D" parent="Preview/SubViewport/Floor" unique_id=1454563573]
 transform = Transform3D(7.2529993, 0, 0, -1.4077628e-13, 5.9999995, 0, 0, 0, 5.5789995, -30.103432, 0.10414514, -0.36822072)
@@ -1083,6 +1108,7 @@ transform = Transform3D(-4.3711417e-08, 0, -1, 0, 1, 0, 1, 0, -4.3711417e-08, -0
 
 [node name="Grass2" type="CSGCombiner3D" parent="Preview/SubViewport" unique_id=134538573]
 transform = Transform3D(-4.3431637e-06, -99.36001, 0, -4.5603215e-06, 1.9933797e-13, 36, -104.328, 4.560322e-06, -1.57361e-06, -3.87281, -0.12619686, -7.0384555)
+visible = false
 material_override = SubResource("ShaderMaterial_hmdq7")
 use_collision = true
 
@@ -1092,6 +1118,7 @@ size = Vector3(0.50606614, 0.49026626, 0.0250138)
 
 [node name="MiniPark Patch" type="MeshInstance3D" parent="Preview/SubViewport" unique_id=1540349953]
 transform = Transform3D(99.36001, 0, 0, 0, -4.6513096e-06, 36, 0, -106.40956, -1.57361e-06, -3.87281, 0.37299776, -7.688995)
+visible = false
 material_override = SubResource("ShaderMaterial_wbl5e")
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Preview/SubViewport/MiniPark Patch" unique_id=353571634]

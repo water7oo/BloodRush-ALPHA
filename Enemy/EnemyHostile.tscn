@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bs0oo1mwxyf4u" path="res://Enemy/MainEnemy.gd" id="1_a6utb"]
 [ext_resource type="ArrayMesh" uid="uid://brq7yfue6csrm" path="res://Enemy/Sandbag.obj" id="2_tuc0k"]
 [ext_resource type="Script" uid="uid://ca27x6ifxqwln" path="res://Scripts/enemyStates/idle_stateEnemy.gd" id="2_wyb1b"]
+[ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="3_4topa"]
 [ext_resource type="Script" uid="uid://dspxpwfwxbk5e" path="res://Scripts/enemyStates/walk_stateEnemy.gd" id="3_o88hp"]
 [ext_resource type="Texture2D" uid="uid://7qgg4do3dwtm" path="res://Enemy/Sandbag.fbm/7467e88d.png" id="3_tuc0k"]
 [ext_resource type="Shader" uid="uid://c8gnrj13ddg2o" path="res://FX/hitFlash.gdshader" id="4_a6utb"]
@@ -540,6 +541,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0328918, 0)
 billboard = 1
 texture_filter = 0
 text = "--"
+font = ExtResource("3_4topa")
 font_size = 130
 outline_size = 22
 uppercase = true
@@ -581,11 +583,13 @@ script = ExtResource("9_n3h2g")
 enemyStats = ExtResource("21_i335x")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="enemyHurtBox" unique_id=1395692564]
-transform = Transform3D(3.99981, 0, 0, 0, 3.99958, -0.0579429, 0, 0.0579429, 3.99958, 0.0154045, 0.992098, -0.193714)
+transform = Transform3D(3.455, 0, 0, 0, 3.4546375, -0.050048187, 0, 0.050048187, 3.4546375, 0.0154045, 0.992098, -0.193714)
 shape = SubResource("BoxShape3D_u8c5v")
 
 [node name="enemyBox" type="Area3D" parent="." unique_id=1258361166]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(0.67, 0, 0, 0, 0.67, 0, 0, 0, 0.67, 0, 1, 0)
+monitoring = false
+monitorable = false
 gravity_space_override = 1
 script = ExtResource("11_a6utb")
 enemyAttackData = ExtResource("5_fauao")
@@ -617,8 +621,9 @@ script = ExtResource("7_n3h2g")
 [node name="AirAttackState" type="LimboState" parent="LimboHSM" unique_id=593520429]
 script = ExtResource("8_dexmo")
 
-[node name="HitStunState" type="LimboState" parent="LimboHSM" unique_id=1810250473]
+[node name="HitStunState" type="LimboState" parent="LimboHSM" unique_id=1810250473 node_paths=PackedStringArray("attackHitBox")]
 script = ExtResource("9_oiwxk")
+attackHitBox = NodePath("../../enemyBox")
 
 [node name="GuardState" type="LimboState" parent="LimboHSM" unique_id=567036237]
 script = ExtResource("10_n48et")
@@ -919,6 +924,7 @@ shape = SubResource("SphereShape3D_0hvkj")
 
 [connection signal="area_entered" from="enemyHurtBox" to="." method="_on_enemy_area_entered"]
 [connection signal="area_entered" from="enemyBox" to="enemyBox" method="_on_area_entered"]
+[connection signal="area_exited" from="enemyBox" to="enemyBox" method="_on_area_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="NoticePlayer" to="NoticePlayer" method="_on_area_entered"]
 [connection signal="area_exited" from="NoticePlayer" to="NoticePlayer" method="_on_area_exited"]

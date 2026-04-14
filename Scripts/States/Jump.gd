@@ -31,15 +31,15 @@ func _enter() -> void:
 	Global.jump_counter = 0
 	jumpResource.JUMP_VELOCITY = jumpResource.DEFAULT_JUMP_VELOCITY
 	
-	if animation_player:
-		animation_player.play("jumpIdle")
+
 
 func _update(delta: float) -> void:
 	player_jump(delta)
 	agent.move_and_slide()
 	
 	var is_on_floor = agent.is_on_floor()
-	
+	if animation_player:
+		animation_player.play("jumpIdle")
 	if agent.state_machine.get_active_state() == self:
 		if is_on_floor and not Global.was_on_floor:
 			land1Sound.play()

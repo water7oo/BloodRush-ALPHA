@@ -65,12 +65,7 @@ func _physics_process(delta):
 	followTarget(real_delta)
 
 func _process(delta: float) -> void:
-	playShake()
-	
-	#if Global.isHit:
-		#applyShake(.04,0.08)
-	if Input.is_action_just_pressed("shake_test"):
-		applyShake(.04,0.08)
+	pass
 		
 	
 	

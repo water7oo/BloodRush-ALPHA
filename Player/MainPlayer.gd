@@ -44,6 +44,7 @@ var input_queue: Array = []
 @onready var UpperSwapDebug = PlayerUI.get_node("UpperSwapDebug")
 @onready var comboCounter = PlayerUI.get_node("ComboCounter2")
 
+@onready var comboCounterSound = $ComboSound1
 
 func _ready():
 	initialize_state_machine()
@@ -116,10 +117,17 @@ func _process(delta: float) -> void:
 			
 
 func updateComboCounter(delta: float):
-	print(Global.combo_hits.size())
+
 	if Global.combo_hits.size() >= 2:
+		print(Global.combo_hits.size())
 		comboCounter.get_child(0).visible = true
 		comboCounter.get_child(0).text = "X" + str(Global.combo_hits.size())
+		comboCounterSound.pitch_scale = clamp(
+			1.0 + (Global.combo_hits.size() * 0.2),
+			1.0,
+			2.0
+		)
+		comboCounterSound.play()
 		if Global.isHit:
 			Global.shakeTween(comboCounter)
 	else:
@@ -130,12 +138,14 @@ func updateComboCounter(delta: float):
 		if Global.combo_timer > Global.combo_reset_time:
 			Global.combo_hits.clear()
 			Global.combo_timer = 0.0
+			comboCounterSound.pitch_scale = 1.0
 
 func updateComboCounterInstant(count):
 	if count >= 2 && Global.combo_timer > 0:
 		comboCounter.get_child(0).visible = true
 		comboCounter.get_child(0).text = "X" + str(count)
 		Global.shakeTween(comboCounter)
+		
 	else:
 		comboCounter.get_child(0).visible = false
 
@@ -167,7 +177,7 @@ func _physics_process(delta: float) -> void:
 	var clean_name = attack_upper_state.attackData.resource_path.get_file().get_basename().to_lower()
 	UpperSwapDebug.text = "upperswap: " + clean_name
 	
-	playerHitStun()
+	#playerHitStun()
 	handle_attack_input()
 	
 
@@ -291,17 +301,11 @@ func playerGravity(delta: float) -> void:
 	if !is_on_floor():
 		velocity.y -= Global.CUSTOM_GRAVITY * delta
 
-func playerHitStun():
-	if Global.is_taking_damage == true:
-		state_machine.dispatch("to_damage")
-
 
 func _on_hurt_box_area_entered(area):
-	if area.name == "enemyBox":
-		#Global.last_enemy_hit = area.get_parent()  # Set the enemy that hit the player
-		
-		# Optionally, transition to TakeDamage state
-		state_machine.dispatch("to_damaged")
+	if area.name == "enemyBox" && !Global.is_taking_damage:
+		print("OW!")
+		#state_machine.dispatch("to_damage")
 
 
 func _on_targeting_area_entered(area: Area3D) -> void:

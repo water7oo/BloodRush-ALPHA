@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bgukb4hmyjy3b" path="res://Resources/ObjectResources/objectscriptResource/boxCrateResource.gd" id="2_lewuj"]
 [ext_resource type="Resource" uid="uid://cdrmc6otk3eol" path="res://Resources/EnemyStats/enemyStats.tres" id="2_uivup"]
 [ext_resource type="Script" uid="uid://ywk4flkanwe4" path="res://Scripts/enemyHealthManager.gd" id="3_sqgbd"]
+[ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="3_uivup"]
 [ext_resource type="Script" uid="uid://ca27x6ifxqwln" path="res://Scripts/enemyStates/idle_stateEnemy.gd" id="5_73rhh"]
 [ext_resource type="Script" uid="uid://dspxpwfwxbk5e" path="res://Scripts/enemyStates/walk_stateEnemy.gd" id="6_2w0aj"]
 [ext_resource type="Script" uid="uid://d0r5hh1u8s67k" path="res://Scripts/enemyStates/run_stateEnemy.gd" id="7_e87bs"]
@@ -48,9 +49,6 @@ bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_u8c5v"]
 size = Vector3(0.5273481, 0.50764406, 0.50911)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_4svdh"]
-size = Vector3(0.540073, 0.5010376, 0.5320598)
 
 [sub_resource type="BoxMesh" id="BoxMesh_lewuj"]
 
@@ -464,6 +462,7 @@ visible = false
 billboard = 1
 texture_filter = 0
 text = "--"
+font = ExtResource("3_uivup")
 font_size = 130
 outline_size = 22
 uppercase = true
@@ -481,6 +480,7 @@ uppercase = true
 
 [node name="HealthBar" type="Sprite3D" parent="." unique_id=886727701]
 transform = Transform3D(5.824551, 0, 0, 0, 0.35277504, 0, 0, 0, 1.0000001, 0, 2.3939538, 0)
+visible = false
 billboard = 1
 no_depth_test = true
 texture = SubResource("ViewportTexture_0hvkj")
@@ -507,14 +507,6 @@ enemyStats = ExtResource("2_uivup")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="enemyHurtBox" unique_id=1395692564]
 transform = Transform3D(3.99981, 0, 0, 0, 3.9999995, 0, 0, 0, 3.9999995, 0.0076011866, 0.20390546, -0.20619266)
 shape = SubResource("BoxShape3D_u8c5v")
-
-[node name="enemyBox" type="Area3D" parent="." unique_id=1258361166]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3290921, 0.144857)
-gravity_space_override = 1
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="enemyBox" unique_id=1405604518]
-transform = Transform3D(3.995, 0, 0, 0, 3.995, 0, 0, 0, 3.995, 0.0026256703, 0.7120077, -0.15430254)
-shape = SubResource("BoxShape3D_4svdh")
 
 [node name="LimboHSM" type="LimboHSM" parent="." unique_id=284204221]
 
@@ -852,7 +844,6 @@ transform = Transform3D(17, 0, 0, 0, 17, 0, 0, 0, 17, 0, 0, 0)
 shape = SubResource("SphereShape3D_0hvkj")
 
 [connection signal="area_entered" from="enemyHurtBox" to="." method="_on_enemy_area_entered"]
-[connection signal="area_entered" from="enemyBox" to="enemyBox" method="_on_area_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="NoticePlayer" to="NoticePlayer" method="_on_area_entered"]
 [connection signal="area_exited" from="NoticePlayer" to="NoticePlayer" method="_on_area_exited"]

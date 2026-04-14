@@ -4,7 +4,7 @@ extends LimboState
 @onready var animation_player = player.get_node("AnimationPlayer")
 @onready var armature = $"../../RootNode/Armature"
 @export var Dodge1Sound: AudioStreamPlayer
-@export var dodgeDust: GPUParticles3D
+@onready var dodgeDust = $"../../dodge_dust"
 @export var dodgeResource: Resource
 var velocity = Vector3.ZERO
 
@@ -16,8 +16,6 @@ func _enter() -> void:
 		velocity.z = 0
 	
 	
-	if animation_player:
-		animation_player.play("SLIDE")
 	Dodge1Sound.play()
 	
 	#animationTree.set("parameters/Ground_Blend2/blend_amount", 1)
@@ -50,13 +48,13 @@ func _update(delta: float) -> void:
 func player_burst(delta: float) -> void:
 	dodgeResource.dodge_cooldown_timer -= delta
 	dodgeResource.spinDodge_timer_cooldown -= delta
-
+	dodgeDust.emitting = true
 	# Gradually slow down the dodge
 	agent.velocity = agent.velocity.lerp(Vector3.ZERO, dodgeResource.DODGE_LERP_VAL * delta)
+	if animation_player:
+		animation_player.play("SLIDE")
 
-	if dodgeDust:
-		dodgeDust.emitting == true
-	# End dodge and transition based on input
+
 	if dodgeResource.dodge_cooldown_timer <= 0:
 		if Input.get_vector("move_left", "move_right", "move_forward", "move_back") != Vector2.ZERO:
 			agent.state_machine.dispatch("to_walk")
@@ -66,5 +64,5 @@ func player_burst(delta: float) -> void:
 			dodgeDust.emitting = false
 
 func _exit() -> void:
-	#animationTree.set("parameters/Ground_Blend2/blend_amount", -1)
+	dodgeDust.emitting = false
 	pass

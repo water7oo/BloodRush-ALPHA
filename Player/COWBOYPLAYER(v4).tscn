@@ -41,10 +41,10 @@
 [ext_resource type="AudioStream" uid="uid://ctlry7okk0ea" path="res://Sounds/jump.wav" id="25_ud7yb"]
 [ext_resource type="AudioStream" uid="uid://rwhetch2imdf" path="res://Sounds/Land1.wav" id="25_uf676"]
 [ext_resource type="Resource" uid="uid://vkv84edlgvsg" path="res://Resources/PlayerStats/PlayerAttackResources/mediumAttack.tres" id="27_h8tk8"]
+[ext_resource type="Resource" uid="uid://duhw8slvomv5b" path="res://Resources/PlayerStats/PlayerAttackResources/upperAttack.tres" id="29_ori5w"]
 [ext_resource type="Resource" uid="uid://dccd8cyx3axdo" path="res://Resources/PlayerStats/PlayerAttackResources/heavyAttack.tres" id="29_wa0mo"]
 [ext_resource type="AudioStream" uid="uid://c5k8fbxm7e1d7" path="res://Sounds/Raygun Empty.wav" id="31_wtaik"]
 [ext_resource type="AudioStream" uid="uid://5ii0pco4segn" path="res://Sounds/jump3.wav" id="32_0rtpi"]
-[ext_resource type="Resource" uid="uid://cvan58wg3c2e6" path="res://Resources/PlayerStats/PlayerAttackResources/upperAttack2.tres" id="32_h8tk8"]
 [ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="33_aggol"]
 [ext_resource type="Resource" uid="uid://conrunlpvwldv" path="res://Resources/PlayerStats/PlayerAttackResources/lightAirAttack.tres" id="33_vkj36"]
 [ext_resource type="Resource" uid="uid://eeey76odwk12" path="res://Resources/PlayerStats/PlayerAttackResources/mediumAirAttack.tres" id="35_3gnjc"]
@@ -54,6 +54,8 @@
 [ext_resource type="Script" uid="uid://7nffybofk8fa" path="res://Scripts/playerAttackManager.gd" id="40_taog0"]
 [ext_resource type="Texture2D" uid="uid://c1sktcvm2d8el" path="res://FX/Sprite_FX_Blast_0010.png2.png" id="45_h8tk8"]
 [ext_resource type="AudioStream" uid="uid://cms7gbyvyntgw" path="res://Sounds/hit6.wav" id="48_0rctv"]
+[ext_resource type="AudioStream" uid="uid://dv2h2ifpcxfaw" path="res://Sounds/slash1.wav" id="48_ori5w"]
+[ext_resource type="AudioStream" uid="uid://cc5rgni3t6ar2" path="res://Sounds/jump2.wav" id="48_vkj36"]
 [ext_resource type="AudioStream" uid="uid://2tp5nhpg7kee" path="res://Sounds/multiHit1.wav" id="51_wa0mo"]
 [ext_resource type="AudioStream" uid="uid://bp61wpvxuqnmc" path="res://Sounds/multiHitFinish1.wav" id="52_ori5w"]
 [ext_resource type="AudioStream" uid="uid://b6sn7x5hdlq8h" path="res://Sounds/deadCombo1.wav" id="55_3gnjc"]
@@ -497,10 +499,9 @@ jumpResource = ExtResource("11_yxw21")
 script = ExtResource("8_ec3d6")
 runJumpResource = ExtResource("13_q8lqs")
 
-[node name="BurstState" type="LimboState" parent="LimboHSM" unique_id=1209353207 node_paths=PackedStringArray("Dodge1Sound", "dodgeDust")]
+[node name="BurstState" type="LimboState" parent="LimboHSM" unique_id=1209353207 node_paths=PackedStringArray("Dodge1Sound")]
 script = ExtResource("7_1mupm")
 Dodge1Sound = NodePath("../../Dodge1Sound")
-dodgeDust = NodePath("../../dodge_dust")
 dodgeResource = ExtResource("15_anpul")
 
 [node name="CrouchState" type="LimboState" parent="LimboHSM" unique_id=2018798451]
@@ -568,7 +569,7 @@ attack_box_col2 = NodePath("../../RootNode/AttackUpperBox2/CollisionShape3D")
 attack_box_debug2 = NodePath("../../RootNode/AttackUpperBox2/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
 jumpCancelFX = NodePath("../../JumpCancel1")
-attackData = ExtResource("32_h8tk8")
+attackData = ExtResource("29_ori5w")
 hit1Sound = NodePath("../../hit1Sound")
 hit2Sound = NodePath("../../hit2Sound")
 hit3Sound = NodePath("../../hit3Sound")
@@ -656,12 +657,12 @@ draw_pass_1 = SubResource("QuadMesh_4mqd1")
 
 [node name="dodge_dust" type="GPUParticles3D" parent="." unique_id=532483975]
 process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.611789)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.30068302)
 material_override = SubResource("StandardMaterial3D_3gnjc")
 emitting = false
-amount = 30
 lifetime = 2.0
 speed_scale = 5.0
+explosiveness = 0.29
 randomness = 1.0
 fixed_fps = 60
 trail_lifetime = 0.5
@@ -791,6 +792,16 @@ pitch_scale = 0.33
 process_mode = 3
 stream = ExtResource("23_4eq7b")
 pitch_scale = 0.87
+
+[node name="ComboSound1" type="AudioStreamPlayer" parent="." unique_id=373144336]
+process_mode = 3
+stream = ExtResource("48_vkj36")
+
+[node name="damagedSound1" type="AudioStreamPlayer" parent="." unique_id=1058379490]
+process_mode = 3
+stream = ExtResource("48_ori5w")
+volume_db = -13.205
+pitch_scale = 0.5
 
 [node name="multiHit1Sound" type="AudioStreamPlayer" parent="." unique_id=432812863]
 process_mode = 3

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dx7or4d1fss65"]
 
 [ext_resource type="StyleBox" uid="uid://b7b3hqmwfdjgv" path="res://MaterialTextures/UI_COOLDOWN_BACK.tres" id="1_rib46"]
+[ext_resource type="Script" uid="uid://cqhj3ep7kn52o" path="res://ui/player_health_label.gd" id="2_spkgn"]
 [ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="2_u5gm8"]
 [ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="3_spkgn"]
 [ext_resource type="PackedScene" uid="uid://3uyo0xcpn6jw" path="res://ui/combo_counter.tscn" id="4_25w1a"]
@@ -58,7 +59,9 @@ mouse_filter = 1
 theme_override_styles/background = ExtResource("1_rib46")
 theme_override_styles/fill = SubResource("StyleBoxFlat_rj02x")
 step = 1.0
+value = 46.0
 show_percentage = false
+script = ExtResource("2_spkgn")
 
 [node name="State debug" type="Label" parent="." unique_id=2051501831]
 layout_mode = 1
@@ -67,10 +70,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -640.0
-offset_top = -320.0
-offset_right = -508.0
-offset_bottom = -295.0
+offset_left = -634.0
+offset_top = -10.0
+offset_right = -83.0
+offset_bottom = 112.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -78,7 +81,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_u5gm8")
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 16
 text = "state debug:"
 
 [node name="PlayerSpeedLabel" type="Label" parent="." unique_id=1672601588]

@@ -14,4 +14,4 @@ enemyTargetHitStop = 0.2
 ATTACK_DECELERATION = 30.0
 next_attack_state = &"to_mediumAttack"
 knockback_force_guardRate = 0.6
-comboknockbackForceRate = 0.5
+comboknockbackForceRate = 0.7

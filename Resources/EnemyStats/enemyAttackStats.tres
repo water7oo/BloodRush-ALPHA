@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_atglf")
-knockbackDirection = Vector3(0, 1, 1)
+knockbackForce = 6.0
+knockbackDirection = Vector3(0, 0.3, 1)

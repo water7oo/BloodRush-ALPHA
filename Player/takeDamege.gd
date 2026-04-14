@@ -1,6 +1,7 @@
 extends LimboState
 
-@export var animation_player: AnimationPlayer
+@onready var player = $"../../RootNode/player2"
+@onready var animation_player = player.get_node("AnimationPlayer")
 @export var animation: StringName
 @onready var state_machine: LimboHSM = $LimboHSM
 
@@ -18,17 +19,22 @@ var hitstun_timer = 0.0
 @export var playerResource: Resource
 
 
+
 func _enter() -> void:
+	Global.is_taking_damage = true
+	Global.can_move = false
+	animation_player.play("SLIDE")
 	hitstun_timer = hitstun_duration
 	pass
 
 func _process(delta: float) -> void:
 	if Global.is_taking_damage:
 		hitstun_timer -= delta
-		gameJuice.objectShake(agent, Global.TargetLength, Global.TargetMagnitude)
+		print("hitstun timer " + str(hitstun_timer))
 		if hitstun_timer <= 0:
-			_exit()
+			agent.state_machine.dispatch("to_recover")
 	
 func _exit() -> void:
 	Global.is_taking_damage = false
+	hitstun_timer = 0.0
 	pass

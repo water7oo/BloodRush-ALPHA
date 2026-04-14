@@ -67,11 +67,14 @@ var isMultiHitUpper = false
 var isComboUiShake = false
 var waslastframehit = false
 
-var playerHitstop: float = 0.3
+var playerHitstop: float = 0.5
 var TargetLength: float = 0.3
 var TargetMagnitude: float = 0.5
 
+var isRecovering = false
+
 func shakeTween(node):
+	FollowCam.applyShake(0.1,0.1)
 	var strength = clamp(Global.combo_hits.size() * 2, 5, 20)
 	TweenFX.shake(node)
 	TweenFX.shake(node, 0.1, 8, strength)

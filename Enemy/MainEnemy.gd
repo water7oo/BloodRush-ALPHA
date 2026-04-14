@@ -118,9 +118,8 @@ func startHealth():
 
 func takeDamageEnemy(damage: float) -> void:
 		if enemyStats.isDead == false:
-			
 			enemyStats.current_health = clamp(enemyStats.current_health - damage, 0.0, enemyStats.max_health)
-			
+			state_machine.dispatch("to_hitstun")
 			
 			var randomNum = randi_range(1, 3)
 			

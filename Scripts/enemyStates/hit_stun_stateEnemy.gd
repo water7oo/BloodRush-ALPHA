@@ -1,15 +1,29 @@
 extends LimboState
 
 @onready var state_machine: LimboHSM = $LimboHSM
+@export var attackHitBox: Area3D
+
+@export var recoveryValue: float = 3.0
 
 
-# Read if enemy is being hit, if so enter this state and then exit after some time
-
+@export var enemyHitRecoveryDuration: float = 3.0
+var enemyHitRecoveryTimer: float = 0.0
 
 func _enter() -> void:
 	print("enemyHitstun")
-	await get_tree().create_timer(1).timeout
-	agent.state_machine.dispatch("to_idle")
+	enemyHitRecoveryTimer = enemyHitRecoveryDuration
+	attackHitBox.monitoring = false
+	attackHitBox.monitorable = false
 
+	
+
+func _process(delta: float) -> void:
+	enemyHitRecoveryTimer -= delta
+	if enemyHitRecoveryTimer <= 0:
+		agent.state_machine.dispatch("to_idle")
+	pass
 func _exit() -> void:
+	attackHitBox.monitoring = true
+	attackHitBox.monitorable = true
+	enemyHitRecoveryTimer = 0.0
 	pass
