@@ -32,6 +32,8 @@ extends CharacterBody3D
 @export var enemyStats: Resource
 @onready var enemyNameLabel = $enemyNameLabel
 
+const DAMAGE_NUM = preload("uid://cotsnmovmqwww")
+
 func _ready():
 	if enemyStats:
 		startHealth()
@@ -133,7 +135,15 @@ func takeDamageEnemy(damage: float) -> void:
 
 			if EnemyHealthBar:
 				EnemyHealthBar.value = enemyStats.current_health
-
+			
+			
+			var newDamageLabel = DAMAGE_NUM.instantiate() as Label3D
+			
+			newDamageLabel.text = str(damage)
+			newDamageLabel.global_position = global_position + Vector3(-1,2,0)
+			get_tree().current_scene.call_deferred("add_child", newDamageLabel)
+			
+			
 			if enemyStats.current_health <= 0:
 				state_machine.dispatch("to_death")
 				enemyHurtBox.monitoring = false

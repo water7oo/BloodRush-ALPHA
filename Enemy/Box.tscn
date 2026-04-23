@@ -450,6 +450,7 @@ anim_speed_max = 1.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_0hvkj"]
 
 [node name="Enemy" type="CharacterBody3D" unique_id=457208653 node_paths=PackedStringArray("enemyHealthManagerNode", "deathSound", "crateHitSound1") groups=["Enemies"]]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_tk8en")
 enemyHealthManagerNode = NodePath("enemyHurtBox")
 deathSound = NodePath("deathSound")

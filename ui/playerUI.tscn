@@ -42,6 +42,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="player_health_label" type="ProgressBar" parent="." unique_id=906913696]
+visible = false
 texture_filter = 3
 layout_mode = 1
 anchors_preset = 8
@@ -64,6 +65,7 @@ show_percentage = false
 script = ExtResource("2_spkgn")
 
 [node name="State debug" type="Label" parent="." unique_id=2051501831]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -85,6 +87,7 @@ theme_override_font_sizes/font_size = 16
 text = "state debug:"
 
 [node name="PlayerSpeedLabel" type="Label" parent="." unique_id=1672601588]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -92,9 +95,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -634.0
-offset_top = 189.0
+offset_top = -311.0
 offset_right = -553.0
-offset_bottom = 205.0
+offset_bottom = -295.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -123,6 +126,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_7rdeg")
 value = 1.0
 
 [node name="AttackCooldown" type="Label" parent="." unique_id=1404397761]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -144,6 +148,7 @@ theme_override_font_sizes/font_size = 18
 text = "light attack timer: 0.0"
 
 [node name="AttackCooldownMedium" type="Label" parent="." unique_id=1718640882]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -165,6 +170,7 @@ theme_override_font_sizes/font_size = 18
 text = "medium attack timer: 0.0"
 
 [node name="AttackCooldownHeavy" type="Label" parent="." unique_id=165776979]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -186,6 +192,7 @@ theme_override_font_sizes/font_size = 18
 text = "heavy attack timer: 0.0"
 
 [node name="AttackCooldownUpper" type="Label" parent="." unique_id=303414773]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -207,6 +214,7 @@ theme_override_font_sizes/font_size = 18
 text = "upper attack timer: 0.0"
 
 [node name="JumpCancelTimer" type="Label" parent="." unique_id=1523214494]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -228,6 +236,7 @@ theme_override_font_sizes/font_size = 18
 text = "jump cancel timer: 0.0"
 
 [node name="JumpCancelDelay" type="Label" parent="." unique_id=1772536617]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -250,13 +259,15 @@ text = "jump cancel delay: 0.0"
 
 [node name="ComboCounter2" parent="." unique_id=733443350 instance=ExtResource("4_25w1a")]
 layout_mode = 1
-offset_left = 518.0
-offset_top = 213.0
-offset_right = 518.0
-offset_bottom = 213.0
+offset_left = -529.0
+offset_top = 189.0
+offset_right = -529.0
+offset_bottom = 189.0
+rotation = -0.11227144
 mouse_filter = 1
 
 [node name="CanCancelDebug" type="Label" parent="." unique_id=353945872]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -278,6 +289,7 @@ theme_override_font_sizes/font_size = 18
 text = "can cancel: false"
 
 [node name="UpperSwapDebug" type="Label" parent="." unique_id=642084624]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

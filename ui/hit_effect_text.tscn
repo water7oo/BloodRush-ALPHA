@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://cp6vtcnob76f0"]
+
+[ext_resource type="Texture2D" uid="uid://bi8w8dbx7mcw5" path="res://ui/HitText1Effect.png" id="1_6oy3h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6oy3h"]
+transparency = 1
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_6oy3h")
+uv1_scale = Vector3(0.95, 0.95, 0.95)
+texture_filter = 0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = true
+proximity_fade_distance = 52.8
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iss2s"]
+emission_shape = 1
+emission_sphere_radius = 0.5
+gravity = Vector3(0, 0, 0)
+damping_max = 14.516
+scale_min = 3.0
+scale_max = 3.0
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_imfe1"]
+
+[node name="HitEffectText" type="Node3D" unique_id=166482147]
+
+[node name="move_dust" type="GPUParticles3D" parent="." unique_id=901287573]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.611789)
+material_override = SubResource("StandardMaterial3D_6oy3h")
+amount = 1
+speed_scale = 5.0
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+trail_lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_iss2s")
+draw_pass_1 = SubResource("QuadMesh_imfe1")

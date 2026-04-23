@@ -1,19 +1,19 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://dcuvjs33ebpe3"]
 
-[ext_resource type="Texture2D" uid="uid://dl3j1ny70t032" path="res://addons/kenney_prototype_textures/orange/texture_09.png" id="1_v6veh"]
+[ext_resource type="Texture2D" uid="uid://dx0vwoe766a8c" path="res://addons/kenney_prototype_textures/dark/texture_08.png" id="1_5er1b"]
 [ext_resource type="Shader" uid="uid://b1ud5q41710hr" path="res://Shaders/OUTLINES.gdshader" id="2_5er1b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fnj2k"]
 render_priority = 0
 shader = ExtResource("2_5er1b")
-shader_parameter/outline_color = Color(0.70001364, 0.32320523, 0, 1)
+shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/outline_width = 1.0
 
 [resource]
 next_pass = SubResource("ShaderMaterial_fnj2k")
 diffuse_mode = 3
 specular_mode = 1
-albedo_texture = ExtResource("1_v6veh")
+albedo_texture = ExtResource("1_5er1b")
 roughness = 0.0
 uv1_scale = Vector3(11, 11, 11)
 uv1_triplanar_sharpness = 0.233259

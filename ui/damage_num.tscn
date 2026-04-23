@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cotsnmovmqwww"]
+
+[ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="1_0enkt"]
+[ext_resource type="Script" uid="uid://clwco7obeqtyd" path="res://ui/damage_num.gd" id="2_l0k6j"]
+
+[node name="DamageNum" type="Label3D" unique_id=1812489564]
+process_mode = 3
+pixel_size = 0.02
+billboard = 1
+no_depth_test = true
+texture_filter = 0
+outline_modulate = Color(0.27387273, 0.27387273, 0.27387273, 1)
+text = "0.0"
+font = ExtResource("1_0enkt")
+uppercase = true
+script = ExtResource("2_l0k6j")
