@@ -61,7 +61,7 @@
 [ext_resource type="AudioStream" uid="uid://2tp5nhpg7kee" path="res://Sounds/multiHit1.wav" id="51_wa0mo"]
 [ext_resource type="AudioStream" uid="uid://bp61wpvxuqnmc" path="res://Sounds/multiHitFinish1.wav" id="52_ori5w"]
 [ext_resource type="AudioStream" uid="uid://b6sn7x5hdlq8h" path="res://Sounds/deadCombo1.wav" id="55_3gnjc"]
-[ext_resource type="PackedScene" uid="uid://5covdmtwkykp" path="res://Player/player.tscn" id="58_vkj36"]
+[ext_resource type="PackedScene" uid="uid://5covdmtwkykp" path="res://Player/Player.tscn" id="58_vkj36"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fvqnm"]
 custom_solver_bias = 0.305
@@ -490,8 +490,12 @@ moveDust = NodePath("../../move_dust")
 landDust = NodePath("../../LandDust")
 jumpResource = ExtResource("11_yxw21")
 
-[node name="RunJumpState" type="LimboState" parent="LimboHSM" unique_id=2022702834]
+[node name="RunJumpState" type="LimboState" parent="LimboHSM" unique_id=2022702834 node_paths=PackedStringArray("jump1Sound", "land1Sound", "moveDust", "landDust")]
 script = ExtResource("8_ec3d6")
+jump1Sound = NodePath("../../Jump1Sound")
+land1Sound = NodePath("../../LandSound")
+moveDust = NodePath("../../move_dust")
+landDust = NodePath("../../LandDust")
 runJumpResource = ExtResource("13_q8lqs")
 
 [node name="BurstState" type="LimboState" parent="LimboHSM" unique_id=1209353207 node_paths=PackedStringArray("Dodge1Sound")]

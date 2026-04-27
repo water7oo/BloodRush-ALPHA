@@ -111,6 +111,7 @@ func _start_attack() -> void:
 
 
 func _enable_hitbox():
+	Global.stretch_forward($"../../RootNode/player2")
 	if attack_box:
 		attack_box_debug.visible = true
 		attack_box_col.visible = true

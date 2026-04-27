@@ -174,7 +174,7 @@ func _start_attack() -> void:
 func _enable_hitbox():
 	if attack_box:
 		if !Global.isMultiHitUpper:
-
+			Global.stretch_forward($"../../RootNode/player2")
 			attack_box_debug.visible = true
 			attack_box_col.visible = true
 			attack_box.monitoring = true
@@ -185,7 +185,7 @@ func _enable_hitbox():
 
 func _OnHitbox():
 	if attack_box:
-
+		Global.stretch_forward($"../../RootNode/player2")
 		attack_box_debug.visible = true
 		attack_box_col.visible = true
 		attack_box.monitoring = true

@@ -79,3 +79,45 @@ func shakeTween(node):
 	TweenFX.shake(node)
 	TweenFX.shake(node, 0.1, 8, strength)
 		
+
+func stretch_up(node):
+	var base_scale: Vector3
+	base_scale = node.scale
+	var tween = create_tween()
+
+	var stretch = Vector3(0.9, 1.2, 0.9)
+	var target_scale = base_scale * stretch
+
+	var height_offset = 1 * base_scale.y  # scale-aware
+
+	tween.parallel().tween_property(node, "scale", target_scale, 0.15)\
+		.set_trans(Tween.TRANS_QUAD)\
+		.set_ease(Tween.EASE_OUT)
+
+	tween.parallel().tween_property(node, "position:y", height_offset, 0.15)
+
+	tween.tween_property(node, "scale", base_scale, 0.12)
+	tween.parallel().tween_property(node, "position:y", 0.0, 0.12)
+
+
+func squash_land(node):
+	var base_scale: Vector3
+	base_scale = node.scale
+	var tween = create_tween()
+
+	var squash = Vector3(1.08, 0.75, 1.08)
+	var target_scale = base_scale * squash
+
+	tween.parallel().tween_property(node, "scale", target_scale, 0.08)
+	tween.tween_property(node, "scale", base_scale, 0.1)
+
+func stretch_forward(node):
+	var base_scale: Vector3
+	base_scale = node.scale
+	var tween = create_tween()
+
+	var stretch = Vector3(0.9, 0.9, 1.2)  # Z is forward in Godot
+	var target_scale = base_scale * stretch
+
+	tween.tween_property(node, "scale", target_scale, 0.12)
+	tween.tween_property(node, "scale", base_scale, 0.1)

@@ -6,7 +6,11 @@ extends LimboState
 @onready var state_machine: LimboHSM = $LimboHSM
 @onready var armature = $"../../RootNode"
 
+@export var jump1Sound: AudioStreamPlayer
+@export var land1Sound: AudioStreamPlayer
 
+@export var moveDust: GPUParticles3D
+@export var landDust: GPUParticles3D
 var velocity = Vector3.ZERO
 
 
@@ -14,6 +18,7 @@ var velocity = Vector3.ZERO
 
 
 func _enter() -> void:
+	Global.stretch_up($"../../RootNode/player2")
 	if agent:
 		velocity = agent.velocity
 	agent.velocity.y = runJumpResource.JUMP_VELOCITY
@@ -28,6 +33,19 @@ func _enter() -> void:
 
 func _update(delta: float) -> void:
 	player_runjump(delta)
+	
+
+
+	var is_on_floor = agent.is_on_floor()
+	if animation_player:
+		animation_player.play("jumpIdle")
+	if agent.state_machine.get_active_state() == self:
+		if is_on_floor and not Global.was_on_floor:
+			land1Sound.play()
+			landDust.restart()
+			landDust.emitting = true
+			Global.squash_land($"../../RootNode/player2")
+			agent.state_machine.dispatch("to_idle")
 	agent.move_and_slide()
 
 

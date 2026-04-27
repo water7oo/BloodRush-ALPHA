@@ -18,6 +18,7 @@ var velocity = Vector3.ZERO
 @export var jumpResource: Resource
 
 func _enter() -> void:
+	Global.stretch_up($"../../RootNode/player2")
 	if agent:
 		velocity = agent.velocity
 	if moveDust.emitting:
@@ -45,7 +46,7 @@ func _update(delta: float) -> void:
 			land1Sound.play()
 			landDust.restart()
 			landDust.emitting = true
-
+			Global.squash_land($"../../RootNode/player2")
 			agent.state_machine.dispatch("to_idle")
 		
 
@@ -59,7 +60,6 @@ func player_jump(delta: float) -> void:
 	var has_input = direction != Vector3.ZERO
 
 	if has_input:
-		# FIXED rotation
 		armature.rotation.y = lerp_angle(
 			armature.rotation.y,
 			atan2(-direction.x, -direction.z),
