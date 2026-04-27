@@ -7,17 +7,18 @@ extends LimboState
 @onready var EnemyMeshMat
 @onready var parent = $"../.."
 @export var deathSound: AudioStreamPlayer
+@onready var animationPlayer = $"../../AnimationPlayer"
 
-# If enemy health reaches 0, enter this state and never exit
+var was_on_floor: bool = false
+var is_dying = true 
 
 func _enter() -> void:
-	
+	handle_death_animation()
 	if EnemyMesh:
 		EnemyMeshMat = EnemyMesh.get_active_material(0)
 		onDeathMaterialSwap()
 	
-	if deathSound:
-		deathSound.play()
+
 		
 		
 	parent.enemyStats.isDead = true
@@ -29,12 +30,28 @@ func _enter() -> void:
 	
 	
 	
-	await get_tree().create_timer(.3).timeout
+	deleteEnemy(6)
+	
+
+func deleteEnemy(time):
+	await get_tree().create_timer(time).timeout
 	agent.set_physics_process(false)
 	agent.set_process(false)
 	$"../..".queue_free()
 	
+	
+func handle_death_animation():
+	if !agent.is_on_floor():
+		if animationPlayer.current_animation != "SpinOut":
+			animationPlayer.play("SpinOut")
+	else:
+		if animationPlayer.current_animation != "dead":
+			animationPlayer.play("dead")
 
+	if agent.is_on_floor() and !was_on_floor:
+		animationPlayer.play("dead")
+	
+	was_on_floor = agent.is_on_floor()
 
 func onDeathMaterialSwap():
 	if EnemyMeshMat is StandardMaterial3D:

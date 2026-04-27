@@ -1,10 +1,22 @@
 [gd_scene format=3 uid="uid://3uyo0xcpn6jw"]
 
-[ext_resource type="FontFile" uid="uid://cg2l5vxyisqd1" path="res://ui/mario-kart-ds-oultine-font/mario-kart-ds-oultine-font.ttf" id="1_4em0e"]
-[ext_resource type="Script" uid="uid://q5wemkhn1k25" path="res://ui/ComboLabel.gd" id="2_iaia8"]
+[ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="1_gs0fg"]
+[ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="3_gs0fg"]
+[ext_resource type="StyleBox" uid="uid://b7b3hqmwfdjgv" path="res://MaterialTextures/UI_COOLDOWN_BACK.tres" id="4_hag1h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsh38"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_bottom_right = 340
+anti_aliasing = false
 
 [node name="ComboCounter" type="Control" unique_id=733443350]
 process_mode = 3
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -14,7 +26,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ComboCounter" type="Label" parent="." unique_id=1467398908]
+[node name="ComboCounter" type="RichTextLabel" parent="." unique_id=2121033999]
 process_mode = 3
 visible = false
 layout_mode = 1
@@ -23,38 +35,56 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -93.0
-offset_top = -55.5
-offset_right = 93.0
-offset_bottom = 55.5
+offset_left = -163.0
+offset_top = -40.75
+offset_right = 161.0
+offset_bottom = 38.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_4em0e")
-theme_override_font_sizes/font_size = 110
-text = "X0"
-script = ExtResource("2_iaia8")
+theme_override_constants/outline_size = 18
+theme_override_fonts/normal_font = ExtResource("1_gs0fg")
+theme_override_font_sizes/normal_font_size = 87
+bbcode_enabled = true
+text = "[center][wave] x000 [/wave]"
 
-[node name="ComboSpeech" type="Label" parent="." unique_id=691754693]
+[node name="ComboSpeech" type="RichTextLabel" parent="." unique_id=1885809574]
 process_mode = 3
 visible = false
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -39.0
-offset_top = -88.0
-offset_right = 148.0
-offset_bottom = 24.291664
+offset_left = -211.0
+offset_top = -65.0
+offset_right = 226.5
+offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_4em0e")
-theme_override_font_sizes/font_size = 20
-text = "--"
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("1_gs0fg")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[color=white][shake][shake][wave amp=0 freq=5 connected=1][center]speech[/center][/wave]"
+
+[node name="ComboGuage" parent="." unique_id=1074283083 instance=ExtResource("3_gs0fg")]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.0
+offset_top = 31.0
+offset_right = 65.0
+offset_bottom = 39.0
+mouse_filter = 1
+theme_override_styles/background = ExtResource("4_hag1h")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qsh38")
+max_value = 0.4
+value = 0.07

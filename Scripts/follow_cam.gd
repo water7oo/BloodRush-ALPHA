@@ -133,10 +133,9 @@ func playShake():
 	if enemyStats:
 		if enemyStats.taking_damage == true:
 			applyShake(.02,0.08)
-			pass
-		if enemyStats.taking_damage == true:
-			applyShake(.02,0.08)
-			pass
+			print("cam shake")
+	else:
+		print("enemy stats are null")
 
 
 func _on_area_3d_area_entered(area: Area3D) -> void:

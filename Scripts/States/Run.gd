@@ -101,6 +101,7 @@ func player_run(delta: float) -> void:
 		agent.state_machine.dispatch("to_idle")
 
 
+
 func initialize_runJump(delta: float) -> void:
 	if Input.is_action_just_pressed("move_jump") and agent.is_on_floor():
 		#animationTree.set("parameters/Ground_Blend2/blend_amount", -1)

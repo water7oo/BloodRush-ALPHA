@@ -5,6 +5,8 @@
 [ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="2_u5gm8"]
 [ext_resource type="PackedScene" uid="uid://bi1x4qby8hoyw" path="res://ui/ui_cooldowns.tscn" id="3_spkgn"]
 [ext_resource type="PackedScene" uid="uid://3uyo0xcpn6jw" path="res://ui/combo_counter.tscn" id="4_25w1a"]
+[ext_resource type="Texture2D" uid="uid://bf72n73g686pa" path="res://ui/PauseButton.png" id="6_25w1a"]
+[ext_resource type="Texture2D" uid="uid://cem23ou7ascah" path="res://ui/HelathUI.png" id="7_rj02x"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rj02x"]
 bg_color = Color(0.623529, 0.839216, 0.0117647, 1)
@@ -29,15 +31,9 @@ anti_aliasing = false
 [node name="PlayerUi" type="Control" unique_id=719208677]
 process_mode = 3
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -640.0
-offset_top = -360.0
-offset_right = 640.0
-offset_bottom = 360.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -87,7 +83,6 @@ theme_override_font_sizes/font_size = 16
 text = "state debug:"
 
 [node name="PlayerSpeedLabel" type="Label" parent="." unique_id=1672601588]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -259,11 +254,12 @@ text = "jump cancel delay: 0.0"
 
 [node name="ComboCounter2" parent="." unique_id=733443350 instance=ExtResource("4_25w1a")]
 layout_mode = 1
-offset_left = -529.0
-offset_top = 189.0
-offset_right = -529.0
-offset_bottom = 189.0
+offset_left = -461.0
+offset_top = 200.00006
+offset_right = -461.0
+offset_bottom = 200.00006
 rotation = -0.11227144
+scale = Vector2(1.425, 1.425)
 mouse_filter = 1
 
 [node name="CanCancelDebug" type="Label" parent="." unique_id=353945872]
@@ -309,3 +305,38 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_u5gm8")
 theme_override_font_sizes/font_size = 33
 text = "upperswap:  00"
+
+[node name="Pause_UI" type="TextureRect" parent="." unique_id=81122251]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 567.0
+offset_top = -352.0
+offset_right = 640.0
+offset_bottom = -280.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("6_25w1a")
+
+[node name="BR_UI" type="TextureRect" parent="." unique_id=2054189836]
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = 231.0
+offset_right = -122.0
+offset_bottom = 347.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("7_rj02x")

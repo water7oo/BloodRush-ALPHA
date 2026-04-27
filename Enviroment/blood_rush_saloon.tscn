@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://ht3sqkorbwcn"]
+
+[ext_resource type="PackedScene" uid="uid://b0ghvel21n8vf" path="res://Enviroment/BloodRushSaloon.glb" id="1_3x047"]
+[ext_resource type="Material" uid="uid://dcuvjs33ebpe3" path="res://MaterialTextures/Room.tres" id="2_f3x85"]
+
+[node name="BloodRushSaloon" unique_id=901536246 instance=ExtResource("1_3x047")]
+
+[node name="Cylinder" parent="." index="0" unique_id=239914161]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cylinder_001" parent="." index="1" unique_id=1352849138]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cylinder_002" parent="." index="2" unique_id=789206295]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cylinder_003" parent="." index="3" unique_id=1586592974]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cone" parent="." index="4" unique_id=1418272890]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cylinder_004" parent="." index="5" unique_id=17720723]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube" parent="." index="6" unique_id=1919593638]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cylinder_005" parent="." index="7" unique_id=1092082795]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_001" parent="." index="8" unique_id=1596938187]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cylinder_006" parent="." index="9" unique_id=830538116]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cylinder_007" parent="." index="10" unique_id=986177819]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cylinder_008" parent="." index="11" unique_id=1387560107]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_002" parent="." index="12" unique_id=100293711]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_003" parent="." index="13" unique_id=105500248]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_004" parent="." index="14" unique_id=1737203608]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_005" parent="." index="15" unique_id=1661964313]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_006" parent="." index="16" unique_id=1823883432]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_007" parent="." index="17" unique_id=550819075]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_008" parent="." index="18" unique_id=328144017]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_009" parent="." index="19" unique_id=1116563429]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_010" parent="." index="20" unique_id=1902089742]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_011" parent="." index="21" unique_id=1234734097]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_012" parent="." index="22" unique_id=277270056]
+material_override = ExtResource("2_f3x85")
+
+[node name="Plane" parent="." index="23" unique_id=2080690784]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_013" parent="." index="24" unique_id=1240883822]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_014" parent="." index="25" unique_id=138393787]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_015" parent="." index="26" unique_id=1229767490]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_016" parent="." index="27" unique_id=1539009948]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_017" parent="." index="28" unique_id=179294167]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_018" parent="." index="29" unique_id=168559914]
+material_override = ExtResource("2_f3x85")
+
+[node name="Cube_019" parent="." index="30" unique_id=221983676]
+material_override = ExtResource("2_f3x85")

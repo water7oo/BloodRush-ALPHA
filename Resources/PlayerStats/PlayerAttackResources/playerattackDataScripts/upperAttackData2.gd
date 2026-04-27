@@ -40,3 +40,8 @@ var hit_count: int = 0
 @export var time_between_hits: float = .05
 
 var isMultiHit = true
+
+@export var knockback_force_finisher: float = 10.0
+@export var knockback_force_default: float = 3.0
+
+@export var knockback_direction_finisher: Vector3 = Vector3(0, 1, 1)

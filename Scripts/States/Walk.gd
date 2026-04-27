@@ -77,7 +77,32 @@ func player_movement(delta: float) -> void:
 
 	velocity.y = agent.velocity.y
 	agent.velocity = velocity
+	
+	if agent.is_on_floor():
+		var target_up = agent.get_floor_normal().normalized()
+		var current_up = agent.global_transform.basis.y.normalized()
 
+		var dot = clamp(current_up.dot(target_up), -1.0, 1.0)
+
+		# Only rotate if there's a meaningful difference
+		if dot < 0.999 && target_up.y > 0.5:
+			var axis = current_up.cross(target_up).normalized()
+			var angle = acos(dot)
+
+			# Smooth rotation (frame-rate independent)
+			var t = 1.0 - exp(-10.0 * delta)
+			agent.rotate(axis, angle * t)
+		
+func align_with_y(xform, new_y):
+	new_y = new_y.normalized()
+
+	var forward = -xform.basis.z.normalized()
+	var right = forward.cross(new_y).normalized()
+	forward = new_y.cross(right).normalized()
+
+	xform.basis = Basis(right, new_y, forward)
+	return xform
+	
 var left_foot_down = false
 var right_foot_down = false
 

@@ -7,7 +7,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wrghe"]
 render_priority = 0
 shader = ExtResource("3_c7ywv")
-shader_parameter/shadows_enabled = true
+shader_parameter/shadows_enabled = false
 shader_parameter/highlights_enabled = false
 shader_parameter/shadow_strength = 0.999999977648
 shader_parameter/highlight_strength = 0.1
@@ -31,14 +31,14 @@ texture_filter = 0
 [node name="bush" unique_id=1485533220 instance=ExtResource("1_cp1h0")]
 transform = Transform3D(1, 0, 0, 0, -0.9659258, -0.25881913, 0, 0.25881913, -0.9659258, 0, 0, 0)
 
-[node name="Plane" parent="." index="0" unique_id=1480938160]
+[node name="Plane" parent="." index="0" unique_id=1073295410]
 material_override = SubResource("StandardMaterial3D_c7ywv")
 
-[node name="Plane_001" parent="." index="1" unique_id=1240179447]
+[node name="Plane_001" parent="." index="1" unique_id=306577931]
 material_override = SubResource("StandardMaterial3D_c7ywv")
 
-[node name="Plane_002" parent="." index="2" unique_id=1806422543]
+[node name="Plane_002" parent="." index="2" unique_id=753173534]
 material_override = SubResource("StandardMaterial3D_c7ywv")
 
-[node name="Plane_003" parent="." index="3" unique_id=450516642]
+[node name="Plane_003" parent="." index="3" unique_id=1643243381]
 material_override = SubResource("StandardMaterial3D_c7ywv")

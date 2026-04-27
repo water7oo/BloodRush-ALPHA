@@ -3,9 +3,8 @@
 [ext_resource type="Script" uid="uid://bs0oo1mwxyf4u" path="res://Enemy/MainEnemy.gd" id="1_a6utb"]
 [ext_resource type="ArrayMesh" uid="uid://brq7yfue6csrm" path="res://Enemy/Sandbag.obj" id="2_tuc0k"]
 [ext_resource type="Script" uid="uid://ca27x6ifxqwln" path="res://Scripts/enemyStates/idle_stateEnemy.gd" id="2_wyb1b"]
-[ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="3_4topa"]
+[ext_resource type="FontFile" uid="uid://dnl3cremj1anv" path="res://demo/assets/fonts/PressStart2P.ttf" id="3_1dgx4"]
 [ext_resource type="Script" uid="uid://dspxpwfwxbk5e" path="res://Scripts/enemyStates/walk_stateEnemy.gd" id="3_o88hp"]
-[ext_resource type="Texture2D" uid="uid://7qgg4do3dwtm" path="res://Enemy/Sandbag.fbm/7467e88d.png" id="3_tuc0k"]
 [ext_resource type="Shader" uid="uid://c8gnrj13ddg2o" path="res://FX/hitFlash.gdshader" id="4_a6utb"]
 [ext_resource type="Script" uid="uid://d0r5hh1u8s67k" path="res://Scripts/enemyStates/run_stateEnemy.gd" id="4_jdsf8"]
 [ext_resource type="Script" uid="uid://cm0rl70t4u6fn" path="res://FX/flashDamage.gd" id="4_wyb1b"]
@@ -13,9 +12,7 @@
 [ext_resource type="Resource" uid="uid://bjw8a4lyjyyck" path="res://Resources/EnemyStats/enemyAttackStats.tres" id="5_fauao"]
 [ext_resource type="Script" uid="uid://doewkbikq4aok" path="res://Scripts/enemyStates/dodge_stateEnemy.gd" id="6_bq7li"]
 [ext_resource type="Material" uid="uid://kddykiqv2ir2" path="res://MaterialTextures/Enemy.tres" id="6_jdsf8"]
-[ext_resource type="Texture2D" uid="uid://ckvxfd6pdd8du" path="res://My Textures/2ndPassAnimations_PixelTextureGrid_32.png" id="7_djeph"]
 [ext_resource type="Script" uid="uid://dc4owc5rnl1p6" path="res://Scripts/enemyStates/attack_stateEnemy.gd" id="7_n3h2g"]
-[ext_resource type="Texture2D" uid="uid://r03mrngq4wtn" path="res://My Textures/2ndPassAnimations_PixelTextureGrid_48.png" id="8_bq7li"]
 [ext_resource type="Script" uid="uid://cklcx2km70w8h" path="res://Scripts/enemyStates/air_attack_stateEnemy.gd" id="8_dexmo"]
 [ext_resource type="Script" uid="uid://ywk4flkanwe4" path="res://Scripts/enemyHealthManager.gd" id="9_n3h2g"]
 [ext_resource type="Script" uid="uid://g5ptkqitwrcd" path="res://Scripts/enemyStates/hit_stun_stateEnemy.gd" id="9_oiwxk"]
@@ -23,22 +20,28 @@
 [ext_resource type="Script" uid="uid://2mcfdc31nc4h" path="res://Enemy/enemyAttack.gd" id="11_a6utb"]
 [ext_resource type="Texture2D" uid="uid://bieag6y18328y" path="res://FX/Explosion_Sheet.png" id="11_oiwxk"]
 [ext_resource type="Script" uid="uid://colgt8jseih4h" path="res://Scripts/enemyStates/death_stateEnemy.gd" id="11_ulp1q"]
-[ext_resource type="Texture2D" uid="uid://dburebixgi0qs" path="res://My Textures/Sprite_FX_Blast_0017.png" id="13_tuc0k"]
 [ext_resource type="Script" uid="uid://djfdwolmvokwk" path="res://Enemy/noticePlayer.gd" id="13_ulp1q"]
 [ext_resource type="Shader" uid="uid://bpu5grc6v8hhm" path="res://FX/flashing.gdshader" id="15_fauao"]
 [ext_resource type="Shader" uid="uid://crwsrlgfy4fjb" path="res://addons/GrassDylearn/Shaders/Outline.gdshader" id="18_fauao"]
+[ext_resource type="Texture2D" uid="uid://du02e72l1hyb3" path="res://Enemy/Sandbag.fbm/7467e88d2.png" id="19_4topa"]
 [ext_resource type="Resource" uid="uid://cdrmc6otk3eol" path="res://Resources/EnemyStats/enemyStats.tres" id="21_i335x"]
-[ext_resource type="AudioStream" uid="uid://b6sn7x5hdlq8h" path="res://Sounds/deadCombo1.wav" id="25_fauao"]
 [ext_resource type="Texture2D" uid="uid://c1sktcvm2d8el" path="res://FX/Sprite_FX_Blast_0010.png2.png" id="26_6g3nf"]
+[ext_resource type="AudioStream" uid="uid://c06pib0npdcyj" path="res://Sounds/snd_bigdoor_open.wav" id="26_fauao"]
+[ext_resource type="Texture2D" uid="uid://c0km34oyfp5l7" path="res://FX/Sprite_FX_Blast_0017.png" id="27_6g3nf"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_0hvkj"]
 viewport_path = NodePath("HealthBar/SubViewport")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hvkj"]
 bg_color = Color(0, 0, 0, 1)
+corner_detail = 1
+anti_aliasing = false
+anti_aliasing_size = 0.044
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_866rt"]
 bg_color = Color(0.97766954, 0.10013088, 0, 1)
+anti_aliasing = false
+anti_aliasing_size = 3.172
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_u8c5v"]
 size = Vector3(0.660662, 1.02917, 0.50911)
@@ -62,9 +65,9 @@ shader = ExtResource("18_fauao")
 shader_parameter/shadows_enabled = true
 shader_parameter/highlights_enabled = false
 shader_parameter/shadow_strength = 0.999999977648
-shader_parameter/highlight_strength = 0.1
+shader_parameter/highlight_strength = 0.0
 shader_parameter/highlight_color = Color(1, 1, 1, 1)
-shader_parameter/shadow_color = Color(0.2123048, 0.21230483, 0.21230477, 1)
+shader_parameter/shadow_color = Color(0.39688927, 0.39688927, 0.39688924, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3ae78"]
 render_priority = 0
@@ -78,7 +81,7 @@ next_pass = SubResource("ShaderMaterial_3ae78")
 shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
-albedo_texture = ExtResource("3_tuc0k")
+albedo_texture = ExtResource("19_4topa")
 texture_filter = 0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ffc8c"]
@@ -216,7 +219,7 @@ resource_name = "Cowboy_Hat"
 cull_mode = 2
 shading_mode = 0
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("7_djeph")
+albedo_texture = ExtResource("26_6g3nf")
 texture_filter = 2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ajm2o"]
@@ -243,7 +246,7 @@ resource_name = "Cowboy_HatBuckle"
 cull_mode = 2
 shading_mode = 0
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("8_bq7li")
+albedo_texture = ExtResource("26_6g3nf")
 texture_filter = 2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_vdll3"]
@@ -318,7 +321,6 @@ animation = &"idle_low"
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_c683h"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ch611"]
-graph_offset = Vector2(-481.849, -75.81593)
 nodes/output/position = Vector2(500, 60)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_ea1wc")
 nodes/Animation/position = Vector2(-300, 120)
@@ -333,7 +335,7 @@ nodes/Blend2/position = Vector2(-60, 80)
 node_connections = [&"output", 0, &"Blend2 2", &"Blend2", 0, &"Animation", &"Blend2", 1, &"Animation 2", &"Blend2 2", 0, &"Blend2", &"Blend2 2", 1, &"Animation 3"]
 
 [sub_resource type="Animation" id="Animation_0hvkj"]
-length = 0.001
+length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -345,6 +347,30 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0, -3.1415925, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemyMesh:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.845, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemyMesh:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_866rt"]
@@ -379,6 +405,46 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Vector3(-0.54105204, 0, 0), Vector3(-0.74351025, 0, -0.5061455), Vector3(-6.604326, 0, 0), Vector3(-4.178318, 0, 2.9321532)]
+}
+
+[sub_resource type="Animation" id="Animation_6g3nf"]
+resource_name = "dead"
+length = 7.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.033333335, 0),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1.5707964, -3.1415927, 0), Vector3(-1.5707964, -3.1415927, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemyMesh:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemyMesh:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.7333333, 3.083333, 3.3666666, 3.7333329, 4.0999994, 4.366667, 4.5, 4.633333, 4.7666674, 4.9, 5.0333333, 5.133333, 5.2333336, 5.3333335, 5.4000006, 5.5000005, 5.5666666, 5.666667, 5.733333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false]
 }
 
 [sub_resource type="Animation" id="Animation_fauao"]
@@ -443,6 +509,7 @@ _data = {
 &"RESET": SubResource("Animation_0hvkj"),
 &"SpinOut": SubResource("Animation_866rt"),
 &"airJuggle": SubResource("Animation_bljps"),
+&"dead": SubResource("Animation_6g3nf"),
 &"takeDamage1": SubResource("Animation_fauao"),
 &"takeDamage2": SubResource("Animation_4topa"),
 &"takeDamage3": SubResource("Animation_rlw8d")
@@ -508,7 +575,7 @@ transparency = 1
 shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
-albedo_texture = ExtResource("13_tuc0k")
+albedo_texture = ExtResource("27_6g3nf")
 uv1_scale = Vector3(0.865, 0.865, 0.865)
 uv1_offset = Vector3(0.015, 0.055, -0.035)
 texture_filter = 2
@@ -538,10 +605,11 @@ enemyStats = ExtResource("21_i335x")
 
 [node name="enemyNameLabel" type="Label3D" parent="." unique_id=593637493]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0328918, 0)
+visible = false
 billboard = 1
 texture_filter = 0
 text = "--"
-font = ExtResource("3_4topa")
+font = ExtResource("3_1dgx4")
 font_size = 130
 outline_size = 22
 uppercase = true
@@ -568,6 +636,7 @@ transparent_bg = true
 size = Vector2i(39, 106)
 
 [node name="ProgressBar" type="ProgressBar" parent="HealthBar/SubViewport" unique_id=822217650]
+texture_filter = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -576,6 +645,8 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_0hvkj")
 theme_override_styles/fill = SubResource("StyleBoxFlat_866rt")
+value = 10.31
+show_percentage = false
 
 [node name="enemyHurtBox" type="Area3D" parent="." unique_id=415868738]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.82950103, 0.336345)
@@ -633,7 +704,7 @@ script = ExtResource("11_ulp1q")
 deathSound = NodePath("../../deathSound")
 
 [node name="EnemyMesh" type="MeshInstance3D" parent="." unique_id=295370142]
-transform = Transform3D(-0.21499997, 0, -3.2464094e-08, 0, 0.21499997, 0, 3.2464094e-08, 0, -0.21499997, 0, 1.5785499, 0)
+transform = Transform3D(-0.21499997, 0, -3.2464094e-08, 0, 0.21499997, 0, 3.2464094e-08, 0, -0.21499997, 0, 1.845, 0)
 material_overlay = SubResource("ShaderMaterial_4topa")
 mesh = ExtResource("2_tuc0k")
 surface_material_override/0 = SubResource("StandardMaterial3D_wyb1b")
@@ -872,8 +943,10 @@ process_callback = 0
 autostart = true
 
 [node name="deathSound" type="AudioStreamPlayer" parent="." unique_id=498826232]
-stream = ExtResource("25_fauao")
-pitch_scale = 0.77
+stream = ExtResource("26_fauao")
+
+[node name="Finisher1" type="AudioStreamPlayer" parent="." unique_id=1917245587]
+stream = ExtResource("26_fauao")
 
 [node name="slideDust" type="GPUParticles3D" parent="." unique_id=191014370]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)

@@ -1,20 +1,16 @@
 [gd_scene format=3 uid="uid://ickviuufl64q"]
 
-[ext_resource type="Script" uid="uid://c78j4g7f4qquj" path="res://Swappables/upper_swap_2.gd" id="1_nwu4h"]
-[ext_resource type="Shader" uid="uid://b1ud5q41710hr" path="res://Shaders/OUTLINES.gdshader" id="2_uc1ia"]
+[ext_resource type="Script" uid="uid://djoewry86oh7n" path="res://Swappables/SwappedAttacks/upper_swap1.gd" id="1_yehss"]
+[ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="2_uc1ia"]
 [ext_resource type="Animation" uid="uid://c65mf7ahl60i3" path="res://Animations/floating.res" id="3_uc1ia"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y0pnp"]
-render_priority = 0
-shader = ExtResource("2_uc1ia")
-shader_parameter/outline_color = Color(0, 0, 0, 1)
-shader_parameter/outline_width = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b6n5p"]
 next_pass = SubResource("ShaderMaterial_y0pnp")
-albedo_color = Color(0.745628, 0.7312574, 0, 1)
+billboard_mode = 1
 
-[sub_resource type="BoxMesh" id="BoxMesh_jhy58"]
+[sub_resource type="QuadMesh" id="QuadMesh_uc1ia"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nsh0k"]
 
@@ -74,13 +70,13 @@ _data = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yehss"]
 
-[node name="UpperSwap2" type="Node3D" unique_id=1806891305]
-script = ExtResource("1_nwu4h")
+[node name="UpperSwap1" type="Node3D" unique_id=1806891305]
+script = ExtResource("1_yehss")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=630153978]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50356144, 0)
 material_override = SubResource("StandardMaterial3D_b6n5p")
-mesh = SubResource("BoxMesh_jhy58")
+mesh = SubResource("QuadMesh_uc1ia")
 
 [node name="UpperSwap1" type="Area3D" parent="." unique_id=1694662564]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5279027, 0)
@@ -94,7 +90,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7972589, 0)
 pixel_size = 0.003
 billboard = 1
 texture_filter = 0
-text = "UpperAttack1"
+text = "1"
+font = ExtResource("2_uc1ia")
 font_size = 130
 outline_size = 22
 uppercase = true

@@ -295,6 +295,14 @@ func _on_attack_box_area_entered(area):
 
 
 		areaParent.takeDamageEnemy(attackData.attackDamage)
+		
+		var is_finishing_blow = areaParent.enemyStats.current_health <= attackData.attackDamage
+
+		if is_finishing_blow:
+			attackData.knockback_force = attackData.knockback_force_finisher
+		else:
+			attackData.knockback_force = attackData.knockback_force_default
+			pass
 		rotateEnemy_to_player(agent, areaParent)
 		rotate_to_target(areaParent)
 		

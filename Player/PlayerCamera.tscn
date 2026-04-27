@@ -2,24 +2,22 @@
 
 [ext_resource type="Script" uid="uid://b0vlvthw3ye25" path="res://Scripts/follow_cam.gd" id="1_hwm0y"]
 [ext_resource type="Resource" uid="uid://cdrmc6otk3eol" path="res://Resources/EnemyStats/enemyStats.tres" id="2_qloqc"]
-[ext_resource type="Shader" uid="uid://xtbp2rolummv" path="res://Shaders/OUTLINE_2.1.gdshader" id="2_ye0eu"]
 [ext_resource type="Script" uid="uid://cn6f1nyulomnm" path="res://Scripts/gameJuice.gd" id="3_sswrb"]
-[ext_resource type="PackedScene" uid="uid://3jvyp4is0xns" path="res://Enviroment/bush.tscn" id="3_ye0eu"]
+[ext_resource type="Shader" uid="uid://66my2earws16" path="res://Shaders/EdgeDetectionV3.gdshader" id="4_ef84v"]
 [ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="6_ql8h7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_td6vy"]
 render_priority = 0
-shader = ExtResource("2_ye0eu")
-shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/shadow_thickness = 1.3
-shader_parameter/depth_sensitivity = 0.04
-shader_parameter/outline_start = 0.2
-shader_parameter/outline_end = 2.4
+shader = ExtResource("4_ef84v")
+shader_parameter/lightIntensity = 1.69
+shader_parameter/lineAlpha = 0.47
+shader_parameter/useLighting = true
+shader_parameter/lineHighlight = 0.0
+shader_parameter/lineShadow = 0.55
 
 [sub_resource type="QuadMesh" id="QuadMesh_n1m7q"]
-size = Vector2(2, 2)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7gdqc"]
+flip_faces = true
+size = Vector2(6, 6)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qloqc"]
 size = Vector3(1, 1, 404.59393)
@@ -59,13 +57,8 @@ size = 6.085
 near = 0.001
 
 [node name="Outline" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D" unique_id=1257294092]
-material_override = SubResource("ShaderMaterial_td6vy")
-mesh = SubResource("QuadMesh_n1m7q")
-skeleton = NodePath("../../../../..")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="SpringArmPivot/SpringArm3D/Margin/Camera3D" unique_id=1738410965]
 visible = false
-material_override = SubResource("ShaderMaterial_7gdqc")
+material_override = SubResource("ShaderMaterial_td6vy")
 mesh = SubResource("QuadMesh_n1m7q")
 skeleton = NodePath("../../../../..")
 
@@ -88,15 +81,11 @@ mesh = SubResource("CapsuleMesh_a8st2")
 skeleton = NodePath("")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="SpringArmPivot" unique_id=2072487226]
-transform = Transform3D(0.698, 0, 0, 0, 0.698, 0, 0, 0, 0.698, 0, 0, 0)
+transform = Transform3D(9, 0, 0, 0, 7.7942286, -4.5, 0, 4.5, 7.7942286, 0, 0, -57)
 visible = false
 material_override = SubResource("ShaderMaterial_wivcw")
 mesh = SubResource("BoxMesh_t12er")
 skeleton = NodePath("")
-
-[node name="bush2" parent="." unique_id=887475478 instance=ExtResource("3_ye0eu")]
-transform = Transform3D(0.524971, -0.923009, 1.89245, 1.70508e-07, -1.95038, -0.951265, 2.10554, 0.230132, -0.47184, 0.069, 3.56781, -36.4612)
-visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1580383606]
 root_node = NodePath("")
@@ -107,6 +96,7 @@ transform = Transform3D(1, 2.32831e-10, 0, 0, 1, -1.86265e-09, 7.45058e-09, 1.86
 script = ExtResource("3_sswrb")
 
 [node name="Reticle" type="Label" parent="." unique_id=1607169781]
+visible = false
 texture_filter = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -128,6 +118,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Current Target" type="Label" parent="." unique_id=223141332]
+visible = false
 texture_filter = 1
 anchors_preset = 8
 anchor_left = 0.5

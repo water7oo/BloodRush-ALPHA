@@ -109,19 +109,20 @@ func initialize_state_machine():
 	state_machine.set_active(true)
 	
 	
-	
 
 
 func _process(delta: float) -> void:
 	updateComboSpeech()
+
 	pass
 			
 
 func updateComboCounter(delta: float):
 	if Global.combo_hits.size() >= 2:
 		comboCounter.get_parent().visible = true
+		comboCounter.get_node("ComboGuage").visible = true
 		comboCounter.get_node("ComboSpeech").visible = true
-		comboCounter.get_child(0).text = "X" + str(Global.combo_hits.size())
+		comboCounter.get_child(0).text = "[wave apm = 0 freq = 5 connected = 1][center]" + "x" + str(Global.combo_hits.size()) + "[/center][/wave]"
 		comboCounterSound.pitch_scale = clamp(
 			1.0 + (Global.combo_hits.size() * 0.2),
 			1.0,
@@ -133,7 +134,8 @@ func updateComboCounter(delta: float):
 	else:
 		comboCounter.get_parent().visible = false
 		comboCounter.get_node("ComboSpeech").visible = false
-		
+		comboCounter.get_node("ComboSpeech").visible = false
+
 		
 	if Global.combo_hits.size() > 0:
 		Global.combo_timer += delta
@@ -146,28 +148,30 @@ func updateComboCounter(delta: float):
 func updateComboSpeech():
 	var combo_count = Global.combo_hits.size()
 	var speech_label = comboCounter.get_node("ComboSpeech")
-	
+	comboCounter.get_node("ComboGuage").value = Global.combo_timer
 	match combo_count:
-		0,1,2, 3:
-			speech_label.text = "OK.."
+		0, 1, 2, 3:
+			speech_label.text = "[center][wave][color=chocolate]ok...[/color][/wave]"
 		4, 5, 6, 7, 8, 9:
-			speech_label.text = "COOL!"
+			speech_label.text = "[center][wave][color=cyan]cool![/color][/wave]"
 		10, 11, 12, 13, 14, 15:
-			speech_label.text = "AWESOME!!"
-		_: # Default case
-			if combo_count > 20:
-				speech_label.text = "WONDERFUL!!!"
-		
+			speech_label.text = "[color=wheat][shake][shake][wave amp=0 freq=5 connected=1][center]awesome!![/center][/wave]"
+		_: 
+			if combo_count > 19:
+				speech_label.text = "[color=gold][shake][shake][wave amp=0 freq=5 connected=1][center]wonderful!![/center][/wave]"
+			
 func updateComboCounterInstant(count):
 	if count >= 2 && Global.combo_timer > 0:
 		comboCounter.get_child(0).visible = true
 		comboCounter.get_node("ComboSpeech").visible = true
-		comboCounter.get_child(0).text = "X" + str(count)
+		comboCounter.get_node("ComboGuage").visible = true
+		comboCounter.get_child(0).text = "[wave apm = 0 freq = 5 connected = 1][center]" + "x" + str(count) + "[/center][/wave]"
 		Global.shakeTween(comboCounter)
 		
 	else:
 		comboCounter.get_child(0).visible = false
 		comboCounter.get_node("ComboSpeech").visible = false
+		comboCounter.get_node("ComboGuage").visible = false
 
 
 func comboTimerCountdown(delta: float):
@@ -321,12 +325,16 @@ func playerGravity(delta: float) -> void:
 	if !is_on_floor():
 		velocity.y -= Global.CUSTOM_GRAVITY * delta
 
+func align_with_y(xform, new_y):
+	xform.basis.y = new_y
+	xform.basis.x = -xform.basis.z.cross(new_y)
+	xform.basis = xform.basis.orthonormalized()
+	return xform
 
 func _on_hurt_box_area_entered(area):
 	if area.name == "enemyBox" && !Global.is_taking_damage:
 		print("OW!")
 		#state_machine.dispatch("to_damage")
-
 
 func _on_targeting_area_entered(area: Area3D) -> void:
 	if area.name == "enemyBox":

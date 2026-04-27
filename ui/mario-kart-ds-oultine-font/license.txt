@@ -1,4 +1,4 @@
-﻿FontStruct Commercial Software End User License Agreement 1.0
+FontStruct Commercial Software End User License Agreement 1.0
 
 This software end user license agreement (hereinafter “Agreement”) is made
 between you or, if you represent a legal entity, that legal entity (hereinafter
@@ -155,4 +155,3 @@ FontStruct shall in no event be liable to You or any third party for any damages
 whatsoever arising out of or relating to this Agreement or the use of the Font
 Software, including but not limited to incidental, special damages, any lost
 profits or lost savings or any claim made by a third party.
-

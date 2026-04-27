@@ -1,27 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://calkwg7q3s3vk"]
+[gd_scene format=3 uid="uid://calkwg7q3s3vk"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_llgo8"]
+[ext_resource type="Texture2D" uid="uid://bcic7jjc4qo36" path="res://ui/pause.png" id="1_uxloo"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jhd5i"]
 blend_mode = 3
 
 [sub_resource type="QuadMesh" id="QuadMesh_pxkic"]
 
-[node name="PAUSEMENU" type="Node2D"]
+[node name="PAUSEMENU" type="Node2D" unique_id=1747093938]
 visible = false
 
-[node name="Button" type="Button" parent="."]
-visible = false
-offset_left = 405.0
-offset_top = 231.0
-offset_right = 752.0
-offset_bottom = 343.0
-theme_override_font_sizes/font_size = 51
-theme_override_styles/normal = SubResource("StyleBoxTexture_llgo8")
-text = "BUTTON
-"
+[node name="TextureRect" type="TextureRect" parent="." unique_id=480228478]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 675.0
+offset_bottom = 378.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.94, 0.94)
+texture = ExtResource("1_uxloo")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=516963516]
 z_index = -1
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_jhd5i")
@@ -29,6 +31,7 @@ position = Vector2(679.25, 475.25)
 scale = Vector2(1359.5, 951.5)
 mesh = SubResource("QuadMesh_pxkic")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="MeshInstance2D"]
+[node name="CanvasModulate" type="CanvasModulate" parent="MeshInstance2D" unique_id=1971326570]
+visible = false
 use_parent_material = true
 color = Color(0.584314, 0.584314, 0.584314, 1)

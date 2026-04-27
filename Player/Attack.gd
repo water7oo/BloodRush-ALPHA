@@ -28,6 +28,8 @@ var in_startup := true
 
 @onready var PlayerUI = $PlayerUI
 
+
+
 func _enter() -> void:
 	enemies_hit.clear()
 	buffered_input = false
@@ -178,15 +180,30 @@ func rotateEnemy_to_player(agent, areaParent):
 		
 func _on_attack_box_area_entered(area):
 	var areaParent = area.get_parent()
-
+	print(areaParent)
 	if Global.isHit:
 		return
+
 
 	if areaParent.has_method("takeDamageEnemy") \
 	and areaParent.enemyStats.current_health > 0 \
 	and not areaParent.enemyStats.isDead \
 	and not areaParent.enemyStats.isGuarding:
 
+
+
+		areaParent.takeDamageEnemy(attackData.attackDamage)
+
+		var is_finishing_blow = areaParent.enemyStats.current_health <= attackData.attackDamage
+
+		if is_finishing_blow:
+			attackData.knockback_force = attackData.knockback_force_finisher
+			attackData.knockback_direction = attackData.knockback_direction_finisher
+		else:
+			attackData.knockback_force = attackData.knockback_force_default
+			attackData.knockback_direction = Vector3(0, 0, 1)
+			pass
+			
 		areaParent.takeDamageEnemy(attackData.attackDamage)
 		rotateEnemy_to_player(agent, areaParent)
 		rotate_to_target(areaParent)
