@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://btwa6jvtvhpe"]
+
+[ext_resource type="PackedScene" uid="uid://dfdnogqljfu0m" path="res://Enviroment/rock1.fbx" id="1_0bcx6"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xd3ay"]
+load_path = "res://.godot/imported/texture_07.png-ab5f4a6ad655d06104ea7939a06ec496.s3tc.ctex"
+
+[sub_resource type="Shader" id="Shader_um5va"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 1.0;
+
+void vertex() {
+	vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+	vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+	
+	vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+	
+	clip_position.xy += offset;
+	
+	POSITION = clip_position;
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aj2ji"]
+render_priority = 0
+shader = SubResource("Shader_um5va")
+shader_parameter/outline_color = Color(0.50534403, 0.5053441, 0.50534385, 1)
+shader_parameter/outline_width = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0bcx6"]
+next_pass = SubResource("ShaderMaterial_aj2ji")
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = SubResource("CompressedTexture2D_xd3ay")
+roughness = 0.0
+uv1_scale = Vector3(15, 15, 15)
+uv1_triplanar_sharpness = 0.233259
+texture_filter = 0
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0bcx6"]
+data = PackedVector3Array(0.0072, 0, -0.0016, 0.0008, 0.0042999997, -0.0041, 0.0018999999, 0.0001, -0.0087, 0.0072, 0, -0.0016, 0.0045, 0.0002, 0.007999999, -0.0015, 0.0042, 0.0047, -0.0015, 0.0042, 0.0047, 0.0008, 0.0042999997, -0.0041, 0.0072, 0, -0.0016, 0.0045, 0.0002, 0.007999999, -0.0033999998, 0.0008, 0.0084999995, -0.0015, 0.0042, 0.0047, -0.0016999999, -0.0042, -0.0064, 0.0072, 0, -0.0016, 0.0018999999, 0.0001, -0.0087, -0.0078, -0.0053, -0.0004, 0.0045, 0.0002, 0.007999999, 0.0072, 0, -0.0016, 0.0072, 0, -0.0016, -0.0016999999, -0.0042, -0.0064, -0.0078, -0.0053, -0.0004, -0.0078, -0.0053, -0.0004, -0.0033999998, 0.0008, 0.0084999995, 0.0045, 0.0002, 0.007999999, 0.0008, 0.0042999997, -0.0041, -0.0016999999, -0.0042, -0.0064, 0.0018999999, 0.0001, -0.0087, 0.0008, 0.0042999997, -0.0041, -0.0015, 0.0042, 0.0047, -0.0078, -0.0053, -0.0004, -0.0078, -0.0053, -0.0004, -0.0016999999, -0.0042, -0.0064, 0.0008, 0.0042999997, -0.0041, -0.0015, 0.0042, 0.0047, -0.0033999998, 0.0008, 0.0084999995, -0.0078, -0.0053, -0.0004)
+
+[node name="rock1" unique_id=778258204 instance=ExtResource("1_0bcx6")]
+
+[node name="rock1" parent="." index="0" unique_id=2044075158]
+material_override = SubResource("StandardMaterial3D_0bcx6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1" unique_id=1809649808]
+transform = Transform3D(89.869576, 43.888382, 4.9282923, -44.16422, 89.30828, 10.028562, 3.7303195e-07, -11.174083, 99.50958, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_0bcx6")

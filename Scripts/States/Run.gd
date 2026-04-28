@@ -4,8 +4,9 @@ extends LimboState
 @onready var animation_player = player.get_node("AnimationPlayer")
 @export var animation : StringName
 @onready var armature = $"../../RootNode"
+@onready var dodgeDust = $"../../dodge_dust"
 
-
+@export var runStartSound1 : AudioStreamPlayer
 
 var sprinting = Input.is_action_pressed("move_sprint")
 var velocity = Vector3.ZERO
@@ -16,6 +17,8 @@ var velocity = Vector3.ZERO
 
 
 func _enter() -> void:
+	dodgeDust.emitting = true
+	#runSoundplay()
 	if agent:
 		velocity = agent.velocity
 		
@@ -26,12 +29,28 @@ func _enter() -> void:
 		animation_player.play("Run")
 	pass
 	
+	
+	Global.current_speed = min(
+		Global.current_speed,
+		runResource.RUN_MAX_SPEED * 0.3
+	)
+
+
+func runSoundplay():
+	if runStartSound1:
+		runStartSound1.pitch_scale = randf_range(.7, 1)
+		runStartSound1.play()
+
 func _update(delta: float) -> void:
 	player_run(delta)
 	initialize_runJump(delta)
 	initialize_attack(delta)
 	initialize_crouch(delta)
 	initialize_guard(delta)
+	
+	if animation_player && Global.is_moving:
+		animation_player.speed_scale = velocity.length() * .1
+		animation_player.play("Run")
 	agent.move_and_slide()
 
 # Smooth run (Mario-esque momentum)
@@ -45,7 +64,7 @@ func player_run(delta: float) -> void:
 
 	var has_input = direction != Vector3.ZERO and agent.is_on_floor()
 
-	if has_input and Global.can_sprint:
+	if has_input and Global.can_sprint and Input.is_action_pressed("move_sprint"):
 		Global.is_sprinting = true
 		Global.sprint_timer += delta
 
@@ -127,4 +146,5 @@ func initialize_guard(delta: float) -> void:
 		agent.state_machine.dispatch("to_guard")
 
 func _exit() -> void:
+	dodgeDust.emitting = false
 	pass

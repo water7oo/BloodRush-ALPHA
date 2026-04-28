@@ -25,29 +25,11 @@
 [ext_resource type="Shader" uid="uid://crwsrlgfy4fjb" path="res://addons/GrassDylearn/Shaders/Outline.gdshader" id="18_fauao"]
 [ext_resource type="Texture2D" uid="uid://du02e72l1hyb3" path="res://Enemy/Sandbag.fbm/7467e88d2.png" id="19_4topa"]
 [ext_resource type="Resource" uid="uid://cdrmc6otk3eol" path="res://Resources/EnemyStats/enemyStats.tres" id="21_i335x"]
+[ext_resource type="AudioStream" uid="uid://rwhetch2imdf" path="res://Sounds/Land1.wav" id="25_4topa"]
+[ext_resource type="AudioStream" uid="uid://dc8mcxi84t857" path="res://Sounds/finisherHit.wav" id="26_4topa"]
 [ext_resource type="Texture2D" uid="uid://c1sktcvm2d8el" path="res://FX/Sprite_FX_Blast_0010.png2.png" id="26_6g3nf"]
-[ext_resource type="AudioStream" uid="uid://c06pib0npdcyj" path="res://Sounds/snd_bigdoor_open.wav" id="26_fauao"]
 [ext_resource type="Texture2D" uid="uid://c0km34oyfp5l7" path="res://FX/Sprite_FX_Blast_0017.png" id="27_6g3nf"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_0hvkj"]
-viewport_path = NodePath("HealthBar/SubViewport")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hvkj"]
-bg_color = Color(0, 0, 0, 1)
-corner_detail = 1
-anti_aliasing = false
-anti_aliasing_size = 0.044
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_866rt"]
-bg_color = Color(0.97766954, 0.10013088, 0, 1)
-anti_aliasing = false
-anti_aliasing_size = 3.172
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_u8c5v"]
-size = Vector3(0.660662, 1.02917, 0.50911)
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_fauao"]
-height = 1.8026123
+[ext_resource type="Texture2D" uid="uid://fm258x5gh42t" path="res://FX/effect1.png" id="27_fauao"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4topa"]
 shader = ExtResource("15_fauao")
@@ -83,6 +65,28 @@ diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("19_4topa")
 texture_filter = 0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_0hvkj"]
+viewport_path = NodePath("HealthBar/SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hvkj"]
+bg_color = Color(0, 0, 0, 1)
+corner_detail = 1
+anti_aliasing = false
+anti_aliasing_size = 0.044
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_866rt"]
+bg_color = Color(0.97766954, 0.10013088, 0, 1)
+anti_aliasing = false
+anti_aliasing_size = 3.172
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u8c5v"]
+size = Vector3(0.660662, 1.02917, 0.50911)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fauao"]
+height = 1.8026123
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0hvkj"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ffc8c"]
 resource_name = "2ndPassAnimations_Circle_008"
@@ -334,6 +338,45 @@ nodes/Blend2/position = Vector2(-60, 80)
 "nodes/Blend2 2/position" = Vector2(220, 60)
 node_connections = [&"output", 0, &"Blend2 2", &"Blend2", 0, &"Animation", &"Blend2", 1, &"Animation 2", &"Blend2 2", 0, &"Blend2", &"Blend2 2", 1, &"Animation 3"]
 
+[sub_resource type="Animation" id="Animation_fjnlt"]
+resource_name = "IDLE"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyMesh:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.215, 0.215, 0.215)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemyMesh:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -3.1415925, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemyMesh:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.845, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_0hvkj"]
 length = 0.6
 tracks/0/type = "value"
@@ -371,6 +414,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("EnemyMesh:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.215, 0.215, 0.215)]
 }
 
 [sub_resource type="Animation" id="Animation_866rt"]
@@ -506,6 +561,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3ae78"]
 _data = {
+&"IDLE": SubResource("Animation_fjnlt"),
 &"RESET": SubResource("Animation_0hvkj"),
 &"SpinOut": SubResource("Animation_866rt"),
 &"airJuggle": SubResource("Animation_bljps"),
@@ -549,14 +605,14 @@ transparency = 1
 shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
-albedo_texture = ExtResource("26_6g3nf")
+albedo_texture = ExtResource("27_fauao")
 uv1_scale = Vector3(0.65, 0.65, 0.65)
 uv1_offset = Vector3(0.175, 0.21, -0.045)
 texture_filter = 2
 billboard_mode = 3
 billboard_keep_scale = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 5
+particles_anim_h_frames = 5
+particles_anim_v_frames = 1
 particles_anim_loop = true
 proximity_fade_distance = 52.8
 
@@ -568,7 +624,7 @@ anim_speed_min = 1.0
 anim_speed_max = 1.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_rlw8d"]
-size = Vector2(1, 0.285)
+size = Vector2(1.26, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6utb"]
 transparency = 1
@@ -595,13 +651,18 @@ anim_speed_max = 1.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_o88hp"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_0hvkj"]
-
 [node name="Enemy" type="CharacterBody3D" unique_id=457208653 node_paths=PackedStringArray("enemyHealthManagerNode", "deathSound") groups=["Enemies"]]
 script = ExtResource("1_a6utb")
 enemyHealthManagerNode = NodePath("enemyHurtBox")
-deathSound = NodePath("deathSound")
+deathSound = NodePath("landingSound1")
 enemyStats = ExtResource("21_i335x")
+
+[node name="EnemyMesh" type="MeshInstance3D" parent="." unique_id=295370142]
+transform = Transform3D(-0.215, 0, -3.2464097e-08, 0, 0.215, 0, 3.2464097e-08, 0, -0.215, 0, 1.845, 0)
+material_overlay = SubResource("ShaderMaterial_4topa")
+mesh = ExtResource("2_tuc0k")
+surface_material_override/0 = SubResource("StandardMaterial3D_wyb1b")
+script = ExtResource("4_wyb1b")
 
 [node name="enemyNameLabel" type="Label3D" parent="." unique_id=593637493]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.0328918, 0)
@@ -669,6 +730,14 @@ enemyAttackData = ExtResource("5_fauao")
 transform = Transform3D(2.555, 0, 0, 0, 2.555, 0, 0, 0, 2.555, 0, 0.70597684, 0)
 shape = SubResource("CylinderShape3D_fauao")
 
+[node name="NoticePlayer" type="Area3D" parent="." unique_id=2071341225]
+monitorable = false
+script = ExtResource("13_ulp1q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NoticePlayer" unique_id=1122049651]
+transform = Transform3D(17, 0, 0, 0, 17, 0, 0, 0, 17, 0, 0, 0)
+shape = SubResource("SphereShape3D_0hvkj")
+
 [node name="LimboHSM" type="LimboHSM" parent="." unique_id=284204221]
 
 [node name="IdleState" type="LimboState" parent="LimboHSM" unique_id=2072758041]
@@ -699,25 +768,19 @@ attackHitBox = NodePath("../../enemyBox")
 [node name="GuardState" type="LimboState" parent="LimboHSM" unique_id=567036237]
 script = ExtResource("10_n48et")
 
-[node name="DeathState" type="LimboState" parent="LimboHSM" unique_id=1007315524 node_paths=PackedStringArray("deathSound")]
+[node name="DeathState" type="LimboState" parent="LimboHSM" unique_id=1007315524 node_paths=PackedStringArray("landingSound1", "finisherSound1")]
 script = ExtResource("11_ulp1q")
-deathSound = NodePath("../../deathSound")
-
-[node name="EnemyMesh" type="MeshInstance3D" parent="." unique_id=295370142]
-transform = Transform3D(-0.215, 0, -3.2464097e-08, 0, 0.215, 0, 3.2464097e-08, 0, -0.215, 0, 1.845, 0)
-material_overlay = SubResource("ShaderMaterial_4topa")
-mesh = ExtResource("2_tuc0k")
-surface_material_override/0 = SubResource("StandardMaterial3D_wyb1b")
-script = ExtResource("4_wyb1b")
+landingSound1 = NodePath("../../landingSound1")
+finisherSound1 = NodePath("../../Finisher1")
 
 [node name="RootNode" type="Node3D" parent="." unique_id=1805039592]
+visible = false
 
 [node name="Armature" type="Node3D" parent="RootNode" unique_id=1260031344]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, -1.62921e-09, 0, 1.62921e-09, 0.01, 0, 0, 0)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="RootNode/Armature" unique_id=130467109]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-visible = false
 bones/0/name = "mixamorig_Hips"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0.832795, -0.0572785, -69.3566)
@@ -942,14 +1005,17 @@ shape = SubResource("CapsuleShape3D_yoo35")
 process_callback = 0
 autostart = true
 
-[node name="deathSound" type="AudioStreamPlayer" parent="." unique_id=498826232]
-stream = ExtResource("26_fauao")
+[node name="landingSound1" type="AudioStreamPlayer" parent="." unique_id=498826232]
+stream = ExtResource("25_4topa")
+volume_db = -20.486
+pitch_scale = 0.84
 
 [node name="Finisher1" type="AudioStreamPlayer" parent="." unique_id=1917245587]
-stream = ExtResource("26_fauao")
+stream = ExtResource("26_4topa")
+volume_db = -32.934
 
 [node name="slideDust" type="GPUParticles3D" parent="." unique_id=191014370]
-transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 1.1868229, 0)
 material_override = SubResource("StandardMaterial3D_bdgjx")
 emitting = false
 amount = 16
@@ -963,7 +1029,7 @@ draw_pass_1 = SubResource("QuadMesh_5xtnc")
 
 [node name="hit2" type="GPUParticles3D" parent="." unique_id=1137587798]
 process_mode = 3
-transform = Transform3D(0.0625, 0, 0, 0, 0.0625, 0, 0, 0, 0.0625, 0, 2.492775, -0.04246056)
+transform = Transform3D(0.0625, 0, 0, 0, 0.0625, 0, 0, 0, 0.0625, 0, 1.6013505, -0.04246056)
 material_override = SubResource("StandardMaterial3D_fauao")
 emitting = false
 amount = 1
@@ -985,19 +1051,9 @@ explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_wyb1b")
 draw_pass_1 = SubResource("QuadMesh_o88hp")
 
-[node name="NoticePlayer" type="Area3D" parent="." unique_id=2071341225]
-visible = false
-monitoring = false
-monitorable = false
-script = ExtResource("13_ulp1q")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NoticePlayer" unique_id=1122049651]
-transform = Transform3D(17, 0, 0, 0, 17, 0, 0, 0, 17, 0, 0, 0)
-shape = SubResource("SphereShape3D_0hvkj")
-
 [connection signal="area_entered" from="enemyHurtBox" to="." method="_on_enemy_area_entered"]
 [connection signal="area_entered" from="enemyBox" to="enemyBox" method="_on_area_entered"]
 [connection signal="area_exited" from="enemyBox" to="enemyBox" method="_on_area_exited"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="NoticePlayer" to="NoticePlayer" method="_on_area_entered"]
 [connection signal="area_exited" from="NoticePlayer" to="NoticePlayer" method="_on_area_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

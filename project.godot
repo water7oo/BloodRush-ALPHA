@@ -51,6 +51,12 @@ version_control/autoload_on_startup=true
 
 enabled=PackedStringArray("res://addons/TweenFX-main/addons/TweenFX/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://addons/": "red"
+}
+
 [input]
 
 move_forward={

@@ -18,6 +18,7 @@ var velocity = Vector3.ZERO
 
 
 func _enter() -> void:
+	jumpSound()
 	Global.stretch_up($"../../RootNode/player2")
 	if agent:
 		velocity = agent.velocity
@@ -31,22 +32,40 @@ func _enter() -> void:
 	if animation_player:
 		animation_player.play("jumpIdle")
 
+func jumpSound():
+	jump1Sound.pitch_scale = randf_range(0.6, 1.2)
+	jump1Sound.play()
+	
+func landSound():
+	land1Sound.pitch_scale = randf_range(0.6, 1.2)
+	land1Sound.play()
+	
+
+func landCheck():
+	var is_on_floor = agent.is_on_floor()
+
+	if agent.state_machine.get_active_state() == self:
+		if is_on_floor and not Global.was_on_floor:
+			landSound()
+			landDust.restart()
+			landDust.emitting = true
+			Global.squash_land($"../../RootNode/player2")
+			animation_player.play("IDLE")
+			agent.state_machine.dispatch("to_idle")
+		
+
+	Global.was_on_floor = is_on_floor
+	
 func _update(delta: float) -> void:
 	player_runjump(delta)
-	
+	landCheck()
+	agent.move_and_slide()
 
 
 	var is_on_floor = agent.is_on_floor()
 	if animation_player:
 		animation_player.play("jumpIdle")
-	if agent.state_machine.get_active_state() == self:
-		if is_on_floor and not Global.was_on_floor:
-			land1Sound.play()
-			landDust.restart()
-			landDust.emitting = true
-			Global.squash_land($"../../RootNode/player2")
-			agent.state_machine.dispatch("to_idle")
-	agent.move_and_slide()
+
 
 
 func player_runjump(delta: float) -> void:
@@ -91,13 +110,13 @@ func player_runjump(delta: float) -> void:
 	if agent.is_on_floor():
 		Global.jump_timer = 0.0
 		Global.air_timer = 0.0
-		#animationTree.set("parameters/Jump_Blend/blend_amount", -1)
-		# Gradually slow down after landing instead of an abrupt stop
+
 		agent.velocity.x = move_toward(agent.velocity.x, 0, 100 * delta)
 		agent.velocity.z = move_toward(agent.velocity.z, 0, 100 * delta)
 
-		# Transition to walk or idle based on input
 		if input_dir != Vector2.ZERO:
+			animation_player.play("IDLE")
 			agent.state_machine.dispatch("to_walk")
 		else:
+			animation_player.play("IDLE")
 			agent.state_machine.dispatch("to_idle")

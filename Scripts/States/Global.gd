@@ -80,44 +80,58 @@ func shakeTween(node):
 	TweenFX.shake(node, 0.1, 8, strength)
 		
 
-func stretch_up(node):
-	var base_scale: Vector3
-	base_scale = node.scale
-	var tween = create_tween()
+func stretch_up(node: Node3D):
+	var base_scale = get_base_scale(node)
+	var tween = start_tween(node)
 
 	var stretch = Vector3(0.9, 1.2, 0.9)
 	var target_scale = base_scale * stretch
 
-	var height_offset = 1 * base_scale.y  # scale-aware
+	var height_offset = (target_scale.y - base_scale.y) * 0.5
 
-	tween.parallel().tween_property(node, "scale", target_scale, 0.15)\
-		.set_trans(Tween.TRANS_QUAD)\
-		.set_ease(Tween.EASE_OUT)
-
-	tween.parallel().tween_property(node, "position:y", height_offset, 0.15)
+	tween.parallel().tween_property(node, "scale", target_scale, 0.15)
+	tween.parallel().tween_property(node, "position:y", 0, 0.15)
 
 	tween.tween_property(node, "scale", base_scale, 0.12)
 	tween.parallel().tween_property(node, "position:y", 0.0, 0.12)
 
-
-func squash_land(node):
-	var base_scale: Vector3
-	base_scale = node.scale
-	var tween = create_tween()
+func squash_land(node: Node3D):
+	var base_scale = get_base_scale(node)
+	var tween = start_tween(node)
 
 	var squash = Vector3(1.08, 0.75, 1.08)
 	var target_scale = base_scale * squash
 
-	tween.parallel().tween_property(node, "scale", target_scale, 0.08)
+	tween.tween_property(node, "scale", target_scale, 0.08)
 	tween.tween_property(node, "scale", base_scale, 0.1)
 
-func stretch_forward(node):
-	var base_scale: Vector3
-	base_scale = node.scale
-	var tween = create_tween()
+func stretch_forward(node: Node3D):
+	var base_scale = get_base_scale(node)
+	var tween = start_tween(node)
 
-	var stretch = Vector3(0.9, 0.9, 1.2)  # Z is forward in Godot
+	var stretch = Vector3(0.9, 0.9, 1.2)
 	var target_scale = base_scale * stretch
 
 	tween.tween_property(node, "scale", target_scale, 0.12)
 	tween.tween_property(node, "scale", base_scale, 0.1)
+
+func get_base_scale(node: Node3D) -> Vector3:
+	if node:
+		if not node.has_meta("base_scale"):
+			node.set_meta("base_scale", node.scale)
+	return node.get_meta("base_scale")
+
+func get_base_y(node: Node3D) -> float:
+	if not node.has_meta("base_y"):
+		node.set_meta("base_y", node.position.y)
+	return node.get_meta("base_y")
+	
+func start_tween(node: Node) -> Tween:
+	if node.has_meta("active_tween"):
+		var old_tween: Tween = node.get_meta("active_tween")
+		if old_tween and old_tween.is_running():
+			old_tween.kill()
+
+	var tween = create_tween()
+	node.set_meta("active_tween", tween)
+	return tween

@@ -35,3 +35,11 @@ var comboknockbackForce: float = knockback_force * comboknockbackForceRate
 @export var knockback_force_default: float = 3.0
 
 @export var knockback_direction_finisher: Vector3 = Vector3(0, 1, 1)
+
+@export var DefaultenemyTargetLength: float = .15
+@export var DefaultenemyTargetMagnitude: float = .05
+@export var DefaultenemyTargetHitStop: float = .2
+
+@export var enemyTargetFinisher: float = .4
+@export var enemyTargetMagnitudeFinisher: float = .1 
+@export var enemyHitstopFinisher: float = .3

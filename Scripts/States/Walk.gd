@@ -38,6 +38,7 @@ func _update(delta: float) -> void:
 		animation_player.play("walking")
 	agent.move_and_slide()
 
+
 func player_movement(delta: float) -> void:
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 
@@ -64,6 +65,7 @@ func player_movement(delta: float) -> void:
 		if velocity.length() > 0.1:
 			var angle_diff = velocity.normalized().dot(direction)
 			if angle_diff < 0:
+				Global.stretch_forward($"../../RootNode/player2")
 				velocity *= 0.8
 		
 	else:

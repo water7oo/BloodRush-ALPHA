@@ -46,6 +46,11 @@ var input_queue: Array = []
 
 @onready var comboCounterSound = $ComboSound1
 
+
+@export var land1Sound: AudioStreamPlayer
+@export var landDust: GPUParticles3D
+
+
 func _ready():
 	initialize_state_machine()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -58,7 +63,6 @@ func initialize_state_machine():
 	state_machine.add_transition(state_machine.ANYSTATE, jump_state, "to_jump")
 	
 	
-
 	state_machine.add_transition(state_machine.ANYSTATE, air_attack_state, "to_airAttack")
 	state_machine.add_transition(state_machine.ANYSTATE, air_attackMedium_state, "to_airMediumAttack")
 	state_machine.add_transition(state_machine.ANYSTATE, air_attackHeavy_state, "to_airHeavyAttack")
@@ -113,9 +117,10 @@ func initialize_state_machine():
 
 func _process(delta: float) -> void:
 	updateComboSpeech()
-
 	pass
 			
+#func _update(delta: float) -> void:
+	#landCheck()
 
 func updateComboCounter(delta: float):
 	if Global.combo_hits.size() >= 2:
@@ -318,8 +323,25 @@ func handle_attack_input() -> void:
 		if try_attack(attack, is_air):
 			return
 		
-func playerCamera(delta: float) -> void:
-	pass
+
+func landCheck():
+	var is_on_floor = is_on_floor()
+
+	if state_machine.get_active_state() == self:
+		if is_on_floor and not Global.was_on_floor:
+			landSound()
+			landDust.restart()
+			landDust.emitting = true
+			Global.squash_land($"../../RootNode/player2")
+			state_machine.dispatch("to_idle")
+		
+
+	Global.was_on_floor = is_on_floor
+	
+func landSound():
+	land1Sound.pitch_scale = randf_range(0.6, 1.2)
+	land1Sound.play()
+
 
 func playerGravity(delta: float) -> void:
 	if !is_on_floor():

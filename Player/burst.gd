@@ -9,6 +9,7 @@ extends LimboState
 var velocity = Vector3.ZERO
 
 func _enter() -> void:
+	Global.squash_land($"../../RootNode/player2")
 	if agent:
 		velocity = agent.velocity
 		
@@ -16,13 +17,11 @@ func _enter() -> void:
 		velocity.z = 0
 	
 	
-	Dodge1Sound.play()
+	DodgeSoundplay()
 	
-	#animationTree.set("parameters/Ground_Blend2/blend_amount", 1)
 	Global.is_dodging = true
 	Global.can_dodge = false
 	Global.last_ground_position = agent.global_transform.origin
-	# Get movement input for dodge direction
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	dodgeResource.dodge_direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	dodgeResource.dodge_direction = dodgeResource.dodge_direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
@@ -40,7 +39,11 @@ func _enter() -> void:
 	dodgeResource.spinDodge_timer_cooldown = dodgeResource.spinDodge_reset
 	
 
-
+func DodgeSoundplay():
+	if Dodge1Sound:
+		Dodge1Sound.pitch_scale = randf_range(.5, .7)
+		Dodge1Sound.play()
+			
 func _update(delta: float) -> void:
 	player_burst(delta)
 	agent.move_and_slide()

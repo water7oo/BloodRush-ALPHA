@@ -122,15 +122,21 @@ func takeDamageEnemy(damage: float) -> void:
 		if enemyStats.isDead == false:
 			enemyStats.current_health = clamp(enemyStats.current_health - damage, 0.0, enemyStats.max_health)
 			state_machine.dispatch("to_hitstun")
-			Global.stretch_up($EnemyMesh)
+			Global.squash_land($EnemyMesh)
 			var randomNum = randi_range(1, 3)
 			
 			if randomNum == 1:
 				$AnimationPlayer.play("takeDamage1")
+				await get_tree().create_timer(.5).timeout
+				$AnimationPlayer.play("IDLE")
 			elif randomNum == 2:
 				$AnimationPlayer.play("takeDamage2")
+				await get_tree().create_timer(.5).timeout
+				$AnimationPlayer.play("IDLE")
 			elif randomNum == 3:
 				$AnimationPlayer.play("takeDamage3")
+				await get_tree().create_timer(.5).timeout
+				$AnimationPlayer.play("IDLE")
 				
 
 			if EnemyHealthBar:
@@ -153,7 +159,7 @@ func takeDamageEnemy(damage: float) -> void:
 				enemyHurtBox.monitorable = true
 		else:
 			damage -= damage
-			$AnimationPlayer.play("RESET")
+			$AnimationPlayer.play("IDLE")
 		
 
 func takeGuardDamageEnemy(damage: float) -> void:

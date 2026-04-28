@@ -11,6 +11,7 @@ var is_moving: bool = false
 
 
 func _enter() -> void:
+	Global.squash_land($"../../RootNode/player2")
 	if agent:
 		velocity = agent.velocity
 		
