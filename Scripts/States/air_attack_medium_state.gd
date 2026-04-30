@@ -41,7 +41,7 @@ func _enter() -> void:
 
 	if animation_player:
 		animation_player.speed_scale = 10.0
-		animation_player.play(AttackAnimation)
+		animation_player.play(attackData.attackAnimation)
 
 func _update(delta: float) -> void:
 	# buffer input

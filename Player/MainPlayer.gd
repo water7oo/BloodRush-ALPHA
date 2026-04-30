@@ -147,7 +147,7 @@ func modeSwitch():
 			attack_upper_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDupperAttack2.tres")
 		else:
 			attack_upper_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDupperAttack.tres")
-	elif type == combatType.FIGHTER:
+	else: 
 		attack_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/lightAttack.tres")
 		attackMedium_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/mediumAttack.tres")
 		attackHeavy_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/heavyAttack.tres")
@@ -155,7 +155,7 @@ func modeSwitch():
 		air_attack_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/lightAirAttack.tres")
 		air_attackMedium_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/mediumAirAttack.tres")
 		air_attackHeavy_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/heavyAirAttack.tres")
-		attack_slamAir_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordplayerattackDataScripts/SWORDairSlamAttackData.gd")
+		attack_slamAir_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDairSlamAttack.tres")
 		sword.visible = false
 		Global.isSwordMode = false
 		Global.isFightMode = true

@@ -42,7 +42,8 @@ func _enter() -> void:
 	
 	if animation_player:
 		animation_player.speed_scale = 7.0
-		animation_player.play(AttackAnimation)
+ 
+		animation_player.play(attackData.attackAnimation)
 
 
 func _update(delta: float) -> void:
@@ -200,7 +201,6 @@ func hitFinisher(area):
 
 func _on_attack_box_area_entered(area):
 	var areaParent = area.get_parent()
-	print(areaParent)
 	if Global.isHit:
 		return
 

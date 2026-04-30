@@ -47,11 +47,11 @@ func _enter() -> void:
 	if attackData == load("res://Resources/PlayerStats/PlayerAttackResources/upperAttack2.tres"):
 		Global.isMultiHitUpper = true
 		animation_player.speed_scale = 7.0
-		animation_player.play(AttackAnimation)
+		animation_player.play(attackData.attackAnimation)
 	else:
 		Global.isMultiHitUpper = false
 		animation_player.speed_scale = 12.0
-		animation_player.play(AttackAnimation)
+		animation_player.play(attackData.attackAnimation)
 	if Global.isMultiHitUpper:
 		attack_box = $"../../RootNode/AttackUpperBox2"
 		attack_box_col = $"../../RootNode/AttackUpperBox2/CollisionShape3D"

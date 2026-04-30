@@ -62,7 +62,7 @@
 [ext_resource type="AudioStream" uid="uid://b6sn7x5hdlq8h" path="res://Sounds/deadCombo1.wav" id="55_3gnjc"]
 [ext_resource type="AudioStream" uid="uid://bc01ms32t7sx5" path="res://Sounds/Throw.wav" id="55_3pi6o"]
 [ext_resource type="AudioStream" uid="uid://cdxhb1h1iof5y" path="res://Sounds/jump4.wav" id="57_tdu7r"]
-[ext_resource type="PackedScene" uid="uid://5covdmtwkykp" path="res://Player/player.tscn" id="58_vkj36"]
+[ext_resource type="PackedScene" uid="uid://5covdmtwkykp" path="res://Player/Player.tscn" id="58_vkj36"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fvqnm"]
 custom_solver_bias = 0.305
