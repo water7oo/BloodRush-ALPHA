@@ -16,3 +16,4 @@ next_attack_state = &"to_mediumAttack"
 knockback_force_guardRate = 0.6
 comboknockbackForceRate = 0.7
 knockback_force_finisher = 5.0
+attackAnimation = "player|attack1"

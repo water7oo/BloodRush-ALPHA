@@ -2,10 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dfdnogqljfu0m" path="res://Enviroment/rock1.fbx" id="1_0bcx6"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xd3ay"]
-load_path = "res://.godot/imported/texture_07.png-ab5f4a6ad655d06104ea7939a06ec496.s3tc.ctex"
-
-[sub_resource type="Shader" id="Shader_um5va"]
+[sub_resource type="Shader" id="Shader_gdw0k"]
 code = "shader_type spatial;
 render_mode cull_front, unshaded;
 
@@ -30,19 +27,18 @@ void fragment() {
 	}
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_aj2ji"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sw35u"]
 render_priority = 0
-shader = SubResource("Shader_um5va")
-shader_parameter/outline_color = Color(0.50534403, 0.5053441, 0.50534385, 1)
-shader_parameter/outline_width = 1.0
+shader = SubResource("Shader_gdw0k")
+shader_parameter/outline_color = Color(3.6098064e-07, 0.31247404, 0.34955338, 1)
+shader_parameter/outline_width = 1.02
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0bcx6"]
-next_pass = SubResource("ShaderMaterial_aj2ji")
+next_pass = SubResource("ShaderMaterial_sw35u")
 diffuse_mode = 3
 specular_mode = 1
-albedo_texture = SubResource("CompressedTexture2D_xd3ay")
-roughness = 0.0
-uv1_scale = Vector3(15, 15, 15)
+albedo_color = Color(0.4267235, 0.5701185, 0.669647, 1)
+uv1_scale = Vector3(2.375, 2.375, 2.375)
 uv1_triplanar_sharpness = 0.233259
 texture_filter = 0
 

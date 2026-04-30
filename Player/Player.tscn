@@ -1,76 +1,232 @@
 [gd_scene format=3 uid="uid://5covdmtwkykp"]
 
-[ext_resource type="PackedScene" uid="uid://o5feoe0eslbg" path="res://Player/player.glb" id="1_l8h54"]
-[ext_resource type="Shader" uid="uid://cw2eeqmautiwo" path="res://addons/GrassDylearn/Shaders/ToonShader.gdshader" id="2_4ntmi"]
-[ext_resource type="Shader" uid="uid://crwsrlgfy4fjb" path="res://addons/GrassDylearn/Shaders/Outline.gdshader" id="2_btcbx"]
+[ext_resource type="PackedScene" uid="uid://c1lufrxxd0g6k" path="res://Player/player.fbx" id="1_l8h54"]
+[ext_resource type="PackedScene" uid="uid://cx1005bfhyg85" path="res://Weapons/Sword_Godot.tscn" id="2_4ntmi"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_k53q1"]
+[sub_resource type="Shader" id="Shader_l8h54"]
+code = "shader_type spatial;
+render_mode unshaded;
+
+// MIT License. Made by Leo Peltola
+// Inspired by https://threejs.org/examples/webgl_postprocessing_pixel.html
+
+uniform sampler2D DEPTH_TEXTURE : hint_depth_texture, filter_linear_mipmap;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform sampler2D NORMAL_TEXTURE : hint_normal_roughness_texture, filter_nearest;
+
+uniform bool shadows_enabled = true;
+uniform bool highlights_enabled = true;
+uniform float shadow_strength : hint_range(0.0, 1.0, 0.01) = 0.4;
+uniform float highlight_strength : hint_range(0.0, 1.0, 0.01) = 0.1;
+uniform vec3 highlight_color : source_color = vec3(1.);
+uniform vec3 shadow_color : source_color = vec3(0.0);
+
+varying mat4 model_view_matrix;
+
+
+float getDepth(vec2 screen_uv, sampler2D depth_texture, mat4 inv_projection_matrix){
+//	Credit: https://godotshaders.com/shader/depth-modulated-pixel-outline-in-screen-space/
+	float raw_depth = texture(depth_texture, screen_uv)[0];
+	vec3 normalized_device_coordinates = vec3(screen_uv * 2.0 - 1.0, raw_depth);
+    vec4 view_space = inv_projection_matrix * vec4(normalized_device_coordinates, 1.0);
+	view_space.xyz /= view_space.w;
+	return -view_space.z;
+}
+
+vec3 getPos(float depth, mat4 mvm, mat4 ipm, vec2 suv, mat4 wm, mat4 icm){
+  vec4 pos = inverse(mvm) * ipm * vec4((suv * 2.0 - 1.0), depth * 2.0 - 1.0, 1.0);
+  pos.xyz /= (pos.w+0.0001*(1.-abs(sign(pos.w))));
+  return (pos*icm).xyz+wm[3].xyz;
+}
+
+float normalIndicator(vec3 normalEdgeBias, vec3 baseNormal, vec3 newNormal, float depth_diff){
+	// Credit: https://threejs.org/examples/webgl_postprocessing_pixel.html
+	float normalDiff = dot(baseNormal - newNormal, normalEdgeBias);
+	float normalIndicator = clamp(smoothstep(-.01, .01, normalDiff), 0.0, 1.0);
+	float depthIndicator = clamp(sign(depth_diff * .25 + .0025), 0.0, 1.0);
+	return (1.0 - dot(baseNormal, newNormal)) * depthIndicator * normalIndicator;
+}
+
+void vertex(){
+    model_view_matrix = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0], INV_VIEW_MATRIX[1], INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
+}
+
+void fragment() {
+	vec2 e = vec2(1./VIEWPORT_SIZE.xy);
+
+//	Shadows
+	float depth_diff = 0.0;
+	float neg_depth_diff = .5;
+	if (shadows_enabled) {
+		float depth = getDepth(SCREEN_UV, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float du = getDepth(SCREEN_UV+vec2(0., -1.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float dr = getDepth(SCREEN_UV+vec2(1., 0.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float dd = getDepth(SCREEN_UV+vec2(0., 1.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		float dl = getDepth(SCREEN_UV+vec2(-1., 0.)*e, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
+		depth_diff += clamp(du - depth, 0., 1.);
+		depth_diff += clamp(dd - depth, 0., 1.);
+		depth_diff += clamp(dr - depth, 0., 1.);
+		depth_diff += clamp(dl - depth, 0., 1.);
+		neg_depth_diff += depth - du;
+		neg_depth_diff += depth - dd;
+		neg_depth_diff += depth - dr;
+		neg_depth_diff += depth - dl;
+		neg_depth_diff = clamp(neg_depth_diff, 0., 1.);
+		neg_depth_diff = clamp(smoothstep(0.5, 0.5, neg_depth_diff)*10., 0., 1.);
+		depth_diff = smoothstep(0.2, 0.3, depth_diff);
+//		ALBEDO = vec3(neg_depth_diff);
+	}
+
+//	Highlights
+	float normal_diff = 0.;
+	if (highlights_enabled) {
+		vec3 normal = texture(NORMAL_TEXTURE, SCREEN_UV).rgb * 2.0 - 1.0;
+		vec3 nu = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(0., -1.)*e).rgb * 2.0 - 1.0;
+		vec3 nr = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(1., 0.)*e).rgb * 2.0 - 1.0;
+		vec3 nd = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(0., 1.)*e).rgb * 2.0 - 1.0;
+		vec3 nl = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(-1., 0.)*e).rgb * 2.0 - 1.0;
+		vec3 normal_edge_bias = (vec3(1., 1., 1.));
+		normal_diff += normalIndicator(normal_edge_bias, normal, nu, depth_diff);
+		normal_diff += normalIndicator(normal_edge_bias, normal, nr, depth_diff);
+		normal_diff += normalIndicator(normal_edge_bias, normal, nd, depth_diff);
+		normal_diff += normalIndicator(normal_edge_bias, normal, nl, depth_diff);
+		normal_diff = smoothstep(0.2, 0.8, normal_diff);
+		normal_diff = clamp(normal_diff-neg_depth_diff, 0., 1.);
+//		ALBEDO = vec3(normal_diff);
+	}
+
+
+	vec3 original_color = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
+	vec3 final_highlight_color = mix(original_color, highlight_color, highlight_strength);
+	vec3 final_shadow_color = mix(original_color, shadow_color, shadow_strength);
+	vec3 final = original_color;
+	if (highlights_enabled) {
+		final = mix(final, final_highlight_color, normal_diff);
+	}
+	if (shadows_enabled) {
+		final = mix(final, final_shadow_color, depth_diff);
+	}
+	ALBEDO = final;
+
+	float alpha_mask = depth_diff * float(shadows_enabled) + normal_diff * float(highlights_enabled);
+	ALPHA = clamp((alpha_mask) * 5., 0., 1.);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ntmi"]
 render_priority = 0
-shader = ExtResource("2_btcbx")
+shader = SubResource("Shader_l8h54")
 shader_parameter/shadows_enabled = true
-shader_parameter/highlights_enabled = true
-shader_parameter/shadow_strength = 0.999999977648
-shader_parameter/highlight_strength = 0.0
+shader_parameter/highlights_enabled = false
+shader_parameter/shadow_strength = 0.50999998860048
+shader_parameter/highlight_strength = 0.1
 shader_parameter/highlight_color = Color(1, 1, 1, 1)
-shader_parameter/shadow_color = Color(0.41598046, 0.41598043, 0.4159804, 1)
+shader_parameter/shadow_color = Color(0.32544088, 0.3254409, 0.32544088, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gwnis"]
-render_priority = 0
-next_pass = SubResource("ShaderMaterial_k53q1")
-shader = ExtResource("2_4ntmi")
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/cuts = 1
-shader_parameter/wrap = -0.02499990618749992
-shader_parameter/steepness = 1.0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8h54"]
+next_pass = SubResource("ShaderMaterial_4ntmi")
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+uv1_scale = Vector3(2.375, 2.375, 2.375)
+uv1_triplanar_sharpness = 0.233259
+texture_filter = 0
 
-[node name="player2" unique_id=1242418788 instance=ExtResource("1_l8h54")]
+[node name="player" unique_id=908021789 instance=ExtResource("1_l8h54")]
 
-[node name="Arms_003" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="0" unique_id=1346521901]
-material_override = SubResource("ShaderMaterial_gwnis")
-
-[node name="Feet_003" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="1" unique_id=805275072]
-material_override = SubResource("ShaderMaterial_gwnis")
-
-[node name="Hands_003" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="2" unique_id=303046098]
-material_override = SubResource("ShaderMaterial_gwnis")
-
-[node name="Head_Body_003" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="3" unique_id=617895174]
-material_override = SubResource("ShaderMaterial_gwnis")
-
-[node name="Legs_003" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="4" unique_id=735902224]
-material_override = SubResource("ShaderMaterial_gwnis")
-
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="5" unique_id=1708127461]
-transform = Transform3D(-0.9078614, 0.36258894, 0.21051614, 0.41894266, 0.7646602, 0.48967522, 0.016577598, 0.53275126, -0.8461095, 31.511198, -1.5425675, -26.259106)
-bone_name = "mixamorig_LeftFoot"
-bone_idx = 17
-
-[node name="leftFootRaycast" type="RayCast3D" parent="player/Skeleton3D/BoneAttachment3D" index="0" unique_id=1755530561]
-transform = Transform3D(-4.7760186, -0.0428372, 2.8267145, 2.3125901, -3.2510939, 3.8580852, 1.6260622, 4.497895, 2.8155582, 7.1502876, 33.76129, -5.778862)
-
-[node name="BoneAttachment3D2" type="BoneAttachment3D" parent="player/Skeleton3D" parent_id_path=PackedInt32Array(1008366320) index="6" unique_id=1395484876]
-transform = Transform3D(-0.9110905, -0.3441016, -0.22695354, -0.41217235, 0.7675476, 0.49090147, 0.0052776635, 0.5407996, -0.8411344, -33.822735, 0.2961023, -26.003366)
-bone_name = "mixamorig_RightFoot"
-bone_idx = 22
-
-[node name="rightFootRaycast" type="RayCast3D" parent="player/Skeleton3D/BoneAttachment3D2" index="0" unique_id=2079303281]
-transform = Transform3D(-4.7760186, -0.0428372, 2.8267145, 2.3125901, -3.2510939, 3.8580852, 1.6260622, 4.497895, 2.8155582, 7.1502876, 33.76129, -5.778862)
-
-[node name="Head_Body" parent="." index="1" unique_id=391758082]
+[node name="Armature" parent="." index="0" unique_id=1178068198]
+transform = Transform3D(-80.55952, -23.22163, -54.506172, -3.5940232, 93.744736, -34.62675, 59.137547, -25.936184, -76.354866, -1.0283458, 1.9868511, 0.026882375)
 visible = false
 
-[node name="Arms" parent="." index="2" unique_id=560473833]
-visible = false
+[node name="Skeleton3D" parent="player" parent_id_path=PackedInt32Array(1981041353) index="0" unique_id=1124435544]
+bones/0/position = Vector3(-0.016426822, 0.81824213, 0.04614456)
+bones/0/rotation = Quaternion(0.050560117, -0.97235614, -0.09117861, 0.20893496)
+bones/1/position = Vector3(0.0008475697, 0.20231567, 7.522291e-11)
+bones/1/rotation = Quaternion(0.019792648, -0.05881559, -0.059484396, 0.9962985)
+bones/2/position = Vector3(5.99324e-11, 0.23603708, 2.3677568e-10)
+bones/2/rotation = Quaternion(-0.0024668619, -0.053472105, -0.06382579, 0.9965245)
+bones/3/position = Vector3(1.1742533e-09, 0.26975656, -1.9772967e-10)
+bones/3/rotation = Quaternion(-0.0025827128, -0.054489736, -0.062935226, 0.99652565)
+bones/3/scale = Vector3(1, 0.9999999, 1)
+bones/4/position = Vector3(-1.1481558e-09, 0.30347636, -3.616278e-11)
+bones/4/rotation = Quaternion(-0.021638298, 0.08191084, -0.049287334, 0.995185)
+bones/5/position = Vector3(0.0039862026, 0.202018, 5.2749083e-11)
+bones/5/rotation = Quaternion(-0.10607593, 0.41081855, 0.19650404, 0.88394696)
+bones/6/position = Vector3(0.03396632, 1.7213892, 2.3134982e-11)
+bones/6/rotation = Quaternion(1.9756343e-09, 0.7071067, -1.9756343e-09, 0.7071068)
+bones/6/scale = Vector3(1, 0.9999999, 1)
+bones/8/position = Vector3(-0.00794277, 0.28512168, -0.1414447)
+bones/8/rotation = Quaternion(-0.085140795, -0.62975526, 0.7716501, -0.026748478)
+bones/8/scale = Vector3(1, 1, 1.0000001)
+bones/9/position = Vector3(-3.3155565e-09, 0.2794941, -2.6966953e-08)
+bones/9/rotation = Quaternion(0.03991391, 0.027470298, -0.066374, 0.99661773)
+bones/9/scale = Vector3(0.9999999, 1, 1)
+bones/10/position = Vector3(-1.866987e-09, 0.23274146, -1.5709828e-08)
+bones/10/rotation = Quaternion(0.008450772, 0.0005692095, 0.5485476, 0.8360765)
+bones/10/scale = Vector3(0.99999994, 0.9999997, 1)
+bones/11/position = Vector3(1.4452565e-08, 0.3668555, 1.2518909e-07)
+bones/11/rotation = Quaternion(1.4080246e-09, -4.6805976e-10, 1.6189123e-09, 1)
+bones/11/scale = Vector3(1, 1, 1)
+bones/13/position = Vector3(0.0080962675, 0.28518897, 0.14144471)
+bones/13/rotation = Quaternion(0.8140268, -0.27912712, 0.15281923, 0.485896)
+bones/13/scale = Vector3(0.9999999, 1, 1.0000004)
+bones/14/position = Vector3(-1.212824e-09, 0.2794941, -1.4998838e-07)
+bones/14/rotation = Quaternion(0.31743786, -0.26920688, 0.08564866, 0.90522105)
+bones/14/scale = Vector3(1.0000001, 0.9999999, 0.9999999)
+bones/15/position = Vector3(6.3767716e-09, 0.23182797, -1.4042783e-07)
+bones/15/rotation = Quaternion(-0.44561538, 0.26448563, -0.18996923, 0.8338981)
+bones/15/scale = Vector3(1.0000001, 1.0000002, 1.0000001)
+bones/16/position = Vector3(-3.50855e-09, 0.36683115, 1.8054183e-07)
+bones/16/rotation = Quaternion(0.29933897, 0.4602097, 0.44087914, 0.7100907)
+bones/16/scale = Vector3(1, 1, 0.99999994)
+bones/18/position = Vector3(0.01063298, -0.11280355, -0.29968888)
+bones/18/rotation = Quaternion(0.13308696, -0.38427028, 0.87383395, -0.26653028)
+bones/18/scale = Vector3(0.99999994, 1, 0.9999999)
+bones/19/position = Vector3(5.3003983e-11, 0.40872854, 7.354926e-09)
+bones/19/rotation = Quaternion(0.068102635, 0.039443832, -0.73049134, 0.678372)
+bones/19/scale = Vector3(0.99999994, 1.0000002, 0.99999994)
+bones/20/position = Vector3(5.027426e-10, 0.25818884, -1.8537518e-08)
+bones/20/rotation = Quaternion(-0.6561545, 0.6540656, -0.369679, -0.07068947)
+bones/20/scale = Vector3(1, 1.0000001, 0.9999999)
+bones/21/position = Vector3(-1.868404e-08, 0.4187525, -1.1197365e-08)
+bones/21/rotation = Quaternion(0.2879603, 0.05853281, -0.018488212, 0.9556731)
+bones/21/scale = Vector3(1, 1.0000001, 1.0000001)
+bones/22/position = Vector3(4.835963e-08, 0.22590075, 9.2170306e-11)
+bones/22/rotation = Quaternion(-2.9703434e-08, 2.8815629e-08, 4.742322e-09, 1)
+bones/22/scale = Vector3(0.9999998, 0.99999976, 0.9999997)
+bones/24/position = Vector3(0.009425282, -0.11280352, 0.29968888)
+bones/24/rotation = Quaternion(-0.13831225, 0.15585303, 0.9185901, -0.33581525)
+bones/24/scale = Vector3(0.9999999, 0.99999994, 0.9999999)
+bones/25/position = Vector3(-4.2870146e-10, 0.4087262, 4.5531372e-08)
+bones/25/rotation = Quaternion(-0.029670164, -0.14366281, -0.5691312, 0.80905527)
+bones/25/scale = Vector3(0.99999994, 0.99999994, 0.9999999)
+bones/26/position = Vector3(3.157105e-10, 0.25825626, -1.9977248e-08)
+bones/26/rotation = Quaternion(0.41253224, -0.31378576, 0.57596505, 0.63215506)
+bones/26/scale = Vector3(0.99999994, 1, 0.9999999)
+bones/27/position = Vector3(-4.4778847e-08, 0.42107406, 5.5576702e-08)
+bones/27/rotation = Quaternion(0.29083243, -0.060663678, 0.019754993, 0.9546446)
+bones/27/scale = Vector3(1, 1.0000001, 1.0000002)
+bones/28/position = Vector3(6.8941105e-08, 0.22801808, -1.2406388e-08)
+bones/28/rotation = Quaternion(3.9097557e-08, 1.4995738e-08, 4.2187605e-09, 1)
+bones/28/scale = Vector3(1, 1, 1)
 
-[node name="Hands" parent="." index="3" unique_id=1510427740]
-visible = false
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="player/Skeleton3D" index="0" unique_id=347043889]
+transform = Transform3D(-0.054097474, 0.8282049, -0.55780846, 0.3899827, -0.4967364, -0.7753495, -0.9192321, -0.25947982, -0.29611298, 0.21242966, 1.7990918, -0.49622473)
+bone_name = "mixamorig_RightHand"
+bone_idx = 16
 
-[node name="Legs" parent="." index="4" unique_id=1883105780]
-visible = false
+[node name="sword" parent="player/Skeleton3D/BoneAttachment3D" index="0" unique_id=1961748764 instance=ExtResource("2_4ntmi")]
 
-[node name="Feet" parent="." index="5" unique_id=1741702364]
-visible = false
+[node name="Arms_003" parent="player/Skeleton3D" index="1" unique_id=907492567]
+material_override = SubResource("StandardMaterial3D_l8h54")
 
-[node name="AnimationTree" type="AnimationTree" parent="." index="7" unique_id=444469295]
-process_mode = 3
-anim_player = NodePath("../AnimationPlayer")
+[node name="Feet_003" parent="player/Skeleton3D" index="2" unique_id=1868533246]
+material_override = SubResource("StandardMaterial3D_l8h54")
+
+[node name="Hands_003" parent="player/Skeleton3D" index="3" unique_id=533825209]
+material_override = SubResource("StandardMaterial3D_l8h54")
+
+[node name="Head_Body_003" parent="player/Skeleton3D" index="4" unique_id=1757390140]
+material_override = SubResource("StandardMaterial3D_l8h54")
+
+[node name="Legs_003" parent="player/Skeleton3D" index="5" unique_id=555956368]
+material_override = SubResource("StandardMaterial3D_l8h54")

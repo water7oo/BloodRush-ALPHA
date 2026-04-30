@@ -29,6 +29,8 @@ var in_startup := true
 var heavy_pressed_time = -1
 var combo_window = 0.2 
 
+@onready var AttackAnimation = attackData.attackAnimation
+
 func _enter() -> void:
 	enemies_hit.clear()
 	buffered_input = false
@@ -42,7 +44,7 @@ func _enter() -> void:
 	
 	if animation_player:
 		animation_player.speed_scale = 7.0
-		animation_player.play("attack2")
+		animation_player.play(AttackAnimation)
 
 
 func _update(delta: float) -> void:

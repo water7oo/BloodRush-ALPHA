@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_647gg")
+attackAnimation = "player|attack2"
 startup_duration = 0.06
 recovery_duration = 0.2
 attackDamage = 15.0

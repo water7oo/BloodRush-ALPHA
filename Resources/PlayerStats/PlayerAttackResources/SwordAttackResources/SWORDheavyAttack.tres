@@ -1,0 +1,19 @@
+[gd_resource type="Resource" format=3 uid="uid://bf6ajdjx0rv08"]
+
+[ext_resource type="Script" uid="uid://cgcokbbqlgc1k" path="res://Resources/PlayerStats/PlayerAttackResources/SwordplayerattackDataScripts/SWORDheavyAttackData.gd" id="1_o5tms"]
+
+[resource]
+script = ExtResource("1_o5tms")
+active_duration = 0.45
+attackDamage = 20.0
+combo_window_duration = 0.8
+enemyTargetLength = 0.3
+enemyTargetMagnitude = 0.1
+enemyTargetHitStop = 0.35
+Default_knockback_force = 3.5
+knockback_force = 30.0
+ATTACK_DECELERATION = 30.0
+next_attack_state = &"to_attackUpper"
+comboknockbackForceRate = 0.7
+knockback_force_finisher = 5.0
+attackAnimation = "player|swordAttackHeavy1"

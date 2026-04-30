@@ -26,7 +26,7 @@ func _enter() -> void:
 		velocity.z = 0
 	
 	if animation_player:
-		animation_player.play("Run")
+		animation_player.play("player|Run")
 	pass
 	
 	
@@ -50,7 +50,7 @@ func _update(delta: float) -> void:
 	
 	if animation_player && Global.is_moving:
 		animation_player.speed_scale = velocity.length() * .1
-		animation_player.play("Run")
+		animation_player.play("player|Run")
 	agent.move_and_slide()
 
 # Smooth run (Mario-esque momentum)

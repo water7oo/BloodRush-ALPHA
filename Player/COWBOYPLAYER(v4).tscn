@@ -867,7 +867,7 @@ volume_db = -16.868
 
 [node name="RootNode" type="Node3D" parent="." unique_id=1429141220]
 
-[node name="player2" parent="RootNode" unique_id=2013222835 instance=ExtResource("58_vkj36")]
+[node name="player2" parent="RootNode" unique_id=2075746240 instance=ExtResource("58_vkj36")]
 transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 0.99999994, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RootNode" unique_id=992140820]

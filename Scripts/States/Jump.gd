@@ -50,6 +50,7 @@ func landCheck():
 			landDust.restart()
 			landDust.emitting = true
 			Global.squash_land($"../../RootNode/player2")
+			animation_player.play("player|idle")
 			agent.state_machine.dispatch("to_idle")
 		
 
@@ -57,9 +58,8 @@ func landCheck():
 	
 func _update(delta: float) -> void:
 	player_jump(delta)
+	fallingCheck()
 	agent.move_and_slide()
-	if animation_player:
-		animation_player.play("jumpIdle")
 
 	landCheck()
 
@@ -105,18 +105,21 @@ func player_jump(delta: float) -> void:
 
 		# Transition
 		if Input.is_action_pressed("move_crouch"):
-			animation_player.play("IDLE")
+			animation_player.play("player|idle")
 			agent.state_machine.dispatch("to_crouch")
 		elif has_input:
-			animation_player.play("IDLE")
+			animation_player.play("player|walk")
 			agent.state_machine.dispatch("to_walk")
 		else:
-			animation_player.play("IDLE")
+			animation_player.play("player|idle")
 			agent.state_machine.dispatch("to_idle")
 
 
-# Falling check
+
+func fallingCheck():
+	if agent.velocity.y > 0:
+		if animation_player:
+			animation_player.play("player|jumpRise")
 	if not agent.is_on_floor() and agent.velocity.y < 0:
-		#animationTree.set("parameters/Jump_Blend/blend_amount", 0)
+		animation_player.play("player|jumpIdle")
 		pass
-		

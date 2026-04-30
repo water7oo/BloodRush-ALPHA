@@ -73,6 +73,9 @@ var TargetMagnitude: float = 0.5
 
 var isRecovering = false
 
+var isSwordMode = false
+var isFightMode = true
+
 func shakeTween(node):
 	FollowCam.applyShake(0.1,0.1)
 	var strength = clamp(Global.combo_hits.size() * 2, 5, 20)

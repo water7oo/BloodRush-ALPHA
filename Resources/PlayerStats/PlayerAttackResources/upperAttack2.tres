@@ -23,3 +23,4 @@ max_hits = 3
 time_between_hits = 0.1
 knockback_force_finisher = 5.0
 knockback_force_default = 4.0
+attackAnimation = "player|SLIDE"

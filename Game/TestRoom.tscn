@@ -10,8 +10,7 @@
 [ext_resource type="Script" uid="uid://byp2l6m5moq11" path="res://ui/transition.gd" id="6_2nta8"]
 [ext_resource type="ArrayMesh" uid="uid://bh4frfom15n71" path="res://Enviroment/cactus1.obj" id="6_nvdy2"]
 [ext_resource type="PackedScene" uid="uid://en5j5w4rjeu2" path="res://Game/ResetEnemy.tscn" id="7_s2vfm"]
-[ext_resource type="Texture2D" uid="uid://bqcs3j00sa7kh" path="res://MaterialTextures/My Textures/CheckeredPattern.png" id="8_sw35u"]
-[ext_resource type="Texture2D" uid="uid://dy0v0w8pjnujn" path="res://MaterialTextures/My Textures/pixel-red.png" id="8_x6rhu"]
+[ext_resource type="Texture2D" uid="uid://dneeyvsrngy6b" path="res://MaterialTextures/Sand1_texture_color.png" id="7_x6rhu"]
 [ext_resource type="Script" uid="uid://ccfr6qljiobv4" path="res://Resources/EnemyStats/EnemyStatsScripts/enemyStats.gd" id="9_cg3hj"]
 [ext_resource type="Script" uid="uid://bgukb4hmyjy3b" path="res://Resources/ObjectResources/objectscriptResource/boxCrateResource.gd" id="9_i1la3"]
 [ext_resource type="PackedScene" uid="uid://7l5yih8w56c3" path="res://Player/PlayerCamera.tscn" id="9_sw35u"]
@@ -49,7 +48,7 @@ volumetric_fog_density = 0.0167
 volumetric_fog_albedo = Color(0.456267, 1, 0.98943, 1)
 volumetric_fog_emission_energy = 122.2
 
-[sub_resource type="Resource" id="Resource_sw35u"]
+[sub_resource type="Resource" id="Resource_x6rhu"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 25.0
@@ -101,9 +100,6 @@ texture_filter = 0
 
 [sub_resource type="QuadMesh" id="QuadMesh_nvdy2"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_swveh"]
-load_path = "res://.godot/imported/texture_07.png-ab5f4a6ad655d06104ea7939a06ec496.s3tc.ctex"
-
 [sub_resource type="Shader" id="Shader_gdw0k"]
 code = "shader_type spatial;
 render_mode cull_front, unshaded;
@@ -132,16 +128,14 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x6rhu"]
 render_priority = 0
 shader = SubResource("Shader_gdw0k")
-shader_parameter/outline_color = Color(0.50534403, 0.5053441, 0.50534385, 1)
-shader_parameter/outline_width = 1.0
+shader_parameter/outline_color = Color(0.5333184, 0.5495315, 0, 1)
+shader_parameter/outline_width = 0.86
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sw35u"]
 next_pass = SubResource("ShaderMaterial_x6rhu")
 diffuse_mode = 3
 specular_mode = 1
-albedo_color = Color(0.4890204, 0.99999994, 0.52332735, 1)
-albedo_texture = SubResource("CompressedTexture2D_swveh")
-roughness_texture = ExtResource("8_x6rhu")
+albedo_color = Color(0.765, 0.9, 0.35999995, 1)
 uv1_scale = Vector3(-1.745, -1.745, -1.745)
 uv1_triplanar_sharpness = 0.233259
 texture_filter = 0
@@ -152,13 +146,17 @@ instance_count = 50
 mesh = ExtResource("6_nvdy2")
 buffer = PackedFloat32Array(-1.001, 0, 0, -142.36363, 0, 1.001, 0, -6.243815, 0, 0, -1.001, -252.82036, 0, 0, -1.001, 50.983704, 4.436906e-08, 1.001, 0, -6.243805, 1.001, -4.436906e-08, 0, -16.267502, 0, 0, -1.001, 47.3121, 4.436906e-08, 1.001, 0, -6.243803, 1.001, -4.436906e-08, 0, 21.29817, -1.001, 0, 0, -114.18395, 0, 1.001, 0, -6.243812, 0, 0, -1.001, -175.64157, -1.001, 0, 0, -81.320885, 0, 1.001, 0, -6.2438107, 0, 0, -1.001, -151.81665, -1.001, 0, 0, -88.309784, 0, 1.001, 0, -6.243812, 0, 0, -1.001, -179.10262, 0, 0, -1.001, 0.89245224, 4.436906e-08, 1.001, 0, -6.2438035, 1.001, -4.436906e-08, 0, 17.363096, 0, 0, -1.001, -48.39985, 4.436906e-08, 1.001, 0, -6.243804, 1.001, -4.436906e-08, 0, 2.245575, -1.001, 0, 0, 2.497898, 0, 1.001, 0, -6.2438164, 0, 0, -1.001, -279.34476, 0, 0, -1.001, 89.41527, 4.436906e-08, 1.001, 0, -6.243816, 1.001, -4.436906e-08, 0, -261.1564, -1.001, 0, 0, 59.02747, 0, 1.001, 0, -6.243814, 0, 0, -1.001, -234.65782, -1.001, 0, 0, -125.86865, 0, 1.001, 0, -6.243813, 0, 0, -1.001, -205.76526, -1.001, 0, 0, 94.93144, 0, 1.001, 0, -6.2438164, 0, 0, -1.001, -285.38754, -1.001, 0, 0, -17.07109, 0, 1.001, 0, -6.2438154, 0, 0, -1.001, -247.4389, 0, 0, -1.001, 64.32819, 4.436906e-08, 1.001, 0, -6.2438035, 1.001, -4.436906e-08, 0, 16.395613, 0, 0, -1.001, -40.03922, 4.436906e-08, 1.001, 0, -6.2438064, 1.001, -4.436906e-08, 0, -58.31298, 0, 0, -1.001, -116.02657, 4.436906e-08, 1.001, 0, -6.243803, 1.001, -4.436906e-08, 0, 11.483469, 0, 0, -1.001, 89.628235, 4.436906e-08, 1.001, 0, -6.243807, 1.001, -4.436906e-08, 0, -61.35801, 0, 0, -1.001, 60.510586, 4.436906e-08, 1.001, 0, -6.2438045, 1.001, -4.436906e-08, 0, -9.997395, 0, 0, -1.001, 43.10178, 4.436906e-08, 1.001, 0, -6.243807, 1.001, -4.436906e-08, 0, -72.74208, 0, 0, -1.001, 7.469347, 4.436906e-08, 1.001, 0, -6.243806, 1.001, -4.436906e-08, 0, -38.962715, -1.001, 0, 0, -107.442566, 0, 1.001, 0, -6.2438087, 0, 0, -1.001, -113.295265, 0, 0, -1.001, 61.186157, 4.436906e-08, 1.001, 0, -6.2438025, 1.001, -4.436906e-08, 0, 29.94549, -1.001, 0, 0, 10.420895, 0, 1.001, 0, -6.2438164, 0, 0, -1.001, -276.80804, -1.001, 0, 0, -30.362831, 0, 1.001, 0, -6.2438164, 0, 0, -1.001, -285.68384, 0, 0, -1.001, -33.695557, 4.436906e-08, 1.001, 0, -6.243803, 1.001, -4.436906e-08, 0, 36.67352, 0, 0, -1.001, 18.058138, 4.436906e-08, 1.001, 0, -6.243802, 1.001, -4.436906e-08, 0, 34.301018, -1.001, 0, 0, -23.711536, 0, 1.001, 0, -6.2438097, 0, 0, -1.001, -125.844345, -1.001, 0, 0, -11.536034, 0, 1.001, 0, -6.2438173, 0, 0, -1.001, -294.10376, -1.001, 0, 0, -29.128937, 0, 1.001, 0, -6.243813, 0, 0, -1.001, -205.62973, 0, 0, -1.001, 97.82461, 4.436906e-08, 1.001, 0, -6.2438045, 1.001, -4.436906e-08, 0, -12.254784, 0, 0, -1.001, 92.286896, 4.436906e-08, 1.001, 0, -6.243803, 1.001, -4.436906e-08, 0, 30.449333, -1.001, 0, 0, -45.674114, 0, 1.001, 0, -6.243814, 0, 0, -1.001, -229.40002, 0, 0, -1.001, 50.37052, 4.436906e-08, 1.001, 0, -6.2438097, 1.001, -4.436906e-08, 0, -126.43016, -1.001, 0, 0, -39.21651, 0, 1.001, 0, -6.243817, 0, 0, -1.001, -288.97488, -1.001, 0, 0, -36.146927, 0, 1.001, 0, -6.2438107, 0, 0, -1.001, -155.36502, 0, 0, -1.001, -5.1717606, 4.436906e-08, 1.001, 0, -6.2438087, 1.001, -4.436906e-08, 0, -101.18355, 0, 0, -1.001, 92.170044, 4.436906e-08, 1.001, 0, -6.2438064, 1.001, -4.436906e-08, 0, -53.647434, -1.001, 0, 0, -85.4021, 0, 1.001, 0, -6.2438107, 0, 0, -1.001, -152.61308, -1.001, 0, 0, -112.51185, 0, 1.001, 0, -6.243808, 0, 0, -1.001, -89.3195, -1.001, 0, 0, -102.81041, 0, 1.001, 0, -6.243807, 0, 0, -1.001, -69.48107, -1.001, 0, 0, -24.277187, 0, 1.001, 0, -6.2438107, 0, 0, -1.001, -156.8565, 0, 0, -1.001, -4.3571334, 4.436906e-08, 1.001, 0, -6.2438025, 1.001, -4.436906e-08, 0, 42.022076, 0, 0, -1.001, -74.7126, 4.436906e-08, 1.001, 0, -6.2438045, 1.001, -4.436906e-08, 0, -9.3316, 0, 0, -1.001, 106.01512, 4.436906e-08, 1.001, 0, -6.2438116, 1.001, -4.436906e-08, 0, -165.75812, 0, 0, -1.001, -90.75049, 4.436906e-08, 1.001, 0, -6.2438045, 1.001, -4.436906e-08, 0, 2.0521812, -1.001, 0, 0, -117.73725, 0, 1.001, 0, -6.2438064, 0, 0, -1.001, -54.996964, -1.001, 0, 0, -21.916958, 0, 1.001, 0, -6.2438164, 0, 0, -1.001, -277.0782, -1.001, 0, 0, -66.7117, 0, 1.001, 0, -6.2438154, 0, 0, -1.001, -266.25134, 0, 0, -1.001, 89.28935, 4.436906e-08, 1.001, 0, -6.2438054, 1.001, -4.436906e-08, 0, -32.18967)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_swveh"]
-next_pass = SubResource("ShaderMaterial_x6rhu")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sw35u"]
+render_priority = 0
+shader = SubResource("Shader_gdw0k")
+shader_parameter/outline_color = Color(3.6098064e-07, 0.31247404, 0.34955338, 1)
+shader_parameter/outline_width = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wbl5e"]
+next_pass = SubResource("ShaderMaterial_sw35u")
 diffuse_mode = 3
 specular_mode = 1
 albedo_color = Color(0.4267235, 0.5701185, 0.669647, 1)
-albedo_texture = SubResource("CompressedTexture2D_swveh")
-roughness_texture = ExtResource("8_x6rhu")
 uv1_scale = Vector3(2.375, 2.375, 2.375)
 uv1_triplanar_sharpness = 0.233259
 texture_filter = 0
@@ -172,7 +170,7 @@ buffer = PackedFloat32Array(-2.0007312, 0, 0.03278798, -90.94217, 0, 2.001, 0, -
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fnj2k"]
 render_priority = 0
 shader = ExtResource("5_nvdy2")
-shader_parameter/outline_color = Color(0.50534403, 0.5053441, 0.50534385, 1)
+shader_parameter/outline_color = Color(0.39163017, 0.122238226, 0, 1)
 shader_parameter/outline_width = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gdw0k"]
@@ -180,12 +178,11 @@ next_pass = SubResource("ShaderMaterial_fnj2k")
 diffuse_mode = 3
 specular_mode = 1
 disable_ambient_light = true
-albedo_color = Color(0.9999996, 0.9204625, 0.88587683, 1)
-albedo_texture = ExtResource("8_sw35u")
+albedo_texture = ExtResource("7_x6rhu")
 metallic_specular = 0.0
 roughness = 0.0
-uv1_triplanar = true
-uv1_triplanar_sharpness = 0.233259
+uv1_scale = Vector3(48, 48, 48)
+uv1_triplanar_sharpness = 0.16493915
 texture_filter = 0
 
 [sub_resource type="BoxMesh" id="BoxMesh_hmdq7"]
@@ -773,11 +770,18 @@ shader_parameter/depth_falloff = 0.001
 
 [sub_resource type="QuadMesh" id="QuadMesh_8ulvh"]
 
-[sub_resource type="Resource" id="Resource_wbl5e"]
+[sub_resource type="Resource" id="Resource_sw35u"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 20.0
 max_health = 999.0
+Name = "Attacking"
+
+[sub_resource type="Resource" id="Resource_wbl5e"]
+resource_local_to_scene = true
+script = ExtResource("9_cg3hj")
+current_health = 10.0
+max_health = 10.0
 Name = "Attacking"
 
 [sub_resource type="Resource" id="Resource_sf2ab"]
@@ -790,15 +794,15 @@ Name = "Attacking"
 [sub_resource type="Resource" id="Resource_q6yvq"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 10.0
-max_health = 10.0
+current_health = 60.0
+max_health = 60.0
 Name = "Attacking"
 
 [sub_resource type="Resource" id="Resource_j5h8r"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 60.0
-max_health = 60.0
+current_health = 10.0
+max_health = 999.0
 Name = "Attacking"
 
 [sub_resource type="Resource" id="Resource_opbd2"]
@@ -811,18 +815,11 @@ Name = "Attacking"
 [sub_resource type="Resource" id="Resource_cokqy"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 10.0
-max_health = 999.0
-Name = "Attacking"
-
-[sub_resource type="Resource" id="Resource_do1i3"]
-resource_local_to_scene = true
-script = ExtResource("9_cg3hj")
 current_health = 999.0
 max_health = 999.0
 Name = "Ranger"
 
-[sub_resource type="Resource" id="Resource_hygva"]
+[sub_resource type="Resource" id="Resource_do1i3"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 999.0
@@ -831,7 +828,7 @@ isGuarding = true
 Name = "GUARDING"
 GuardDamage = 4
 
-[sub_resource type="Resource" id="Resource_46pbn"]
+[sub_resource type="Resource" id="Resource_hygva"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 999.0
@@ -905,7 +902,10 @@ _data = {
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=351352346]
 transform = Transform3D(1, 0, 0, 0, 0.0019374636, 0.99999815, 0, -0.99999815, 0.0019374636, 0, 20.500511, -6)
+light_specular = 0.0
 shadow_enabled = true
+shadow_opacity = 0.45
+shadow_blur = 0.1
 directional_shadow_mode = 0
 directional_shadow_fade_start = 1.0
 directional_shadow_max_distance = 126.9
@@ -948,7 +948,7 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 7.6728115, 2.007)
 target = NodePath("../../../Cowboy")
 speed = 4.0
-enemyStats = SubResource("Resource_sw35u")
+enemyStats = SubResource("Resource_x6rhu")
 
 [node name="CamTarget2" type="Marker3D" parent="SubViewportContainer/SubViewport" unique_id=2034139925]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.53036, 9.918121, 8.49949)
@@ -999,7 +999,7 @@ multimesh = SubResource("MultiMesh_swveh")
 
 [node name="rockMulti" type="MultiMeshInstance3D" parent="SubViewportContainer/SubViewport" unique_id=1359937772]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -159.77455, 6.176811, 149.95445)
-material_override = SubResource("StandardMaterial3D_swveh")
+material_override = SubResource("StandardMaterial3D_wbl5e")
 multimesh = SubResource("MultiMesh_s2vfm")
 
 [node name="MainFloor" type="CSGCombiner3D" parent="SubViewportContainer/SubViewport" unique_id=15713091]
@@ -1096,6 +1096,9 @@ mesh = SubResource("BoxMesh_hmdq7")
 [node name="CSGMesh3D8" type="CSGMesh3D" parent="SubViewportContainer/SubViewport/Level" unique_id=315981238]
 transform = Transform3D(2.4921002, -1.960987e-06, 5.803099e-07, -3.6989725e-06, 0.3419453, 0.28978, -4.820588e-06, -1.2761554, 0.07764622, 12.84141, 4.286137, 0.08901176)
 mesh = SubResource("BoxMesh_hmdq7")
+
+[node name="BloodRushSaloon" parent="SubViewportContainer/SubViewport" unique_id=901536246 instance=ExtResource("12_iu1ym")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -279, 0.19212532, 79)
 
 [node name="rock2" parent="SubViewportContainer/SubViewport" unique_id=891841887 instance=ExtResource("10_x6rhu")]
 transform = Transform3D(3.6384847, 1.0484432, 4.6542645, -0.12384225, 5.872109, -1.2259668, -4.7692857, 0.64737767, 3.5825708, -294, 4, -138.71704)
@@ -1336,11 +1339,7 @@ use_collision = true
 
 [node name="MeshInstance3D2" type="CSGBox3D" parent="SubViewportContainer/SubViewport/Grass2" unique_id=1757205333]
 transform = Transform3D(1, -1.030287e-13, 0, 0, 1, -4.1134038e-20, 0, -8.4703295e-22, 1, 0.008349225, -0.0024254285, -2.3283064e-10)
-visible = false
 size = Vector3(0.50606614, 0.49026626, 0.0250138)
-
-[node name="BloodRushSaloon" parent="SubViewportContainer/SubViewport" unique_id=901536246 instance=ExtResource("12_iu1ym")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -279, 0.19212532, 79)
 
 [node name="MiniPark Patch" type="MeshInstance3D" parent="SubViewportContainer/SubViewport" unique_id=1540349953]
 transform = Transform3D(99.36001, 0, 0, 0, -4.6513096e-06, 36, 0, -106.40956, -1.57361e-06, -77.85094, 0.9249158, 69.311005)
@@ -1349,7 +1348,6 @@ material_override = SubResource("ShaderMaterial_wbl5e")
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="SubViewportContainer/SubViewport/MiniPark Patch" unique_id=353571634]
 transform = Transform3D(1, -1.6367786e-22, 4.119088e-15, 0, 1, 1.7763568e-15, 0, 0, 0.99999994, -5.5879354e-09, -2.2351742e-08, -2.6077032e-08)
-visible = false
 multimesh = SubResource("MultiMesh_sw35u")
 
 [node name="water" type="MeshInstance3D" parent="SubViewportContainer/SubViewport" unique_id=1055177507]
@@ -1365,8 +1363,13 @@ mesh = SubResource("QuadMesh_8ulvh")
 [node name="Pausing" parent="SubViewportContainer/SubViewport" unique_id=515406776 instance=ExtResource("5_swveh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.176811, 0)
 
+[node name="Cowboy" parent="." unique_id=401760427 instance=ExtResource("10_wbl5e")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -62.997192, 4.6938396, -1.076)
+type = 1
+
 [node name="HitEffectText" parent="." unique_id=166482147 instance=ExtResource("27_2nta8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58, 6.176811, -21)
+visible = false
 
 [node name="Reset" parent="." unique_id=935272242 node_paths=PackedStringArray("enemyDummy1", "enemyDummy2", "enemyDummy3", "resetPos1", "resetPos2", "resetPos3", "playerReset", "player") instance=ExtResource("7_s2vfm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.176811, 0)
@@ -1393,42 +1396,39 @@ transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -95.2197
 
 [node name="Enemy" parent="." unique_id=1935452947 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(1.9470718e-07, 0, -1, 0, 1, 0, 1, 0, 1.9470718e-07, -73.13269, 4.236618, 2.132698)
-enemyStats = SubResource("Resource_wbl5e")
+enemyStats = SubResource("Resource_sw35u")
 
 [node name="Enemy7" parent="." unique_id=120782745 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(0.9659258, 0, -0.25881886, 0, 1, 0, 0.25881886, 0, 0.9659258, -70, 4.236618, 18)
-enemyStats = SubResource("Resource_sf2ab")
+enemyStats = SubResource("Resource_wbl5e")
 
 [node name="Enemy8" parent="." unique_id=457208653 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(0.9659258, 0, -0.25881886, 0, 1, 0, 0.25881886, 0, 0.9659258, -81, 4.236618, 8)
-enemyStats = SubResource("Resource_q6yvq")
+enemyStats = SubResource("Resource_sf2ab")
 
 [node name="Enemy9" parent="." unique_id=1671187498 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(0.9659258, 0, -0.25881886, 0, 1, 0, 0.25881886, 0, 0.9659258, -81, 4.236618, -8)
-enemyStats = SubResource("Resource_j5h8r")
+enemyStats = SubResource("Resource_q6yvq")
 
 [node name="Enemy6" parent="." unique_id=1981908742 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.99999994, 0, -1.7881393e-07, 0, 1, 0, 1.7881393e-07, 0, -0.99999994, -73, 4.236618, -23)
-enemyStats = SubResource("Resource_opbd2")
+enemyStats = SubResource("Resource_j5h8r")
 
 [node name="Enemy5" parent="." unique_id=1902015437 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.70710665, 0, -0.7071069, 0, 1, 0, 0.7071069, 0, -0.70710665, -100, 4.236618, -6)
-enemyStats = SubResource("Resource_cokqy")
+enemyStats = SubResource("Resource_opbd2")
 
 [node name="Enemy2" parent="." unique_id=697327262 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.96363044, 0, 0.26723835, 0, 1, 0, -0.26723835, 0, -0.96363044, -10, 4.236618, -13)
-enemyStats = SubResource("Resource_do1i3")
+enemyStats = SubResource("Resource_cokqy")
 
 [node name="Enemy4" parent="." unique_id=225199188 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.00872653, 0, -0.9999619, 0, 1, 0, 0.9999619, 0, -0.00872653, -4, 4.236618, 5)
-enemyStats = SubResource("Resource_hygva")
+enemyStats = SubResource("Resource_do1i3")
 
 [node name="Enemy3" parent="." unique_id=467869146 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.9902682, 0, 0.13917308, 0, 1, 0, -0.13917308, 0, -0.9902682, -70.13269, 4.236618, -11.13269)
-enemyStats = SubResource("Resource_46pbn")
-
-[node name="Cowboy" parent="." unique_id=375016865 instance=ExtResource("10_wbl5e")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -62.997192, 4.6938396, -1.076)
+enemyStats = SubResource("Resource_hygva")
 
 [node name="Box4" parent="." unique_id=1616381138 instance=ExtResource("10_ai8yb")]
 transform = Transform3D(0.9935402, 0, -0.113480665, 0, 1, 0, 0.113480665, 0, 0.9935402, -23.308504, 4.603476, -18)

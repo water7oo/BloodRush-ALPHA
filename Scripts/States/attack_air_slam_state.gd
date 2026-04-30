@@ -26,6 +26,8 @@ var preserved_velocity: Vector3 = Vector3.ZERO
 var startup_timer := 0.0
 var in_startup := true
 
+@onready var AttackAnimation = attackData.attackAnimation
+
 func _enter() -> void:
 	enemies_hit.clear()
 	buffered_input = false
@@ -38,8 +40,8 @@ func _enter() -> void:
 	attack_timer = 0.0
 	
 	if animation_player:
-		animation_player.speed_scale = 15.0
-		animation_player.play("heavyAttack")
+		animation_player.speed_scale = 5
+		animation_player.play(AttackAnimation)
 
 
 func _update(delta: float) -> void:

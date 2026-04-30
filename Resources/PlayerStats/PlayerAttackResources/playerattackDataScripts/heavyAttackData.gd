@@ -42,3 +42,5 @@ var comboknockbackForce: float = knockback_force * comboknockbackForceRate
 @export var enemyTargetFinisher: float = .4
 @export var enemyTargetMagnitudeFinisher: float = .1 
 @export var enemyHitstopFinisher: float = .3
+
+@export var attackAnimation: String = ""

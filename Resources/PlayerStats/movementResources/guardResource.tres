@@ -4,3 +4,9 @@
 
 [resource]
 script = ExtResource("1_bm3eg")
+GUARD_BASE_SPEED = null
+guardSpeedSubtract = 80.0
+momentum_deceleration = 90.0
+momentum_acceleration = 90.0
+air_momentum_acceleration = null
+air_momentum_deceleration = null

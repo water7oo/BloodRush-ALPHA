@@ -21,7 +21,7 @@ func _enter() -> void:
 	
 	
 	if animation_player:
-		animation_player.play("Idle")
+		animation_player.play("player|Idle")
 
 func _update(delta: float) -> void:
 	player_idle(delta)

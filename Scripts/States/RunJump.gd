@@ -29,8 +29,6 @@ func _enter() -> void:
 	Global.jump_timer = 0.0
 	Global.jump_counter = 0
 
-	if animation_player:
-		animation_player.play("jumpIdle")
 
 func jumpSound():
 	jump1Sound.pitch_scale = randf_range(0.6, 1.2)
@@ -50,7 +48,7 @@ func landCheck():
 			landDust.restart()
 			landDust.emitting = true
 			Global.squash_land($"../../RootNode/player2")
-			animation_player.play("IDLE")
+			animation_player.play("player|idle")
 			agent.state_machine.dispatch("to_idle")
 		
 
@@ -60,14 +58,20 @@ func _update(delta: float) -> void:
 	player_runjump(delta)
 	landCheck()
 	agent.move_and_slide()
-
+	fallingCheck()
 
 	var is_on_floor = agent.is_on_floor()
-	if animation_player:
-		animation_player.play("jumpIdle")
 
 
-
+func fallingCheck():
+	if agent.velocity.y > 0:
+		if animation_player:
+			animation_player.play("player|jumpRise")
+	elif not agent.is_on_floor() and agent.velocity.y < 0:
+		animation_player.play("player|jumpIdle")
+		pass
+		
+		
 func player_runjump(delta: float) -> void:
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (agent.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -115,8 +119,8 @@ func player_runjump(delta: float) -> void:
 		agent.velocity.z = move_toward(agent.velocity.z, 0, 100 * delta)
 
 		if input_dir != Vector2.ZERO:
-			animation_player.play("IDLE")
+			animation_player.play("player|walk")
 			agent.state_machine.dispatch("to_walk")
 		else:
-			animation_player.play("IDLE")
+			animation_player.play("player|idle")
 			agent.state_machine.dispatch("to_idle")

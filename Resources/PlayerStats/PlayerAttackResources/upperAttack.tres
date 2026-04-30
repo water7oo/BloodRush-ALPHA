@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_dg80q")
+attackAnimation = "player|Launcher"
 startup_duration = 0.08
 active_duration = 0.5
 recovery_duration = 0.5
@@ -24,3 +25,4 @@ max_hits = 6
 time_between_hits = 0.1
 knockback_force_finisher = 5.0
 knockback_force_default = 4.0
+knockback_direction_finisher = Vector3(0, 1, 0.3)

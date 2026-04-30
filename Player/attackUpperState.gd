@@ -40,15 +40,18 @@ var in_startup := true
 var isJumpCancel = false
 var canJumpCancel = false
 
+@onready var AttackAnimation = attackData.attackAnimation
+
+
 func _enter() -> void:
 	if attackData == load("res://Resources/PlayerStats/PlayerAttackResources/upperAttack2.tres"):
 		Global.isMultiHitUpper = true
 		animation_player.speed_scale = 7.0
-		animation_player.play("SLIDE")
+		animation_player.play(AttackAnimation)
 	else:
 		Global.isMultiHitUpper = false
 		animation_player.speed_scale = 12.0
-		animation_player.play("Launcher")
+		animation_player.play(AttackAnimation)
 	if Global.isMultiHitUpper:
 		attack_box = $"../../RootNode/AttackUpperBox2"
 		attack_box_col = $"../../RootNode/AttackUpperBox2/CollisionShape3D"

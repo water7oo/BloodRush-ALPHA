@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_70lbc")
+attackAnimation = "player|heavyAttack"
 active_duration = 0.45
 attackDamage = 20.0
 combo_window_duration = 0.8

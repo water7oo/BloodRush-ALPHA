@@ -1,7 +1,6 @@
 class_name UpperAttackData
 extends Resource
 
-
 @export var startup_duration: float = 0.1
 @export var active_duration: float = 0.4
 @export var recovery_duration: float = 0.3
@@ -53,3 +52,5 @@ var isMultiHit = false
 @export var enemyTargetFinisher: float = .4
 @export var enemyTargetMagnitudeFinisher: float = .1 
 @export var enemyHitstopFinisher: float = .3
+
+@export var attackAnimation: String = ""

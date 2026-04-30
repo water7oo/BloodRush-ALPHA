@@ -28,7 +28,7 @@ var in_startup := true
 
 @onready var PlayerUI = $PlayerUI
 
-
+@onready var AttackAnimation = attackData.attackAnimation
 
 func _enter() -> void:
 	enemies_hit.clear()
@@ -42,7 +42,7 @@ func _enter() -> void:
 	
 	if animation_player:
 		animation_player.speed_scale = 7.0
-		animation_player.play("attack1")
+		animation_player.play(AttackAnimation)
 
 
 func _update(delta: float) -> void:
@@ -73,6 +73,7 @@ func _update(delta: float) -> void:
 	_process_cancel_window()
 	_apply_physics(delta)
 	agent.move_and_slide()
+
 
 func is_in_attack_phase() -> bool:
 	return attack_timer > attackData.recovery_duration

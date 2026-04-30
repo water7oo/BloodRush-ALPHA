@@ -55,7 +55,7 @@ func player_burst(delta: float) -> void:
 	# Gradually slow down the dodge
 	agent.velocity = agent.velocity.lerp(Vector3.ZERO, dodgeResource.DODGE_LERP_VAL * delta)
 	if animation_player:
-		animation_player.play("SLIDE")
+		animation_player.play("player|SLIDE")
 
 
 	if dodgeResource.dodge_cooldown_timer <= 0:

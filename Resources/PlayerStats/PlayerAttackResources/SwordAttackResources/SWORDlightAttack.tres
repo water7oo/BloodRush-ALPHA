@@ -1,0 +1,19 @@
+[gd_resource type="Resource" format=3 uid="uid://umlituq4ctml"]
+
+[ext_resource type="Script" uid="uid://dkrvjreu3l3er" path="res://Resources/PlayerStats/PlayerAttackResources/SwordplayerattackDataScripts/SWORDlightAttackData.gd" id="1_ym48y"]
+
+[resource]
+script = ExtResource("1_ym48y")
+startup_duration = 0.05
+active_duration = 0.2
+recovery_duration = 0.2
+combo_window_duration = 0.8
+enemyTargetLength = 0.15
+enemyTargetMagnitude = 0.05
+enemyTargetHitStop = 0.2
+ATTACK_DECELERATION = 30.0
+next_attack_state = &"to_mediumAttack"
+knockback_force_guardRate = 0.6
+comboknockbackForceRate = 0.7
+knockback_force_finisher = 5.0
+attackAnimation = "player|swordLightAttack1"

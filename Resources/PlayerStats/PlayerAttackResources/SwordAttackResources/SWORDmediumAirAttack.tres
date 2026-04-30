@@ -1,0 +1,20 @@
+[gd_resource type="Resource" format=3 uid="uid://51dr184rmr4u"]
+
+[ext_resource type="Script" uid="uid://q34ga6chmlje" path="res://Resources/PlayerStats/PlayerAttackResources/SwordplayerattackDataScripts/SWORDmediumAirAttackData.gd" id="1_4rijf"]
+
+[resource]
+script = ExtResource("1_4rijf")
+startup_duration = 0.06
+recovery_duration = 0.2
+attackDamage = 15.0
+combo_window_duration = 0.8
+enemyTargetLength = 0.2
+enemyTargetMagnitude = 0.07
+enemyTargetHitStop = 0.2
+Default_knockback_force = 3.5
+knockback_force = 3.5
+ATTACK_DECELERATION = 30.0
+next_attack_state = &"to_airHeavyAttack"
+comboknockbackForceRate = 0.7
+knockback_force_finisher = 5.0
+attackAnimation = "player|swordMediumAttack1"

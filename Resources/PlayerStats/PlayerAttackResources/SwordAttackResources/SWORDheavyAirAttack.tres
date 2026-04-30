@@ -1,0 +1,21 @@
+[gd_resource type="Resource" format=3 uid="uid://cegc0vhitto8f"]
+
+[ext_resource type="Script" uid="uid://d3cwwpl1ip7r6" path="res://Resources/PlayerStats/PlayerAttackResources/SwordplayerattackDataScripts/SWORDheavyAirAttackData.gd" id="1_ty76g"]
+
+[resource]
+script = ExtResource("1_ty76g")
+startup_duration = 0.08
+active_duration = 0.5
+recovery_duration = 0.2
+attackDamage = 20.0
+combo_window_duration = 0.8
+enemyTargetLength = 0.3
+enemyTargetMagnitude = 0.1
+enemyTargetHitStop = 0.3
+Default_knockback_force = 3.5
+knockback_force = 4.0
+ATTACK_DECELERATION = 30.0
+next_attack_state = &"to_airSlamAttack"
+comboknockbackForceRate = 0.7
+knockback_force_finisher = 5.0
+attackAnimation = "player|SLIDE"

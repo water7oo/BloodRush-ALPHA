@@ -1,4 +1,7 @@
 extends CharacterBody3D
+class_name Player
+@onready var player = $RootNode/player2
+
 
 @onready var state_machine: LimboHSM = $LimboHSM
 @onready var idle_state = $LimboHSM/IdleState
@@ -50,6 +53,8 @@ var input_queue: Array = []
 @export var land1Sound: AudioStreamPlayer
 @export var landDust: GPUParticles3D
 
+enum combatType {FIGHTER, SWORD}
+@export var type: combatType = combatType.FIGHTER
 
 func _ready():
 	initialize_state_machine()
@@ -117,10 +122,48 @@ func initialize_state_machine():
 
 func _process(delta: float) -> void:
 	updateComboSpeech()
+	modeSwitch()
 	pass
 			
-#func _update(delta: float) -> void:
-	#landCheck()
+
+func modeSwitch():
+	var sword = player.get_node("player/Skeleton3D/BoneAttachment3D")
+
+	
+	if type == combatType.SWORD:
+		attack_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDlightAttack.tres")
+		attackMedium_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDmediumAttack.tres")
+		attackHeavy_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDheavyAttack.tres")
+		
+		air_attack_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDlightAirAttack.tres")
+		air_attackMedium_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDmediumAirAttack.tres")
+		air_attackHeavy_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDheavyAirAttack.tres")
+		attack_slamAir_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDairSlamAttack.tres")
+		sword.visible = true
+		Global.isSwordMode = true
+		Global.isFightMode = false
+		
+		if Global.isMultiHitUpper == false:
+			attack_upper_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDupperAttack2.tres")
+		else:
+			attack_upper_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDupperAttack.tres")
+	elif type == combatType.FIGHTER:
+		attack_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/lightAttack.tres")
+		attackMedium_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/mediumAttack.tres")
+		attackHeavy_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/heavyAttack.tres")
+
+		air_attack_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/lightAirAttack.tres")
+		air_attackMedium_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/mediumAirAttack.tres")
+		air_attackHeavy_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/heavyAirAttack.tres")
+		attack_slamAir_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordplayerattackDataScripts/SWORDairSlamAttackData.gd")
+		sword.visible = false
+		Global.isSwordMode = false
+		Global.isFightMode = true
+		
+		if Global.isMultiHitUpper == true:
+			attack_upper_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/upperAttack2.tres")
+		else:
+			attack_upper_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/upperAttack.tres")
 
 func updateComboCounter(delta: float):
 	if Global.combo_hits.size() >= 2:

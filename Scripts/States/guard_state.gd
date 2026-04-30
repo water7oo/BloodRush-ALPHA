@@ -2,6 +2,8 @@ extends LimboState
 
 @onready var armature = $"../../RootNode"
 @onready var state_machine: LimboHSM = $LimboHSM
+@onready var player = $"../../RootNode/player2"
+@onready var animation_player = player.get_node("AnimationPlayer")
 
 var velocity = Vector3.ZERO
 var is_moving: bool = false
@@ -20,7 +22,8 @@ func _enter() -> void:
 		
 	GuardActivateSound.play()
 
-	# Preserve momentum from the previous state
+	if animation_player:
+		animation_player.play("player|guard")
 	velocity = agent.velocity
 	velocity.y = 0  
 
