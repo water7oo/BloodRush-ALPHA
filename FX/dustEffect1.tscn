@@ -1,0 +1,178 @@
+[gd_scene format=3 uid="uid://dhd2amiuh43lt"]
+
+[ext_resource type="PackedScene" uid="uid://cafabtl3b50vx" path="res://FX/Dust_Wave.fbx" id="1_x5vei"]
+[ext_resource type="Script" uid="uid://ilnnhgtka3to" path="res://FX/dust_effect_1.gd" id="2_yxw2k"]
+[ext_resource type="Texture2D" uid="uid://ctpf7t205a75m" path="res://FX/Dust_Wave2-e8432e9fa40c58d5df7e1588c66db668_Slashing_Texture3.png" id="3_gjmsr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_74ker"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_texture = ExtResource("3_gjmsr")
+texture_filter = 0
+
+[sub_resource type="Animation" id="Animation_mrki0"]
+resource_name = "Dust"
+length = 0.825
+step = 0.0025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cylinder_001:material_override:uv1_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.745),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 0.86, 1), Vector3(2.293, 1.973, 2.293)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cylinder_001:material_override:uv1_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.745),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.185, 0.02, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Cylinder_001:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1125, 0.7375),
+"transitions": PackedFloat32Array(1.4640876, 1, 8.000001),
+"update": 0,
+"values": [Vector3(66, 66, 66), Vector3(169, 169, 169), Vector3(267, 267, 267)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Cylinder_001:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0.0003220886)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Cylinder_001:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.74500006),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1.5707964, 0, 0), Vector3(-1.5707964, 6.2831855, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_i8s8b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cylinder_001:material_override:uv1_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cylinder_001:material_override:uv1_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Cylinder_001:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(100, 99.99999, 99.99999)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Cylinder_001:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0.0003220886)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Cylinder_001:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.5707964, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qyg83"]
+_data = {
+&"Dust": SubResource("Animation_mrki0"),
+&"RESET": SubResource("Animation_i8s8b")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7fqbl"]
+animation = &"RESET"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_olebh"]
+animation = &"Dust"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_vs46r"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_aj5tq"]
+nodes/Animation/node = SubResource("AnimationNodeAnimation_olebh")
+nodes/Animation/position = Vector2(-200, 240)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_7fqbl")
+"nodes/Animation 2/position" = Vector2(-220, 100)
+nodes/Blend2/node = SubResource("AnimationNodeBlend2_vs46r")
+nodes/Blend2/position = Vector2(80, 120)
+node_connections = [&"Blend2", 0, &"Animation 2", &"Blend2", 1, &"Animation"]
+
+[node name="Root Scene" unique_id=440371400 instance=ExtResource("1_x5vei")]
+
+[node name="Cylinder_001" parent="." index="0" unique_id=191400299]
+transform = Transform3D(100, 0, 0, 0, -4.3711384e-06, 99.99999, 0, -99.99999, -4.3711384e-06, 0, 0, 0.0003220886)
+material_override = SubResource("StandardMaterial3D_74ker")
+script = ExtResource("2_yxw2k")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1466926974]
+libraries/ = SubResource("AnimationLibrary_qyg83")
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2" unique_id=852474022]
+tree_root = SubResource("AnimationNodeBlendTree_aj5tq")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Blend2/blend_amount = 0.0

@@ -34,7 +34,7 @@ func _update(delta: float) -> void:
 	playWalkingSound()
 	
 	if animation_player && Global.is_moving:
-		animation_player.speed_scale = velocity.length() * .5
+		animation_player.speed_scale = velocity.length() * .2
 		animation_player.play("player|walking")
 	agent.move_and_slide()
 

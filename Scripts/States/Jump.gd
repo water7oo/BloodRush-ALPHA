@@ -17,6 +17,9 @@ var velocity = Vector3.ZERO
 
 @export var jumpResource: Resource
 
+const DustLandEffect = preload("res://FX/dustEffect1.tscn")
+
+
 func _enter() -> void:
 	Global.stretch_up($"../../RootNode/player2")
 	jumpSound()
@@ -46,6 +49,12 @@ func landCheck():
 
 	if agent.state_machine.get_active_state() == self:
 		if is_on_floor and not Global.was_on_floor:
+			
+			var landEffectInstance = DustLandEffect.instantiate()
+			get_tree().root.add_child(landEffectInstance)
+			landEffectInstance.global_transform.origin = agent.global_transform.origin
+			
+			
 			landSound()
 			landDust.restart()
 			landDust.emitting = true

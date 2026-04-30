@@ -54,3 +54,4 @@ var isMultiHit = false
 @export var enemyHitstopFinisher: float = .3
 
 @export var attackAnimation: String = ""
+@export var animationSpeedScale: float = 7.0

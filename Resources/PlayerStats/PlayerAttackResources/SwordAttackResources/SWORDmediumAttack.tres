@@ -17,3 +17,4 @@ next_attack_state = &"to_heavyAttack"
 comboknockbackForceRate = 0.7
 knockback_force_finisher = 5.0
 attackAnimation = "player|swordMediumAttack1"
+animationSpeedScale = 2.0

@@ -40,7 +40,7 @@ func _enter() -> void:
 	attack_timer = 0.0
 	
 	if animation_player:
-		animation_player.speed_scale = 7.0
+		animation_player.speed_scale = attackData.animationSpeedScale
 		animation_player.play(attackData.attackAnimation)
 
 
@@ -199,7 +199,7 @@ func rotateEnemy_to_player(agent, areaParent):
 		print("no visual node")
 	
 func hitFinisher(area):
-	var is_finishing_blow = area.enemyStats.current_health <= attackData.attackDamage
+	var is_finishing_blow = area.enemyStats.current_health <= 0
 
 	if is_finishing_blow:
 		attackData.knockback_force = attackData.knockback_force_finisher

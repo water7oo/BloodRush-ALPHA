@@ -16,4 +16,5 @@ ATTACK_DECELERATION = 30.0
 next_attack_state = &"to_attackUpper"
 comboknockbackForceRate = 0.7
 knockback_force_finisher = 5.0
-attackAnimation = "player|swordAttackHeavy1"
+attackAnimation = "player|swordHeavyAttack1"
+animationSpeedScale = 3.0

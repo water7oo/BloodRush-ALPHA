@@ -62,7 +62,8 @@
 [ext_resource type="AudioStream" uid="uid://b6sn7x5hdlq8h" path="res://Sounds/deadCombo1.wav" id="55_3gnjc"]
 [ext_resource type="AudioStream" uid="uid://bc01ms32t7sx5" path="res://Sounds/Throw.wav" id="55_3pi6o"]
 [ext_resource type="AudioStream" uid="uid://cdxhb1h1iof5y" path="res://Sounds/jump4.wav" id="57_tdu7r"]
-[ext_resource type="PackedScene" uid="uid://5covdmtwkykp" path="res://Player/Player.tscn" id="58_vkj36"]
+[ext_resource type="PackedScene" uid="uid://5covdmtwkykp" path="res://Player/player.tscn" id="58_vkj36"]
+[ext_resource type="PackedScene" uid="uid://dcf0qjsmnq71g" path="res://FX/swordslash_1.tscn" id="64_r0qfn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fvqnm"]
 custom_solver_bias = 0.305
@@ -674,7 +675,7 @@ draw_pass_1 = SubResource("QuadMesh_4mqd1")
 
 [node name="LandDust" type="GPUParticles3D" parent="." unique_id=745241267]
 process_mode = 3
-transform = Transform3D(2.015, 0, 0, 0, -2.015, 3.0425656e-07, 0, -3.0425656e-07, -2.015, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -1, 1.509958e-07, 0, -1.509958e-07, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_4hbvs")
 emitting = false
 amount = 50
@@ -867,7 +868,7 @@ volume_db = -16.868
 
 [node name="RootNode" type="Node3D" parent="." unique_id=1429141220]
 
-[node name="player2" parent="RootNode" unique_id=2075746240 instance=ExtResource("58_vkj36")]
+[node name="player2" parent="RootNode" unique_id=908021789 instance=ExtResource("58_vkj36")]
 transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 0.99999994, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RootNode" unique_id=992140820]
@@ -905,7 +906,6 @@ debug_fill = false
 
 [node name="AttackBox" type="Area3D" parent="RootNode" unique_id=1044839766]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2.2068102)
-visible = false
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackBox" unique_id=1181781909]
@@ -921,7 +921,6 @@ mesh = SubResource("BoxMesh_uf676")
 
 [node name="AttackMedium" type="Area3D" parent="RootNode" unique_id=1214013254]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2.4534442)
-visible = false
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackMedium" unique_id=1592223614]
@@ -937,7 +936,6 @@ mesh = SubResource("BoxMesh_uf676")
 
 [node name="AttackHeavy" type="Area3D" parent="RootNode" unique_id=1426539418]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1.9097979)
-visible = false
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackHeavy" unique_id=2098707322]
@@ -1067,6 +1065,18 @@ shape = SubResource("SphereShape3D_wtaik")
 
 [node name="PlayerUI" parent="." unique_id=719208677 instance=ExtResource("3_wa0mo")]
 mouse_filter = 1
+
+[node name="swordslash1" parent="." unique_id=2093353702 instance=ExtResource("64_r0qfn")]
+transform = Transform3D(11.34, 0, -2.7036665e-06, 0, 11.34, 0, 2.7036665e-06, 0, 11.34, 0, 0, 0)
+visible = false
+
+[node name="swordslash2" parent="." unique_id=996981750 instance=ExtResource("64_r0qfn")]
+transform = Transform3D(2.4277236, 0, 9.060384, 0, 9.379998, 0, -9.060384, 0, 2.4277236, 0, 0.43083763, 0)
+visible = false
+
+[node name="swordslash3" parent="." unique_id=1206853028 instance=ExtResource("64_r0qfn")]
+transform = Transform3D(2.465583, -5.5000005, 16.128035, 1.423505, 9.5262785, 9.311524, -10.625184, 1.5286565e-07, 4.9900327, 0, 1, 0)
+visible = false
 
 [connection signal="area_entered" from="RootNode/HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="area_entered" from="RootNode/HurtBox" to="Swappable Launch" method="_on_hurt_box_area_entered"]

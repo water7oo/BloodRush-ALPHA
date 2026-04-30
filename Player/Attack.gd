@@ -1,6 +1,6 @@
 extends LimboState
 
-
+@export var hiteffect1 = preload("res://FX/swordslash_1.tscn")
 @onready var player = $"../../RootNode/player2"
 @onready var animation_player = player.get_node("AnimationPlayer")
 @export var attack_box: Node
@@ -41,8 +41,8 @@ func _enter() -> void:
 	attack_timer = 0.0
 	
 	if animation_player:
-		animation_player.speed_scale = 7.0
- 
+		animation_player.speed_scale = attackData.animationSpeedScale
+ 		
 		animation_player.play(attackData.attackAnimation)
 
 
@@ -183,7 +183,7 @@ func rotateEnemy_to_player(agent, areaParent):
 		
 		
 func hitFinisher(area):
-	var is_finishing_blow = area.enemyStats.current_health <= attackData.attackDamage
+	var is_finishing_blow = area.enemyStats.current_health <= 0
 
 	if is_finishing_blow:
 		attackData.knockback_force = attackData.knockback_force_finisher
@@ -263,7 +263,6 @@ func _on_attack_box_area_entered(area):
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
 
 		areaParent.enemyStats.enemyWasHit = false
-
 		var hit1Effect = enemy.find_child("hit1", true, false)
 		if hit1Effect is GPUParticles3D:
 			hit1Effect.restart()
@@ -329,11 +328,14 @@ func _on_attack_box_area_entered(area):
 			agent.velocity = Vector3.ZERO
 
 			areaParent.enemyStats.enemyWasHit = true
-
+			
 			gameJuice.objectShake(enemy, attackData.enemyTargetGuardLength, attackData.enemyTargetGuardMagnitude)
+			animation_player.process_mode = PROCESS_MODE_DISABLED
 			gameJuice.hitstop(attackData.enemyTargetGuardedHitstop, [agent, enemy])
 			areaParent.enemyStats.enemyWasHit = false
-
+			animation_player.process_mode = PROCESS_MODE_INHERIT
+			
+			
 			var hit1Effect = enemy.find_child("hit1", true, false)
 			if hit1Effect is GPUParticles3D:
 				hit1Effect.restart()

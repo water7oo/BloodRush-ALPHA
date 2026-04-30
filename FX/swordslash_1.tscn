@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://dcf0qjsmnq71g"]
+
+[ext_resource type="PackedScene" uid="uid://cwbmq7m3ohpo" path="res://FX/swordslash1.fbx" id="1_kl7vm"]
+[ext_resource type="Texture2D" uid="uid://ctpf7t205a75m" path="res://FX/Dust_Wave2-e8432e9fa40c58d5df7e1588c66db668_Slashing_Texture3.png" id="2_f2r2f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r65yt"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("2_f2r2f")
+uv1_scale = Vector3(0.655, 0.655, 0.655)
+uv1_offset = Vector3(0, 0.01, 0)
+texture_filter = 0
+
+[sub_resource type="Animation" id="Animation_f2r2f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle_001:material_override:uv1_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.655, 0.655, 0.655)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Circle_001:material_override:uv1_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.01, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lv0df"]
+resource_name = "slash"
+length = 0.275
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circle_001:material_override:uv1_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.26666665),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.655, 0.655, 0.655), Vector3(-0.39, -0.39, -0.39)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Circle_001:material_override:uv1_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.26666665),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.28, 0), Vector3(0, 0.01, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6722t"]
+_data = {
+&"RESET": SubResource("Animation_f2r2f"),
+&"slash": SubResource("Animation_lv0df")
+}
+
+[node name="swordslash1" unique_id=2093353702 instance=ExtResource("1_kl7vm")]
+
+[node name="Circle_001" parent="." index="0" unique_id=1123519638]
+material_override = SubResource("StandardMaterial3D_r65yt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=967825539]
+libraries/ = SubResource("AnimationLibrary_6722t")
+autoplay = &"slash"

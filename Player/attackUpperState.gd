@@ -46,11 +46,11 @@ var canJumpCancel = false
 func _enter() -> void:
 	if attackData == load("res://Resources/PlayerStats/PlayerAttackResources/upperAttack2.tres"):
 		Global.isMultiHitUpper = true
-		animation_player.speed_scale = 7.0
+		animation_player.speed_scale = attackData.animationSpeedScale
 		animation_player.play(attackData.attackAnimation)
 	else:
 		Global.isMultiHitUpper = false
-		animation_player.speed_scale = 12.0
+		animation_player.speed_scale = attackData.animationSpeedScale
 		animation_player.play(attackData.attackAnimation)
 	if Global.isMultiHitUpper:
 		attack_box = $"../../RootNode/AttackUpperBox2"
@@ -285,7 +285,7 @@ func rotateEnemy_to_player(agent, areaParent):
 
 
 func hitFinisher(area):
-	var is_finishing_blow = area.enemyStats.current_health <= attackData.attackDamage
+	var is_finishing_blow = area.enemyStats.current_health <= 0
 
 	if is_finishing_blow:
 		attackData.knockback_force = attackData.knockback_force_finisher
@@ -295,7 +295,7 @@ func hitFinisher(area):
 		attackData.enemyTargetHitStop = attackData.enemyHitstopFinisher
 	else:
 		attackData.knockback_force = attackData.knockback_force_default
-		attackData.knockback_direction = Vector3(0, 1, 1)
+		attackData.knockback_direction = Vector3(0, 1, 0.3)
 		attackData.enemyTargetLength = attackData.DefaultenemyTargetLength
 		attackData.enemyTargetMagnitude = attackData.DefaultenemyTargetMagnitude
 		attackData.enemyTargetHitStop = attackData.DefaultenemyTargetHitStop

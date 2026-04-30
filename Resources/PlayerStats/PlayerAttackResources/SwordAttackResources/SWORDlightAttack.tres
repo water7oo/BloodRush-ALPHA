@@ -17,3 +17,4 @@ knockback_force_guardRate = 0.6
 comboknockbackForceRate = 0.7
 knockback_force_finisher = 5.0
 attackAnimation = "player|swordLightAttack1"
+animationSpeedScale = 2.0
