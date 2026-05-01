@@ -16,6 +16,7 @@ var velocity = Vector3.ZERO
 
 @export var runJumpResource: Resource
 
+const DustLandEffect = preload("res://FX/dustEffect1.tscn")
 
 func _enter() -> void:
 	jumpSound()
@@ -41,9 +42,20 @@ func landSound():
 
 func landCheck():
 	var is_on_floor = agent.is_on_floor()
-
+	var normal = agent.get_floor_normal()
+	
 	if agent.state_machine.get_active_state() == self:
 		if is_on_floor and not Global.was_on_floor:
+			
+			var landEffectInstance = DustLandEffect.instantiate()
+			get_tree().root.add_child(landEffectInstance)
+			var xform = landEffectInstance.global_transform
+			
+			xform.origin = agent.global_transform.origin
+
+			xform = align_with_y(xform, agent.get_floor_normal())
+
+			landEffectInstance.global_transform = xform
 			landSound()
 			landDust.restart()
 			landDust.emitting = true
@@ -53,15 +65,26 @@ func landCheck():
 		
 
 	Global.was_on_floor = is_on_floor
+
+
+func align_with_y(xform, new_y):
+	new_y = new_y.normalized()
+
+	var forward = -xform.basis.z.normalized()
+	var right = forward.cross(new_y).normalized()
+	forward = new_y.cross(right).normalized()
+
+	xform.basis = Basis(right, new_y, forward)
+	return xform
+	
 	
 func _update(delta: float) -> void:
 	player_runjump(delta)
-	landCheck()
-	agent.move_and_slide()
 	fallingCheck()
 
 	var is_on_floor = agent.is_on_floor()
-
+	agent.move_and_slide()
+	landCheck()
 
 func fallingCheck():
 	if agent.velocity.y > 0:

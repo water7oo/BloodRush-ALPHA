@@ -142,6 +142,7 @@ func _unhandled_input(event):
 
 func initialize_jump(delta: float) -> void:
 	if Input.is_action_just_pressed("move_jump") and agent.is_on_floor():
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_jump")
 		moveDust.emitting = false
 
@@ -151,18 +152,22 @@ func initialize_run(delta: float)-> void:
 	direction = direction.rotated(Vector3.UP, Global.spring_arm_pivot.rotation.y)
 	
 	if Input.is_action_pressed("move_sprint") && direction != Vector3.ZERO:
+		animation_player.speed_scale = 1.0
 		moveDust.emitting = false
 		agent.state_machine.dispatch("to_run")
 
 func initialize_burst(delta: float) -> void:
 	if Input.is_action_just_pressed("move_dodge"):
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_burst")
 		
 		
 func initialize_crouch(delta: float) -> void:
 	if Input.is_action_pressed("move_crouch"):
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_crouch")
 		
 func initialize_guard(delta: float) -> void:
 	if Input.is_action_just_pressed("defend_guard"):
+		animation_player.speed_scale = 1.0
 		agent.state_machine.dispatch("to_guard")

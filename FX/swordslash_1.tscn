@@ -12,7 +12,7 @@ specular_mode = 1
 albedo_texture = ExtResource("2_f2r2f")
 uv1_scale = Vector3(0.655, 0.655, 0.655)
 uv1_offset = Vector3(0, 0.01, 0)
-texture_filter = 0
+texture_filter = 2
 
 [sub_resource type="Animation" id="Animation_f2r2f"]
 length = 0.001
@@ -43,7 +43,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_lv0df"]
 resource_name = "slash"
-length = 0.275
+length = 0.26666668
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -78,7 +78,7 @@ _data = {
 
 [node name="swordslash1" unique_id=2093353702 instance=ExtResource("1_kl7vm")]
 
-[node name="Circle_001" parent="." index="0" unique_id=1123519638]
+[node name="Circle_001" parent="." index="0" unique_id=1718932988]
 material_override = SubResource("StandardMaterial3D_r65yt")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=967825539]

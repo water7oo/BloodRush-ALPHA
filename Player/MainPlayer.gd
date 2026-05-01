@@ -367,23 +367,23 @@ func handle_attack_input() -> void:
 			return
 		
 
-func landCheck():
-	var is_on_floor = is_on_floor()
-
-	if state_machine.get_active_state() == self:
-		if is_on_floor and not Global.was_on_floor:
-			landSound()
-			landDust.restart()
-			landDust.emitting = true
-			Global.squash_land($"../../RootNode/player2")
-			state_machine.dispatch("to_idle")
-		
-
-	Global.was_on_floor = is_on_floor
-	
-func landSound():
-	land1Sound.pitch_scale = randf_range(0.6, 1.2)
-	land1Sound.play()
+#func landCheck():
+	#var is_on_floor = is_on_floor()
+#
+	#if state_machine.get_active_state() == self:
+		#if is_on_floor and not Global.was_on_floor:
+			#landSound()
+			#landDust.restart()
+			#landDust.emitting = true
+			#Global.squash_land($"../../RootNode/player2")
+			#state_machine.dispatch("to_idle")
+		#
+#
+	#Global.was_on_floor = is_on_floor
+	#
+#func landSound():
+	#land1Sound.pitch_scale = randf_range(0.6, 1.2)
+	#land1Sound.play()
 
 
 func playerGravity(delta: float) -> void:

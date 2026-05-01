@@ -8,6 +8,10 @@ extends LimboState
 @export var dodgeResource: Resource
 var velocity = Vector3.ZERO
 
+
+const DustWaveEffect = preload("res://FX/dustEffect2.tscn")
+var effectSpawned = false
+
 func _enter() -> void:
 	Global.squash_land($"../../RootNode/player2")
 	if agent:
@@ -18,7 +22,7 @@ func _enter() -> void:
 	
 	
 	DodgeSoundplay()
-	
+	effectSpawned = false
 	Global.is_dodging = true
 	Global.can_dodge = false
 	Global.last_ground_position = agent.global_transform.origin
@@ -43,10 +47,40 @@ func DodgeSoundplay():
 	if Dodge1Sound:
 		Dodge1Sound.pitch_scale = randf_range(.5, .7)
 		Dodge1Sound.play()
+
+
+func BurstEffectWave():
+	var is_on_floor = agent.is_on_floor()
+	if agent.state_machine.get_active_state() == self:
+		if is_on_floor && effectSpawned == false:
+			var instanceBurstEffect = DustWaveEffect.instantiate()
+			effectSpawned = true
+			get_tree().root.add_child(instanceBurstEffect)
 			
+			var xform = instanceBurstEffect.global_transform
+			
+			xform.origin = agent.global_transform.origin
+
+			xform = align_with_y(xform, agent.get_floor_normal())
+
+			instanceBurstEffect.global_transform = xform
+
+func align_with_y(xform, new_y):
+	new_y = new_y.normalized()
+
+	var forward = -xform.basis.z.normalized()
+	var right = forward.cross(new_y).normalized()
+	forward = new_y.cross(right).normalized()
+
+	xform.basis = Basis(right, new_y, forward)
+	return xform
+	
+	
 func _update(delta: float) -> void:
 	player_burst(delta)
 	agent.move_and_slide()
+	
+	BurstEffectWave()
 
 func player_burst(delta: float) -> void:
 	dodgeResource.dodge_cooldown_timer -= delta
@@ -66,6 +100,21 @@ func player_burst(delta: float) -> void:
 			agent.state_machine.dispatch("to_idle")
 			dodgeDust.emitting = false
 
+	if agent.is_on_floor():
+		var target_up = agent.get_floor_normal().normalized()
+		var current_up = agent.global_transform.basis.y.normalized()
+
+		var dot = clamp(current_up.dot(target_up), -1.0, 1.0)
+
+		# Only rotate if there's a meaningful difference
+		if dot < 0.999 && target_up.y > 0.5:
+			var axis = current_up.cross(target_up).normalized()
+			var angle = acos(dot)
+
+			# Smooth rotation (frame-rate independent)
+			var t = 1.0 - exp(-10.0 * delta)
+			agent.rotate(axis, angle * t)
+			
 func _exit() -> void:
 	dodgeDust.emitting = false
 	pass

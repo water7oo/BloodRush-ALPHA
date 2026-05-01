@@ -61,7 +61,6 @@ show_percentage = false
 script = ExtResource("2_spkgn")
 
 [node name="State debug" type="Label" parent="." unique_id=2051501831]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

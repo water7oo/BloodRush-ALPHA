@@ -28,7 +28,7 @@ func _update(delta: float) -> void:
 	initialize_jump(delta)
 	initialize_crouch(delta)
 	initialize_guard(delta)
-
+	agent.move_and_slide()
 
 func player_idle(delta: float) -> void:
 	
@@ -54,9 +54,11 @@ func player_idle(delta: float) -> void:
 		#animationTree.set("parameters/Ground_Blend/blend_amount", -1)
 
 func initialize_jump(delta: float) -> void:
-	if Input.is_action_just_pressed("move_jump"):
+	if Input.is_action_just_pressed("move_jump") && agent.is_on_floor():
 		animation_player.speed_scale = 1.0
+		print("jumping")
 		agent.state_machine.dispatch("to_jump")
+
 		
 func initialize_crouch(delta: float) -> void:
 	if Input.is_action_pressed("move_crouch"):
