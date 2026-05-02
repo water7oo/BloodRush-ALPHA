@@ -4,5 +4,7 @@
 
 [resource]
 script = ExtResource("1_uh4tp")
-air_momentum_acceleration = 10.0
+air_momentum_acceleration = null
 air_momentum_deceleration = null
+AIR_DRAG = 0.0
+AIR_MAX_SPEED = 10.0

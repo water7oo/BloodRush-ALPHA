@@ -13,7 +13,8 @@ const DustWaveEffect = preload("res://FX/dustEffect2.tscn")
 var effectSpawned = false
 
 func _enter() -> void:
-	Global.squash_land($"../../RootNode/player2")
+	BurstEffectWave()
+	Global.stretch_forward($"../../RootNode/player2")
 	if agent:
 		velocity = agent.velocity
 		
@@ -52,25 +53,25 @@ func DodgeSoundplay():
 func BurstEffectWave():
 	var is_on_floor = agent.is_on_floor()
 	if agent.state_machine.get_active_state() == self:
-		if is_on_floor && effectSpawned == false:
+		if effectSpawned == false:
 			var instanceBurstEffect = DustWaveEffect.instantiate()
 			effectSpawned = true
 			get_tree().root.add_child(instanceBurstEffect)
 			
+			var player_forward = -agent.global_transform.basis.z
 			var xform = instanceBurstEffect.global_transform
-			
 			xform.origin = agent.global_transform.origin
 
-			xform = align_with_y(xform, agent.get_floor_normal())
-
+			xform = align_with_y(xform, agent.get_floor_normal(), player_forward)
+	
 			instanceBurstEffect.global_transform = xform
 
-func align_with_y(xform, new_y):
+func align_with_y(xform, new_y, player_forward):
 	new_y = new_y.normalized()
+	
 
-	var forward = -xform.basis.z.normalized()
-	var right = forward.cross(new_y).normalized()
-	forward = new_y.cross(right).normalized()
+	var right = player_forward.cross(new_y).normalized()
+	var forward = new_y.cross(right).normalized()
 
 	xform.basis = Basis(right, new_y, forward)
 	return xform
@@ -80,14 +81,16 @@ func _update(delta: float) -> void:
 	player_burst(delta)
 	agent.move_and_slide()
 	
-	BurstEffectWave()
 
+	
+	
 func player_burst(delta: float) -> void:
 	dodgeResource.dodge_cooldown_timer -= delta
 	dodgeResource.spinDodge_timer_cooldown -= delta
 	dodgeDust.emitting = true
 	# Gradually slow down the dodge
 	agent.velocity = agent.velocity.lerp(Vector3.ZERO, dodgeResource.DODGE_LERP_VAL * delta)
+
 	if animation_player:
 		animation_player.play("player|SLIDE")
 
@@ -117,4 +120,5 @@ func player_burst(delta: float) -> void:
 			
 func _exit() -> void:
 	dodgeDust.emitting = false
+
 	pass
