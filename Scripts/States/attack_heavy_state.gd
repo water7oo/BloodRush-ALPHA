@@ -65,7 +65,7 @@ func _update(delta: float) -> void:
 			attackData.next_attack_state = ""  # or your normal heavy follow-up
 	
 	
-	attack_timer = max(attack_timer - delta, 0.0)
+	attack_timer -= delta
 	if attack_timer <= 0.0:
 		if (buffered_input || Global.isHit) && Global.can_cancel:
 			_chain_attack()

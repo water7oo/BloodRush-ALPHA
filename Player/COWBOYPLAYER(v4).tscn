@@ -937,17 +937,14 @@ mesh = SubResource("BoxMesh_uf676")
 
 [node name="AttackHeavy" type="Area3D" parent="RootNode" unique_id=1426539418]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1.9097979)
-visible = false
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackHeavy" unique_id=2098707322]
 transform = Transform3D(2.10476, 0, 0, 0, 1.72, 0, 0, 0, 2.646, 0, 0, -1.0168059)
-visible = false
 shape = SubResource("BoxShape3D_wtaik")
 
 [node name="Attack_Debug" type="MeshInstance3D" parent="RootNode/AttackHeavy" unique_id=269625628]
 transform = Transform3D(2.10476, 0, 0, 0, 1.72, 0, 0, 0, 2.646, 0, 0, -0.9439416)
-visible = false
 material_override = SubResource("StandardMaterial3D_uf676")
 mesh = SubResource("BoxMesh_uf676")
 
