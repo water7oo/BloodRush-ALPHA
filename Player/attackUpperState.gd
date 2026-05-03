@@ -523,7 +523,6 @@ func _apply_physics(delta: float):
 
 func _exit_attack_state() -> void:
 	animation_player.speed_scale = 7.0
-	animation_player.stop()
 	Global.is_attacking = false
 	Global.isHit = false
 	combo_timer = 0.0

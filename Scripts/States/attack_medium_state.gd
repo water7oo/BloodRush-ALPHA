@@ -31,22 +31,29 @@ var combo_window = 0.2
 
 @onready var AttackAnimation = attackData.attackAnimation
 
-func _enter() -> void:
+func _enter(msg := {}) -> void:
 	enemies_hit.clear()
 	buffered_input = false
 	
 	Global.is_attacking = true
 	Global.isHit = false
-	
-	startup_timer = attackData.startup_duration
-	in_startup = true
-	attack_timer = 0.0
-	
+
+	var skip_startup = msg.get("skip_startup", false)
+
+	if skip_startup:
+		in_startup = false
+		startup_timer = 0.0
+		attack_timer = attackData.active_duration + attackData.recovery_duration
+		_enable_hitbox()
+		_start_attack()
+	else:
+		startup_timer = attackData.startup_duration
+		in_startup = true
+		attack_timer = 0.0
+
 	if animation_player:
 		animation_player.speed_scale = attackData.animationSpeedScale
-		print("Medium attack animation " + str(AttackAnimation)) 
 		animation_player.play(attackData.attackAnimation)
-
 
 func _update(delta: float) -> void:
 	if Input.is_action_just_pressed("attack_heavy_1"):
@@ -59,7 +66,8 @@ func _update(delta: float) -> void:
 		if now - heavy_pressed_time <= combo_window:
 			# Combo detected → trigger Upper Attack
 			buffered_input = true
-			attackData.next_attack_state = "to_attackUpper"  # Ground Upper Attack
+			attackData.next_attack_state = "to_attackUpper"
+
 		else:
 			# Regular heavy attack
 			buffered_input = false
@@ -69,16 +77,11 @@ func _update(delta: float) -> void:
 		attackData.next_attack_state = "to_heavyAttack"
 	
 	
-	attack_timer = max(attack_timer - delta, 0.0)
-	if attack_timer <= 0.0:
-		if (buffered_input || Global.isHit) && Global.can_cancel:
-			_chain_attack()
-		else:
-			_exit_attack_state()
-			agent.state_machine.dispatch("to_idle")
-	
-
 	if in_startup:
+		if buffered_input and Global.can_cancel:
+			_chain_attack()
+			return
+
 		startup_timer -= delta
 		if startup_timer <= 0:
 			in_startup = false
@@ -86,8 +89,9 @@ func _update(delta: float) -> void:
 			_enable_hitbox()
 			_start_attack()
 		return
+
 		
-	_process_cancel_window()	
+	_process_cancel_window()
 	_apply_physics(delta)
 	agent.move_and_slide()
 
@@ -115,11 +119,16 @@ func _end_or_chain():
 
 func _chain_attack():
 	_exit_attack_state()
-	attackData.startup_duration = 0.0
 	attack_timer = 0.0
-	if buffered_input:
-		agent.state_machine.dispatch(attackData.next_attack_state)
 
+	if buffered_input:
+		var msg = {}
+
+		if attackData.next_attack_state in ["to_heavyAttack", "to_attackUpper"]:
+			msg["skip_startup"] = true
+
+		agent.state_machine.dispatch(attackData.next_attack_state, msg)
+		
 func _start_attack() -> void:
 	Global.combo_timer = attackData.combo_window_duration
 	Global.can_chain_attack = false
@@ -387,8 +396,9 @@ func _apply_physics(delta: float):
 
 func _exit_attack_state() -> void:
 	animation_player.speed_scale = 1.0
-	animation_player.stop()
 	Global.is_attacking = false
 	Global.isHit = false
+	attack_timer = 0.0
 	combo_timer = 0.0
 	_disable_hitbox()
+	agent.state_machine.dispatch("to_idle")
