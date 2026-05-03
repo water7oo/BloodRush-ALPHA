@@ -1,4 +1,6 @@
 extends Node3D
+class_name Camera
+
 
 @onready var gameJuice = get_node("/root/GameJuice")
 @onready var enemy = get_node("/root/EnemyHealthManager")

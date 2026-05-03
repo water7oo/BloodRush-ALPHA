@@ -42,6 +42,9 @@ var canJumpCancel = false
 
 @onready var AttackAnimation = attackData.attackAnimation
 
+const DustLandEffect = preload("res://FX/dustEffect4.tscn")
+
+const DustMultiEffect = preload("res://FX/dustEffect2.tscn")
 
 func _enter() -> void:
 	if attackData == load("res://Resources/PlayerStats/PlayerAttackResources/upperAttack2.tres"):
@@ -159,8 +162,60 @@ func _chain_attack():
 	_jumpCancel()
 
 
+func jumpCancelWave():
+	var normal = agent.get_floor_normal()
+	
+	if agent.is_on_floor():
+		var jumpCancelWave = DustLandEffect.instantiate()
+		get_tree().root.add_child(jumpCancelWave)
+		var xform = jumpCancelWave.global_transform
+		xform.origin = agent.global_transform.origin + Vector3(0,1,0)
+		xform = align_with_y(xform, agent.get_floor_normal())
+		jumpCancelWave.global_transform = xform
+
+func multiHitEffectWaves():
+	var instanceBurstEffect = DustMultiEffect.instantiate()
+	get_tree().root.add_child(instanceBurstEffect)
+	
+	var player_forward = -$"../../RootNode".global_transform.basis.z
+	var xform = instanceBurstEffect.global_transform
+	
+	var spawn_offset = player_forward * 4.0 
+	xform.origin = $"../../RootNode".global_transform.origin + spawn_offset + Vector3(0,2,0)
+
+
+
+
+	var random_angle = randf_range(0, TAU) 
+	xform = xform.rotated_local(Vector3.UP, random_angle)
+
+	
+	instanceBurstEffect.global_transform = xform
+	
+func align_with_y_multi(xform, new_y, player_forward):
+	new_y = new_y.normalized()
+	
+
+	var right = player_forward.cross(new_y).normalized()
+	var forward = new_y.cross(right).normalized()
+
+	xform.basis = Basis(right, new_y, forward)
+	return xform
+	
+func align_with_y(xform, new_y):
+	new_y = new_y.normalized()
+
+	var forward = -xform.basis.z.normalized()
+	var right = forward.cross(new_y).normalized()
+	forward = new_y.cross(right).normalized()
+
+	xform.basis = Basis(right, new_y, forward)
+	return xform
+	
+	
 func _jumpCancel():
 	if Input.is_action_just_pressed("move_jump") && canJumpCancel == true && jumpCancelFX:
+		jumpCancelWave()
 		agent.jump_state.jumpResource.JUMP_VELOCITY += 5
 		jumpCancelFX.emitting = true
 		agent.state_machine.dispatch(attackData.next_attack_state)
@@ -200,11 +255,11 @@ func multi_hit():
 		enemies_hit.clear()
 		Global.isHit = false
 		_OnHitbox()
-
 		for frame in range(3): 
 			await get_tree().physics_frame
 
 		if Global.isHit:
+			multiHitEffectWaves()
 			if multiHit1Sound && multiHit1FinishSound:
 				if i >= attackData.max_hits - 1:
 

@@ -260,7 +260,9 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
+		animation_player.process_mode = PROCESS_MODE_DISABLED
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
+		animation_player.process_mode = PROCESS_MODE_INHERIT
 
 		areaParent.enemyStats.enemyWasHit = false
 		var hit1Effect = enemy.find_child("hit1", true, false)
@@ -326,14 +328,12 @@ func _on_attack_box_area_entered(area):
 
 			var saved_velocity = agent.velocity
 			agent.velocity = Vector3.ZERO
-
 			areaParent.enemyStats.enemyWasHit = true
 			
 			gameJuice.objectShake(enemy, attackData.enemyTargetGuardLength, attackData.enemyTargetGuardMagnitude)
-			animation_player.process_mode = PROCESS_MODE_DISABLED
+
 			gameJuice.hitstop(attackData.enemyTargetGuardedHitstop, [agent, enemy])
 			areaParent.enemyStats.enemyWasHit = false
-			animation_player.process_mode = PROCESS_MODE_INHERIT
 			
 			
 			var hit1Effect = enemy.find_child("hit1", true, false)

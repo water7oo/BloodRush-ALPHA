@@ -1042,11 +1042,11 @@ draw_pass_1 = SubResource("QuadMesh_rlw8d")
 [node name="hit1" type="GPUParticles3D" parent="." unique_id=303269608]
 process_mode = 3
 transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 2.32659, 0)
+visible = false
 material_override = SubResource("StandardMaterial3D_a6utb")
 emitting = false
 amount = 1
 lifetime = 0.2
-one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_wyb1b")
 draw_pass_1 = SubResource("QuadMesh_o88hp")

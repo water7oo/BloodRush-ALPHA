@@ -34,6 +34,9 @@ extends CharacterBody3D
 
 const DAMAGE_NUM = preload("uid://cotsnmovmqwww")
 
+const DustWaveEffect = preload("res://FX/dustEffect3.tscn")
+var effectSpawned = false
+
 func _ready():
 	if enemyStats:
 		startHealth()
@@ -117,28 +120,55 @@ func startHealth():
 			print("Health bar not found")
 			
 
+func BurstEffectWave(damage):
+		if effectSpawned == false && damage > 15.0:
+			var instanceBurstEffect = DustWaveEffect.instantiate()
+			effectSpawned = true
+			get_tree().root.add_child(instanceBurstEffect)
+			
+			var player_forward = -$EnemyMesh.global_transform.basis.z
+			var xform = instanceBurstEffect.global_transform
+			
+			var spawn_offset = player_forward * 4.0 
+			xform.origin = $EnemyMesh.global_transform.origin + spawn_offset
 
+			xform = align_with_y(xform, get_floor_normal(), player_forward)
+			
+			instanceBurstEffect.global_transform = xform
+
+func align_with_y(xform, new_y, player_forward):
+	new_y = new_y.normalized()
+	
+
+	var right = player_forward.cross(new_y).normalized()
+	var forward = new_y.cross(right).normalized()
+
+	xform.basis = Basis(right, new_y, forward)
+	return xform
+
+func damageAnimation():
+		var randomNum = randi_range(1, 3)
+		if randomNum == 1:
+			$AnimationPlayer.play("takeDamage1")
+			await get_tree().create_timer(.5).timeout
+			$AnimationPlayer.play("IDLE")
+		elif randomNum == 2:
+			$AnimationPlayer.play("takeDamage2")
+			await get_tree().create_timer(.5).timeout
+			$AnimationPlayer.play("IDLE")
+		elif randomNum == 3:
+			$AnimationPlayer.play("takeDamage3")
+			await get_tree().create_timer(.5).timeout
+			$AnimationPlayer.play("IDLE")
+			
 func takeDamageEnemy(damage: float) -> void:
 		if enemyStats.isDead == false:
+			damageAnimation()
 			enemyStats.current_health = clamp(enemyStats.current_health - damage, 0.0, enemyStats.max_health)
 			state_machine.dispatch("to_hitstun")
 			Global.squash_land($EnemyMesh)
-			var randomNum = randi_range(1, 3)
-			
-			if randomNum == 1:
-				$AnimationPlayer.play("takeDamage1")
-				await get_tree().create_timer(.5).timeout
-				$AnimationPlayer.play("IDLE")
-			elif randomNum == 2:
-				$AnimationPlayer.play("takeDamage2")
-				await get_tree().create_timer(.5).timeout
-				$AnimationPlayer.play("IDLE")
-			elif randomNum == 3:
-				$AnimationPlayer.play("takeDamage3")
-				await get_tree().create_timer(.5).timeout
-				$AnimationPlayer.play("IDLE")
-				
-
+			BurstEffectWave(damage)
+			effectSpawned = false
 			if EnemyHealthBar:
 				EnemyHealthBar.value = enemyStats.current_health
 			

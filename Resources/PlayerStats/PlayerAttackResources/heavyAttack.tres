@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_70lbc")
-attackAnimation = "player|heavyAttack"
+startup_duration = 1.0
 active_duration = 0.45
 attackDamage = 20.0
 combo_window_duration = 0.8
@@ -17,3 +17,4 @@ ATTACK_DECELERATION = 30.0
 next_attack_state = &"to_attackUpper"
 comboknockbackForceRate = 0.7
 knockback_force_finisher = 5.0
+attackAnimation = "player|heavyAttack"

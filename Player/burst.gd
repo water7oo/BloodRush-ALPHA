@@ -58,9 +58,9 @@ func BurstEffectWave():
 			effectSpawned = true
 			get_tree().root.add_child(instanceBurstEffect)
 			
-			var player_forward = -agent.global_transform.basis.z
+			var player_forward = -$"../../RootNode".global_transform.basis.z
 			var xform = instanceBurstEffect.global_transform
-			xform.origin = agent.global_transform.origin
+			xform.origin = $"../../RootNode".global_transform.origin
 
 			xform = align_with_y(xform, agent.get_floor_normal(), player_forward)
 	

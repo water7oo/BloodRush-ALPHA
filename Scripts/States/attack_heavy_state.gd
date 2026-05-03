@@ -280,9 +280,10 @@ func _on_attack_box_area_entered(area):
 
 		areaParent.enemyStats.enemyWasHit = true
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
-
+		animation_player.process_mode = PROCESS_MODE_ALWAYS
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
 		areaParent.enemyStats.enemyWasHit = false
+		animation_player.process_mode = PROCESS_MODE_INHERIT
 
 		var hit1Effect = enemy.find_child("hit1", true, false)
 		if hit1Effect is GPUParticles3D:
@@ -397,4 +398,5 @@ func _exit_attack_state() -> void:
 	Global.is_attacking = false
 	Global.isHit = false
 	combo_timer = 0.0
+	attack_timer = 0.0
 	_disable_hitbox()
