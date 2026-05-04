@@ -1,0 +1,35 @@
+
+grab
+
+enemy gets parented to grab hitbox
+
+player inputs a direction
+
+enemy gets thrown that way
+---
+Attack Notes
+
+- Follow ups
+
+Cross Toss: Slams the enemy behind player, bounces them upwards
+- Medium -> Heavy -> Grab = Cross Toss 
+
+Criss Cross: Follow up from Cross Toss, grabs enemy and
+vertical spin down into a slam
+Cross Toss -> Heavy -> Grab = Criss Cross
+
+Slam Rebound: Final hit deals alot of damage
+and knockback, if colliding with wall, enemy will rebound
+- Medium -> Upper -> Heavy -> Slam = Slam Rebound
+
+Suplex Ender: from Slam Rebound, finishes them off with a air suplex
+- Slam Rebound -> Air Burst -> Air Medium -> Air Grab = Suplex Ender
+
+Achilles Stamp: Slams enemy to the floor with a 
+- Back Throw -> Medium -> Heavy = Achilles Stamp
+
+Burst Follow Ups
+
+Heart Stopper: Flurry rush of punhes followed by a punch
+
+Texan Slinger: Flurry of bullets followed by a slash

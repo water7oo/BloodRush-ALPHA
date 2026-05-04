@@ -65,7 +65,6 @@ show_percentage = false
 script = ExtResource("2_spkgn")
 
 [node name="State debug" type="Label" parent="." unique_id=2051501831]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -73,9 +72,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -634.0
-offset_top = -10.0
+offset_top = -278.0
 offset_right = -83.0
-offset_bottom = 112.0
+offset_bottom = -156.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -346,6 +345,7 @@ size_flags_vertical = 4
 texture = ExtResource("7_rj02x")
 
 [node name="GridContainer" type="GridContainer" parent="." unique_id=1448171992]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

@@ -25,6 +25,7 @@ class_name Player
 @onready var air_attackMedium_state = $LimboHSM/AirAttackMediumState
 @onready var air_attackHeavy_state = $LimboHSM/AirAttackHeavyState
 
+@onready var grab_state = $LimboHSM/GrabState
 @onready var guard_state = $LimboHSM/GuardState
 
 
@@ -92,13 +93,11 @@ func initialize_state_machine():
 	state_machine.add_transition(run_state, attackHeavy_state, "to_heavyAttack")   # H
 	state_machine.add_transition(run_state, attack_upper_state, "to_attackUpper")  
 	
-	# THE COMBO CHAIN (Gatling Rules)
 	state_machine.add_transition(attack_state, attackMedium_state, "to_mediumAttack") # L -> M
 	state_machine.add_transition(attackMedium_state, attackHeavy_state, "to_heavyAttack") # M -> H
 	state_machine.add_transition(attackHeavy_state, attack_upper_state, "to_attackUpper") # H -> Launch
 
 
-	# THE FINISHER
 	state_machine.add_transition(attack_upper_state, jump_state, "to_jump")
 	
 	state_machine.add_transition(run_state, runJump_state, "to_runJump")
@@ -113,6 +112,12 @@ func initialize_state_machine():
 	state_machine.add_transition(take_damage_state, recover_state, "to_recover")
 	state_machine.add_transition(state_machine.ANYSTATE, take_damage_state, "to_damage")
 
+
+	state_machine.add_transition(idle_state, grab_state, "to_grab")
+	state_machine.add_transition(run_state, grab_state, "to_grab")
+	state_machine.add_transition(walk_state, grab_state, "to_grab")
+	
+	
 	state_machine.initial_state = idle_state  
 	state_machine.initialize(self)
 	state_machine.set_active(true)
@@ -333,7 +338,15 @@ func handle_attack_input() -> void:
 				attack_upper_state.attack_timer = attack_upper_state.attackData.recovery_duration
 				consume_inputs(["medium", "heavy"])
 			return  # exit after success
-			
+	
+	elif has_inputs(["light", "medium"]):
+		if not Global.is_attacking or can_buffer_attack():
+			if is_air:
+				pass
+			else:
+				state_machine.dispatch("to_grab")
+				consume_inputs(["light", "medium"])
+			return
 			
 	var attacks = [
 		{
@@ -359,6 +372,15 @@ func handle_attack_input() -> void:
 			"air_state": air_attack_state,
 			"ground_transition": "to_attack",
 			"air_transition": "to_airAttack"
+		}
+		,
+		{
+			"ground": "grab",
+			"air": "airGrab",
+			"ground_state": grab_state,
+			"air_state": idle_state,
+			"ground_transition": "to_grab",
+			"air_transition": "to_idle"
 		}
 	]
 
