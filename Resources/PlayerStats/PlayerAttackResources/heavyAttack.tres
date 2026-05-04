@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_70lbc")
-startup_duration = 0.25
+startup_duration = 0.27
 recovery_duration = 0.5
 attackDamage = 20.0
 combo_window_duration = 0.8
