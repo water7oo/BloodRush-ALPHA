@@ -7,6 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://3uyo0xcpn6jw" path="res://ui/combo_counter.tscn" id="4_25w1a"]
 [ext_resource type="Texture2D" uid="uid://bf72n73g686pa" path="res://ui/PauseButton.png" id="6_25w1a"]
 [ext_resource type="Texture2D" uid="uid://cem23ou7ascah" path="res://ui/HelathUI.png" id="7_rj02x"]
+[ext_resource type="Texture2D" uid="uid://1j1312aiphqd" path="res://ui/ControllerTextures/tile_0016.png" id="8_wf2gy"]
+[ext_resource type="Texture2D" uid="uid://drtd8ksh6obol" path="res://ui/ControllerTextures/tile_0015.png" id="9_wdvmp"]
+[ext_resource type="Texture2D" uid="uid://0us14btpo7rx" path="res://ui/ControllerTextures/tile_0013.png" id="10_ix8yv"]
+[ext_resource type="Texture2D" uid="uid://dgnvbppkfv67m" path="res://ui/ControllerTextures/tile_0014.png" id="11_gu5rq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rj02x"]
 bg_color = Color(0.623529, 0.839216, 0.0117647, 1)
@@ -61,6 +65,7 @@ show_percentage = false
 script = ExtResource("2_spkgn")
 
 [node name="State debug" type="Label" parent="." unique_id=2051501831]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -120,6 +125,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_7rdeg")
 value = 1.0
 
 [node name="AttackCooldown" type="Label" parent="." unique_id=1404397761]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -141,6 +147,7 @@ theme_override_font_sizes/font_size = 18
 text = "light attack timer: 0.0"
 
 [node name="AttackCooldownMedium" type="Label" parent="." unique_id=1718640882]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -162,6 +169,7 @@ theme_override_font_sizes/font_size = 18
 text = "medium attack timer: 0.0"
 
 [node name="AttackCooldownHeavy" type="Label" parent="." unique_id=165776979]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -183,6 +191,7 @@ theme_override_font_sizes/font_size = 18
 text = "heavy attack timer: 0.0"
 
 [node name="AttackCooldownUpper" type="Label" parent="." unique_id=303414773]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -258,6 +267,7 @@ scale = Vector2(1.425, 1.425)
 mouse_filter = 1
 
 [node name="CanCancelDebug" type="Label" parent="." unique_id=353945872]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -334,3 +344,50 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("7_rj02x")
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1448171992]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 458.0
+offset_top = 176.0
+offset_right = 514.0
+offset_bottom = 232.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+columns = 3
+
+[node name="TextureRect" type="TextureRect" parent="GridContainer" unique_id=236443007]
+layout_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="GridContainer" unique_id=835789036]
+layout_mode = 2
+texture = ExtResource("8_wf2gy")
+
+[node name="TextureRect6" type="TextureRect" parent="GridContainer" unique_id=1431511477]
+layout_mode = 2
+
+[node name="TextureRect7" type="TextureRect" parent="GridContainer" unique_id=605529879]
+layout_mode = 2
+texture = ExtResource("9_wdvmp")
+
+[node name="TextureRect8" type="TextureRect" parent="GridContainer" unique_id=1684042569]
+layout_mode = 2
+
+[node name="TextureRect9" type="TextureRect" parent="GridContainer" unique_id=1539157696]
+layout_mode = 2
+texture = ExtResource("10_ix8yv")
+
+[node name="TextureRect2" type="TextureRect" parent="GridContainer" unique_id=118490951]
+layout_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="GridContainer" unique_id=457948702]
+layout_mode = 2
+texture = ExtResource("11_gu5rq")
+
+[node name="TextureRect4" type="TextureRect" parent="GridContainer" unique_id=1686026394]
+layout_mode = 2

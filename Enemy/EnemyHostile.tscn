@@ -49,7 +49,7 @@ shader_parameter/highlights_enabled = false
 shader_parameter/shadow_strength = 0.999999977648
 shader_parameter/highlight_strength = 0.0
 shader_parameter/highlight_color = Color(1, 1, 1, 1)
-shader_parameter/shadow_color = Color(0.39688927, 0.39688927, 0.39688924, 1)
+shader_parameter/shadow_color = Color(0.47397572, 0.47397578, 0.4739756, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3ae78"]
 render_priority = 0

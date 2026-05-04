@@ -164,7 +164,7 @@ node_connections = [&"Blend2", 0, &"Animation 2", &"Blend2", 1, &"Animation"]
 
 [node name="Root Scene" unique_id=440371400 instance=ExtResource("1_ialgm")]
 
-[node name="Cylinder_001" parent="." index="0" unique_id=191400299]
+[node name="Cylinder_001" parent="." index="0" unique_id=652088545]
 transform = Transform3D(100, 0, 0, 0, -4.3711384e-06, 99.99999, 0, -99.99999, -4.3711384e-06, 0, 0, 0.0003220886)
 material_override = SubResource("StandardMaterial3D_74ker")
 script = ExtResource("3_pdiq6")

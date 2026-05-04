@@ -62,7 +62,7 @@
 [ext_resource type="AudioStream" uid="uid://b6sn7x5hdlq8h" path="res://Sounds/deadCombo1.wav" id="55_3gnjc"]
 [ext_resource type="AudioStream" uid="uid://bc01ms32t7sx5" path="res://Sounds/Throw.wav" id="55_3pi6o"]
 [ext_resource type="AudioStream" uid="uid://cdxhb1h1iof5y" path="res://Sounds/jump4.wav" id="57_tdu7r"]
-[ext_resource type="PackedScene" uid="uid://5covdmtwkykp" path="res://Player/player.tscn" id="58_vkj36"]
+[ext_resource type="PackedScene" uid="uid://sc0lnih1woqq" path="res://Player/player.tscn" id="58_vkj36"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fvqnm"]
 custom_solver_bias = 0.305
@@ -748,8 +748,8 @@ process_mode = 3
 material_override = SubResource("ShaderMaterial_m03mu")
 emitting = false
 amount = 1
-lifetime = 0.15000000000000002
 one_shot = true
+speed_scale = 5.45
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_q8lqs")
 draw_pass_1 = SubResource("QuadMesh_56u1a")
@@ -867,8 +867,8 @@ volume_db = -16.868
 
 [node name="RootNode" type="Node3D" parent="." unique_id=1429141220]
 
-[node name="player2" parent="RootNode" unique_id=1582641936 instance=ExtResource("58_vkj36")]
-transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 0.99999994, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 0)
+[node name="player2" parent="RootNode" unique_id=82393766 instance=ExtResource("58_vkj36")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RootNode" unique_id=992140820]
 transform = Transform3D(1.905, 0, 0, 0, 3.9991162, 0, 0, 0, 1.905, 0, 2.0421567, 0)
@@ -905,6 +905,7 @@ debug_fill = false
 
 [node name="AttackBox" type="Area3D" parent="RootNode" unique_id=1044839766]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2.2068102)
+visible = false
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackBox" unique_id=1181781909]
@@ -920,6 +921,7 @@ mesh = SubResource("BoxMesh_uf676")
 
 [node name="AttackMedium" type="Area3D" parent="RootNode" unique_id=1214013254]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2.4534442)
+visible = false
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackMedium" unique_id=1592223614]
@@ -935,6 +937,7 @@ mesh = SubResource("BoxMesh_uf676")
 
 [node name="AttackHeavy" type="Area3D" parent="RootNode" unique_id=1426539418]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1.9097979)
+visible = false
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackHeavy" unique_id=2098707322]
