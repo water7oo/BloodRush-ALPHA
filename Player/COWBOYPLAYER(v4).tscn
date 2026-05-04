@@ -62,7 +62,7 @@
 [ext_resource type="AudioStream" uid="uid://b6sn7x5hdlq8h" path="res://Sounds/deadCombo1.wav" id="55_3gnjc"]
 [ext_resource type="AudioStream" uid="uid://bc01ms32t7sx5" path="res://Sounds/Throw.wav" id="55_3pi6o"]
 [ext_resource type="AudioStream" uid="uid://cdxhb1h1iof5y" path="res://Sounds/jump4.wav" id="57_tdu7r"]
-[ext_resource type="PackedScene" uid="uid://5covdmtwkykp" path="res://Player/Player.tscn" id="58_vkj36"]
+[ext_resource type="PackedScene" uid="uid://5covdmtwkykp" path="res://Player/player.tscn" id="58_vkj36"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fvqnm"]
 custom_solver_bias = 0.305
@@ -867,7 +867,7 @@ volume_db = -16.868
 
 [node name="RootNode" type="Node3D" parent="." unique_id=1429141220]
 
-[node name="player2" parent="RootNode" unique_id=908021789 instance=ExtResource("58_vkj36")]
+[node name="player2" parent="RootNode" unique_id=1582641936 instance=ExtResource("58_vkj36")]
 transform = Transform3D(-0.99999994, 0, -8.742277e-08, 0, 0.99999994, 0, 8.742277e-08, 0, -0.99999994, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RootNode" unique_id=992140820]
@@ -998,7 +998,6 @@ mesh = SubResource("BoxMesh_uf676")
 
 [node name="AttackUpperBox" type="Area3D" parent="RootNode" unique_id=2060644472]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5133755, -1.5815301)
-visible = false
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackUpperBox" unique_id=1412063134]

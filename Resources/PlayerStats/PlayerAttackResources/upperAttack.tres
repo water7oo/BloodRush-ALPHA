@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_dg80q")
-startup_duration = 0.08
+startup_duration = 0.2
 active_duration = 0.5
 recovery_duration = 0.5
 attackDamage = 21.0
@@ -25,4 +25,5 @@ time_between_hits = 0.1
 knockback_force_finisher = 5.0
 knockback_force_default = 4.0
 knockback_direction_finisher = Vector3(0, 1, 0.3)
-attackAnimation = "player|uppercut"
+attackAnimation = "player|upperCut"
+animationSpeedScale = 1.0

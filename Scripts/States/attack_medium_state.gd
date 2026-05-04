@@ -1,6 +1,6 @@
 extends LimboState
 
-
+@export var hiteffect1 = preload("res://FX/swordslash_1.tscn")
 @onready var player = $"../../RootNode/player2"
 @onready var animation_player = player.get_node("AnimationPlayer")
 @export var attack_box: Node
@@ -26,26 +26,34 @@ var preserved_velocity: Vector3 = Vector3.ZERO
 var startup_timer := 0.0
 var in_startup := true
 
-var heavy_pressed_time = -1
-var combo_window = 0.2 
+var buffered_medium := false
+var buffered_heavy := false
+var medium_pressed_time := -1.0
+
+@onready var PlayerUI = $PlayerUI
 
 @onready var AttackAnimation = attackData.attackAnimation
 
-func _enter(msg := {}) -> void:
+func _enter() -> void:
+	medium_pressed_time = -1.0
+	
 	enemies_hit.clear()
 	buffered_input = false
-	
+	buffered_medium = false
+	buffered_heavy = false
 	Global.is_attacking = true
 	Global.isHit = false
+	Global.can_cancel = false
 
-	var skip_startup = msg.get("skip_startup", false)
-
-	if skip_startup:
-		in_startup = false
+	if Global.skip_startup:
+		print("skip startup")
 		startup_timer = 0.0
-		attack_timer = attackData.active_duration + attackData.recovery_duration
+		in_startup = false
+		Global.skip_startup = false 
+
 		_enable_hitbox()
 		_start_attack()
+		attack_timer = attackData.active_duration + attackData.recovery_duration
 	else:
 		startup_timer = attackData.startup_duration
 		in_startup = true
@@ -55,33 +63,30 @@ func _enter(msg := {}) -> void:
 		animation_player.speed_scale = attackData.animationSpeedScale
 		animation_player.play(attackData.attackAnimation)
 
+
 func _update(delta: float) -> void:
-	if Input.is_action_just_pressed("attack_heavy_1"):
-		heavy_pressed_time = Time.get_ticks_msec() / 1000.0
+	combo_timer -= delta
+
 
 	if Input.is_action_just_pressed("attack_medium_1"):
-		var now = Time.get_ticks_msec() / 1000.0
-		
-		# Check for medium+heavy within combo window
-		if now - heavy_pressed_time <= combo_window:
-			# Combo detected → trigger Upper Attack
-			buffered_input = true
-			attackData.next_attack_state = "to_attackUpper"
-
-		else:
-			# Regular heavy attack
-			buffered_input = false
-			attackData.next_attack_state = ""  # or your normal heavy follow-up
-	elif Input.is_action_just_pressed("attack_heavy_1"):
+		buffered_medium = true
 		buffered_input = true
-		attackData.next_attack_state = "to_heavyAttack"
+		medium_pressed_time = Time.get_ticks_msec() / 1000.0
+
+	if Input.is_action_just_pressed("attack_heavy_1"):
+		buffered_heavy = true
+		buffered_input = true
+
+		var now = Time.get_ticks_msec() / 1000.0
+
+		# Only trigger Upper if THIS medium pressed recently
+		if medium_pressed_time > 0 and now - medium_pressed_time <= attackData.combo_window_duration:
+			attackData.next_attack_state = "to_attackUpper"
+		else:
+			attackData.next_attack_state = "to_attackHeavy"
 	
 	
 	if in_startup:
-		if buffered_input and Global.can_cancel:
-			_chain_attack()
-			return
-
 		startup_timer -= delta
 		if startup_timer <= 0:
 			in_startup = false
@@ -89,27 +94,39 @@ func _update(delta: float) -> void:
 			_enable_hitbox()
 			_start_attack()
 		return
-
 		
 	_process_cancel_window()
+	
+	attack_timer -= delta
+	if attack_timer <= 0.0:
+		if (buffered_input || Global.isHit) && Global.can_cancel:
+			_end_or_chain()
+		else:
+			_exit_attack_state()
+			agent.state_machine.dispatch("to_idle")
+		
+
+	_comboKnockBack()
 	_apply_physics(delta)
 	agent.move_and_slide()
 
-func is_in_attack_phase() -> bool:
-	return attack_timer > attackData.recovery_duration
 
-func is_in_recovery_phase() -> bool:
-	return attack_timer <= attackData.recovery_duration and attack_timer > 0
-
+func _comboKnockBack():
+	if Global.combo_hits.size() >= 2:
+		attackData.knockback_force = attackData.comboknockbackForce
+	else:
+		attackData.knockback_force = attackData.Default_knockback_force
+		
 func _process_cancel_window():
 	if buffered_input and Global.can_cancel:
-		buffered_input = false
 		_chain_attack()
+	
 
 
 func _end_or_chain():
 	if combo_timer >= 0.0:
 		if (buffered_input || Global.isHit) && Global.can_cancel:
+			$"../../ComboConfirm1".emitting = true
 			_chain_attack()
 	else:
 		Global.can_cancel = false
@@ -119,18 +136,18 @@ func _end_or_chain():
 
 func _chain_attack():
 	_exit_attack_state()
+	
+	Global.skip_startup = true
 	attack_timer = 0.0
 
-	if buffered_input:
-		var msg = {}
+	if combo_timer >= 0.0:
+		if buffered_heavy:
+			agent.state_machine.dispatch(attackData.next_attack_state)
+		else:
+			agent.state_machine.dispatch("to_idle")
 
-		if attackData.next_attack_state in ["to_heavyAttack", "to_attackUpper"]:
-			msg["skip_startup"] = true
-
-		agent.state_machine.dispatch(attackData.next_attack_state, msg)
-		
 func _start_attack() -> void:
-	Global.combo_timer = attackData.combo_window_duration
+	combo_timer = attackData.combo_window_duration
 	Global.can_chain_attack = false
 	Global.can_cancel = false
 
@@ -177,8 +194,6 @@ func rotate_to_target(areaParent):
 		)
 	else:
 		print("no visual node")
-			
-
 
 func rotateEnemy_to_player(agent, areaParent):
 	var enemyMesh = areaParent
@@ -206,7 +221,7 @@ func rotateEnemy_to_player(agent, areaParent):
 		print("no visual node")
 		
 		
-
+		
 func hitFinisher(area):
 	var is_finishing_blow = area.enemyStats.current_health <= 0
 
@@ -223,19 +238,27 @@ func hitFinisher(area):
 		attackData.enemyTargetMagnitude = attackData.DefaultenemyTargetMagnitude
 		attackData.enemyTargetHitStop = attackData.DefaultenemyTargetHitStop
 		pass
-		
-		
+
 func _on_attack_box_area_entered(area):
 	var areaParent = area.get_parent()
-
 	if Global.isHit:
 		return
+
 
 	if areaParent.has_method("takeDamageEnemy") \
 	and areaParent.enemyStats.current_health > 0 \
 	and not areaParent.enemyStats.isDead \
 	and not areaParent.enemyStats.isGuarding:
 
+
+
+		areaParent.takeDamageEnemy(attackData.attackDamage)
+		hitFinisher(areaParent)
+			
+		areaParent.takeDamageEnemy(attackData.attackDamage)
+		rotateEnemy_to_player(agent, areaParent)
+		rotate_to_target(areaParent)
+		
 		Global.combo_hits.append({
 			"enemy": area,
 			"damage": attackData.attackDamage,
@@ -243,15 +266,9 @@ func _on_attack_box_area_entered(area):
 			"timestamp": Time.get_ticks_msec()
 		})
 		
+		#PlayerUI.get_node("ComboCounter2").get_child(0).text = "x" + str(Global.combo_hits.size())
 		agent.updateComboCounterInstant(Global.combo_hits.size())
 		Global.combo_timer = Global.combo_reset_time
-		areaParent.takeDamageEnemy(attackData.attackDamage)
-		hitFinisher(areaParent)
-
-			
-			
-		rotateEnemy_to_player(agent, areaParent)
-		rotate_to_target(areaParent)
 		
 		Global.isHit = true
 		Global.can_chain_attack = true
@@ -269,9 +286,9 @@ func _on_attack_box_area_entered(area):
 
 		enemies_hit[area] = true
 
-		hit2Sound.pitch_scale = randf_range(.8, 1.1)
-		hit2Sound.play()
-#		change this so it doesnt rely on the node name, only the node type
+		hit1Sound.pitch_scale = randf_range(.8, 1.1)
+		hit1Sound.play()
+
 		if enemy.has_node("EnemyMesh"):
 			var mesh = enemy.get_node("EnemyMesh")
 			mesh.trigger_flash()
@@ -283,10 +300,11 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
+		animation_player.process_mode = PROCESS_MODE_DISABLED
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
+		animation_player.process_mode = PROCESS_MODE_INHERIT
 
 		areaParent.enemyStats.enemyWasHit = false
-
 		var hit1Effect = enemy.find_child("hit1", true, false)
 		if hit1Effect is GPUParticles3D:
 			hit1Effect.restart()
@@ -298,6 +316,7 @@ func _on_attack_box_area_entered(area):
 			hit2Effect.restart()
 			hit2Effect.emitting = true
 			hit2Effect.process_mode = Node.PROCESS_MODE_ALWAYS
+			
 		agent.velocity = saved_velocity
 
 		var combo_count = Global.combo_hits.size()
@@ -319,7 +338,8 @@ func _on_attack_box_area_entered(area):
 
 	elif areaParent.has_method("takeGuardDamageEnemy") and areaParent.enemyStats.isGuarding and areaParent.enemyStats.current_health > 0 and not areaParent.enemyStats.isDead:
 			areaParent.takeDamageEnemy(attackData.attackDamage * .5)
-			
+
+
 			rotateEnemy_to_player(agent, areaParent)
 			rotate_to_target(areaParent)
 			Global.isHit = true
@@ -348,15 +368,12 @@ func _on_attack_box_area_entered(area):
 
 			var saved_velocity = agent.velocity
 			agent.velocity = Vector3.ZERO
-
 			areaParent.enemyStats.enemyWasHit = true
-
-
+			
 			gameJuice.objectShake(enemy, attackData.enemyTargetGuardLength, attackData.enemyTargetGuardMagnitude)
-			animation_player.process_mode = PROCESS_MODE_DISABLED
+
 			gameJuice.hitstop(attackData.enemyTargetGuardedHitstop, [agent, enemy])
 			areaParent.enemyStats.enemyWasHit = false
-			animation_player.process_mode = PROCESS_MODE_INHERIT
 			
 			
 			var hit1Effect = enemy.find_child("hit1", true, false)
@@ -373,16 +390,15 @@ func _on_attack_box_area_entered(area):
 
 			agent.velocity = saved_velocity
 
-
-			var combo_count = Global.combo_hits.size()
 			if enemy is CharacterBody3D:
-				if combo_count == 1:
+				if Global.combo_hits.size() == 1:
 					gameJuice.knockback(
 						enemy,
 						agent,
 						attackData.guardedknockbackForce,
 						attackData.guardedknockbackDirection
 					)
+			
 
 
 func _apply_physics(delta: float):
@@ -396,9 +412,12 @@ func _apply_physics(delta: float):
 
 func _exit_attack_state() -> void:
 	animation_player.speed_scale = 1.0
+	animation_player.stop()
 	Global.is_attacking = false
 	Global.isHit = false
-	attack_timer = 0.0
+	Global.can_cancel = false
+	buffered_input = false
+	buffered_medium = false
+	buffered_heavy = false
 	combo_timer = 0.0
 	_disable_hitbox()
-	agent.state_machine.dispatch("to_idle")

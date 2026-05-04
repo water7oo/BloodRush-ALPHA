@@ -81,11 +81,7 @@ func _landCancel():
 		else:
 			return
 			
-func is_in_attack_phase() -> bool:
-	return attack_timer > attackData.recovery_duration
 
-func is_in_recovery_phase() -> bool:
-	return attack_timer <= attackData.recovery_duration and attack_timer > 0
 
 func _process_cancel_window():
 	if buffered_input and Global.can_cancel:

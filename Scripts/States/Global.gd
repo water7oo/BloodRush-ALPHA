@@ -75,6 +75,8 @@ var isRecovering = false
 
 var isSwordMode = false
 var isFightMode = true
+var skip_startup = false
+
 
 func shakeTween(node):
 	FollowCam.applyShake(0.1,0.1)

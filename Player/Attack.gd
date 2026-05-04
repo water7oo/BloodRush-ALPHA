@@ -26,25 +26,28 @@ var preserved_velocity: Vector3 = Vector3.ZERO
 var startup_timer := 0.0
 var in_startup := true
 
+var buffered_medium := false
 @onready var PlayerUI = $PlayerUI
 
 @onready var AttackAnimation = attackData.attackAnimation
 
-func _enter(msg := {}) -> void:
+func _enter() -> void:
 	enemies_hit.clear()
 	buffered_input = false
-	
+	buffered_medium = false
 	Global.is_attacking = true
 	Global.isHit = false
+	Global.can_cancel = false
 
-	var skip_startup = msg.get("skip_startup", false)
-
-	if skip_startup:
-		in_startup = false
+	if Global.skip_startup:
+		print("skip startup")
 		startup_timer = 0.0
-		attack_timer = attackData.active_duration + attackData.recovery_duration
+		in_startup = false
+		Global.skip_startup = false 
+
 		_enable_hitbox()
 		_start_attack()
+		attack_timer = attackData.active_duration + attackData.recovery_duration
 	else:
 		startup_timer = attackData.startup_duration
 		in_startup = true
@@ -56,17 +59,16 @@ func _enter(msg := {}) -> void:
 
 
 func _update(delta: float) -> void:
-	# buffer input
+	combo_timer -= delta
+
+
 	if Input.is_action_just_pressed("attack_medium_1"):
+		buffered_medium = true
 		buffered_input = true
 		
-	
-	
-	if in_startup:
-		if buffered_input and Global.can_cancel:
-			_chain_attack()
-			return
 
+
+	if in_startup:
 		startup_timer -= delta
 		if startup_timer <= 0:
 			in_startup = false
@@ -75,21 +77,31 @@ func _update(delta: float) -> void:
 			_start_attack()
 		return
 
-		
+
 	_process_cancel_window()
+	
+	attack_timer -= delta
+	if attack_timer <= 0.0:
+		if (buffered_input || Global.isHit) && Global.can_cancel:
+			_end_or_chain()
+		else:
+			_exit_attack_state()
+			agent.state_machine.dispatch("to_idle")
+	
+		
+		
 	_apply_physics(delta)
 	agent.move_and_slide()
 
-
-func is_in_attack_phase() -> bool:
-	return attack_timer > attackData.recovery_duration
-
-func is_in_recovery_phase() -> bool:
-	return attack_timer <= attackData.recovery_duration and attack_timer > 0
+func _comboKnockBack():
+	if Global.combo_hits.size() >= 2:
+		attackData.knockback_force = attackData.comboknockbackForce
+	else:
+		attackData.knockback_force = attackData.Default_knockback_force
+		
 
 func _process_cancel_window():
 	if buffered_input and Global.can_cancel:
-		buffered_input = false
 		_chain_attack()
 
 
@@ -106,16 +118,15 @@ func _end_or_chain():
 
 func _chain_attack():
 	_exit_attack_state()
+	
+	Global.skip_startup = true
 	attack_timer = 0.0
 
-	if buffered_input:
-		var msg = {}
-
-		# Medium → Heavy (Upper)
-		if attackData.next_attack_state in ["to_mediumAttack", "to_heavyAttack", "to_attackUpper"]:
-			msg["skip_startup"] = true
-
-		agent.state_machine.dispatch(attackData.next_attack_state, msg)
+	if combo_timer >= 0.0:
+		if buffered_medium:
+			agent.state_machine.dispatch(attackData.next_attack_state)
+		else:
+			agent.state_machine.dispatch("to_idle")
 
 func _start_attack() -> void:
 	combo_timer = attackData.combo_window_duration
@@ -383,9 +394,11 @@ func _apply_physics(delta: float):
 
 func _exit_attack_state() -> void:
 	animation_player.speed_scale = 1.0
+	animation_player.stop()
 	Global.is_attacking = false
 	Global.isHit = false
-	attack_timer = 0.0
+	Global.can_cancel = false
+	buffered_input = false
+	buffered_medium = false
 	combo_timer = 0.0
 	_disable_hitbox()
-	agent.state_machine.dispatch("to_idle")

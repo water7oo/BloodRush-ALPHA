@@ -788,7 +788,7 @@ Name = "One Hit"
 [sub_resource type="Resource" id="Resource_sf2ab"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 100.0
+current_health = 5000.0
 max_health = 999.0
 isGuarding = true
 Name = "GUARDING"
@@ -797,7 +797,7 @@ GuardDamage = 4
 [sub_resource type="Resource" id="Resource_q6yvq"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 100.0
+current_health = 5000.0
 max_health = 999.0
 Name = "GUARDING"
 GuardDamage = 4
@@ -805,7 +805,7 @@ GuardDamage = 4
 [sub_resource type="Resource" id="Resource_j5h8r"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 999.0
+current_health = 5000.0
 max_health = 999.0
 Name = "GUARDING"
 GuardDamage = 4
@@ -813,7 +813,7 @@ GuardDamage = 4
 [sub_resource type="Resource" id="Resource_opbd2"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 100.0
+current_health = 5000.0
 max_health = 999.0
 Name = "GUARDING"
 GuardDamage = 4
@@ -821,7 +821,7 @@ GuardDamage = 4
 [sub_resource type="Resource" id="Resource_cokqy"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
-current_health = 100.0
+current_health = 5000.0
 max_health = 999.0
 Name = "GUARDING"
 GuardDamage = 4

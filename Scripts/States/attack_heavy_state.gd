@@ -27,25 +27,31 @@ var startup_timer := 0.0
 var in_startup := true
 
 var medium_pressed_time = -1
-var combo_window = 0.2 
+var buffered_medium := false
+var buffered_heavy := false
+
+var combo_window = 0.8
 
 @onready var AttackAnimation = attackData.attackAnimation
 
-func _enter(msg := {}) -> void:
+func _enter() -> void:
 	enemies_hit.clear()
 	buffered_input = false
-	
+	buffered_medium = false
+	buffered_heavy = false
 	Global.is_attacking = true
 	Global.isHit = false
+	Global.can_cancel = false
 
-	var skip_startup = msg.get("skip_startup", false)
-
-	if skip_startup:
-		in_startup = false
+	if Global.skip_startup:
+		print("skip startup")
 		startup_timer = 0.0
-		attack_timer = attackData.active_duration + attackData.recovery_duration
+		in_startup = false
+		Global.skip_startup = false  
+
 		_enable_hitbox()
 		_start_attack()
+		attack_timer = attackData.active_duration + attackData.recovery_duration
 	else:
 		startup_timer = attackData.startup_duration
 		in_startup = true
@@ -55,29 +61,22 @@ func _enter(msg := {}) -> void:
 		animation_player.speed_scale = attackData.animationSpeedScale
 		animation_player.play(attackData.attackAnimation)
 
+
 func _update(delta: float) -> void:
-	if Input.is_action_just_pressed("attack_medium_1"):
-		medium_pressed_time = Time.get_ticks_msec() / 1000.0
-
-	if Input.is_action_just_pressed("attack_heavy_1"):
-		var now = Time.get_ticks_msec() / 1000.0
-		
-		# Check for medium+heavy within combo window
-		if now - medium_pressed_time <= combo_window:
-			buffered_input = true
-			attackData.next_attack_state = "to_attackUpper"
-		else:
-			# Regular heavy attack
-			buffered_input = false
-			attackData.next_attack_state = ""  # or your normal heavy follow-up
+	combo_timer -= delta
 	
-		
+	
+	if Input.is_action_just_pressed("attack_heavy_1"):
+		buffered_heavy = true
+		buffered_input = true
+
+	if Input.is_action_just_pressed("attack_medium_1"):
+		buffered_medium = true
+		buffered_input = true
+
+
+
 	if in_startup:
-
-		if buffered_input and Global.can_cancel:
-			_chain_attack()
-			return
-
 		startup_timer -= delta
 		if startup_timer <= 0:
 			in_startup = false
@@ -86,49 +85,52 @@ func _update(delta: float) -> void:
 			_start_attack()
 		return
 
-
 	_process_cancel_window()
+	
+	attack_timer -= delta
+	if attack_timer <= 0.0:
+		if (buffered_input || Global.isHit) && Global.can_cancel:
+			_end_or_chain()
+		else:
+			_exit_attack_state()
+			agent.state_machine.dispatch("to_idle")
+
+
 	_comboKnockBack()
 	_apply_physics(delta)
 	agent.move_and_slide()
 
 		
 		
-func is_in_attack_phase() -> bool:
-	return attack_timer > attackData.recovery_duration
-
-func is_in_recovery_phase() -> bool:
-	return attack_timer <= attackData.recovery_duration and attack_timer > 0
 
 func _process_cancel_window():
 	if buffered_input and Global.can_cancel:
-		buffered_input = false
 		_chain_attack()
 
 
 func _end_or_chain():
 	if combo_timer >= 0.0:
 		if (buffered_input || Global.isHit) && Global.can_cancel:
+			$"../../ComboConfirm1".emitting = true
 			_chain_attack()
 	else:
 		Global.can_cancel = false
 		_exit_attack_state()
-		#agent.state_machine.dispatch("to_idle")
+		agent.state_machine.dispatch("to_idle")
 
 
 func _chain_attack():
 	_exit_attack_state()
+	
+	Global.skip_startup = true
 	attack_timer = 0.0
 
-	if buffered_input:
-		var msg = {}
+	if combo_timer >= 0.0:
+		if buffered_medium:
+			agent.state_machine.dispatch("to_attackUpper")
+	else:
+		agent.state_machine.dispatch("to_idle")
 
-		# ONLY skip startup for medium → heavy
-		if attackData.next_attack_state == "to_attackUpper":
-			msg["skip_startup"] = true
-
-		agent.state_machine.dispatch(attackData.next_attack_state, msg)
-		
 func _start_attack() -> void:
 	Global.combo_timer = attackData.combo_window_duration
 	Global.can_chain_attack = false
@@ -290,11 +292,9 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = true
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
 		animation_player.process_mode = PROCESS_MODE_ALWAYS
-		animation_player.speed_scale = 0.5
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
 		areaParent.enemyStats.enemyWasHit = false
 		animation_player.process_mode = PROCESS_MODE_INHERIT
-		animation_player.speed_scale = 1
 
 		var hit1Effect = enemy.find_child("hit1", true, false)
 		if hit1Effect is GPUParticles3D:
@@ -405,9 +405,13 @@ func _apply_physics(delta: float):
 
 func _exit_attack_state() -> void:
 	animation_player.speed_scale = 1.0
+	animation_player.stop()
 	Global.is_attacking = false
 	Global.isHit = false
-	attack_timer = 0.0
+	Global.can_cancel = false
+
+	buffered_input = false
+	buffered_medium = false
+	buffered_heavy = false
 	combo_timer = 0.0
 	_disable_hitbox()
-	agent.state_machine.dispatch("to_idle")

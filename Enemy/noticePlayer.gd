@@ -10,12 +10,10 @@ func _on_area_entered(area: Area3D) -> void:
 	if area.name == "HurtBox":
 		target = area
 		player = area
-		print("Looking at Player")
 
 func _on_area_exited(area: Area3D) -> void:
 	if area == target:
 		target = null
-		print("Player is gone...")
 
 func lookAtPlayer(area):
 	var enemyEntity = self.get_parent()

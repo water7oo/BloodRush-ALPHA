@@ -86,19 +86,8 @@ func _enter() -> void:
 	
 
 func _update(delta: float) -> void:
-	
-	# buffer input
 	if Input.is_action_just_pressed("move_jump"):
 		buffered_input = true
-	
-	attack_timer = max(attack_timer - delta, 0.0)
-	if attack_timer <= 0.0:
-		if (buffered_input || Global.isHit) && Global.can_cancel:
-			_chain_attack()
-		else:
-			_exit_attack_state()
-			agent.state_machine.dispatch("to_idle")
-	
 
 	if in_startup:
 		startup_timer -= delta
@@ -113,16 +102,38 @@ func _update(delta: float) -> void:
 				attack_timer = attackData.active_duration + attackData.recovery_duration
 				_enable_hitbox()
 				_start_attack()
+				
+
+
+	_process_cancel_window()
+	
+	attack_timer -= delta
+	if attack_timer <= 0.0:
+		if (buffered_input || Global.isHit) && Global.can_cancel:
+			_chain_attack()
+		else:
+			_exit_attack_state()
+			agent.state_machine.dispatch("to_idle")
+	
+
 	
 	
 	
 	if Global.can_chain_attack == true:
 		runJumpTimers(delta)
 	
-	_process_cancel_window()
+	
+	_comboKnockBack()
 	_apply_physics(delta)
 	agent.move_and_slide()
 
+
+func _comboKnockBack():
+	if Global.combo_hits.size() >= 2:
+		attackData.knockback_force = attackData.comboknockbackForce
+	else:
+		attackData.knockback_force = attackData.Default_knockback_force
+		
 func runJumpTimers(delta: float):
 
 	jumpCancelDelay = max(jumpCancelDelay - delta, 0.0)
@@ -132,15 +143,9 @@ func runJumpTimers(delta: float):
 		jump_cancel_timer = max(jump_cancel_timer - delta, 0.0)
 		canJumpCancel = true
 		
-func is_in_attack_phase() -> bool:
-	return attack_timer > attackData.recovery_duration
-
-func is_in_recovery_phase() -> bool:
-	return attack_timer <= attackData.recovery_duration and attack_timer > 0
 
 func _process_cancel_window():
 	if buffered_input and Global.can_cancel:
-		buffered_input = false
 		_chain_attack()
 
 
@@ -156,7 +161,6 @@ func _end_or_chain():
 
 func _chain_attack():
 	_exit_attack_state()
-	attackData.startup_duration = 0.0
 	attack_timer = 0.0
 	
 	_jumpCancel()
@@ -525,6 +529,7 @@ func _exit_attack_state() -> void:
 	animation_player.speed_scale = 7.0
 	Global.is_attacking = false
 	Global.isHit = false
+	Global.can_cancel = false
 	combo_timer = 0.0
 	agent.jump_state.jumpResource.JUMP_VELOCITY = agent.jump_state.jumpResource.DEFAULT_JUMP_VELOCITY
 	_disable_hitbox()
