@@ -308,6 +308,7 @@ specular_mode = 1
 texture_filter = 0
 
 [node name="BloodKatana" unique_id=894357482 instance=ExtResource("1_e7b85")]
+transform = Transform3D(1.675, 0, 0, 0, 1.38, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Cylinder" parent="." index="0" unique_id=452522888]
 transform = Transform3D(0.2174277, 0, 0, 0, 0.36938936, 0, 0, 0, 0.21742775, 0, 0.23623312, 0)

@@ -1,4 +1,4 @@
-class_name UpperAttackData2
+class_name SwordUpperAttackData2
 extends Resource
 
 @export var startup_duration: float = 0.1

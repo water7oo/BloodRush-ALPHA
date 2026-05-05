@@ -152,7 +152,8 @@ func modeSwitch():
 			attack_upper_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDupperAttack2.tres")
 		else:
 			attack_upper_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/SwordAttackResources/SWORDupperAttack.tres")
-	else: 
+
+	elif type == combatType.FIGHTER: 
 		attack_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/lightAttack.tres")
 		attackMedium_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/mediumAttack.tres")
 		attackHeavy_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/heavyAttack.tres")

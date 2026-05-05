@@ -1363,6 +1363,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.176811, 0)
 
 [node name="Cowboy" parent="." unique_id=401760427 instance=ExtResource("10_wbl5e")]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -16.997192, 4.6938396, -3.076)
+type = 1
 
 [node name="HitEffectText" parent="." unique_id=166482147 instance=ExtResource("27_2nta8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58, 6.176811, -21)
@@ -1379,10 +1380,10 @@ playerReset = NodePath("../SubViewportContainer/SubViewport/PlayerReset")
 player = NodePath("../Cowboy")
 
 [node name="UpperSwap1" parent="." unique_id=1806891305 instance=ExtResource("12_bsi3r")]
-transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -18.285488, 4.636797, 9.673176)
+transform = Transform3D(0.25881904, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.25881904, -20.632936, 3.636797, -14.8653345)
 
 [node name="UpperSwap2" parent="." unique_id=1324330705 instance=ExtResource("12_n5x20")]
-transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -20.219723, 4.6728115, 7.333404)
+transform = Transform3D(0.25881904, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.25881904, -17.872274, 3.6728115, -16.128084)
 
 [node name="UpperSwap3" parent="." unique_id=898093647 instance=ExtResource("12_bsi3r")]
 transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -93.28549, 2.636797, 9.673176)

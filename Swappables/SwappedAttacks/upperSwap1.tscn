@@ -2,12 +2,17 @@
 
 [ext_resource type="Script" uid="uid://djoewry86oh7n" path="res://Swappables/SwappedAttacks/upper_swap1.gd" id="1_yehss"]
 [ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="2_uc1ia"]
+[ext_resource type="Texture2D" uid="uid://hdjcjndtx2wq" path="res://ui/ControllerTextures/tile_0008.png" id="2_yehss"]
 [ext_resource type="Animation" uid="uid://c65mf7ahl60i3" path="res://Animations/floating.res" id="3_uc1ia"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y0pnp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b6n5p"]
 next_pass = SubResource("ShaderMaterial_y0pnp")
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("2_yehss")
+texture_filter = 0
 billboard_mode = 1
 
 [sub_resource type="QuadMesh" id="QuadMesh_uc1ia"]

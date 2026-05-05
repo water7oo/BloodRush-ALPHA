@@ -11,8 +11,14 @@ extends Resource
 @export var enemyTargetHitStop: float = 0.4
 
 @export var Default_knockback_force: float = 3.0
-@export var knockback_force: float = 3.0
-@export var knockback_direction: Vector3 = Vector3(0, 0, 1)
+@export var knockback_force: float = 7.0
+@export var knockback_direction: Vector3 = Vector3(0, 1, 1)
+
+@export var knockback_backDirection: Vector3 = Vector3(0,0,-1)
+
+@export var knockback_downDirection: Vector3 = Vector3(0,-1,0)
+
+@export var knockback_UpDirection: Vector3 = Vector3(0,-1,0)
 
 @export var jump_cancel_window: float = 0.25
 @export var ATTACK_DECELERATION: float = 60.0
@@ -45,3 +51,5 @@ var comboknockbackForce: float = knockback_force * comboknockbackForceRate
 
 @export var attackAnimation: String = ""
 @export var animationSpeedScale: float = 5.0
+
+@export var max_grab_time: float  = 2.0

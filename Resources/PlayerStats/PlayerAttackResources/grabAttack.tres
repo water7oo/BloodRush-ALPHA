@@ -4,3 +4,13 @@
 
 [resource]
 script = ExtResource("1_y85vv")
+enemyTargetLength = 0.0
+enemyTargetMagnitude = 0.0
+enemyTargetHitStop = 0.1
+Default_knockback_force = 10.0
+knockback_force = 10.0
+knockback_backDirection = Vector3(0, 1, 1)
+knockback_downDirection = Vector3(0, 0, -1)
+knockback_UpDirection = Vector3(0, 1, 1)
+attackAnimation = "player|upperCut"
+max_grab_time = 3.0

@@ -1,12 +1,17 @@
 [gd_scene format=3 uid="uid://yos5axl07j0c"]
 
 [ext_resource type="Script" uid="uid://c78j4g7f4qquj" path="res://Swappables/upper_swap_2.gd" id="1_y0pnp"]
+[ext_resource type="Texture2D" uid="uid://bhpey0cfvasbc" path="res://ui/ControllerTextures/tile_0009.png" id="2_b6n5p"]
 [ext_resource type="FontFile" uid="uid://bnwv8pcflssa3" path="res://ui/mario_kart_ds/Mario-Kart-DS.ttf" id="2_y0pnp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y0pnp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b6n5p"]
 next_pass = SubResource("ShaderMaterial_y0pnp")
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("2_b6n5p")
+texture_filter = 0
 billboard_mode = 1
 
 [sub_resource type="QuadMesh" id="QuadMesh_y0pnp"]

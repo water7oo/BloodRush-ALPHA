@@ -46,8 +46,14 @@ const DustLandEffect = preload("res://FX/dustEffect4.tscn")
 
 const DustMultiEffect = preload("res://FX/dustEffect2.tscn")
 
+
+var is_multi_hit := false
+
 func _enter() -> void:
-	if attackData == load("res://Resources/PlayerStats/PlayerAttackResources/upperAttack2.tres"):
+	is_multi_hit = attackData.has_meta("multi_hit") && attackData.get_meta("multi_hit")
+	
+	
+	if is_multi_hit:
 		Global.isMultiHitUpper = true
 		animation_player.speed_scale = attackData.animationSpeedScale
 		animation_player.play(attackData.attackAnimation)
@@ -55,7 +61,8 @@ func _enter() -> void:
 		Global.isMultiHitUpper = false
 		animation_player.speed_scale = attackData.animationSpeedScale
 		animation_player.play(attackData.attackAnimation)
-	if Global.isMultiHitUpper:
+
+	if !is_multi_hit:
 		attack_box = $"../../RootNode/AttackUpperBox2"
 		attack_box_col = $"../../RootNode/AttackUpperBox2/CollisionShape3D"
 		attack_box_debug = $"../../RootNode/AttackUpperBox2/Attack_Debug"
@@ -92,7 +99,7 @@ func _update(delta: float) -> void:
 	if in_startup:
 		startup_timer -= delta
 		if startup_timer <= 0:
-			if !Global.isMultiHitUpper:
+			if !is_multi_hit:
 				in_startup = false
 				attack_timer = attackData.active_duration + attackData.recovery_duration
 				_enable_hitbox()
@@ -235,7 +242,7 @@ func _start_attack() -> void:
 
 func _enable_hitbox():
 	if attack_box:
-		if !Global.isMultiHitUpper:
+		if !is_multi_hit:
 			Global.stretch_forward($"../../RootNode/player2")
 			attack_box_debug.visible = true
 			attack_box_col.visible = true
@@ -270,9 +277,12 @@ func multi_hit():
 					Global.shakeTween($"../../PlayerUI".get_node("ComboCounter2"))
 					multiHit1FinishSound.pitch_scale = randf_range(0.2, 1.1)
 					multiHit1FinishSound.play()
+					
+					#animation_player.play("player|multiFinish")
 				else:
 					multiHit1Sound.pitch_scale = randf_range(0.6, 1.2)
 					multiHit1Sound.play()
+
 					
 					
 		_disable_hitbox()

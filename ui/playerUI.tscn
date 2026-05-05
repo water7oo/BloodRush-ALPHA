@@ -288,17 +288,16 @@ theme_override_font_sizes/font_size = 18
 text = "can cancel: false"
 
 [node name="UpperSwapDebug" type="Label" parent="." unique_id=642084624]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 411.0
-offset_top = 3.0
-offset_right = 635.0
-offset_bottom = 48.0
+offset_left = -633.0
+offset_top = -262.0
+offset_right = -409.0
+offset_bottom = -217.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1

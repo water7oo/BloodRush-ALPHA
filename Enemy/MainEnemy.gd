@@ -192,6 +192,10 @@ func takeDamageEnemy(damage: float) -> void:
 			$AnimationPlayer.play("IDLE")
 		
 
+func grabbedEnemy():
+	Global.squash_land($EnemyMesh)
+	
+	
 func takeGuardDamageEnemy(damage: float) -> void:
 	if enemyStats.isDead == false:
 		if enemyStats.isGuarding == true:

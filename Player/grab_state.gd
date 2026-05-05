@@ -13,6 +13,7 @@ extends LimboState
 @onready var gameJuice = get_node("/root/GameJuice")
 
 @export var hit1Sound: AudioStreamPlayer
+@export var hit2Sound: AudioStreamPlayer
 
 
 var attack_timer: float = 0.0
@@ -23,7 +24,18 @@ var preserved_velocity: Vector3 = Vector3.ZERO
 var startup_timer := 0.0
 var in_startup := true
 
+
+
+var grab_timer := 0.0
+
+var can_grab = true
+var isGrabbed = false
 var buffered_medium := false
+
+var grabbed_enemy: CharacterBody3D = null
+@onready var grab_point = $"../../RootNode/grabPoint"
+
+
 @onready var PlayerUI = $PlayerUI
 
 @onready var AttackAnimation = attackData.attackAnimation
@@ -35,6 +47,12 @@ func _enter() -> void:
 	Global.is_attacking = true
 	Global.isHit = false
 	Global.can_cancel = false
+	isGrabbed = false
+	grabbed_enemy = null
+
+
+	var forward_dir = -agent.global_transform.basis.z.normalized()
+	var back_dir = agent.global_transform.basis.z.normalized()
 
 	if Global.skip_startup:
 		print("skip startup")
@@ -51,20 +69,17 @@ func _enter() -> void:
 		attack_timer = 0.0
 
 	if animation_player:
-		animation_player.speed_scale = attackData.animationSpeedScale
-		animation_player.play(attackData.attackAnimation)
+		animation_player.speed_scale = 0.0
+		animation_player.play("player|upperCut")
 
 
 func _update(delta: float) -> void:
 	combo_timer -= delta
 
-
 	if Input.is_action_just_pressed("attack_medium_1"):
 		buffered_medium = true
 		buffered_input = true
 		
-
-
 	if in_startup:
 		startup_timer -= delta
 		if startup_timer <= 0:
@@ -75,6 +90,33 @@ func _update(delta: float) -> void:
 		return
 
 
+
+
+	if isGrabbed:
+		if not grabbed_enemy:
+			isGrabbed = false
+			return
+		
+		grab_timer += delta
+
+
+		if isGrabbed and grabbed_enemy:
+			if Input.is_action_just_pressed("move_crouch"):
+				slam_down()
+			elif Input.is_action_just_pressed("attack_light_1") \
+			or Input.is_action_just_pressed("attack_medium_1"):
+				throw_forward()
+			elif Input.is_action_just_pressed("move_back"):
+				throw_back()
+
+		if grab_timer > attackData.max_grab_time:
+			release_enemy()
+			throw_forward()
+			_exit_attack_state()
+			agent.state_machine.dispatch("to_idle")
+
+		return
+		
 	_process_cancel_window()
 	
 	attack_timer -= delta
@@ -89,7 +131,114 @@ func _update(delta: float) -> void:
 		
 	_apply_physics(delta)
 	agent.move_and_slide()
+	
 
+
+func throwSoundPlay():
+	if hit2Sound:
+		hit2Sound.pitch_scale = randf_range(.8, 1.1)
+		hit2Sound.play()
+	
+func grabSoundPlay():
+	if hit1Sound:
+		hit1Sound.pitch_scale = randf_range(.8, 1.1)
+		hit1Sound.play()
+	
+func throw_back():
+	var enemy = grabbed_enemy
+	var playerMesh = agent
+	var back_dir = (playerMesh.global_position - enemy.global_position).normalized()
+	back_dir.y = 0
+
+	rotate_to_target(enemy, true)
+	
+
+
+
+
+	# Animation
+	animation_player.speed_scale = 1.0
+	animation_player.play("player|multi")
+
+
+	attackEnemy(grabbed_enemy)
+	release_enemy()
+	
+	throwSoundPlay()
+	gameJuice.knockback(enemy, agent, attackData.knockback_force, attackData.knockback_backDirection)
+	
+	
+func rotate_to_target(areaParent, invert := false):
+	var playerMesh = agent.get_node("RootNode")
+	
+	if playerMesh:
+		var dir
+		
+		if invert:
+			dir = playerMesh.global_position - areaParent.global_position
+		else:
+			dir = areaParent.global_position - playerMesh.global_position
+		
+		dir.y = 0
+		
+		if dir.length() < 0.001:
+			return
+		
+		dir = dir.normalized()
+		
+		var target_yaw = atan2(-dir.x, -dir.z)
+		
+		playerMesh.rotation.y = lerp_angle(
+			playerMesh.rotation.y,
+			target_yaw,
+			1
+		)
+
+func throw_forward():
+	var enemy = grabbed_enemy
+	var forward_dir = agent.global_transform.basis.z.normalized()
+	
+	animation_player.speed_scale = 1.0
+	animation_player.play("player|Launcher")
+
+
+
+	attackEnemy(grabbed_enemy)
+	release_enemy()
+	
+	throwSoundPlay()
+	gameJuice.knockback(enemy, agent, attackData.knockback_force, attackData.knockback_direction)
+
+func slam_down():
+	var enemy = grabbed_enemy
+	release_enemy()
+	
+	
+	await get_tree().create_timer(0.2).timeout
+	
+	attackEnemy(grabbed_enemy)
+	release_enemy()
+	
+	throwSoundPlay()
+	gameJuice.knockback(enemy, agent, attackData.knockback_force, attackData.knockback_UpDirection)
+	
+	
+func release_enemy():
+	if not grabbed_enemy:
+		return
+
+	var global_xform = grabbed_enemy.global_transform
+
+	var root = get_tree().current_scene
+	grabbed_enemy.get_parent().remove_child(grabbed_enemy)
+	root.add_child(grabbed_enemy)
+
+	grabbed_enemy.global_transform = global_xform
+
+	grabbed_enemy = null
+	isGrabbed = false
+	
+	
 func _comboKnockBack():
 	if Global.combo_hits.size() >= 2:
 		attackData.knockback_force = attackData.comboknockbackForce
@@ -149,30 +298,6 @@ func _disable_hitbox():
 		if attack_box.is_connected("area_entered", Callable(self, "_on_attack_box_area_entered")):
 			attack_box.disconnect("area_entered", Callable(self, "_on_attack_box_area_entered"))
 
-func rotate_to_target(areaParent):
-	var playerMesh = agent.get_node("RootNode")
-	
-	if playerMesh:
-		var dir = areaParent.global_position - playerMesh.global_position
-		
-		dir.y = 0
-		
-		if dir.length() < 0.001:
-			return
-		
-		dir = dir.normalized()
-		
-		# Compute yaw (Y rotation)
-		var target_yaw = atan2(-dir.x, -dir.z)
-		
-		# Smoothly rotate only Y
-		playerMesh.rotation.y = lerp_angle(
-			playerMesh.rotation.y,
-			target_yaw,
-			1
-		)
-	else:
-		print("no visual node")
 
 func rotateEnemy_to_player(agent, areaParent):
 	var enemyMesh = areaParent
@@ -218,36 +343,22 @@ func hitFinisher(area):
 		attackData.enemyTargetHitStop = attackData.DefaultenemyTargetHitStop
 		pass
 
-func _on_attack_box_area_entered(area):
-	
-#	
-	var areaParent = area.get_parent()
-	if Global.isHit:
-		return
-
-
-	if areaParent.has_method("takeDamageEnemy") \
-	and areaParent.enemyStats.current_health > 0 \
-	and not areaParent.enemyStats.isDead \
-	and not areaParent.enemyStats.isGuarding:
-
-
-
+func attackEnemy(areaParent):
+	if grabbed_enemy != null:
 		areaParent.takeDamageEnemy(attackData.attackDamage)
 		hitFinisher(areaParent)
-			
+
 		areaParent.takeDamageEnemy(attackData.attackDamage)
 		rotateEnemy_to_player(agent, areaParent)
 		rotate_to_target(areaParent)
 		
 		Global.combo_hits.append({
-			"enemy": area,
+			"enemy": areaParent,
 			"damage": attackData.attackDamage,
-			"attack_type": "attackLight",
+			"attack_type": "grabAttack",
 			"timestamp": Time.get_ticks_msec()
 		})
 		
-		#PlayerUI.get_node("ComboCounter2").get_child(0).text = "x" + str(Global.combo_hits.size())
 		agent.updateComboCounterInstant(Global.combo_hits.size())
 		Global.combo_timer = Global.combo_reset_time
 		
@@ -258,17 +369,15 @@ func _on_attack_box_area_entered(area):
 
 		attack_box.monitoring = false
 
-		var enemy = area
+		var enemy = areaParent
 		while enemy and not (enemy is CharacterBody3D):
 			enemy = enemy.get_parent()
 
-		if area in enemies_hit:
+		if areaParent in enemies_hit:
 			return
 
-		enemies_hit[area] = true
+		enemies_hit[areaParent] = true
 
-		hit1Sound.pitch_scale = randf_range(.8, 1.1)
-		hit1Sound.play()
 
 		if enemy.has_node("EnemyMesh"):
 			var mesh = enemy.get_node("EnemyMesh")
@@ -281,41 +390,67 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
-		animation_player.process_mode = PROCESS_MODE_DISABLED
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
-		animation_player.process_mode = PROCESS_MODE_INHERIT
 
 		areaParent.enemyStats.enemyWasHit = false
-		var hit1Effect = enemy.find_child("hit1", true, false)
-		if hit1Effect is GPUParticles3D:
-			hit1Effect.restart()
-			hit1Effect.emitting = true
-			hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
-
-		var hit2Effect = enemy.find_child("hit2", true, false)
-		if hit2Effect is GPUParticles3D:
-			hit2Effect.restart()
-			hit2Effect.emitting = true
-			hit2Effect.process_mode = Node.PROCESS_MODE_ALWAYS
+		
+		
+		#var hit1Effect = enemy.find_child("hit1", true, false)
+		#if hit1Effect is GPUParticles3D:
+			#hit1Effect.restart()
+			#hit1Effect.emitting = true
+			#hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
+#
+		#var hit2Effect = enemy.find_child("hit2", true, false)
+		#if hit2Effect is GPUParticles3D:
+			#hit2Effect.restart()
+			#hit2Effect.emitting = true
+			#hit2Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 			
 		agent.velocity = saved_velocity
 
-		var combo_count = Global.combo_hits.size()
-		if enemy is CharacterBody3D:
-			if combo_count == 1:
-				gameJuice.knockback(
-					enemy,
-					agent,
-					attackData.knockback_force,
-					attackData.knockback_direction
-				)
-			elif combo_count >= 2:
-				gameJuice.knockback(
-					enemy,
-					agent,
-					attackData.comboknockbackForce,
-					attackData.knockback_direction
-				)
+
+
+func grabEnemy(area):
+	_disable_hitbox()
+	grab_timer = 0.0
+
+	grabSoundPlay()
+
+		
+	var enemy = area.get_parent()
+	grabbed_enemy = enemy
+
+	var grab_point = $"../../RootNode/grabPoint"
+
+	var global_xform = enemy.global_transform
+
+
+	enemy.get_parent().remove_child(enemy)
+	grab_point.add_child(enemy)
+
+	enemy.global_transform = global_xform
+
+	enemy.transform.origin = Vector3(0, 0, -1.5)
+
+	isGrabbed = true
+	
+	
+func _on_attack_box_area_entered(area):
+	
+#	
+	var areaParent = area.get_parent()
+	if Global.isHit:
+		return
+
+
+	if areaParent.has_method("takeDamageEnemy") \
+	and areaParent.enemyStats.current_health > 0 \
+	and not areaParent.enemyStats.isDead \
+	and not areaParent.enemyStats.isGuarding:
+		grabEnemy(area)
+	else:
+		return
 
 
 
@@ -337,4 +472,6 @@ func _exit_attack_state() -> void:
 	buffered_input = false
 	buffered_medium = false
 	combo_timer = 0.0
+	
+	
 	_disable_hitbox()

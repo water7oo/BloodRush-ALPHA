@@ -1,5 +1,5 @@
 extends Resource
-
+class_name UpperAttackData
 
 @export var startup_duration: float = 0.1
 @export var active_duration: float = 0.4
