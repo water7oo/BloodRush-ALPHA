@@ -34,6 +34,8 @@ var combo_window = 0.8
 
 @onready var AttackAnimation = attackData.attackAnimation
 
+
+
 func _enter() -> void:
 	enemies_hit.clear()
 	buffered_input = false
@@ -53,7 +55,7 @@ func _enter() -> void:
 		_start_attack()
 		attack_timer = attackData.active_duration + attackData.recovery_duration
 	else:
-		startup_timer = attackData.startup_duration
+		startup_timer = 0.6
 		in_startup = true
 		attack_timer = 0.0
 
@@ -102,7 +104,8 @@ func _update(delta: float) -> void:
 
 		
 		
-
+			
+			
 func _process_cancel_window():
 	if buffered_input and Global.can_cancel:
 		_chain_attack()

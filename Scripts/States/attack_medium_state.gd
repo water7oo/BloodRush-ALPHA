@@ -34,9 +34,13 @@ var medium_pressed_time := -1.0
 
 @onready var AttackAnimation = attackData.attackAnimation
 
+
+const slash1Effect = preload("res://FX/slash_1_fbx.tscn")
+var effectSpawned = false
+
 func _enter() -> void:
 	medium_pressed_time = -1.0
-	
+	effectSpawned = false
 	enemies_hit.clear()
 	buffered_input = false
 	buffered_medium = false
@@ -44,6 +48,7 @@ func _enter() -> void:
 	Global.is_attacking = true
 	Global.isHit = false
 	Global.can_cancel = false
+	startup_timer = 0.0
 
 	if Global.skip_startup:
 		print("skip startup")
@@ -51,11 +56,10 @@ func _enter() -> void:
 		in_startup = false
 		Global.skip_startup = false 
 
-		_enable_hitbox()
 		_start_attack()
 		attack_timer = attackData.active_duration + attackData.recovery_duration
 	else:
-		startup_timer = attackData.startup_duration
+		startup_timer = 0.4
 		in_startup = true
 		attack_timer = 0.0
 
@@ -88,10 +92,9 @@ func _update(delta: float) -> void:
 	
 	if in_startup:
 		startup_timer -= delta
-		if startup_timer <= 0:
+		if startup_timer <= 0.0:
 			in_startup = false
 			attack_timer = attackData.active_duration + attackData.recovery_duration
-			_enable_hitbox()
 			_start_attack()
 		return
 		
@@ -110,7 +113,25 @@ func _update(delta: float) -> void:
 	_apply_physics(delta)
 	agent.move_and_slide()
 
+func SlashEffect():
+	if agent.type == agent.combatType.SWORD:
+		if effectSpawned == false && startup_timer <= 0.0:
+			
+			
+			var instanceSlash = slash1Effect.instantiate()
+			effectSpawned = true
+			get_tree().root.add_child(instanceSlash)
+			
+			var player_forward = agent.global_transform.basis.z
+			var xform = instanceSlash.global_transform
+			
+			var spawn_offset = player_forward 
+			xform.origin = agent.global_transform.origin + spawn_offset
 
+			
+			instanceSlash.global_transform = xform
+			
+			
 func _comboKnockBack():
 	if Global.combo_hits.size() >= 2:
 		attackData.knockback_force = attackData.comboknockbackForce
@@ -150,6 +171,8 @@ func _start_attack() -> void:
 	combo_timer = attackData.combo_window_duration
 	Global.can_chain_attack = false
 	Global.can_cancel = false
+	_enable_hitbox()
+	SlashEffect()
 
 
 func _enable_hitbox():
@@ -251,7 +274,7 @@ func _on_attack_box_area_entered(area):
 	and not areaParent.enemyStats.isGuarding:
 
 
-
+		effectSpawned = false
 		areaParent.takeDamageEnemy(attackData.attackDamage)
 		hitFinisher(areaParent)
 			
@@ -300,9 +323,7 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
-		animation_player.process_mode = PROCESS_MODE_DISABLED
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
-		animation_player.process_mode = PROCESS_MODE_INHERIT
 
 		areaParent.enemyStats.enemyWasHit = false
 		var hit1Effect = enemy.find_child("hit1", true, false)

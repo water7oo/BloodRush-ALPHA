@@ -33,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://djpj07be2ylsn" path="res://Enviroment/Trunk.tscn" id="25_c8r2n"]
 [ext_resource type="PackedScene" uid="uid://babe5tbhi8dwe" path="res://Enviroment/Fence.tscn" id="26_u0pkm"]
 [ext_resource type="PackedScene" uid="uid://cp6vtcnob76f0" path="res://ui/hit_effect_text.tscn" id="27_2nta8"]
+[ext_resource type="PackedScene" uid="uid://d21g1fsgaqdke" path="res://FX/slash_1_fbx.tscn" id="30_sw35u"]
 
 [sub_resource type="Environment" id="Environment_trpa7"]
 background_mode = 2
@@ -48,7 +49,7 @@ volumetric_fog_density = 0.0167
 volumetric_fog_albedo = Color(0.456267, 1, 0.98943, 1)
 volumetric_fog_emission_energy = 122.2
 
-[sub_resource type="Resource" id="Resource_x6rhu"]
+[sub_resource type="Resource" id="Resource_sw35u"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 25.0
@@ -770,7 +771,7 @@ shader_parameter/depth_falloff = 0.001
 
 [sub_resource type="QuadMesh" id="QuadMesh_8ulvh"]
 
-[sub_resource type="Resource" id="Resource_sw35u"]
+[sub_resource type="Resource" id="Resource_wbl5e"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 100.0
@@ -778,27 +779,19 @@ max_health = 999.0
 Name = "Attacking"
 GuardDamage = 0
 
-[sub_resource type="Resource" id="Resource_wbl5e"]
+[sub_resource type="Resource" id="Resource_sf2ab"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 100.0
 max_health = 10.0
 Name = "One Hit"
 
-[sub_resource type="Resource" id="Resource_sf2ab"]
-resource_local_to_scene = true
-script = ExtResource("9_cg3hj")
-current_health = 5000.0
-max_health = 999.0
-isGuarding = true
-Name = "GUARDING"
-GuardDamage = 4
-
 [sub_resource type="Resource" id="Resource_q6yvq"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 5000.0
 max_health = 999.0
+isGuarding = true
 Name = "GUARDING"
 GuardDamage = 4
 
@@ -827,6 +820,14 @@ Name = "GUARDING"
 GuardDamage = 4
 
 [sub_resource type="Resource" id="Resource_do1i3"]
+resource_local_to_scene = true
+script = ExtResource("9_cg3hj")
+current_health = 5000.0
+max_health = 999.0
+Name = "GUARDING"
+GuardDamage = 4
+
+[sub_resource type="Resource" id="Resource_hygva"]
 resource_local_to_scene = true
 script = ExtResource("9_cg3hj")
 current_health = 100.0
@@ -946,7 +947,7 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51, 7.6728115, 2.007)
 target = NodePath("../../../Cowboy")
 speed = 4.0
-enemyStats = SubResource("Resource_x6rhu")
+enemyStats = SubResource("Resource_sw35u")
 
 [node name="CamTarget2" type="Marker3D" parent="SubViewportContainer/SubViewport" unique_id=2034139925]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 7.53036, 9.918121, 8.49949)
@@ -1363,7 +1364,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.176811, 0)
 
 [node name="Cowboy" parent="." unique_id=401760427 instance=ExtResource("10_wbl5e")]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -16.997192, 4.6938396, -3.076)
-type = 1
 
 [node name="HitEffectText" parent="." unique_id=166482147 instance=ExtResource("27_2nta8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58, 6.176811, -21)
@@ -1393,35 +1393,35 @@ transform = Transform3D(0.8660254, 0, 0.5, 0, 1, 0, -0.5, 0, 0.8660254, -95.2197
 
 [node name="Enemy" parent="." unique_id=1935452947 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(1.9470718e-07, 0, -1, 0, 1, 0, 1, 0, 1.9470718e-07, -73.13269, 4.236618, 2.132698)
-enemyStats = SubResource("Resource_sw35u")
+enemyStats = SubResource("Resource_wbl5e")
 
 [node name="Enemy7" parent="." unique_id=120782745 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(0.9659258, 0, -0.25881886, 0, 1, 0, 0.25881886, 0, 0.9659258, -70, 4.236618, 18)
-enemyStats = SubResource("Resource_wbl5e")
+enemyStats = SubResource("Resource_sf2ab")
 
 [node name="Enemy4" parent="." unique_id=225199188 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.00872653, 0, -0.9999619, 0, 1, 0, 0.9999619, 0, -0.00872653, -4, 4.236618, 12)
-enemyStats = SubResource("Resource_sf2ab")
+enemyStats = SubResource("Resource_q6yvq")
 
 [node name="Enemy5" parent="." unique_id=457208653 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.9999619, 0, 0.008726574, 0, 1, 0, -0.008726574, 0, -0.9999619, -4, 4.236618, -15)
-enemyStats = SubResource("Resource_q6yvq")
+enemyStats = SubResource("Resource_j5h8r")
 
 [node name="Enemy9" parent="." unique_id=499877844 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.9999619, 0, 0.008726574, 0, 1, 0, -0.008726574, 0, -0.9999619, -9, 4.236618, 2)
-enemyStats = SubResource("Resource_j5h8r")
+enemyStats = SubResource("Resource_opbd2")
 
 [node name="Enemy6" parent="." unique_id=1026663274 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.25037998, 0, 0.96814764, 0, 1, 0, -0.96814764, 0, -0.25037998, 9, 4.236618, -7)
-enemyStats = SubResource("Resource_opbd2")
+enemyStats = SubResource("Resource_cokqy")
 
 [node name="Enemy8" parent="." unique_id=46891505 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.96363044, 0, 0.26723835, 0, 1, 0, -0.26723835, 0, -0.96363044, 9, 4.236618, -18)
-enemyStats = SubResource("Resource_cokqy")
+enemyStats = SubResource("Resource_do1i3")
 
 [node name="Enemy3" parent="." unique_id=467869146 instance=ExtResource("16_cg3hj")]
 transform = Transform3D(-0.9902682, 0, 0.13917308, 0, 1, 0, -0.13917308, 0, -0.9902682, -70.13269, 4.236618, -11.13269)
-enemyStats = SubResource("Resource_do1i3")
+enemyStats = SubResource("Resource_hygva")
 
 [node name="Box4" parent="." unique_id=1616381138 instance=ExtResource("10_ai8yb")]
 transform = Transform3D(0.9935402, 0, -0.113480665, 0, 1, 0, 0.113480665, 0, 0.9935402, -23.308504, 4.603476, -18)
@@ -1430,6 +1430,15 @@ enemyStats = SubResource("Resource_hmdq7")
 [node name="Box5" parent="." unique_id=1152080316 instance=ExtResource("10_ai8yb")]
 transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, -20.65179, 4.603476, -21)
 enemyStats = SubResource("Resource_iu1ym")
+
+[node name="Slash1fbx" parent="." unique_id=249289579 instance=ExtResource("30_sw35u")]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, -62, -1, -34)
+
+[node name="Slash1fbx2" parent="." unique_id=618532460 instance=ExtResource("30_sw35u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -24)
+
+[node name="Slash1fbx3" parent="." unique_id=1094644671 instance=ExtResource("30_sw35u")]
+transform = Transform3D(0.25881907, 0.68301266, 0.68301266, 0, 0.70710677, -0.70710677, -0.9659258, 0.18301272, 0.18301272, -62, -1, -34)
 
 [node name="Opener" parent="." unique_id=1106475258 instance=ExtResource("3_8ulvh")]
 anchors_preset = 0

@@ -39,6 +39,8 @@ var grabbed_enemy: CharacterBody3D = null
 @onready var PlayerUI = $PlayerUI
 
 @onready var AttackAnimation = attackData.attackAnimation
+const DustLandEffect = preload("res://FX/dustEffect1.tscn")
+
 
 func _enter() -> void:
 	enemies_hit.clear()
@@ -112,6 +114,8 @@ func _update(delta: float) -> void:
 		if grab_timer > attackData.max_grab_time:
 			release_enemy()
 			throw_forward()
+			
+			
 			_exit_attack_state()
 			agent.state_machine.dispatch("to_idle")
 
@@ -149,7 +153,7 @@ func throw_back():
 	var playerMesh = agent
 	var back_dir = (playerMesh.global_position - enemy.global_position).normalized()
 	back_dir.y = 0
-
+	
 	rotate_to_target(enemy, true)
 	
 
@@ -165,6 +169,7 @@ func throw_back():
 	release_enemy()
 	
 	throwSoundPlay()
+	throwEffect()
 	gameJuice.knockback(enemy, agent, attackData.knockback_force, attackData.knockback_backDirection)
 	
 	
@@ -409,7 +414,36 @@ func attackEnemy(areaParent):
 			
 		agent.velocity = saved_velocity
 
+func throwEffect():
+	var is_on_floor = agent.is_on_floor()
+	var normal = agent.get_floor_normal()
+	
+	if is_on_floor:
+		var landEffectInstance = DustLandEffect.instantiate()
+		get_tree().root.add_child(landEffectInstance)
+		var xform = landEffectInstance.global_transform
+		
+		xform.origin = agent.global_transform.origin + Vector3(0, 1.0, 0)
 
+		xform = align_with_y(xform, agent.get_floor_normal())
+
+		landEffectInstance.global_transform = xform
+
+		
+
+
+
+func align_with_y(xform, new_y):
+	new_y = new_y.normalized()
+
+	var forward = -xform.basis.z.normalized()
+	var right = forward.cross(new_y).normalized()
+	forward = new_y.cross(right).normalized()
+
+	xform.basis = Basis(right, new_y, forward)
+	return xform
+	
+	
 
 func grabEnemy(area):
 	_disable_hitbox()

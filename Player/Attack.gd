@@ -49,7 +49,7 @@ func _enter() -> void:
 		_start_attack()
 		attack_timer = attackData.active_duration + attackData.recovery_duration
 	else:
-		startup_timer = attackData.startup_duration
+		startup_timer = 0.09
 		in_startup = true
 		attack_timer = 0.0
 

@@ -28,6 +28,7 @@ var in_startup := true
 
 @onready var AttackAnimation = attackData.attackAnimation
 
+
 func _enter() -> void:
 	enemies_hit.clear()
 	buffered_input = false

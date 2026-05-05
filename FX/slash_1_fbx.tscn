@@ -1,0 +1,158 @@
+[gd_scene format=3 uid="uid://d21g1fsgaqdke"]
+
+[ext_resource type="PackedScene" uid="uid://dwnf121xbvewf" path="res://FX/Slash1fbx.fbx" id="1_8f584"]
+[ext_resource type="Script" uid="uid://cwk3410qpa43h" path="res://FX/slash_1_fbx.gd" id="2_ny5bx"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8f584"]
+load_path = "res://.godot/imported/Dust_Wave2-e8432e9fa40c58d5df7e1588c66db668_Slashing_Texture3.png-44df6eaf99fce25fd4124c1177fa4b6c.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ny5bx"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_texture = SubResource("CompressedTexture2D_8f584")
+uv1_scale = Vector3(1, 0.86, 1)
+texture_filter = 0
+
+[sub_resource type="Animation" id="Animation_ny5bx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torus:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.5707964, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Torus:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(103.56604, 103.566055, 8.987629)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Torus:material_override:uv1_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 0.86, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Torus:material_override:uv1_offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Torus:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 3, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8f584"]
+resource_name = "Slash"
+length = 0.23333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torus:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.23333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1.5707964, 2.0943952, 0), Vector3(-1.5707964, -3.111922, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Torus:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.23333332),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(103.566, 103.566, 32.933), Vector3(103.566, 103.566, 3.168)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Torus:material_override:uv1_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.23333332),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.095, 1.095, 1.095), Vector3(1, 0.12, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Torus:material_override:uv1_offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.23333332),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.29, 0), Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Torus:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ny5bx"]
+_data = {
+&"RESET": SubResource("Animation_ny5bx"),
+&"Slash": SubResource("Animation_8f584")
+}
+
+[node name="Slash1fbx" unique_id=249289579 instance=ExtResource("1_8f584")]
+script = ExtResource("2_ny5bx")
+
+[node name="Torus" parent="." index="0" unique_id=1353743809]
+transform = Transform3D(103.56604, 0, 0, 0, -4.5270162e-06, -8.987629, 0, 103.566055, -3.9286175e-07, 0, 3, 0)
+material_override = SubResource("StandardMaterial3D_ny5bx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1379188559]
+libraries/ = SubResource("AnimationLibrary_ny5bx")

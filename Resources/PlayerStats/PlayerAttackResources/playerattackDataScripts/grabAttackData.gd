@@ -37,7 +37,7 @@ var comboknockbackForce: float = knockback_force * comboknockbackForceRate
 @export var comboknockbackForceRate: float = .2
 
 @export var knockback_force_finisher: float = 10.0
-@export var knockback_force_default: float = 3.0
+@export var knockback_force_default: float = 4.0
 
 @export var knockback_direction_finisher: Vector3 = Vector3(0, 1, 1)
 
