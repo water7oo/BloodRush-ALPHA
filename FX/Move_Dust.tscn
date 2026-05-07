@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://rlcylvhdacih"]
+[gd_scene format=3 uid="uid://rlcylvhdacih"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aoycw"]
 shading_mode = 0
@@ -28,9 +28,9 @@ scale_curve = SubResource("CurveTexture_6t3s6")
 
 [sub_resource type="QuadMesh" id="QuadMesh_kegxp"]
 
-[node name="DUST4" type="Node3D" groups=["move_dust"]]
+[node name="DUST4" type="Node3D" unique_id=22771968 groups=["move_dust"]]
 
-[node name="move_dust" type="GPUParticles3D" parent="."]
+[node name="move_dust" type="GPUParticles3D" parent="." unique_id=782803789]
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0.0624622, 0)
 material_override = SubResource("StandardMaterial3D_aoycw")
 amount = 4

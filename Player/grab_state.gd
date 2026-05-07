@@ -39,7 +39,7 @@ var grabbed_enemy: CharacterBody3D = null
 @onready var PlayerUI = $PlayerUI
 
 @onready var AttackAnimation = attackData.attackAnimation
-const DustLandEffect = preload("res://FX/dustEffect1.tscn")
+const spinEffectMesh = preload("res://FX/vfxWave/GroundWaveEffect1.tscn")
 
 
 func _enter() -> void:
@@ -151,8 +151,8 @@ func grabSoundPlay():
 func throw_back():
 	var enemy = grabbed_enemy
 	var playerMesh = agent
-	var back_dir = (playerMesh.global_position - enemy.global_position).normalized()
-	back_dir.y = 0
+	var back_dir = (playerMesh.global_position + enemy.global_position).normalized()
+	#back_dir.y = 0
 	
 	rotate_to_target(enemy, true)
 	
@@ -169,7 +169,7 @@ func throw_back():
 	release_enemy()
 	
 	throwSoundPlay()
-	throwEffect()
+	VFX.spinEffectGround(agent, spinEffectMesh, $"../../RootNode")
 	gameJuice.knockback(enemy, agent, attackData.knockback_force, attackData.knockback_backDirection)
 	
 	
@@ -216,16 +216,23 @@ func throw_forward():
 
 func slam_down():
 	var enemy = grabbed_enemy
-	release_enemy()
+	var forward_dir = agent.global_transform.basis.z.normalized()
 	
-	
-	await get_tree().create_timer(0.2).timeout
-	
+	grabSoundPlay()
+	animation_player.speed_scale = -1.0
+	animation_player.play("player|Launcher")
 	attackEnemy(grabbed_enemy)
 	release_enemy()
+	await get_tree().create_timer(0.2).timeout
+
+	animation_player.speed_scale = -1.0
+	animation_player.play("player|Launcher")
+
+	attackEnemy(grabbed_enemy)
+
 	
 	throwSoundPlay()
-	gameJuice.knockback(enemy, agent, attackData.knockback_force, attackData.knockback_UpDirection)
+	gameJuice.knockback(enemy, agent, attackData.knockback_force, attackData.knockback_direction)
 	
 	
 func release_enemy():
@@ -414,34 +421,9 @@ func attackEnemy(areaParent):
 			
 		agent.velocity = saved_velocity
 
-func throwEffect():
-	var is_on_floor = agent.is_on_floor()
-	var normal = agent.get_floor_normal()
-	
-	if is_on_floor:
-		var landEffectInstance = DustLandEffect.instantiate()
-		get_tree().root.add_child(landEffectInstance)
-		var xform = landEffectInstance.global_transform
-		
-		xform.origin = agent.global_transform.origin + Vector3(0, 1.0, 0)
-
-		xform = align_with_y(xform, agent.get_floor_normal())
-
-		landEffectInstance.global_transform = xform
 
 		
 
-
-
-func align_with_y(xform, new_y):
-	new_y = new_y.normalized()
-
-	var forward = -xform.basis.z.normalized()
-	var right = forward.cross(new_y).normalized()
-	forward = new_y.cross(right).normalized()
-
-	xform.basis = Basis(right, new_y, forward)
-	return xform
 	
 	
 

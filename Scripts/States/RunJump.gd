@@ -16,7 +16,7 @@ var velocity = Vector3.ZERO
 
 @export var runJumpResource: Resource
 
-const DustLandEffect = preload("res://FX/dustEffect1.tscn")
+const DustLandEffect = preload("res://FX/vfxWave/GroundWaveEffect1.tscn")
 
 func _enter() -> void:
 	jumpSound()

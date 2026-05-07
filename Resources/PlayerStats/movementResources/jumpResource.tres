@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_uh4tp")
+DEFAULT_JUMP_VELOCITY = 15.0
 air_momentum_acceleration = null
 air_momentum_deceleration = null
 AIR_DRAG = 0.0

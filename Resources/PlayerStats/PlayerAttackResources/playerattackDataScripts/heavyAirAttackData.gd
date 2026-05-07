@@ -1,5 +1,9 @@
 extends Resource
 
+@export var camShakeLength: float = 1.0
+@export var camShakeMagnitude: float = 1.0
+
+
 @export var startup_duration: float = 0.1
 @export var active_duration: float = 0.4
 @export var recovery_duration: float = 0.3

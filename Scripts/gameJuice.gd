@@ -75,3 +75,26 @@ func objectShake(target, period, magnitude):
 	if target:
 		
 		target.transform = initial_transform
+		
+		
+func camShake(target, period, magnitude):
+	print("cam shake")
+	var initial_transform = target.global_transform
+	var elapsed_time = 0.0
+
+	while elapsed_time < period:
+		var offset = Vector3(
+			randf_range(-magnitude, magnitude),
+			randf_range(-magnitude, magnitude),
+			0.0
+		)
+		
+		if target:
+			offset *= 0.5 
+			target.global_transform.origin = initial_transform.origin + offset
+			elapsed_time += get_process_delta_time()
+			await get_tree().process_frame  # Use await here as well
+
+	if target:
+		
+		target.transform = initial_transform

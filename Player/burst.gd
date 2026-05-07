@@ -9,11 +9,11 @@ extends LimboState
 var velocity = Vector3.ZERO
 
 
-const DustWaveEffect = preload("res://FX/dustEffect2.tscn")
+const DustWaveEffect = preload("res://FX/vfxWave/VerticalWaveEffect1.tscn")
 var effectSpawned = false
 
 func _enter() -> void:
-	BurstEffectWave()
+	VFX.BurstEffectWave(agent, effectSpawned, DustWaveEffect,$"../../RootNode", 0.0)
 	Global.stretch_forward($"../../RootNode/player2")
 	if agent:
 		velocity = agent.velocity

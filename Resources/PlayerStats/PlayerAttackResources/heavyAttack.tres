@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_70lbc")
+camShakeLength = 0.2
+camShakeMagnitude = 0.2
 startup_duration = 0.27
 recovery_duration = 0.5
 attackDamage = 20.0

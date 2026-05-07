@@ -16,6 +16,7 @@ extends LimboState
 var velocity = Vector3.ZERO
 
 func _enter() -> void:
+	Global.stretch_forward($"../../RootNode/player2")
 	if agent:
 		velocity = agent.velocity
 		

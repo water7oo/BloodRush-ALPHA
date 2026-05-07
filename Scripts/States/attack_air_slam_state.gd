@@ -1,6 +1,6 @@
 extends LimboState
 
-
+@onready var camera = get_tree().get_first_node_in_group("camera")
 @onready var player = $"../../RootNode/player2"
 @onready var animation_player = player.get_node("AnimationPlayer")
 @export var attack_box: Node
@@ -26,9 +26,14 @@ var preserved_velocity: Vector3 = Vector3.ZERO
 var startup_timer := 0.0
 var in_startup := true
 
+var effectSpawned = false
+
 @onready var AttackAnimation = attackData.attackAnimation
+const DustWaveEffect = preload("res://FX/vfxWave/VerticalWaveEffect1.tscn")
+
 
 func _enter() -> void:
+
 	enemies_hit.clear()
 	buffered_input = false
 	
@@ -39,13 +44,14 @@ func _enter() -> void:
 	in_startup = true
 	attack_timer = 0.0
 	
+	effectSpawned = false
 	if animation_player:
-		animation_player.speed_scale = attackData.animationSpeedScale
-		animation_player.play(attackData.attackAnimation)
+		animation_player.speed_scale = 1
+		animation_player.play("player|swordAirHeavyAttack1_001")
+
 
 
 func _update(delta: float) -> void:
-	# buffer input
 	if Input.is_action_just_pressed("attack_medium_1") && !agent.is_on_floor():
 		buffered_input = true
 	
@@ -68,12 +74,17 @@ func _update(delta: float) -> void:
 			_start_attack()
 		return
 		
-	_process_cancel_window()	
+	_process_cancel_window()
 	_comboKnockBack()
 	_apply_physics(delta)
 	_landCancel()
 	agent.move_and_slide()
 
+
+
+	
+	
+	
 func _landCancel():
 	if Global.is_attacking == true:
 		if agent.is_on_floor():
@@ -114,6 +125,7 @@ func _start_attack() -> void:
 
 func _enable_hitbox():
 	Global.stretch_forward($"../../RootNode/player2")
+	VFX.spinEffectAir(agent, DustWaveEffect, $"../../RootNode")
 	if attack_box:
 		attack_box_debug.visible = true
 		attack_box_col.visible = true
@@ -267,6 +279,7 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
+		gameJuice.camShake(camera, .2, .2)
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
 
 		areaParent.enemyStats.enemyWasHit = false

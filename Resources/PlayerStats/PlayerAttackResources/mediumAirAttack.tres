@@ -4,7 +4,8 @@
 
 [resource]
 script = ExtResource("1_647gg")
-attackAnimation = "player|attack2"
+camShakeLength = 0.15
+camShakeMagnitude = 0.15
 startup_duration = 0.06
 recovery_duration = 0.2
 attackDamage = 15.0
@@ -18,3 +19,4 @@ ATTACK_DECELERATION = 30.0
 next_attack_state = &"to_airHeavyAttack"
 comboknockbackForceRate = 0.7
 knockback_force_finisher = 5.0
+attackAnimation = "player|attack2"

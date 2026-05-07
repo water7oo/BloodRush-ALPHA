@@ -1,5 +1,8 @@
 extends LimboState
 
+
+@onready var camera = get_tree().get_first_node_in_group("camera")
+
 @export var hiteffect1 = preload("res://FX/swordslash_1.tscn")
 @onready var player = $"../../RootNode/player2"
 @onready var animation_player = player.get_node("AnimationPlayer")
@@ -282,22 +285,14 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
-		animation_player.process_mode = PROCESS_MODE_DISABLED
+		gameJuice.camShake(camera, attackData.camShakeLength, attackData.camShakeMagnitude)
+			
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
-		animation_player.process_mode = PROCESS_MODE_INHERIT
 
 		areaParent.enemyStats.enemyWasHit = false
-		var hit1Effect = enemy.find_child("hit1", true, false)
-		if hit1Effect is GPUParticles3D:
-			hit1Effect.restart()
-			hit1Effect.emitting = true
-			hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 
-		var hit2Effect = enemy.find_child("hit2", true, false)
-		if hit2Effect is GPUParticles3D:
-			hit2Effect.restart()
-			hit2Effect.emitting = true
-			hit2Effect.process_mode = Node.PROCESS_MODE_ALWAYS
+		VFX.particleHitEffect()
+			
 			
 		agent.velocity = saved_velocity
 
@@ -354,6 +349,7 @@ func _on_attack_box_area_entered(area):
 			
 			gameJuice.objectShake(enemy, attackData.enemyTargetGuardLength, attackData.enemyTargetGuardMagnitude)
 
+			
 			gameJuice.hitstop(attackData.enemyTargetGuardedHitstop, [agent, enemy])
 			areaParent.enemyStats.enemyWasHit = false
 			
@@ -369,6 +365,7 @@ func _on_attack_box_area_entered(area):
 				hit2Effect.restart()
 				hit2Effect.emitting = true
 				hit2Effect.process_mode = Node.PROCESS_MODE_ALWAYS
+
 
 			agent.velocity = saved_velocity
 

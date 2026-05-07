@@ -132,12 +132,8 @@ func applyShake(period, magnitude):
 	self.transform = initial_transform
 
 func playShake():
-	if enemyStats:
-		if enemyStats.taking_damage == true:
-			applyShake(.02,0.08)
-			print("cam shake")
-	else:
-		print("enemy stats are null")
+	if Global.isHit == true:
+		applyShake(.02,0.08)
 
 
 func _on_area_3d_area_entered(area: Area3D) -> void:

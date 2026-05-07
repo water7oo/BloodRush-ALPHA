@@ -1,5 +1,6 @@
 extends LimboState
 
+@onready var camera = get_tree().get_first_node_in_group("camera")
 @export var hiteffect1 = preload("res://FX/swordslash_1.tscn")
 @onready var player = $"../../RootNode/player2"
 @onready var animation_player = player.get_node("AnimationPlayer")
@@ -116,7 +117,7 @@ func _update(delta: float) -> void:
 func SlashEffect():
 	if agent.type == agent.combatType.SWORD:
 		if effectSpawned == false && startup_timer <= 0.0:
-			
+			print("slash")
 			
 			var instanceSlash = slash1Effect.instantiate()
 			effectSpawned = true
@@ -323,6 +324,7 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
+		gameJuice.camShake(camera, attackData.camShakeLength, attackData.camShakeMagnitude)
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
 
 		areaParent.enemyStats.enemyWasHit = false

@@ -4,3 +4,5 @@
 
 [resource]
 script = ExtResource("1_q6qnm")
+max_hits = 3
+attackAnimation = "player|multi1"

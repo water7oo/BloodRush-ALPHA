@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_dps70")
+camShakeLength = 0.1
+camShakeMagnitude = 0.1
 startup_duration = 0.09
 active_duration = 0.2
 recovery_duration = 0.2

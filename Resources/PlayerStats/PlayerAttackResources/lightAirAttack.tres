@@ -4,7 +4,8 @@
 
 [resource]
 script = ExtResource("1_y5oga")
-attackAnimation = "player|attack1"
+camShakeLength = 0.1
+camShakeMagnitude = 0.1
 startup_duration = 0.05
 active_duration = 0.2
 recovery_duration = 0.15
@@ -16,3 +17,4 @@ ATTACK_DECELERATION = 30.0
 next_attack_state = &"to_airMediumAttack"
 comboknockbackForceRate = 0.7
 knockback_force_finisher = 5.0
+attackAnimation = "player|attack1"

@@ -44,7 +44,7 @@ shader_parameter/intensity = 1.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6g3nf"]
 render_priority = 0
 shader = ExtResource("18_fauao")
-shader_parameter/shadows_enabled = true
+shader_parameter/shadows_enabled = false
 shader_parameter/highlights_enabled = false
 shader_parameter/shadow_strength = 0.999999977648
 shader_parameter/highlight_strength = 0.0
@@ -651,6 +651,25 @@ anim_speed_max = 1.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_o88hp"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4topa"]
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+billboard_keep_scale = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rlw8d"]
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 8.0
+initial_velocity_max = 12.0
+radial_accel_min = 99.99999
+radial_accel_max = 99.99999
+
+[sub_resource type="QuadMesh" id="QuadMesh_bljps"]
+size = Vector2(0.1, 0.6)
+
 [node name="Enemy" type="CharacterBody3D" unique_id=457208653 node_paths=PackedStringArray("enemyHealthManagerNode", "deathSound") groups=["Enemies"]]
 script = ExtResource("1_a6utb")
 enemyHealthManagerNode = NodePath("enemyHurtBox")
@@ -1033,7 +1052,7 @@ transform = Transform3D(0.0625, 0, 0, 0, 0.0625, 0, 0, 0, 0.0625, 0, 1.6013505, 
 material_override = SubResource("StandardMaterial3D_fauao")
 emitting = false
 amount = 1
-lifetime = 0.15000000000000002
+lifetime = 0.25
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_4topa")
@@ -1044,12 +1063,25 @@ process_mode = 3
 transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 2.32659, 0)
 visible = false
 material_override = SubResource("StandardMaterial3D_a6utb")
-emitting = false
 amount = 1
 lifetime = 0.2
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_wyb1b")
 draw_pass_1 = SubResource("QuadMesh_o88hp")
+
+[node name="hit3" type="GPUParticles3D" parent="." unique_id=455596039 groups=["punch_dust"]]
+transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 1.9520211, 0)
+material_override = SubResource("StandardMaterial3D_4topa")
+emitting = false
+amount = 50
+lifetime = 0.15000000000000002
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+trail_lifetime = 2.76
+process_material = SubResource("ParticleProcessMaterial_rlw8d")
+draw_pass_1 = SubResource("QuadMesh_bljps")
 
 [connection signal="area_entered" from="enemyHurtBox" to="." method="_on_enemy_area_entered"]
 [connection signal="area_entered" from="enemyBox" to="enemyBox" method="_on_area_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ctudhwisdi64s"]
+[gd_scene format=3 uid="uid://ctudhwisdi64s"]
 
 [sub_resource type="Gradient" id="Gradient_c744y"]
 interpolation_mode = 2
@@ -49,10 +49,10 @@ scale_over_velocity_curve = SubResource("CurveTexture_e6qyx")
 
 [sub_resource type="QuadMesh" id="QuadMesh_5fy4s"]
 
-[node name="DUST3" type="Node3D" groups=["burst_dust"]]
+[node name="DUST3" type="Node3D" unique_id=1038119220 groups=["burst_dust"]]
 process_mode = 3
 
-[node name="burst_dust" type="GPUParticles3D" parent="."]
+[node name="burst_dust" type="GPUParticles3D" parent="." unique_id=2088869867]
 process_mode = 3
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_8f8w8")

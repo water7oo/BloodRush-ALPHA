@@ -1,6 +1,6 @@
 extends LimboState
 
-
+@onready var camera = get_tree().get_first_node_in_group("camera")
 @onready var player = $"../../RootNode/player2"
 @onready var animation_player = player.get_node("AnimationPlayer")
 @export var attack_box: Node
@@ -42,9 +42,9 @@ var canJumpCancel = false
 
 @onready var AttackAnimation = attackData.attackAnimation
 
-const DustLandEffect = preload("res://FX/dustEffect4.tscn")
+const DustLandEffect = preload("res://FX/vfxWave/GroundWaveEffect1.tscn")
 
-const DustMultiEffect = preload("res://FX/dustEffect2.tscn")
+const DustMultiEffect = preload("res://FX/vfxWave/VerticalWaveEffect1.tscn")
 
 
 var is_multi_hit := false
@@ -428,6 +428,7 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
+		gameJuice.camShake(camera, attackData.camShakeLength, attackData.camShakeMagnitude)
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
 
 		areaParent.enemyStats.enemyWasHit = false

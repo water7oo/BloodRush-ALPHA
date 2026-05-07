@@ -25,4 +25,4 @@ time_between_hits = 0.1
 knockback_force_finisher = 5.0
 knockback_force_default = 4.0
 knockback_direction_finisher = Vector3(0, 1, 0.3)
-attackAnimation = "player|swordAttackLauncher1"
+attackAnimation = "player|multi2"

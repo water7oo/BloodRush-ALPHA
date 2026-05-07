@@ -1,6 +1,6 @@
 extends LimboState
 
-
+@onready var camera = get_tree().get_first_node_in_group("camera")
 @onready var player = $"../../RootNode/player2"
 @onready var animation_player = player.get_node("AnimationPlayer")
 @export var attack_box: Node
@@ -279,6 +279,7 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = true
 
 		gameJuice.objectShake(enemy, attackData.enemyTargetLength, attackData.enemyTargetMagnitude)
+		gameJuice.camShake(camera, attackData.camShakeLength, attackData.camShakeMagnitude)
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
 
 		areaParent.enemyStats.enemyWasHit = false

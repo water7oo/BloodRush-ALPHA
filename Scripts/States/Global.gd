@@ -13,7 +13,7 @@ var blend_lerp_speed = 10.0
 @export var mouse_sensitivity: float = 0.005
 
 @export var armature_rot_speed: float = .1
-@export var armature_default_rot_speed: float = .001
+@export var armature_default_rot_speed: float = .003
 
 @export var CUSTOM_GRAVITY: float = 30.0
 var spring_arm_pivot: Node3D = null
@@ -54,15 +54,15 @@ var combo_timer: float = 0.0
 
 var isMultiHitUpper = false
 
-@export var BASE_SPEED: float = 15.0
-@export var MAX_SPEED: float = 30.0  # Reduce slightly for better control
+@export var BASE_SPEED: float = 17.0
+@export var MAX_SPEED: float = 32.0  # Reduce slightly for better control
 @export var ACCELERATION: float = 60.0  # Slightly higher for snappier movement
-@export var DECELERATION: float = 70.0  # Increase for quicker stopping
-@export var BASE_ACCELERATION: float = 70.0  # Matches normal deceleration
+@export var DECELERATION: float = 75.0  # Increase for quicker stopping
+@export var BASE_ACCELERATION: float = 75.0  # Matches normal deceleration
 @export var BASE_DECELERATION: float = 70.0
 
-@export var momentum_deceleration: float = DECELERATION
-@export var momentum_acceleration: float = ACCELERATION
+var momentum_deceleration: float = DECELERATION
+var momentum_acceleration: float = ACCELERATION
 
 var isComboUiShake = false
 var waslastframehit = false
