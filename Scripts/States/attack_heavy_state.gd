@@ -12,10 +12,7 @@ extends LimboState
 
 @onready var gameJuice = get_node("/root/GameJuice")
 
-@export var hit1Sound: AudioStreamPlayer
-@export var hit2Sound: AudioStreamPlayer
-@export var hit3Sound: AudioStreamPlayer
-@export var hit4Sound: AudioStreamPlayer
+@export var Heavy1Sound: AudioStreamPlayer
 @export var hit5GuardSound: AudioStreamPlayer
 
 var attack_timer: float = 0.0
@@ -34,6 +31,7 @@ var combo_window = 0.8
 
 @onready var AttackAnimation = attackData.attackAnimation
 
+const OverheadSmear = preload("res://FX/smear_effect.tscn")
 
 
 func _enter() -> void:
@@ -142,6 +140,7 @@ func _start_attack() -> void:
 
 func _enable_hitbox():
 	Global.stretch_forward($"../../RootNode/player2")
+	VFX.smearEffectOverhead(agent, false, OverheadSmear, $"../../RootNode/player2", 0.0)
 	if attack_box:
 		attack_box_debug.visible = true
 		attack_box_col.visible = true
@@ -218,7 +217,11 @@ func rotateEnemy_to_player(agent, areaParent):
 		print("no visual node")
 		
 
-
+func playHitSound():
+	Heavy1Sound.pitch_scale = randf_range(.8, 1.1)
+	Heavy1Sound.play()
+	
+	
 func hitFinisher(area):
 	var is_finishing_blow = area.enemyStats.current_health <= 0
 
@@ -279,10 +282,8 @@ func _on_attack_box_area_entered(area):
 			return
 
 		enemies_hit[area] = true
+		playHitSound()
 
-
-		hit3Sound.pitch_scale = randf_range(.8, 1.1)
-		hit3Sound.play()
 #		change this so it doesnt rely on the node name, only the node type
 		if enemy.has_node("EnemyMesh"):
 			var mesh = enemy.get_node("EnemyMesh")
@@ -299,17 +300,8 @@ func _on_attack_box_area_entered(area):
 		areaParent.enemyStats.enemyWasHit = false
 
 
-		var hit1Effect = enemy.find_child("hit1", true, false)
-		if hit1Effect is GPUParticles3D:
-			hit1Effect.restart()
-			hit1Effect.emitting = true
-			hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
-
-		var hit2Effect = enemy.find_child("hit2", true, false)
-		if hit2Effect is GPUParticles3D:
-			hit2Effect.restart()
-			hit2Effect.emitting = true
-			hit2Effect.process_mode = Node.PROCESS_MODE_ALWAYS
+		VFX.particleHitEffect(enemy)
+		
 		agent.velocity = saved_velocity
 
 		var combo_count = Global.combo_hits.size()

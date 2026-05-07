@@ -628,6 +628,8 @@ size = Vector2(1.26, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a6utb"]
 transparency = 1
+cull_mode = 2
+no_depth_test = true
 shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
@@ -644,8 +646,8 @@ proximity_fade_distance = 52.8
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wyb1b"]
 gravity = Vector3(0, 0, 0)
-scale_min = 5.0
-scale_max = 5.0
+scale_min = 3.0
+scale_max = 3.0
 anim_speed_min = 1.0
 anim_speed_max = 1.0
 
@@ -660,10 +662,12 @@ billboard_keep_scale = true
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rlw8d"]
 particle_flag_align_y = true
-direction = Vector3(0, 1, 0)
+direction = Vector3(0, 0, 0)
 spread = 180.0
 initial_velocity_min = 8.0
 initial_velocity_max = 12.0
+radial_velocity_min = 12.049977
+radial_velocity_max = 36.139977
 radial_accel_min = 99.99999
 radial_accel_max = 99.99999
 
@@ -1061,10 +1065,11 @@ draw_pass_1 = SubResource("QuadMesh_rlw8d")
 [node name="hit1" type="GPUParticles3D" parent="." unique_id=303269608]
 process_mode = 3
 transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 2.32659, 0)
-visible = false
 material_override = SubResource("StandardMaterial3D_a6utb")
+emitting = false
 amount = 1
 lifetime = 0.2
+one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_wyb1b")
 draw_pass_1 = SubResource("QuadMesh_o88hp")
@@ -1073,8 +1078,8 @@ draw_pass_1 = SubResource("QuadMesh_o88hp")
 transform = Transform3D(2.22643, 0, 0, 0, 0.492198, 0, 0, 0, 1, 0, 1.9520211, 0)
 material_override = SubResource("StandardMaterial3D_4topa")
 emitting = false
-amount = 50
-lifetime = 0.15000000000000002
+amount = 30
+lifetime = 0.09999999999999999
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0

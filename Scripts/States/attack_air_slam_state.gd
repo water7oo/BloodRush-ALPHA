@@ -12,10 +12,7 @@ extends LimboState
 
 @onready var gameJuice = get_node("/root/GameJuice")
 
-@export var hit1Sound: AudioStreamPlayer
-@export var hit2Sound: AudioStreamPlayer
-@export var hit3Sound: AudioStreamPlayer
-@export var hit4Sound: AudioStreamPlayer
+@export var AirSlamAttackSound1: AudioStreamPlayer
 @export var hit5GuardSound: AudioStreamPlayer
 
 var attack_timer: float = 0.0
@@ -30,6 +27,8 @@ var effectSpawned = false
 
 @onready var AttackAnimation = attackData.attackAnimation
 const DustWaveEffect = preload("res://FX/vfxWave/VerticalWaveEffect1.tscn")
+
+const OverheadSmear = preload("res://FX/smear_effect.tscn")
 
 
 func _enter() -> void:
@@ -220,7 +219,10 @@ func hitFinisher(area):
 		attackData.enemyTargetHitStop = attackData.DefaultenemyTargetHitStop
 		pass
 		
-		
+
+func playhitSound():
+	AirSlamAttackSound1.pitch_scale = randf_range(.8, 1.1)
+	AirSlamAttackSound1.play()
 		
 func _on_attack_box_area_entered(area):
 	var areaParent = area.get_parent()
@@ -263,10 +265,8 @@ func _on_attack_box_area_entered(area):
 			return
 
 		enemies_hit[area] = true
+		playhitSound()
 
-
-		hit4Sound.pitch_scale = randf_range(.8, 1.1)
-		hit4Sound.play()
 #		change this so it doesnt rely on the node name, only the node type
 		if enemy.has_node("EnemyMesh"):
 			var mesh = enemy.get_node("EnemyMesh")
@@ -283,19 +283,8 @@ func _on_attack_box_area_entered(area):
 		gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
 
 		areaParent.enemyStats.enemyWasHit = false
-
-		var hit1Effect = enemy.find_child("hit1", true, false)
-		if hit1Effect is GPUParticles3D:
-			hit1Effect.restart()
-			hit1Effect.emitting = true
-			hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
-
-
-		var hit2Effect = enemy.find_child("hit2", true, false)
-		if hit2Effect is GPUParticles3D:
-			hit2Effect.restart()
-			hit2Effect.emitting = true
-			hit2Effect.process_mode = Node.PROCESS_MODE_ALWAYS
+		
+		
 		agent.velocity = saved_velocity
 
 		var combo_count = Global.combo_hits.size()

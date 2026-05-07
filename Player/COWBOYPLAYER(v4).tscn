@@ -32,7 +32,6 @@
 [ext_resource type="Texture2D" uid="uid://bieag6y18328y" path="res://FX/Explosion_Sheet.png" id="19_o7idq"]
 [ext_resource type="Texture2D" uid="uid://d31cga1rg0od0" path="res://FX/Sprite_FX_Dust_0009.png" id="20_4hbvs"]
 [ext_resource type="Script" uid="uid://xv42vaodptix" path="res://Scripts/States/guard_state.gd" id="21_frjtj"]
-[ext_resource type="AudioStream" uid="uid://cf1i4kbxr2n4y" path="res://Sounds/hitHard1.wav" id="23_4eq7b"]
 [ext_resource type="AudioStream" uid="uid://cr7tudn7s2g83" path="res://Sounds/hit4.wav" id="23_aggol"]
 [ext_resource type="Texture2D" uid="uid://h0pqkcu5k018" path="res://FX/T_flare2.png" id="23_wtaik"]
 [ext_resource type="Texture2D" uid="uid://dburebixgi0qs" path="res://MaterialTextures/My Textures/Sprite_FX_Blast_0017.png" id="23_xsw6c"]
@@ -59,6 +58,7 @@
 [ext_resource type="AudioStream" uid="uid://cms7gbyvyntgw" path="res://Sounds/hit6.wav" id="48_0rctv"]
 [ext_resource type="AudioStream" uid="uid://dv2h2ifpcxfaw" path="res://Sounds/slash1.wav" id="48_ori5w"]
 [ext_resource type="AudioStream" uid="uid://cc5rgni3t6ar2" path="res://Sounds/jump2.wav" id="48_vkj36"]
+[ext_resource type="AudioStream" uid="uid://oik4gbs754dc" path="res://Sounds/heavyHit2.wav" id="51_mshqq"]
 [ext_resource type="AudioStream" uid="uid://2tp5nhpg7kee" path="res://Sounds/multiHit1.wav" id="51_wa0mo"]
 [ext_resource type="AudioStream" uid="uid://b5mfwun7w8tya" path="res://Sounds/snd_switchpull_n.wav" id="52_mshqq"]
 [ext_resource type="AudioStream" uid="uid://bp61wpvxuqnmc" path="res://Sounds/multiHitFinish1.wav" id="52_ori5w"]
@@ -525,46 +525,37 @@ guardResource = ExtResource("19_anpul")
 
 [node name="SlideState" type="LimboState" parent="LimboHSM" unique_id=969690228]
 
-[node name="AttackState" type="LimboState" parent="LimboHSM" unique_id=377672798 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSound")]
+[node name="AttackState" type="LimboState" parent="LimboHSM" unique_id=377672798 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "Light1Sound", "hit5GuardSound")]
 script = ExtResource("9_gu0nf")
 attack_box = NodePath("../../RootNode/AttackBox")
 attack_box_col = NodePath("../../RootNode/AttackBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AttackBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
 attackData = ExtResource("25_0sosj")
-hit1Sound = NodePath("../../hit1Sound")
-hit2Sound = NodePath("../../hit2Sound")
-hit3Sound = NodePath("../../hit3Sound")
-hit4Sound = NodePath("../../hit4Sound")
+Light1Sound = NodePath("../../lightAttackSound")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
 
-[node name="AttackMediumState" type="LimboState" parent="LimboHSM" unique_id=1355721534 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSound")]
+[node name="AttackMediumState" type="LimboState" parent="LimboHSM" unique_id=1355721534 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "Medium1Sound", "hit5GuardSound")]
 script = ExtResource("11_m03mu")
 attack_box = NodePath("../../RootNode/AttackMedium")
 attack_box_col = NodePath("../../RootNode/AttackMedium/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AttackMedium/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
 attackData = ExtResource("27_h8tk8")
-hit1Sound = NodePath("../../hit1Sound")
-hit2Sound = NodePath("../../hit2Sound")
-hit3Sound = NodePath("../../hit3Sound")
-hit4Sound = NodePath("../../hit4Sound")
+Medium1Sound = NodePath("../../MediumAttackSound")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
 
-[node name="AttackHeavyState" type="LimboState" parent="LimboHSM" unique_id=1692007507 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSound")]
+[node name="AttackHeavyState" type="LimboState" parent="LimboHSM" unique_id=1692007507 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "Heavy1Sound", "hit5GuardSound")]
 script = ExtResource("12_m03mu")
 attack_box = NodePath("../../RootNode/AttackHeavy")
 attack_box_col = NodePath("../../RootNode/AttackHeavy/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AttackHeavy/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
 attackData = ExtResource("29_wa0mo")
-hit1Sound = NodePath("../../hit1Sound")
-hit2Sound = NodePath("../../hit2Sound")
-hit3Sound = NodePath("../../hit3Sound")
-hit4Sound = NodePath("../../hit4Sound")
+Heavy1Sound = NodePath("../../HeavyAttackSound")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
 
-[node name="AttackUpperState" type="LimboState" parent="LimboHSM" unique_id=1882753718 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "attack_box2", "attack_box_col2", "attack_box_debug2", "ComboConfirmFX", "jumpCancelFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSound", "multiHit1Sound", "multiHit1FinishSound")]
+[node name="AttackUpperState" type="LimboState" parent="LimboHSM" unique_id=1882753718 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "attack_box2", "attack_box_col2", "attack_box_debug2", "ComboConfirmFX", "jumpCancelFX", "Upper1Sound", "hit5GuardSound", "multiHit1Sound", "multiHit1FinishSound")]
 process_mode = 3
 script = ExtResource("16_4mqd1")
 attack_box = NodePath("../../RootNode/AttackUpperBox")
@@ -576,64 +567,49 @@ attack_box_debug2 = NodePath("../../RootNode/AttackUpperBox2/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
 jumpCancelFX = NodePath("../../JumpCancel1")
 attackData = ExtResource("29_ori5w")
-hit1Sound = NodePath("../../hit1Sound")
-hit2Sound = NodePath("../../hit2Sound")
-hit3Sound = NodePath("../../hit3Sound")
-hit4Sound = NodePath("../../hit4Sound")
+Upper1Sound = NodePath("../../UpperAttackSound")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
 multiHit1Sound = NodePath("../../multiHit1Sound")
 multiHit1FinishSound = NodePath("../../multiHit1FinishSound")
 
-[node name="AirAttackState" type="LimboState" parent="LimboHSM" unique_id=990125352 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSound")]
+[node name="AirAttackState" type="LimboState" parent="LimboHSM" unique_id=990125352 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "AirLightAttack1Sound", "hit5GuardSound")]
 script = ExtResource("11_why3t")
 attack_box = NodePath("../../RootNode/AirAttackBox")
 attack_box_col = NodePath("../../RootNode/AirAttackBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AirAttackBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
 attackData = ExtResource("33_vkj36")
-hit1Sound = NodePath("../../hit1Sound2")
-hit2Sound = NodePath("../../hit2Sound")
-hit3Sound = NodePath("../../hit3Sound")
-hit4Sound = NodePath("../../hit4Sound")
+AirLightAttack1Sound = NodePath("../../AirLightAttackSound")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
 
-[node name="AirAttackMediumState" type="LimboState" parent="LimboHSM" unique_id=588184422 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSound")]
+[node name="AirAttackMediumState" type="LimboState" parent="LimboHSM" unique_id=588184422 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "AirMediumAttackSound1", "hit5GuardSound")]
 script = ExtResource("15_0rtpi")
 attack_box = NodePath("../../RootNode/AirAttackMediumBox")
 attack_box_col = NodePath("../../RootNode/AirAttackMediumBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AirAttackMediumBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
 attackData = ExtResource("35_3gnjc")
-hit1Sound = NodePath("../../hit1Sound")
-hit2Sound = NodePath("../../hit2Sound2")
-hit3Sound = NodePath("../../hit3Sound")
-hit4Sound = NodePath("../../hit4Sound")
+AirMediumAttackSound1 = NodePath("../../AirMediumAttackSound")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
 
-[node name="AirAttackHeavyState" type="LimboState" parent="LimboHSM" unique_id=1529037227 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSound")]
+[node name="AirAttackHeavyState" type="LimboState" parent="LimboHSM" unique_id=1529037227 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "AirHeavyAttackSound1", "hit5GuardSound")]
 script = ExtResource("16_aggol")
 attack_box = NodePath("../../RootNode/AirAttackHeavyBox")
 attack_box_col = NodePath("../../RootNode/AirAttackHeavyBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AirAttackHeavyBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
 attackData = ExtResource("37_tdu7r")
-hit1Sound = NodePath("../../hit1Sound")
-hit2Sound = NodePath("../../hit2Sound")
-hit3Sound = NodePath("../../hit3Sound2")
-hit4Sound = NodePath("../../hit4Sound")
+AirHeavyAttackSound1 = NodePath("../../AirHeavyAttackSound")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
 
-[node name="AttackAirSlamState" type="LimboState" parent="LimboHSM" unique_id=666826914 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "hit1Sound", "hit2Sound", "hit3Sound", "hit4Sound", "hit5GuardSound")]
+[node name="AttackAirSlamState" type="LimboState" parent="LimboHSM" unique_id=666826914 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "AirSlamAttackSound1", "hit5GuardSound")]
 script = ExtResource("10_3mcw4")
 attack_box = NodePath("../../RootNode/AirAttackSlamBox")
 attack_box_col = NodePath("../../RootNode/AirAttackSlamBox/CollisionShape3D")
 attack_box_debug = NodePath("../../RootNode/AirAttackSlamBox/Attack_Debug")
 ComboConfirmFX = NodePath("../../ComboConfirm1")
 attackData = ExtResource("39_3pi6o")
-hit1Sound = NodePath("../../hit1Sound")
-hit2Sound = NodePath("../../hit2Sound")
-hit3Sound = NodePath("../../hit3Sound")
-hit4Sound = NodePath("../../hit4Sound2")
+AirSlamAttackSound1 = NodePath("../../AirSlamAttackSound")
 hit5GuardSound = NodePath("../../hit5GuardHitSound")
 
 [node name="TakeDamageState" type="LimboState" parent="LimboHSM" unique_id=278158561]
@@ -780,47 +756,49 @@ pitch_scale = 1.36
 stream = ExtResource("45_3pi6o")
 volume_db = -10.4
 
-[node name="hit1Sound" type="AudioStreamPlayer" parent="." unique_id=1287895694]
+[node name="lightAttackSound" type="AudioStreamPlayer" parent="." unique_id=1287895694]
 process_mode = 3
 stream = ExtResource("23_aggol")
 
-[node name="hit2Sound" type="AudioStreamPlayer" parent="." unique_id=1313085057]
+[node name="MediumAttackSound" type="AudioStreamPlayer" parent="." unique_id=1313085057]
 process_mode = 3
 stream = ExtResource("23_aggol")
 pitch_scale = 0.76
 
-[node name="hit3Sound" type="AudioStreamPlayer" parent="." unique_id=341554967]
+[node name="HeavyAttackSound" type="AudioStreamPlayer" parent="." unique_id=341554967]
 process_mode = 3
-stream = ExtResource("23_aggol")
+stream = ExtResource("51_mshqq")
+volume_db = -8.224
 pitch_scale = 0.5
 
-[node name="hit4Sound" type="AudioStreamPlayer" parent="." unique_id=665712956]
+[node name="UpperAttackSound" type="AudioStreamPlayer" parent="." unique_id=665712956]
 process_mode = 3
 stream = ExtResource("23_aggol")
 pitch_scale = 0.36
 
-[node name="hit1Sound2" type="AudioStreamPlayer" parent="." unique_id=1842447516]
+[node name="AirLightAttackSound" type="AudioStreamPlayer" parent="." unique_id=1842447516]
 process_mode = 3
 stream = ExtResource("48_0rctv")
 volume_db = -12.0
 pitch_scale = 1.11
 
-[node name="hit2Sound2" type="AudioStreamPlayer" parent="." unique_id=1586881741]
+[node name="AirMediumAttackSound" type="AudioStreamPlayer" parent="." unique_id=1586881741]
 process_mode = 3
 stream = ExtResource("48_0rctv")
 volume_db = -12.0
 pitch_scale = 0.76
 
-[node name="hit3Sound2" type="AudioStreamPlayer" parent="." unique_id=351935253]
+[node name="AirHeavyAttackSound" type="AudioStreamPlayer" parent="." unique_id=351935253]
 process_mode = 3
 stream = ExtResource("48_0rctv")
 volume_db = -12.0
 pitch_scale = 0.33
 
-[node name="hit4Sound2" type="AudioStreamPlayer" parent="." unique_id=306353880]
+[node name="AirSlamAttackSound" type="AudioStreamPlayer" parent="." unique_id=306353880]
 process_mode = 3
-stream = ExtResource("23_4eq7b")
-pitch_scale = 0.87
+stream = ExtResource("51_mshqq")
+volume_db = -6.738
+pitch_scale = 0.57
 
 [node name="GrabSound1" type="AudioStreamPlayer" parent="." unique_id=1581849704]
 process_mode = 3
@@ -891,7 +869,7 @@ volume_db = -16.868
 
 [node name="RootNode" type="Node3D" parent="." unique_id=1429141220]
 
-[node name="player2" parent="RootNode" unique_id=1429825863 instance=ExtResource("58_vkj36")]
+[node name="player2" parent="RootNode" unique_id=2010958568 instance=ExtResource("58_vkj36")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RootNode" unique_id=992140820]

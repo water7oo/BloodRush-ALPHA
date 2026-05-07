@@ -4,20 +4,20 @@ class_name VFXManager
 # combine wave effect, add rotational parameter
 
 
-func particleHitEffect():
-		var hit1Effect = enemy.find_child("hit1", true, false)
+func particleHitEffect(opponent):
+		var hit1Effect = opponent.find_child("hit1", true, false)
 		if hit1Effect is GPUParticles3D:
 			hit1Effect.restart()
 			hit1Effect.emitting = true
 			hit1Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 
-		var hit2Effect = enemy.find_child("hit2", true, false)
+		var hit2Effect = opponent.find_child("hit2", true, false)
 		if hit2Effect is GPUParticles3D:
 			hit2Effect.restart()
 			hit2Effect.emitting = true
 			hit2Effect.process_mode = Node.PROCESS_MODE_ALWAYS
 
-		var hit3Effect = enemy.find_child("hit3", true, false)
+		var hit3Effect = opponent.find_child("hit3", true, false)
 		if hit3Effect is GPUParticles3D:
 			hit3Effect.restart()
 			hit3Effect.emitting = true
@@ -81,6 +81,24 @@ func spinEffectGround(player, spinEffect, directionMesh):
 
 		spinEffectInstance.global_transform = xform
 
+
+
+func smearEffectOverhead(player, effectSpawnedFlag, BurstEffect, directionMesh, offset):
+	var is_on_floor = player.is_on_floor()
+	if effectSpawnedFlag == false:
+		var instanceBurstEffect = BurstEffect.instantiate()
+		effectSpawnedFlag = true
+		get_tree().root.add_child(instanceBurstEffect)
+		
+		var player_forward = -directionMesh.global_transform.basis.z
+		var xform = instanceBurstEffect.global_transform
+		
+		var spawn_offset = player_forward * offset
+		xform.origin = directionMesh.global_transform.origin + spawn_offset
+
+		xform = align_with_y(xform, player.get_floor_normal(), player_forward)
+
+		instanceBurstEffect.global_transform = xform
 
 func spinEffectAir(player, spinEffect, directionMesh):
 

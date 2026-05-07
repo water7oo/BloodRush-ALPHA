@@ -21,3 +21,4 @@ next_attack_state = &"to_airSlamAttack"
 comboknockbackForceRate = 0.7
 knockback_force_finisher = 5.0
 attackAnimation = "player|heavyAttack"
+animationSpeedScale = 5.0

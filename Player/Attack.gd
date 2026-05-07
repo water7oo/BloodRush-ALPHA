@@ -15,10 +15,7 @@ extends LimboState
 
 @onready var gameJuice = get_node("/root/GameJuice")
 
-@export var hit1Sound: AudioStreamPlayer
-@export var hit2Sound: AudioStreamPlayer
-@export var hit3Sound: AudioStreamPlayer
-@export var hit4Sound: AudioStreamPlayer
+@export var Light1Sound: AudioStreamPlayer
 @export var hit5GuardSound: AudioStreamPlayer
 
 var attack_timer: float = 0.0
@@ -206,7 +203,9 @@ func rotateEnemy_to_player(agent, areaParent):
 		print("no visual node")
 		
 		
-		
+func playHitSound():
+	Light1Sound.pitch_scale = randf_range(.8, 1.1)
+	Light1Sound.play()
 func hitFinisher(area):
 	var is_finishing_blow = area.enemyStats.current_health <= 0
 
@@ -243,7 +242,7 @@ func _on_attack_box_area_entered(area):
 		areaParent.takeDamageEnemy(attackData.attackDamage)
 		rotateEnemy_to_player(agent, areaParent)
 		rotate_to_target(areaParent)
-		
+		playHitSound()
 		Global.combo_hits.append({
 			"enemy": area,
 			"damage": attackData.attackDamage,
@@ -271,8 +270,6 @@ func _on_attack_box_area_entered(area):
 
 		enemies_hit[area] = true
 
-		hit1Sound.pitch_scale = randf_range(.8, 1.1)
-		hit1Sound.play()
 
 		if enemy.has_node("EnemyMesh"):
 			var mesh = enemy.get_node("EnemyMesh")
@@ -291,7 +288,6 @@ func _on_attack_box_area_entered(area):
 
 		areaParent.enemyStats.enemyWasHit = false
 
-		VFX.particleHitEffect()
 			
 			
 		agent.velocity = saved_velocity
