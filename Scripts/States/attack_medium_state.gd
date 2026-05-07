@@ -34,9 +34,11 @@ var medium_pressed_time := -1.0
 
 
 const slash1Effect = preload("res://FX/slash_1_fbx.tscn")
+
+const HorizontalSmear = preload("res://FX/smear_effect_horizontal.tscn")
 var effectSpawned = false
 
-func _enter() -> void:
+func _enter(msg := {}) -> void:
 	medium_pressed_time = -1.0
 	effectSpawned = false
 	enemies_hit.clear()
@@ -47,29 +49,36 @@ func _enter() -> void:
 	Global.isHit = false
 	Global.can_cancel = false
 	startup_timer = 0.0
-
-	if Global.skip_startup:
-		print("skip startup")
-		startup_timer = 0.0
-		in_startup = false
-		Global.skip_startup = false 
-
-		_start_attack()
-		attack_timer = attackData.active_duration + attackData.recovery_duration
-	else:
-		startup_timer = 0.4
-		in_startup = true
-		attack_timer = 0.0
+	
+	var data = agent.get_transition_data()
+	handle_startup(data.get("skip_startup", false))
+	agent.transition_data.clear()
+	print(data)
 
 	if animation_player:
 		animation_player.speed_scale = attackData.animationSpeedScale
 		animation_player.play(attackData.attackAnimation)
 
+		await get_tree().process_frame
 
+		animation_player.speed_scale = 0.1
+
+func handle_startup(skip_startup: bool):
+	if skip_startup:
+		startup_timer = 0.0
+		in_startup = false
+
+		_enable_hitbox()
+		_start_attack()
+
+		attack_timer = attackData.active_duration + attackData.recovery_duration
+	else:
+		startup_timer = attackData.startup_duration
+		in_startup = true
+		attack_timer = 0.0
+		
 func _update(delta: float) -> void:
 	combo_timer -= delta
-
-
 	if Input.is_action_just_pressed("attack_medium_1"):
 		buffered_medium = true
 		buffered_input = true
@@ -90,15 +99,21 @@ func _update(delta: float) -> void:
 	
 	if in_startup:
 		startup_timer -= delta
-		if startup_timer <= 0.0:
+
+		if startup_timer <= 0:
 			in_startup = false
+
 			attack_timer = attackData.active_duration + attackData.recovery_duration
+
+			_enable_hitbox()
 			_start_attack()
+
 		return
 		
-	_process_cancel_window()
 	
 	attack_timer -= delta
+	_process_cancel_window()
+	
 	if attack_timer <= 0.0:
 		if (buffered_input || Global.isHit) && Global.can_cancel:
 			_end_or_chain()
@@ -156,11 +171,12 @@ func _end_or_chain():
 func _chain_attack():
 	_exit_attack_state()
 	
-	Global.skip_startup = true
 	attack_timer = 0.0
 
 	if combo_timer >= 0.0:
 		if buffered_heavy:
+			print("M to H")
+			agent.set_transition_data({"skip_startup": true})
 			agent.state_machine.dispatch(attackData.next_attack_state)
 		else:
 			agent.state_machine.dispatch("to_idle")
@@ -175,6 +191,10 @@ func _start_attack() -> void:
 
 func _enable_hitbox():
 	Global.stretch_forward($"../../RootNode/player2")
+	VFX.smearEffectOverhead(agent, false, HorizontalSmear, $"../../RootNode/player2", 0.0)
+	if animation_player:
+		animation_player.speed_scale = attackData.animationSpeedScale
+		animation_player.play()
 	if attack_box:
 		attack_box_debug.visible = true
 		attack_box_col.visible = true
@@ -313,9 +333,12 @@ func _on_attack_box_area_entered(area):
 		enemies_hit[area] = true
 		playHitSound()
 
+		if enemy.has_method("damageAnimation"):
+			enemy.damageAnimation()
+				
 		if enemy.has_node("EnemyMesh"):
-			var mesh = enemy.get_node("EnemyMesh")
-			mesh.trigger_flash()
+			var enemyScene = enemy.get_node("EnemyMesh")
+			enemyScene.trigger_flash()
 			await get_tree().process_frame
 
 		var saved_velocity = agent.velocity

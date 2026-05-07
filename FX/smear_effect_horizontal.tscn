@@ -1,0 +1,157 @@
+[gd_scene format=3 uid="uid://cxrrjxruruqry"]
+
+[ext_resource type="PackedScene" uid="uid://bm5olr40el4hd" path="res://FX/smearEffect.fbx" id="1_yht14"]
+[ext_resource type="Script" uid="uid://c4b2cxya68pou" path="res://FX/smear_effect.gd" id="2_ta8x4"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6sixf"]
+load_path = "res://.godot/imported/Dust_Wave2-e8432e9fa40c58d5df7e1588c66db668_Slashing_Texture3.png-44df6eaf99fce25fd4124c1177fa4b6c.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ng07t"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+albedo_texture = SubResource("CompressedTexture2D_6sixf")
+texture_filter = 0
+
+[sub_resource type="Animation" id="Animation_ng07t"]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torus_004:material_override:uv1_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Torus_004:material_override:uv1_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Torus_004:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-5.960466e-08, 1.5707965, -1.5707963)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Torus_004:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Torus_004:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(86.496765, 86.496765, 86.496765)]
+}
+
+[sub_resource type="Animation" id="Animation_6sixf"]
+resource_name = "smear"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Torus_004:material_override:uv1_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.099999994),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1.025, 1), Vector3(1, 0.875, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Torus_004:material_override:uv1_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.099999994),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.01, 0.05, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Torus_004:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.099999994),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.5707964, 0.72431177, 0), Vector3(1.5707964, -1.5707964, -1.7959439)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Torus_004:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Torus_004:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.099999994),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(118, 118, 118), Vector3(86.49677, 86.49677, 86.496765)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ng07t"]
+_data = {
+&"RESET": SubResource("Animation_ng07t"),
+&"smear": SubResource("Animation_6sixf")
+}
+
+[node name="smearEffect" unique_id=685924116 instance=ExtResource("1_yht14")]
+script = ExtResource("2_ta8x4")
+
+[node name="Torus_004" parent="." index="0" unique_id=926807140]
+transform = Transform3D(5.155609e-06, -1.4092112e-05, 86.496765, -86.496765, 6.5303243e-06, 5.1556103e-06, -6.5303248e-06, -86.496765, -1.4092112e-05, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_ng07t")
+
+[node name="AnimationPlayer" parent="." index="1" unique_id=2125617065]
+libraries/ = SubResource("AnimationLibrary_ng07t")

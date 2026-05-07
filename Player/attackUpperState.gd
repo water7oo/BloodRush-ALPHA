@@ -79,6 +79,7 @@ func _enter() -> void:
 	isJumpCancel = false
 	canJumpCancel = false
 
+	attackStartupSkip()
 	startup_timer = max(attackData.startup_duration, 0.01) 
 	attack_timer = 0.0
 	in_startup = true
@@ -88,7 +89,26 @@ func _enter() -> void:
 	agent.jump_state.jumpResource.JUMP_VELOCITY = agent.jump_state.jumpResource.DEFAULT_JUMP_VELOCITY
 	
 	
+func attackStartupSkip():
+	if Global.skip_startup:
+		print("skip startup")
 
+		Global.skip_startup = false
+
+		startup_timer = 0.0
+		in_startup = false
+
+		_enable_hitbox()
+		_start_attack()
+
+		attack_timer = attackData.active_duration + attackData.recovery_duration
+
+	else:
+		startup_timer = attackData.startup_duration
+		in_startup = true
+		attack_timer = 0.0
+		
+		
 func _update(delta: float) -> void:
 	if Input.is_action_just_pressed("move_jump"):
 		buffered_input = true
@@ -107,7 +127,6 @@ func _update(delta: float) -> void:
 				_enable_hitbox()
 				_start_attack()
 				
-
 
 	_process_cancel_window()
 	
@@ -413,10 +432,12 @@ func _on_attack_box_area_entered(area):
 		if !Global.isMultiHitUpper:
 			Upper1Sound.play()
 		
-#		change this so it doesnt rely on the node name, only the node type
+		if enemy.has_method("damageAnimation"):
+			enemy.damageAnimation()
+				
 		if enemy.has_node("EnemyMesh"):
-			var mesh = enemy.get_node("EnemyMesh")
-			mesh.trigger_flash()
+			var enemyScene = enemy.get_node("EnemyMesh")
+			enemyScene.trigger_flash()
 			await get_tree().process_frame
 
 		var saved_velocity = agent.velocity

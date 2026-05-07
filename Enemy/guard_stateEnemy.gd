@@ -1,7 +1,8 @@
 extends LimboState
 
 @onready var state_machine: LimboHSM = $LimboHSM
-@onready var EnemyMesh = $"../../EnemyMesh"
+@onready var EnemyScene = $"../../EnemyMesh"
+@onready var EnemyMesh = get_node("$Armature/Skeleton3D/Sandbag")
 @onready var EnemyMeshMat
 
 @onready var parent = $"../.."

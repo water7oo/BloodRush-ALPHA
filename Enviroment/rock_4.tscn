@@ -30,7 +30,7 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sw35u"]
 render_priority = 0
 shader = SubResource("Shader_gdw0k")
-shader_parameter/outline_color = Color(3.6098064e-07, 0.31247404, 0.34955338, 1)
+shader_parameter/outline_color = Color(0.3142581, 0.16754347, 0.0027008331, 1)
 shader_parameter/outline_width = 1.02
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_khp18"]
@@ -38,6 +38,7 @@ next_pass = SubResource("ShaderMaterial_sw35u")
 diffuse_mode = 3
 specular_mode = 1
 albedo_color = Color(0.74509805, 0.6, 0.5019608, 1)
+roughness = 0.0
 uv1_scale = Vector3(2.375, 2.375, 2.375)
 uv1_triplanar_sharpness = 0.233259
 texture_filter = 0

@@ -96,7 +96,6 @@ transform = Transform3D(1, 2.32831e-10, 0, 0, 1, -1.86265e-09, 7.45058e-09, 1.86
 script = ExtResource("3_sswrb")
 
 [node name="Reticle" type="Label" parent="." unique_id=1607169781]
-visible = false
 texture_filter = 3
 anchors_preset = 8
 anchor_left = 0.5

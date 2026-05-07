@@ -6,7 +6,6 @@
 script = ExtResource("1_7gs8h")
 camShakeLength = 0.15
 camShakeMagnitude = 0.15
-startup_duration = 0.4
 attackDamage = 15.0
 combo_window_duration = 0.8
 enemyTargetLength = 0.2

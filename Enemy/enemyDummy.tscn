@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://bha1v8nli1ndu"]
+
+[ext_resource type="PackedScene" uid="uid://bb1xiaasibqob" path="res://Enemy/enemyDummy.fbx" id="1_ai743"]
+[ext_resource type="Shader" uid="uid://crwsrlgfy4fjb" path="res://addons/GrassDylearn/Shaders/Outline.gdshader" id="3_p2wm2"]
+[ext_resource type="Texture2D" uid="uid://7qgg4do3dwtm" path="res://Enemy/Sandbag.fbm/7467e88d.png" id="3_rlcwf"]
+[ext_resource type="Shader" uid="uid://c8gnrj13ddg2o" path="res://FX/hitFlash.gdshader" id="4_rlcwf"]
+[ext_resource type="Script" uid="uid://cm0rl70t4u6fn" path="res://FX/flashDamage.gd" id="5_p2wm2"]
+[ext_resource type="Shader" uid="uid://bpu5grc6v8hhm" path="res://FX/flashing.gdshader" id="6_rlcwf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bo421"]
+shader = ExtResource("6_rlcwf")
+shader_parameter/color_a = Color(0.5400679, 0.89538556, 0.99999994, 1)
+shader_parameter/color_b = Color(1, 1, 1, 0)
+shader_parameter/colors_affect_alpha = true
+shader_parameter/flash_amount = 1.0
+shader_parameter/flash_speed = 1.0
+shader_parameter/transparency = 0.9499999787656
+shader_parameter/intensity = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6g3nf"]
+render_priority = 0
+shader = ExtResource("3_p2wm2")
+shader_parameter/shadows_enabled = false
+shader_parameter/highlights_enabled = false
+shader_parameter/shadow_strength = 0.999999977648
+shader_parameter/highlight_strength = 0.0
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/shadow_color = Color(0.47397572, 0.47397578, 0.4739756, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ae78"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_6g3nf")
+shader = ExtResource("4_rlcwf")
+shader_parameter/flash = 0.0
+shader_parameter/custom_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bo421"]
+next_pass = SubResource("ShaderMaterial_3ae78")
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("3_rlcwf")
+texture_filter = 0
+
+[node name="enemyDummy" unique_id=1912012700 instance=ExtResource("1_ai743")]
+script = ExtResource("5_p2wm2")
+
+[node name="Armature" parent="." index="0" unique_id=111419901]
+transform = Transform3D(100, 0, 0, 0, -4.3711384e-06, 99.99999, 0, -99.99999, -4.3711384e-06, 0, -8, 0)
+
+[node name="Skeleton3D" parent="Armature" index="0" unique_id=1401872192]
+bones/0/rotation = Quaternion(0.7071069, -2.0608955e-09, -3.7912176e-09, 0.7071067)
+bones/0/scale = Vector3(1, 1, 1)
+bones/1/position = Vector3(0, -0.020000003, 2.7870248e-10)
+bones/1/rotation = Quaternion(-0.015134372, -0.9848078, -7.4536227e-10, 0.17298718)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/position = Vector3(0, 0.05, 1.1823431e-15)
+bones/2/rotation = Quaternion(2.3283064e-10, 1.49048e-08, -8.731155e-11, 1)
+bones/4/position = Vector3(0, -0.020000003, 2.7870248e-10)
+bones/4/rotation = Quaternion(0.1729871, -5.296497e-09, 0.9848079, 0.015134376)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/position = Vector3(-3.2500366e-23, 0.044472713, -3.7176085e-16)
+bones/5/rotation = Quaternion(3.49246e-10, 2.9816874e-08, -8.731149e-11, 1)
+bones/5/scale = Vector3(1, 1, 1)
+
+[node name="Sandbag" parent="Armature/Skeleton3D" index="0" unique_id=725194631 groups=["Mesh"]]
+material_overlay = SubResource("ShaderMaterial_bo421")
+surface_material_override/0 = SubResource("StandardMaterial3D_bo421")

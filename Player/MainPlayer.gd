@@ -57,6 +57,8 @@ var input_queue: Array = []
 enum combatType {FIGHTER, SWORD}
 @export var type: combatType = combatType.FIGHTER
 
+var transition_data := {}
+
 func _ready():
 	initialize_state_machine()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -390,23 +392,13 @@ func handle_attack_input() -> void:
 			return
 		
 
-#func landCheck():
-	#var is_on_floor = is_on_floor()
-#
-	#if state_machine.get_active_state() == self:
-		#if is_on_floor and not Global.was_on_floor:
-			#landSound()
-			#landDust.restart()
-			#landDust.emitting = true
-			#Global.squash_land($"../../RootNode/player2")
-			#state_machine.dispatch("to_idle")
-		#
-#
-	#Global.was_on_floor = is_on_floor
-	#
-#func landSound():
-	#land1Sound.pitch_scale = randf_range(0.6, 1.2)
-	#land1Sound.play()
+func set_transition_data(data: Dictionary):
+	transition_data = data
+
+func get_transition_data() -> Dictionary:
+	var data = transition_data.duplicate()
+	transition_data.clear()
+	return data
 
 
 func playerGravity(delta: float) -> void:

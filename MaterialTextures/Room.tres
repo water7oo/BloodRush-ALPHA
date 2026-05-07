@@ -6,7 +6,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fnj2k"]
 render_priority = 0
 shader = ExtResource("2_5er1b")
-shader_parameter/outline_color = Color(0.50534403, 0.5053441, 0.50534385, 1)
+shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/outline_width = 1.0
 
 [resource]

@@ -1,22 +1,25 @@
-extends MeshInstance3D
+extends Node3D
+
 
 var is_hit: bool = false
-
 var flash_mat: ShaderMaterial
+var mesh: MeshInstance3D
+@onready var sandbag: MeshInstance3D = $Armature/Skeleton3D/Sandbag
 
 func _ready() -> void:
-	var base_mat = get_active_material(0)
-	if base_mat:
-		var unique_mat: StandardMaterial3D = base_mat.duplicate()
+	if sandbag:
+		var base_mat = sandbag.get_active_material(0)
+		if base_mat:
+			var unique_mat: StandardMaterial3D = base_mat.duplicate()
 
-		if unique_mat.next_pass:
-			unique_mat.next_pass = unique_mat.next_pass.duplicate()
+			if unique_mat.next_pass:
+				unique_mat.next_pass = unique_mat.next_pass.duplicate()
 
-		set_surface_override_material(0, unique_mat)
+			sandbag.set_surface_override_material(0, unique_mat)
 
-		# Cache it
-		if unique_mat.next_pass is ShaderMaterial:
-			flash_mat = unique_mat.next_pass
+
+			if unique_mat.next_pass is ShaderMaterial:
+				flash_mat = unique_mat.next_pass
 
 func _physics_process(delta: float) -> void:
 	if is_hit:

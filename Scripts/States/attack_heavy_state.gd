@@ -34,7 +34,7 @@ var combo_window = 0.8
 const OverheadSmear = preload("res://FX/smear_effect.tscn")
 
 
-func _enter() -> void:
+func _enter(msg := {}) -> void:
 	enemies_hit.clear()
 	buffered_input = false
 	buffered_medium = false
@@ -43,24 +43,35 @@ func _enter() -> void:
 	Global.isHit = false
 	Global.can_cancel = false
 
-	if Global.skip_startup:
-		print("skip startup")
-		startup_timer = 0.0
-		in_startup = false
-		Global.skip_startup = false  
-
-		_enable_hitbox()
-		_start_attack()
-		attack_timer = attackData.active_duration + attackData.recovery_duration
-	else:
-		startup_timer = 0.6
-		in_startup = true
-		attack_timer = 0.0
+	var data = agent.get_transition_data()
+	handle_startup(data.get("skip_startup", false))
+	agent.transition_data.clear()
+	print(data)
 
 	if animation_player:
 		animation_player.speed_scale = attackData.animationSpeedScale
 		animation_player.play(attackData.attackAnimation)
 
+		await get_tree().process_frame
+
+		animation_player.seek(.5333, true)
+		animation_player.speed_scale = 0.05
+		
+
+func handle_startup(skip_startup: bool):
+	if skip_startup:
+		startup_timer = 0.0
+		in_startup = false
+
+		_enable_hitbox()
+		_start_attack()
+
+		attack_timer = attackData.active_duration + attackData.recovery_duration
+	else:
+		startup_timer = attackData.startup_duration
+		in_startup = true
+		attack_timer = 0.0
+		
 
 func _update(delta: float) -> void:
 	combo_timer -= delta
@@ -78,14 +89,17 @@ func _update(delta: float) -> void:
 
 	if in_startup:
 		startup_timer -= delta
+
 		if startup_timer <= 0:
 			in_startup = false
+
 			attack_timer = attackData.active_duration + attackData.recovery_duration
+
 			_enable_hitbox()
 			_start_attack()
+
 		return
 
-	_process_cancel_window()
 	
 	attack_timer -= delta
 	if attack_timer <= 0.0:
@@ -123,12 +137,12 @@ func _end_or_chain():
 func _chain_attack():
 	_exit_attack_state()
 	
-	Global.skip_startup = true
 	attack_timer = 0.0
 
 	if combo_timer >= 0.0:
 		if buffered_medium:
-			agent.state_machine.dispatch("to_attackUpper")
+			agent.set_transition_data({"skip_startup": true})
+			agent.state_machine.dispatch(attackData.next_attack_state)
 	else:
 		agent.state_machine.dispatch("to_idle")
 
@@ -141,6 +155,9 @@ func _start_attack() -> void:
 func _enable_hitbox():
 	Global.stretch_forward($"../../RootNode/player2")
 	VFX.smearEffectOverhead(agent, false, OverheadSmear, $"../../RootNode/player2", 0.0)
+	if animation_player:
+		animation_player.speed_scale = 1.5
+		animation_player.play()
 	if attack_box:
 		attack_box_debug.visible = true
 		attack_box_col.visible = true
@@ -284,10 +301,12 @@ func _on_attack_box_area_entered(area):
 		enemies_hit[area] = true
 		playHitSound()
 
-#		change this so it doesnt rely on the node name, only the node type
+		if enemy.has_method("damageAnimation"):
+			enemy.damageAnimation()
+				
 		if enemy.has_node("EnemyMesh"):
-			var mesh = enemy.get_node("EnemyMesh")
-			mesh.trigger_flash()
+			var enemyScene = enemy.get_node("EnemyMesh")
+			enemyScene.trigger_flash()
 			await get_tree().process_frame
 
 		var saved_velocity = agent.velocity

@@ -267,10 +267,12 @@ func _on_attack_box_area_entered(area):
 		enemies_hit[area] = true
 		playhitSound()
 
-#		change this so it doesnt rely on the node name, only the node type
+		if enemy.has_method("damageAnimation"):
+			enemy.damageAnimation()
+				
 		if enemy.has_node("EnemyMesh"):
-			var mesh = enemy.get_node("EnemyMesh")
-			mesh.trigger_flash()
+			var enemyScene = enemy.get_node("EnemyMesh")
+			enemyScene.trigger_flash()
 			await get_tree().process_frame
 
 		var saved_velocity = agent.velocity

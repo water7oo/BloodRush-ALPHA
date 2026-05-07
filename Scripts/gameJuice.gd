@@ -78,7 +78,6 @@ func objectShake(target, period, magnitude):
 		
 		
 func camShake(target, period, magnitude):
-	print("cam shake")
 	var initial_transform = target.global_transform
 	var elapsed_time = 0.0
 

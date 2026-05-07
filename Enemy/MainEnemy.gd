@@ -37,10 +37,14 @@ const DAMAGE_NUM = preload("uid://cotsnmovmqwww")
 const DustWaveEffect = preload("res://FX/vfxWave/VerticalWaveEffect1.tscn")
 var effectSpawned = false
 
+@export var enemyMeshScene: Node3D
+var animation_player: AnimationPlayer
+
 func _ready():
+	if enemyMeshScene:
+		animation_player = enemyMeshScene.get_node("AnimationPlayer")
 	if enemyStats:
 		startHealth()
-
 		
 	if state_machine:
 		initialize_state_machine()
@@ -121,23 +125,24 @@ func startHealth():
 			
 
 func damageAnimation():
+	
 		var randomNum = randi_range(1, 3)
 		if randomNum == 1:
-			$AnimationPlayer.play("takeDamage1")
-			await get_tree().create_timer(.5).timeout
-			$AnimationPlayer.play("IDLE")
+			animation_player.play("Armature|Hurt")
+			#await get_tree().create_timer(.5).timeout
+			#animation_player.play("Armature|RESET")
 		elif randomNum == 2:
-			$AnimationPlayer.play("takeDamage2")
-			await get_tree().create_timer(.5).timeout
-			$AnimationPlayer.play("IDLE")
+			animation_player.play("Armature|HurtMedium")
+			#await get_tree().create_timer(.5).timeout
+			#animation_player.play("Armature|RESET")
 		elif randomNum == 3:
-			$AnimationPlayer.play("takeDamage3")
-			await get_tree().create_timer(.5).timeout
-			$AnimationPlayer.play("IDLE")
+			animation_player.play("Armature|HurtCrush")
+			#await get_tree().create_timer(.5).timeout
+			#animation_player.play("Armature|RESET")
 			
 func takeDamageEnemy(damage: float) -> void:
 		if enemyStats.isDead == false:
-			damageAnimation()
+
 			enemyStats.current_health = clamp(enemyStats.current_health - damage, 0.0, enemyStats.max_health)
 			state_machine.dispatch("to_hitstun")
 			Global.squash_land($EnemyMesh)
@@ -165,7 +170,7 @@ func takeDamageEnemy(damage: float) -> void:
 				enemyHurtBox.monitorable = true
 		else:
 			damage -= damage
-			$AnimationPlayer.play("IDLE")
+			animation_player.play("RESET")
 		
 
 func grabbedEnemy():

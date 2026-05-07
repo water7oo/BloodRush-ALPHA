@@ -20,6 +20,7 @@ extends LimboState
 
 var attack_timer: float = 0.0
 var combo_timer: float = 0.0
+var recovery_timer: float = 0.0
 var buffered_input := false
 var enemies_hit := {}
 var preserved_velocity: Vector3 = Vector3.ZERO
@@ -31,7 +32,7 @@ var buffered_medium := false
 
 @onready var AttackAnimation = attackData.attackAnimation
 
-func _enter() -> void:
+func _enter(msg := {}) -> void:
 	enemies_hit.clear()
 	buffered_input = false
 	buffered_medium = false
@@ -39,48 +40,56 @@ func _enter() -> void:
 	Global.isHit = false
 	Global.can_cancel = false
 
-	if Global.skip_startup:
-		print("skip startup")
-		startup_timer = 0.0
-		in_startup = false
-		Global.skip_startup = false 
-
-		_enable_hitbox()
-		_start_attack()
-		attack_timer = attackData.active_duration + attackData.recovery_duration
-	else:
-		startup_timer = 0.09
-		in_startup = true
-		attack_timer = 0.0
+	var data = agent.get_transition_data()
+	handle_startup(data.get("skip_startup", false))
+	agent.transition_data.clear()
+	print(data)
 
 	if animation_player:
 		animation_player.speed_scale = attackData.animationSpeedScale
 		animation_player.play(attackData.attackAnimation)
 
+func handle_startup(skip_startup: bool):
+	if skip_startup:
+		startup_timer = 0.0
+		in_startup = false
+
+		_enable_hitbox()
+		_start_attack()
+
+		attack_timer = attackData.active_duration + attackData.recovery_duration
+	else:
+		startup_timer = attackData.startup_duration
+		in_startup = true
+		attack_timer = 0.0
 
 func _update(delta: float) -> void:
 	combo_timer -= delta
-
-
+	
 	if Input.is_action_just_pressed("attack_medium_1"):
 		buffered_medium = true
 		buffered_input = true
 		
 
-
 	if in_startup:
 		startup_timer -= delta
+
 		if startup_timer <= 0:
 			in_startup = false
+
 			attack_timer = attackData.active_duration + attackData.recovery_duration
+
 			_enable_hitbox()
 			_start_attack()
+
 		return
 
 
-	_process_cancel_window()
 	
 	attack_timer -= delta
+	_process_cancel_window()
+	
+	
 	if attack_timer <= 0.0:
 		if (buffered_input || Global.isHit) && Global.can_cancel:
 			_end_or_chain()
@@ -107,6 +116,7 @@ func _process_cancel_window():
 
 func _end_or_chain():
 	if combo_timer >= 0.0:
+
 		if (buffered_input || Global.isHit) && Global.can_cancel:
 			$"../../ComboConfirm1".emitting = true
 			_chain_attack()
@@ -119,11 +129,12 @@ func _end_or_chain():
 func _chain_attack():
 	_exit_attack_state()
 	
-	Global.skip_startup = true
 	attack_timer = 0.0
 
 	if combo_timer >= 0.0:
 		if buffered_medium:
+			print("L to M")
+			agent.set_transition_data({"skip_startup": true})
 			agent.state_machine.dispatch(attackData.next_attack_state)
 		else:
 			agent.state_machine.dispatch("to_idle")
@@ -270,12 +281,15 @@ func _on_attack_box_area_entered(area):
 
 		enemies_hit[area] = true
 
-
+		if enemy.has_method("damageAnimation"):
+			enemy.damageAnimation()
+				
 		if enemy.has_node("EnemyMesh"):
-			var mesh = enemy.get_node("EnemyMesh")
-			mesh.trigger_flash()
+			var enemyScene = enemy.get_node("EnemyMesh")
+			enemyScene.trigger_flash()
 			await get_tree().process_frame
 
+	
 		var saved_velocity = agent.velocity
 		agent.velocity = Vector3.ZERO
 
@@ -333,9 +347,10 @@ func _on_attack_box_area_entered(area):
 
 			hit5GuardSound.pitch_scale = randf_range(.3, 1.5)
 			hit5GuardSound.play()
-	#		change this so it doesnt rely on the node name, only the node type
+
 			if enemy.has_node("EnemyMesh"):
-				var mesh = enemy.get_node("EnemyMesh")
+				var mesh = get_tree().get_first_node_in_group("$Armature/Skeleton3D/Sandbag")
+				
 				mesh.trigger_guardFlash()
 				await get_tree().process_frame
 
