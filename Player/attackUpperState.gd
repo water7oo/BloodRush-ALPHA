@@ -185,7 +185,6 @@ func _end_or_chain():
 func _chain_attack():
 	_exit_attack_state()
 	attack_timer = 0.0
-	
 	_jumpCancel()
 
 

@@ -45,8 +45,11 @@ var in_air_damage := false
 var previous_on_floor := false
 var is_being_slammed := false
 var waiting_for_bounce_land := false
-var upwardSlamForce: float = 10.0
-var horizontalSlamForce: float = 10.0
+var upwardSlamForce: float = 15.0
+var horizontalSlamForce: float = 20.0
+
+var is_slam_sequence := false
+
 func _ready():
 	if enemyMeshScene:
 		animation_player = enemyMeshScene.get_node("AnimationPlayer")
@@ -159,6 +162,11 @@ func airDamageAnimation(animationDuration, isUpper):
 func grabAnimation():
 	animation_player.play("Armature|Grabbed")
 
+func slamCrush1():
+	animation_player.speed_scale = 1.0
+	animation_player.play("Armature|GroundBounce")
+	print("slamCrush1")
+	
 func slamCrushAnimation():
 
 	in_air_damage = false
@@ -238,95 +246,113 @@ func takeGuardDamageEnemy(damage: float) -> void:
 			enemyHurtBox.monitorable = true
 			
 
+func start_slam_sequence():
+	is_slam_sequence = true
+	in_air_damage = true
+	waiting_for_bounce_land = false
+
+	animation_player.play("Armature|GroundBounce")
+
+func apply_air_rotation(delta):
+	var target_rotation = remap(
+		velocity.y,
+		-40.0, 40.0,
+		deg_to_rad(90),
+		deg_to_rad(-90)
+	)
+
+	$EnemyMesh.rotation.x = lerp(
+		$EnemyMesh.rotation.x,
+		target_rotation,
+		delta * 10.0
+	)
+	
+func _handle_slam_land():
+
+	is_slam_sequence = false
+	in_air_damage = false
+
+	animation_player.play("Armature|GroundRecover")
+
+	VFX.landEffect($".", GroundDustEffect, $EnemyMesh)
+
+	await get_tree().create_timer(0.25).timeout
+
+	animation_player.play("Armature|CrushSpinningBack")
+	
+func _handle_normal_land():
+
+	in_air_damage = false
+
+	var tween = create_tween()
+	tween.tween_property(
+		$EnemyMesh,
+		"rotation:x",
+		0.0,
+		0.25
+	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+	animation_player.play("Armature|GroundBounce")
+
+	await get_tree().create_timer(0.15).timeout
+	animation_player.play("Armature|GroundRecover")
+	
+	
 func _physics_process(delta):
 
 	var was_on_floor = previous_on_floor
 
 	Gravity(delta)
 
-	move_and_slide()
 
 	# =========================
-	# AIR DAMAGE ROTATION
+	# 1. SLAM SEQUENCE (HIGHEST PRIORITY)
+	# =========================
+	if is_slam_sequence:
+
+		# still airborne during slam
+		if !is_on_floor():
+			apply_air_rotation(delta)
+
+		# just landed from slam
+		if is_on_floor() and !was_on_floor:
+			_handle_slam_land()
+
+		move_and_slide()
+		previous_on_floor = is_on_floor()
+		return
+
+
+	# =========================
+	# 2. NORMAL AIR DAMAGE
 	# =========================
 	if in_air_damage:
 
-		var target_rotation = remap(
-			velocity.y,
-			-40.0, 40.0,
-			deg_to_rad(90),
-			deg_to_rad(-90)
-		)
-
-		$EnemyMesh.rotation.x = lerp(
-			$EnemyMesh.rotation.x,
-			target_rotation,
-			delta * 10.0
-		)
-
-	# =========================
-	# SLAM LANDING
-	# =========================
-	if is_being_slammed:
-
-		print("SLAM IMPACT")
-
-		is_being_slammed = false
-		in_air_damage = false
-		waiting_for_bounce_land = true
-
-		slamCrushAnimation()
-
-		# bounce upward
-		velocity.y = upwardSlamForce
-
-		# little backward bounce
-		velocity += -global_transform.basis.z * horizontalSlamForce
-
-		VFX.landEffect($".", GroundDustEffect, $EnemyMesh)
-
-
-	if waiting_for_bounce_land:
+		apply_air_rotation(delta)
 
 		if is_on_floor() and !was_on_floor:
+			_handle_normal_land()
 
-			waiting_for_bounce_land = false
+		move_and_slide()
+		previous_on_floor = is_on_floor()
+		return
 
-			animation_player.play("Armature|GroundRecover")
 
-			await get_tree().create_timer(0.8).timeout
-
-			animation_player.play("Armature|RESET")
 	# =========================
-	# NORMAL AIR LANDING
+	# 3. GROUND STATES
 	# =========================
-	elif in_air_damage:
+	if is_on_floor():
 
-		if is_on_floor() and !was_on_floor:
+		if enemyStats.isGuarding:
+			animation_player.play("GuardIdle")
+		else:
+			animation_player.play("Idle")
 
-			in_air_damage = false
+	elif animation_player:
+		animation_player.play("Falling")
 
-			var tween = create_tween()
 
-			tween.tween_property(
-				$EnemyMesh,
-				"rotation:x",
-				0.0,
-				0.25
-			).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-
-			animation_player.play("Armature|GroundBounce")
-
-			VFX.landEffect($".", GroundDustEffect, $EnemyMesh)
-
-			await get_tree().create_timer(0.15).timeout
-
-			animation_player.play("Armature|GroundRecover")
-
-			await get_tree().create_timer(0.8).timeout
-
-			animation_player.play("Armature|RESET")
-
+	move_and_slide()
 	previous_on_floor = is_on_floor()
 
 func Gravity(delta: float) -> void:

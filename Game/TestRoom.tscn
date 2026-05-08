@@ -1264,7 +1264,7 @@ transform = Transform3D(0.469472, 0, -0.882948, 0, 1, 0, 0.882948, 0, 0.469472, 
 transform = Transform3D(0.605243, 0, 0.427205, 0, 0.740826, 0, -0.427205, 0, 0.605243, 0, 0, 0)
 
 [node name="FenceALL" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=1650600130]
-transform = Transform3D(-2.5002913e-07, 0, -5.72, 0, 5.72, 0, 5.72, 0, -2.5002913e-07, -82.65736, 3.1768112, 20)
+transform = Transform3D(-2.5002913e-07, 0, -5.72, 0, 5.72, 0, 5.72, 0, -2.5002913e-07, -82.65736, -1.2507286, 20)
 visible = false
 
 [node name="Fence16" parent="SubViewportContainer/SubViewport/FenceALL" unique_id=928242850 instance=ExtResource("26_u0pkm")]

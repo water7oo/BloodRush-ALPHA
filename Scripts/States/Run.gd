@@ -54,7 +54,6 @@ func _update(delta: float) -> void:
 		animation_player.play("player|Run")
 	agent.move_and_slide()
 
-# Smooth run (Mario-esque momentum)
 func player_run(delta: float) -> void:
 	if !Global.can_move:
 		return

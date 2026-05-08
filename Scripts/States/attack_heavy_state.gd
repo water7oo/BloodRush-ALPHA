@@ -65,9 +65,6 @@ func _enter(msg := {}) -> void:
 		animation_player.play(attackData.attackAnimation)
 
 
-# -------------------------
-# STARTUP
-# -------------------------
 func handle_startup(skip_startup: bool):
 	if skip_startup:
 		startup_timer = 0.0
@@ -75,15 +72,13 @@ func handle_startup(skip_startup: bool):
 		_enable_hitbox()
 		_start_attack()
 		attack_timer = attackData.active_duration + attackData.recovery_duration
+		print("skip startup 3")
 	else:
 		startup_timer = attackData.startup_duration
 		in_startup = true
 		attack_timer = 0.0
 
 
-# -------------------------
-# UPDATE
-# -------------------------
 func _update(delta: float) -> void:
 
 	combo_timer -= delta
@@ -111,14 +106,23 @@ func _update(delta: float) -> void:
 	# ACTIVE / RECOVERY
 	attack_timer -= delta
 
-	_process_cancel_window()
+	#_process_cancel_window()
 
+# CHAIN ASAP AFTER HIT CONFIRM
+	if buffered_heavy \
+	and hit_confirmed \
+	and cancel_window_active \
+	and combo_timer > 0.0:
+
+		print("CHAINING")
+		_chain_attack()
+		return
+
+	# END STATE
 	if attack_timer <= 0.0:
-		if buffered_input and cancel_window_active:
-			_chain_attack()
-		else:
-			_exit_attack_state()
-			agent.state_machine.dispatch("to_idle")
+		_exit_attack_state()
+		agent.state_machine.dispatch("to_idle")
+		return
 
 
 	_apply_physics(delta)
@@ -130,42 +134,32 @@ func _update(delta: float) -> void:
 # -------------------------
 func _start_attack() -> void:
 	combo_timer = attackData.combo_window_duration
-	cancel_window_active = true
-	Global.can_cancel = true
+	cancel_window_active = false
+	Global.can_cancel = false
 
 
 # -------------------------
 # CANCEL WINDOW
 # -------------------------
-func _process_cancel_window():
-	if buffered_input and cancel_window_active:
-		_chain_attack()
+#func _process_cancel_window():
+	#if buffered_input and cancel_window_active:
+		#_chain_attack()
 
 
 # -------------------------
 # CHAIN LOGIC (FIXED)
 # -------------------------
 func _chain_attack():
-
 	if animation_player.is_playing():
-		animation_player.stop()
-
-	_exit_attack_state()
+		animation_player.stop(true)
 	attack_timer = 0.0
-
-	if combo_timer >= 0.0:
-
-		# heavy branching
-		if buffered_medium:
-			agent.set_transition_data({"skip_startup": true})
-			agent.state_machine.dispatch("to_attackMedium")
-
-		elif buffered_heavy:
-			agent.set_transition_data({"skip_startup": true})
-			agent.state_machine.dispatch("to_attackHeavy")
-
-		else:
-			agent.state_machine.dispatch("to_idle")
+	_exit_attack_state()
+	agent.set_transition_data({"skip_startup": true})
+	
+	if attackData.next_attack_state != null:
+		agent.state_machine.dispatch(attackData.next_attack_state)
+	else:
+		print("next attack state is null")
 
 
 # -------------------------
@@ -312,6 +306,7 @@ func _on_attack_box_area_entered(area):
 		rotateEnemy_to_player(agent, areaParent)
 		rotate_to_target(areaParent)
 
+		hit_confirmed = true
 		Global.isHit = true
 		Global.can_cancel = true
 		cancel_window_active = true

@@ -20,5 +20,5 @@ knockback_direction_default = Vector3(0, -1, 0.4)
 ATTACK_DECELERATION = 30.0
 comboknockbackForceRate = 0.75
 knockback_force_finisher = 5.0
-knockback_direction_finisher = Vector3(0, -1, 0.4)
+knockback_direction_finisher = Vector3(0, -1, 1)
 animationSpeedScale = 2.0

@@ -93,8 +93,6 @@ func _update(delta: float) -> void:
 		return
 
 
-
-
 	if isGrabbed:
 		if not grabbed_enemy:
 			isGrabbed = false
@@ -213,36 +211,50 @@ func throw_forward():
 	release_enemy()
 	
 	throwSoundPlay()
-	gameJuice.knockback(enemy, agent, attackData.knockback_force, attackData.knockback_direction)
+	gameJuice.knockback(enemy, agent, attackData.knockback_force + 2.0, attackData.knockback_direction)
 
 func slam_down():
 	var enemy = grabbed_enemy
+	if enemy == null:
+		return
 
-	animation_player.speed_scale = 1
+	print("1")
+
+	animation_player.speed_scale = 1.5
 	animation_player.play("player|heavyAttack")
-
-	await get_tree().create_timer(.5).timeout
-
-	hit3Sound.play()
-	VFX.particleHitEffect(grabbed_enemy)
 	
-	enemy.is_being_slammed = true
-	enemy.in_air_damage = true
 
-	release_enemy()
+	await get_tree().create_timer(0.3).timeout
+	grabbed_enemy.animation_player.play("Armature|GroundBounce")
+	print("2")
+	hit3Sound.play()
 
-	animation_player.speed_scale = 1.0
-	animation_player.play("player|Launcher")
+	enemy.start_slam_sequence()
+	print("slam")
+	
+	gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
+	gameJuice.knockback(enemy, agent, attackData.knockback_force, attackData.knockback_downDirection)
+
+
+	await get_tree().create_timer(0.1).timeout
+
+	print("3")
+
+	if enemy:
+		enemy.slamCrushAnimation()
+		VFX.particleHitEffect(enemy)
+		VFX.spinEffectGround(agent, spinEffectMesh, enemy)
+
 
 	throwSoundPlay()
+	
 
-	# strong downward knockback
-	gameJuice.knockback(
-		enemy,
-		agent,
-		attackData.knockback_force,
-		Vector3.DOWN
-	)
+	await get_tree().create_timer(0.1).timeout
+	
+	print("launch away")
+	gameJuice.knockback(enemy, agent, attackData.knockback_force + 1, attackData.knockback_direction)
+
+	release_enemy()
 	
 func release_enemy():
 	var previousEnemy = grabbed_enemy
@@ -388,7 +400,7 @@ func attackEnemy(areaParent):
 			"timestamp": Time.get_ticks_msec()
 		})
 
-		grabbed_enemy.grabAnimation()
+
 		agent.updateComboCounterInstant(Global.combo_hits.size())
 		Global.combo_timer = Global.combo_reset_time
 		
@@ -455,7 +467,9 @@ func grabEnemy(area):
 		
 	var enemy = area.get_parent()
 	grabbed_enemy = enemy
+	grabbed_enemy.grabAnimation()
 
+	rotateEnemy_to_player(agent, enemy)
 	var grab_point = $"../../RootNode/grabPoint"
 
 	var global_xform = enemy.global_transform

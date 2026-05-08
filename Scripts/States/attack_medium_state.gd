@@ -19,32 +19,29 @@ extends LimboState
 @export var hit5GuardSound: AudioStreamPlayer
 
 const smear = preload("res://FX/smear_effect_horizontal.tscn")
-# -------------------------
-# STATE
-# -------------------------
+
 var attack_timer: float = 0.0
 var combo_timer: float = 0.0
 
-var buffered_input := false
-var buffered_medium := false
-var buffered_heavy := false
+var buffered_input: bool = false
+var buffered_medium: bool = false
+var buffered_heavy: bool = false
 
 var enemies_hit := {}
 
 var startup_timer := 0.0
-var in_startup := true
+var in_startup: bool = true
 
-# 🔥 FIXED SYSTEM FLAGS
-var hit_confirmed := false
-var cancel_window_active := false
+var hit_confirmed: bool = false
+var cancel_window_active: bool = false
+var launcher_buffered: bool = false
 
+var medium_pressed_time: float = -1.0
+var heavy_pressed_time: float = -1.0
+var launcher_window: float = 0.5
 
 @onready var PlayerUI = $PlayerUI
 
-
-# -------------------------
-# ENTER
-# -------------------------
 func _enter(msg := {}) -> void:
 	enemies_hit.clear()
 
@@ -67,10 +64,6 @@ func _enter(msg := {}) -> void:
 		animation_player.speed_scale = attackData.animationSpeedScale
 		animation_player.play(attackData.attackAnimation)
 
-
-# -------------------------
-# STARTUP
-# -------------------------
 func handle_startup(skip_startup: bool):
 	if skip_startup:
 		startup_timer = 0.0
@@ -78,15 +71,12 @@ func handle_startup(skip_startup: bool):
 		_enable_hitbox()
 		_start_attack()
 		attack_timer = attackData.active_duration + attackData.recovery_duration
+		print("skip startup 2")
 	else:
 		startup_timer = attackData.startup_duration
 		in_startup = true
 		attack_timer = 0.0
 
-
-# -------------------------
-# UPDATE
-# -------------------------
 func _update(delta: float) -> void:
 
 	combo_timer -= delta
@@ -94,13 +84,21 @@ func _update(delta: float) -> void:
 	if Input.is_action_just_pressed("attack_medium_1"):
 		buffered_medium = true
 		buffered_input = true
+		medium_pressed_time = Time.get_ticks_msec() / 1000.0
+
 
 	if Input.is_action_just_pressed("attack_heavy_1"):
 		buffered_heavy = true
 		buffered_input = true
 
+		var now = Time.get_ticks_msec() / 1000.0
+		# Detect launcher
+		if now - medium_pressed_time <= launcher_window:
+			launcher_buffered = true
+			print("LAUNCHER BUFFERED")
+		
 
-	# STARTUP
+	
 	if in_startup:
 		startup_timer -= delta
 		if startup_timer <= 0:
@@ -110,18 +108,21 @@ func _update(delta: float) -> void:
 			_start_attack()
 		return
 
-
-	# ACTIVE / RECOVERY
 	attack_timer -= delta
 
-	_process_cancel_window()
+	if buffered_input \
+	and hit_confirmed \
+	and cancel_window_active \
+	and combo_timer > 0.0:
+
+		print("medium state chaining")
+		_chain_attack()
+		return
 
 	if attack_timer <= 0.0:
-		if buffered_input and cancel_window_active:
-			_chain_attack()
-		else:
-			_exit_attack_state()
-			agent.state_machine.dispatch("to_idle")
+		_exit_attack_state()
+		agent.state_machine.dispatch("to_idle")
+		return
 
 
 	_comboKnockBack()
@@ -136,44 +137,33 @@ func _comboKnockBack():
 		
 		
 		
-# -------------------------
-# START ATTACK
-# -------------------------
 func _start_attack() -> void:
 	combo_timer = attackData.combo_window_duration
-	cancel_window_active = true
-	Global.can_cancel = true
+
+	cancel_window_active = false
+	Global.can_cancel = false
 
 
-# -------------------------
-# CANCEL WINDOW
-# -------------------------
-func _process_cancel_window():
-	if buffered_input and cancel_window_active:
-		_chain_attack()
-
-
-# -------------------------
-# CHAIN (FIXED)
-# -------------------------
 func _chain_attack():
 	if animation_player.is_playing():
-		animation_player.stop()
-
-	_exit_attack_state()
+		animation_player.stop(true)
 	attack_timer = 0.0
-
-	if combo_timer >= 0.0:
-		if buffered_heavy:
-			agent.set_transition_data({"skip_startup": true})
-			agent.state_machine.dispatch(attackData.next_attack_state)
-		else:
-			agent.state_machine.dispatch("to_idle")
+	agent.set_transition_data({"skip_startup": true})
 
 
-# -------------------------
-# HITBOX ENABLE
-# -------------------------
+
+	if launcher_buffered:
+		print("medium to launcher")
+		_exit_attack_state()
+		agent.state_machine.dispatch("to_attackUpper")
+		return
+		
+	else:
+		print("medium to heavy")
+		agent.state_machine.dispatch(attackData.next_attack_state)
+
+
+
 func _enable_hitbox():
 	Global.stretch_forward($"../../RootNode/player2")
 	VFX.smearEffectOverhead(agent, false, smear, $"../../RootNode/player2", 0.0)
@@ -241,15 +231,10 @@ func playHitSound():
 	Medium1Sound.pitch_scale = randf_range(.8, 1.1)
 	Medium1Sound.play()
 
-	
-# -------------------------
-# HIT LOGIC (FIXED)
-# -------------------------
 func _on_attack_box_area_entered(area):
 
 	var areaParent = area.get_parent()
 
-	# per-target protection
 	if enemies_hit.has(areaParent):
 		return
 
@@ -316,6 +301,7 @@ func _on_attack_box_area_entered(area):
 		rotateEnemy_to_player(agent, areaParent)
 		rotate_to_target(areaParent)
 
+		hit_confirmed = true
 		Global.isHit = true
 		Global.can_cancel = true
 		cancel_window_active = true
@@ -337,10 +323,6 @@ func _on_attack_box_area_entered(area):
 
 		agent.velocity = saved_velocity
 
-
-# -------------------------
-# PHYSICS
-# -------------------------
 func _apply_physics(delta: float):
 	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
 
@@ -348,10 +330,6 @@ func _apply_physics(delta: float):
 		agent.velocity.x = move_toward(agent.velocity.x, 0, attackData.ATTACK_DECELERATION * delta)
 		agent.velocity.z = move_toward(agent.velocity.z, 0, attackData.ATTACK_DECELERATION * delta)
 
-
-# -------------------------
-# EXIT
-# -------------------------
 func _exit_attack_state():
 	animation_player.speed_scale = 1.0
 	animation_player.stop()
@@ -363,7 +341,11 @@ func _exit_attack_state():
 	buffered_input = false
 	buffered_medium = false
 	buffered_heavy = false
-
+	launcher_buffered = false
+	
+	medium_pressed_time = -1.0
+	heavy_pressed_time = -1.0
+	
 	hit_confirmed = false
 	cancel_window_active = false
 
@@ -371,10 +353,6 @@ func _exit_attack_state():
 
 	_disable_hitbox()
 
-
-# -------------------------
-# HITBOX DISABLE
-# -------------------------
 func _disable_hitbox():
 	if attack_box:
 		attack_box.monitoring = false

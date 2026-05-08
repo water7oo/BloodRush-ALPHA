@@ -65,6 +65,7 @@ func handle_startup(skip_startup: bool):
 		_enable_hitbox()
 		_start_attack()
 		attack_timer = attackData.active_duration + attackData.recovery_duration
+		print("skip startup 1")
 	else:
 		startup_timer = attackData.startup_duration
 		in_startup = true
@@ -72,13 +73,10 @@ func handle_startup(skip_startup: bool):
 
 
 func _update(delta: float) -> void:
-
 	combo_timer -= delta
-
 	if Input.is_action_just_pressed("attack_medium_1"):
 		buffered_medium = true
 		buffered_input = true
-
 	# STARTUP
 	if in_startup:
 		startup_timer -= delta
@@ -88,47 +86,50 @@ func _update(delta: float) -> void:
 			_enable_hitbox()
 			_start_attack()
 		return
-
 	# ACTIVE / RECOVERY
 	attack_timer -= delta
+	#_process_cancel_window()
 
-	_process_cancel_window()
 
+# CHAIN ASAP AFTER HIT CONFIRM
+	if buffered_medium \
+	and hit_confirmed \
+	and cancel_window_active \
+	and combo_timer > 0.0:
+
+		print("CHAINING")
+		_chain_attack()
+		return
+
+	# END STATE
 	if attack_timer <= 0.0:
-		if buffered_input and cancel_window_active:
-			_chain_attack()
-		else:
-			_exit_attack_state()
-			agent.state_machine.dispatch("to_idle")
-
+		_exit_attack_state()
+		agent.state_machine.dispatch("to_idle")
+		return
 	_apply_physics(delta)
 	agent.move_and_slide()
 
 
-func _process_cancel_window():
-	if buffered_input and cancel_window_active:
-		_chain_attack()
+#func _process_cancel_window():
+	#if buffered_input and cancel_window_active:
+		#_chain_attack()
 
 
 func _start_attack() -> void:
 	combo_timer = attackData.combo_window_duration
-	cancel_window_active = true
-	Global.can_cancel = true
+
+	cancel_window_active = false
+	Global.can_cancel = false
 
 
 func _chain_attack():
 	if animation_player.is_playing():
-		animation_player.stop()
-
-	_exit_attack_state()
+		animation_player.stop(true)
 	attack_timer = 0.0
-
-	if combo_timer >= 0.0:
-		if buffered_medium:
-			agent.set_transition_data({"skip_startup": true})
-			agent.state_machine.dispatch(attackData.next_attack_state)
-		else:
-			agent.state_machine.dispatch("to_idle")
+	_exit_attack_state()
+	agent.set_transition_data({"skip_startup": true})
+	print("chain")
+	agent.state_machine.dispatch(attackData.next_attack_state)
 
 
 func _enable_hitbox():
@@ -241,7 +242,6 @@ func _on_attack_box_area_entered(area):
 
 		playHitSound()
 
-		# freeze velocity safely
 		var saved_velocity = agent.velocity
 		agent.velocity = Vector3.ZERO
 
@@ -251,7 +251,6 @@ func _on_attack_box_area_entered(area):
 
 		agent.velocity = saved_velocity
 
-		# knockback
 		var combo_count = Global.combo_hits.size()
 
 		if enemy is CharacterBody3D:
@@ -260,6 +259,37 @@ func _on_attack_box_area_entered(area):
 			else:
 				gameJuice.knockback(enemy, agent, attackData.comboknockbackForce, attackData.knockback_direction)
 
+	elif areaParent.has_method("takeGuardDamageEnemy") \
+	and areaParent.enemyStats.isGuarding \
+	and areaParent.enemyStats.current_health > 0 \
+	and not areaParent.enemyStats.isDead:
+
+		areaParent.takeDamageEnemy(attackData.attackDamage * 0.5)
+
+		rotateEnemy_to_player(agent, areaParent)
+		rotate_to_target(areaParent)
+
+		hit_confirmed = true
+		Global.isHit = true
+		Global.can_cancel = true
+		cancel_window_active = true
+
+		attack_box.monitoring = false
+
+		hit5GuardSound.pitch_scale = randf_range(0.3, 1.5)
+		hit5GuardSound.play()
+
+		var enemy = areaParent
+		while enemy and not (enemy is CharacterBody3D):
+			enemy = enemy.get_parent()
+
+		var saved_velocity = agent.velocity
+		agent.velocity = Vector3.ZERO
+
+		gameJuice.objectShake(enemy, attackData.enemyTargetGuardLength, attackData.enemyTargetGuardMagnitude)
+		gameJuice.hitstop(attackData.enemyTargetGuardedHitstop, [agent, enemy])
+
+		agent.velocity = saved_velocity
 
 func _apply_physics(delta: float):
 	agent.velocity.y -= Global.CUSTOM_GRAVITY * delta
