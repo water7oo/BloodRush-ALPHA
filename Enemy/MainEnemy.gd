@@ -162,6 +162,8 @@ func grabAnimation():
 func slamCrushAnimation():
 
 	in_air_damage = false
+	
+	animation_player.speed_scale = 0.2
 	animation_player.play("Armature|GroundBounce")
 	var tween = create_tween()
 	tween.tween_property(
@@ -170,7 +172,12 @@ func slamCrushAnimation():
 		0.0,
 		0.2
 	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		
+	
+	
+	await get_tree().create_timer(0.1).timeout
+	animation_player.speed_scale = 1
+	animation_player.play("Armature|CrushSpinningBack")
+	
 func grabReleaseAnimation():
 	animation_player.play("Armature|GrabReleased")
 	

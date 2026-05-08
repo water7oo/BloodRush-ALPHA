@@ -50,7 +50,7 @@ func _update(delta: float) -> void:
 	initialize_guard(delta)
 	
 	if animation_player && Global.is_moving:
-		animation_player.speed_scale = velocity.length() * .1
+		animation_player.speed_scale = velocity.length() * .05
 		animation_player.play("player|Run")
 	agent.move_and_slide()
 

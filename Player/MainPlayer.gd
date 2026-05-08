@@ -251,8 +251,8 @@ func _physics_process(delta: float) -> void:
 	mediumAttackTimer.text = ("medium attack timer: " + str(attackMedium_state.attack_timer))
 	heavyAttackTimer.text = ("heavy attack timer: " + str(attackHeavy_state.attack_timer))
 	upperAttackTimer.text = ("upper attack timer: " + str(attack_upper_state.attack_timer))
-	jumpCancelTimer.text = ("jump cancel timer: " + str(attack_upper_state.jump_cancel_timer))
-	jumpCancelDelay.text = ("jump cancel delay: " + str(attack_upper_state.jumpCancelDelay))
+	#jumpCancelTimer.text = ("jump cancel timer: " + str(attack_upper_state.jump_cancel_timer))
+	#jumpCancelDelay.text = ("jump cancel delay: " + str(attack_upper_state.jumpCancelDelay))
 	
 	var clean_name = attack_upper_state.attackData.resource_path.get_file().get_basename().to_lower()
 	UpperSwapDebug.text = "upperswap: " + clean_name
