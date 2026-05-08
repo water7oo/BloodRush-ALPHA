@@ -127,13 +127,13 @@ func _end_or_chain():
 
 
 func _chain_attack():
-	_exit_attack_state()
 	
 	attack_timer = 0.0
 
 	if combo_timer >= 0.0:
 		if buffered_medium:
 			print("L to M")
+			_exit_attack_state()
 			agent.set_transition_data({"skip_startup": true})
 			agent.state_machine.dispatch(attackData.next_attack_state)
 		else:
@@ -228,7 +228,7 @@ func hitFinisher(area):
 		attackData.enemyTargetHitStop = attackData.enemyHitstopFinisher
 	else:
 		attackData.knockback_force = attackData.knockback_force_default
-		attackData.knockback_direction = Vector3(0, 0, 1)
+		attackData.knockback_direction = attackData.knockback_direction_default
 		attackData.enemyTargetLength = attackData.DefaultenemyTargetLength
 		attackData.enemyTargetMagnitude = attackData.DefaultenemyTargetMagnitude
 		attackData.enemyTargetHitStop = attackData.DefaultenemyTargetHitStop
@@ -282,7 +282,7 @@ func _on_attack_box_area_entered(area):
 		enemies_hit[area] = true
 
 		if enemy.has_method("damageAnimation"):
-			enemy.damageAnimation()
+			enemy.damageAnimation(.2)
 				
 		if enemy.has_node("EnemyMesh"):
 			var enemyScene = enemy.get_node("EnemyMesh")

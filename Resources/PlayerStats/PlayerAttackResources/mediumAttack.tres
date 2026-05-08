@@ -13,6 +13,7 @@ enemyTargetMagnitude = 0.07
 enemyTargetHitStop = 0.3
 Default_knockback_force = 3.5
 knockback_force = 3.5
+knockback_direction_default = Vector3(0, 0, 1)
 ATTACK_DECELERATION = 30.0
 next_attack_state = &"to_heavyAttack"
 comboknockbackForceRate = 0.7

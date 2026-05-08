@@ -13,6 +13,7 @@ combo_window_duration = 0.8
 enemyTargetLength = 0.15
 enemyTargetMagnitude = 0.05
 enemyTargetHitStop = 0.2
+knockback_direction_default = Vector3(0, 0, 1)
 ATTACK_DECELERATION = 30.0
 next_attack_state = &"to_mediumAttack"
 knockback_force_guardRate = 0.6

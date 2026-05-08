@@ -3,7 +3,7 @@ extends Area3D
 @onready var mesh = $"../MeshInstance3D"
 
 var target: Node3D = null
-@export var turn_speed: float = 1.0  # tweak this for faster/slower turning
+@export var turn_speed: float = 0.0  # tweak this for faster/slower turning
 @onready var player: Node3D = null
 
 func _on_area_entered(area: Area3D) -> void:

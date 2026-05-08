@@ -17,6 +17,7 @@ extends Resource
 @export var Default_knockback_force: float = 3.0
 @export var knockback_force: float = 3.0
 @export var knockback_direction: Vector3 = Vector3(0, 0, 1)
+@export var knockback_direction_default: Vector3 = Vector3(0, 1, 1)
 
 @export var jump_cancel_window: float = 0.25
 @export var ATTACK_DECELERATION: float = 60.0

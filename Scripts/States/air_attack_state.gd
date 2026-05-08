@@ -202,7 +202,7 @@ func hitFinisher(area):
 		attackData.enemyTargetHitStop = attackData.enemyHitstopFinisher
 	else:
 		attackData.knockback_force = attackData.knockback_force_default
-		attackData.knockback_direction = Vector3(0, 0, 1)
+		attackData.knockback_direction = attackData.knockback_direction_default
 		attackData.enemyTargetLength = attackData.DefaultenemyTargetLength
 		attackData.enemyTargetMagnitude = attackData.DefaultenemyTargetMagnitude
 		attackData.enemyTargetHitStop = attackData.DefaultenemyTargetHitStop
@@ -259,7 +259,7 @@ func _on_attack_box_area_entered(area):
 		playhitSound()
 
 		if enemy.has_method("damageAnimation"):
-			enemy.damageAnimation()
+			enemy.airDamageAnimation(.9, false)
 				
 		if enemy.has_node("EnemyMesh"):
 			var enemyScene = enemy.get_node("EnemyMesh")

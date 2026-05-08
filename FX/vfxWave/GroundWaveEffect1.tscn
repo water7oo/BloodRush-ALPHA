@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://dhd2amiuh43lt"]
 
-[ext_resource type="PackedScene" uid="uid://cafabtl3b50vx" path="res://FX/Dust_Wave.fbx" id="1_x5vei"]
-[ext_resource type="Script" uid="uid://ilnnhgtka3to" path="res://FX/dust_effect_1.gd" id="2_yxw2k"]
-[ext_resource type="Texture2D" uid="uid://ctpf7t205a75m" path="res://FX/Dust_Wave2-e8432e9fa40c58d5df7e1588c66db668_Slashing_Texture3.png" id="3_gjmsr"]
+[ext_resource type="PackedScene" uid="uid://cafabtl3b50vx" path="res://FX/Dust_Wave.fbx" id="1_l246l"]
+[ext_resource type="Texture2D" uid="uid://ctpf7t205a75m" path="res://FX/Dust_Wave2-e8432e9fa40c58d5df7e1588c66db668_Slashing_Texture3.png" id="2_asnj6"]
+[ext_resource type="Script" uid="uid://ilnnhgtka3to" path="res://FX/dust_effect_1.gd" id="3_chyrw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_74ker"]
 transparency = 1
 cull_mode = 2
 shading_mode = 0
-albedo_texture = ExtResource("3_gjmsr")
+albedo_texture = ExtResource("2_asnj6")
 texture_filter = 0
 
 [sub_resource type="Animation" id="Animation_mrki0"]
@@ -162,12 +162,12 @@ nodes/Blend2/node = SubResource("AnimationNodeBlend2_vs46r")
 nodes/Blend2/position = Vector2(80, 120)
 node_connections = [&"Blend2", 0, &"Animation 2", &"Blend2", 1, &"Animation"]
 
-[node name="Root Scene" unique_id=440371400 instance=ExtResource("1_x5vei")]
+[node name="Root Scene" unique_id=440371400 instance=ExtResource("1_l246l")]
 
 [node name="Cylinder_001" parent="." index="0" unique_id=652088545]
 transform = Transform3D(100, 0, 0, 0, -4.3711384e-06, 99.99999, 0, -99.99999, -4.3711384e-06, 0, 0, 0.0003220886)
 material_override = SubResource("StandardMaterial3D_74ker")
-script = ExtResource("2_yxw2k")
+script = ExtResource("3_chyrw")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1" unique_id=1466926974]
 libraries/ = SubResource("AnimationLibrary_qyg83")

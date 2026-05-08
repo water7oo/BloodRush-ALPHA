@@ -3,7 +3,7 @@ extends Resource
 @export var camShakeLength: float = 1.0
 @export var camShakeMagnitude: float = 1.0
 
-
+@export var slamKnoackBackForce: float = 12.0
 @export var startup_duration: float = 0.1
 @export var active_duration: float = 0.4
 @export var recovery_duration: float = 0.3
@@ -44,6 +44,8 @@ var comboknockbackForce: float = knockback_force * comboknockbackForceRate
 @export var knockback_force_default: float = 4.0
 
 @export var knockback_direction_finisher: Vector3 = Vector3(0, 1, 1)
+@export var knockback_direction_default: Vector3 = Vector3(0, 1, 1)
+
 
 @export var DefaultenemyTargetLength: float = .3
 @export var DefaultenemyTargetMagnitude: float = .1

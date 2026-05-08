@@ -14,6 +14,7 @@ extends LimboState
 
 @export var hit1Sound: AudioStreamPlayer
 @export var hit2Sound: AudioStreamPlayer
+@export var hit3Sound: AudioStreamPlayer
 
 
 var attack_timer: float = 0.0
@@ -216,39 +217,57 @@ func throw_forward():
 
 func slam_down():
 	var enemy = grabbed_enemy
-	var forward_dir = agent.global_transform.basis.z.normalized()
+
+	animation_player.speed_scale = 1
+	animation_player.play("player|heavyAttack")
+
+	await get_tree().create_timer(.5).timeout
+
+	hit3Sound.play()
+	VFX.particleHitEffect(grabbed_enemy)
 	
-	grabSoundPlay()
-	animation_player.speed_scale = -1.0
-	animation_player.play("player|Launcher")
-	attackEnemy(grabbed_enemy)
+	enemy.is_being_slammed = true
+	enemy.in_air_damage = true
+
 	release_enemy()
-	await get_tree().create_timer(0.2).timeout
 
-	animation_player.speed_scale = -1.0
+	animation_player.speed_scale = 1.0
 	animation_player.play("player|Launcher")
 
-	attackEnemy(grabbed_enemy)
-
-	
 	throwSoundPlay()
-	gameJuice.knockback(enemy, agent, attackData.knockback_force, attackData.knockback_direction)
-	
+
+	# strong downward knockback
+	gameJuice.knockback(
+		enemy,
+		agent,
+		attackData.knockback_force,
+		Vector3.DOWN
+	)
 	
 func release_enemy():
-	if not grabbed_enemy:
-		return
+	var previousEnemy = grabbed_enemy
 
-	var global_xform = grabbed_enemy.global_transform
+	if previousEnemy:
+		if previousEnemy.is_being_slammed:
+			pass
+		elif !previousEnemy.is_on_floor():
+			previousEnemy.airDamageAnimation(1, false)
+		else:
+			previousEnemy.grabReleaseAnimation()
 
-	var root = get_tree().current_scene
-	grabbed_enemy.get_parent().remove_child(grabbed_enemy)
-	root.add_child(grabbed_enemy)
+		if not grabbed_enemy:
+			return
 
-	grabbed_enemy.global_transform = global_xform
+		var global_xform = grabbed_enemy.global_transform
 
-	grabbed_enemy = null
-	isGrabbed = false
+		var root = get_tree().current_scene
+		grabbed_enemy.get_parent().remove_child(grabbed_enemy)
+		root.add_child(grabbed_enemy)
+
+		grabbed_enemy.global_transform = global_xform
+
+		grabbed_enemy = null
+		isGrabbed = false
 	
 	
 func _comboKnockBack():
@@ -338,28 +357,26 @@ func rotateEnemy_to_player(agent, areaParent):
 		
 		
 		
-func hitFinisher(area):
-	var is_finishing_blow = area.enemyStats.current_health <= 0
-
-	if is_finishing_blow:
-		attackData.knockback_force = attackData.knockback_force_finisher
-		attackData.knockback_direction = attackData.knockback_direction_finisher
-		attackData.enemyTargetLength = attackData.enemyTargetFinisher
-		attackData.enemyTargetMagnitude = attackData.enemyTargetMagnitudeFinisher
-		attackData.enemyTargetHitStop = attackData.enemyHitstopFinisher
-	else:
-		attackData.knockback_force = attackData.knockback_force_default
-		attackData.knockback_direction = Vector3(0, 0, 1)
-		attackData.enemyTargetLength = attackData.DefaultenemyTargetLength
-		attackData.enemyTargetMagnitude = attackData.DefaultenemyTargetMagnitude
-		attackData.enemyTargetHitStop = attackData.DefaultenemyTargetHitStop
-		pass
+#func hitFinisher(area):
+	#var is_finishing_blow = area.enemyStats.current_health <= 0
+#
+	#if is_finishing_blow:
+		#attackData.knockback_force = attackData.knockback_force_finisher
+		#attackData.knockback_direction = attackData.knockback_direction_finisher
+		#attackData.enemyTargetLength = attackData.enemyTargetFinisher
+		#attackData.enemyTargetMagnitude = attackData.enemyTargetMagnitudeFinisher
+		#attackData.enemyTargetHitStop = attackData.enemyHitstopFinisher
+	#else:
+		#attackData.knockback_force = attackData.knockback_force_default
+		#attackData.knockback_direction = attackData.knockback_direction_default
+		#attackData.enemyTargetLength = attackData.DefaultenemyTargetLength
+		#attackData.enemyTargetMagnitude = attackData.DefaultenemyTargetMagnitude
+		#attackData.enemyTargetHitStop = attackData.DefaultenemyTargetHitStop
+		#pass
 
 func attackEnemy(areaParent):
 	if grabbed_enemy != null:
 		areaParent.takeDamageEnemy(attackData.attackDamage)
-		hitFinisher(areaParent)
-
 		areaParent.takeDamageEnemy(attackData.attackDamage)
 		rotateEnemy_to_player(agent, areaParent)
 		rotate_to_target(areaParent)
@@ -370,7 +387,8 @@ func attackEnemy(areaParent):
 			"attack_type": "grabAttack",
 			"timestamp": Time.get_ticks_msec()
 		})
-		
+
+		grabbed_enemy.grabAnimation()
 		agent.updateComboCounterInstant(Global.combo_hits.size())
 		Global.combo_timer = Global.combo_reset_time
 		
@@ -391,9 +409,10 @@ func attackEnemy(areaParent):
 		enemies_hit[areaParent] = true
 
 
+				
 		if enemy.has_node("EnemyMesh"):
-			var mesh = enemy.get_node("EnemyMesh")
-			mesh.trigger_flash()
+			var enemyScene = enemy.get_node("EnemyMesh")
+			enemyScene.trigger_flash()
 			await get_tree().process_frame
 
 		var saved_velocity = agent.velocity

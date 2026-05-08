@@ -620,7 +620,7 @@ knockback_direction = Vector3(0, 0, -1)
 [node name="RecoverState" type="LimboState" parent="LimboHSM" unique_id=1979648746]
 script = ExtResource("11_3apqd")
 
-[node name="GrabState" type="LimboState" parent="LimboHSM" unique_id=1755192759 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "hit1Sound", "hit2Sound")]
+[node name="GrabState" type="LimboState" parent="LimboHSM" unique_id=1755192759 node_paths=PackedStringArray("attack_box", "attack_box_col", "attack_box_debug", "ComboConfirmFX", "hit1Sound", "hit2Sound", "hit3Sound")]
 script = ExtResource("39_r0qfn")
 attack_box = NodePath("../../RootNode/GrabAttack")
 attack_box_col = NodePath("../../RootNode/AttackBox/CollisionShape3D")
@@ -629,6 +629,7 @@ ComboConfirmFX = NodePath("../../ComboConfirm1")
 attackData = ExtResource("40_tobss")
 hit1Sound = NodePath("../../GrabSound1")
 hit2Sound = NodePath("../../GrabSound2")
+hit3Sound = NodePath("../../GrabSound3")
 
 [node name="move_dust" type="GPUParticles3D" parent="." unique_id=1083574215]
 process_mode = 3
@@ -811,6 +812,12 @@ process_mode = 3
 stream = ExtResource("55_3pi6o")
 volume_db = -7.74
 pitch_scale = 0.39
+
+[node name="GrabSound3" type="AudioStreamPlayer" parent="." unique_id=1289898254]
+process_mode = 3
+stream = ExtResource("51_mshqq")
+volume_db = -2.903
+pitch_scale = 0.36
 
 [node name="ComboSound1" type="AudioStreamPlayer" parent="." unique_id=373144336]
 process_mode = 3
@@ -1043,6 +1050,7 @@ mesh = SubResource("BoxMesh_uf676")
 
 [node name="AttackUpperBox2" type="Area3D" parent="RootNode" unique_id=219792082]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5133755, -1.5815301)
+visible = false
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RootNode/AttackUpperBox2" unique_id=413620503]

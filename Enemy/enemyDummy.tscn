@@ -20,12 +20,12 @@ shader_parameter/intensity = 1.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6g3nf"]
 render_priority = 0
 shader = ExtResource("3_p2wm2")
-shader_parameter/shadows_enabled = false
-shader_parameter/highlights_enabled = false
+shader_parameter/shadows_enabled = true
+shader_parameter/highlights_enabled = true
 shader_parameter/shadow_strength = 0.999999977648
 shader_parameter/highlight_strength = 0.0
 shader_parameter/highlight_color = Color(1, 1, 1, 1)
-shader_parameter/shadow_color = Color(0.47397572, 0.47397578, 0.4739756, 1)
+shader_parameter/shadow_color = Color(0.5053443, 0.505344, 0.50534403, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3ae78"]
 render_priority = 0
@@ -42,27 +42,31 @@ specular_mode = 1
 albedo_texture = ExtResource("3_rlcwf")
 texture_filter = 0
 
-[node name="enemyDummy" unique_id=1912012700 instance=ExtResource("1_ai743")]
+[node name="enemyDummy" unique_id=1048459900 instance=ExtResource("1_ai743")]
 script = ExtResource("5_p2wm2")
 
-[node name="Armature" parent="." index="0" unique_id=111419901]
+[node name="Armature" parent="." index="0" unique_id=1964443279]
 transform = Transform3D(100, 0, 0, 0, -4.3711384e-06, 99.99999, 0, -99.99999, -4.3711384e-06, 0, -8, 0)
 
-[node name="Skeleton3D" parent="Armature" index="0" unique_id=1401872192]
-bones/0/rotation = Quaternion(0.7071069, -2.0608955e-09, -3.7912176e-09, 0.7071067)
-bones/0/scale = Vector3(1, 1, 1)
+[node name="Skeleton3D" parent="Armature" index="0" unique_id=1634070880]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 3.5527137e-15, 0, -3.5527137e-15, 1.0000001, 0, 0, 0)
 bones/1/position = Vector3(0, -0.020000003, 2.7870248e-10)
-bones/1/rotation = Quaternion(-0.015134372, -0.9848078, -7.4536227e-10, 0.17298718)
+bones/1/rotation = Quaternion(-0.015134375, -0.9848079, 1.398158e-09, 0.17298706)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/position = Vector3(0, 0.05, 1.1823431e-15)
-bones/2/rotation = Quaternion(2.3283064e-10, 1.49048e-08, -8.731155e-11, 1)
+bones/2/rotation = Quaternion(-0.055445917, -0.012864207, -0.0004484218, 0.9983788)
+bones/2/scale = Vector3(1, 1, 1)
 bones/4/position = Vector3(0, -0.020000003, 2.7870248e-10)
 bones/4/rotation = Quaternion(0.1729871, -5.296497e-09, 0.9848079, 0.015134376)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/position = Vector3(-3.2500366e-23, 0.044472713, -3.7176085e-16)
-bones/5/rotation = Quaternion(3.49246e-10, 2.9816874e-08, -8.731149e-11, 1)
+bones/5/rotation = Quaternion(0.06497462, 0.006297049, -0.028140005, 0.9974702)
 bones/5/scale = Vector3(1, 1, 1)
 
-[node name="Sandbag" parent="Armature/Skeleton3D" index="0" unique_id=725194631 groups=["Mesh"]]
+[node name="Sandbag" parent="Armature/Skeleton3D" index="0" unique_id=266806018 groups=["Mesh"]]
+transform = Transform3D(1.0000002, 0, 0, 0, 1.0000002, 3.5527137e-15, 0, -3.5527137e-15, 1.0000002, 0, 0, 0)
 material_overlay = SubResource("ShaderMaterial_bo421")
 surface_material_override/0 = SubResource("StandardMaterial3D_bo421")
+
+[node name="Cube" parent="." index="1" unique_id=1972813742]
+visible = false

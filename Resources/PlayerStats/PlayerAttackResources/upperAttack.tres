@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_dg80q")
-camShakeLength = 0.2
-camShakeMagnitude = 0.2
+camShakeLength = 0.17
+camShakeMagnitude = 0.17
 startup_duration = 0.2
 active_duration = 0.5
 recovery_duration = 0.5
@@ -17,6 +17,7 @@ enemyTargetHitStop = 0.3
 Default_knockback_force = 3.5
 knockback_force = 4.0
 knockback_direction = Vector3(0, 1, 0.3)
+knockback_direction_default = Vector3(0, 1, 0.3)
 ATTACK_DECELERATION = 30.0
 next_attack_state = &"to_jump"
 jumpCancelDelayDuration = 0.001
@@ -28,4 +29,4 @@ knockback_force_finisher = 5.0
 knockback_force_default = 4.0
 knockback_direction_finisher = Vector3(0, 1, 0.3)
 attackAnimation = "player|upperCut"
-animationSpeedScale = 1.0
+animationSpeedScale = 0.7

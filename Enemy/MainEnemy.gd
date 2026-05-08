@@ -35,11 +35,18 @@ extends CharacterBody3D
 const DAMAGE_NUM = preload("uid://cotsnmovmqwww")
 
 const DustWaveEffect = preload("res://FX/vfxWave/VerticalWaveEffect1.tscn")
+const GroundDustEffect = preload("res://FX/vfxWave/GroundWaveEffect1.tscn")
 var effectSpawned = false
 
 @export var enemyMeshScene: Node3D
 var animation_player: AnimationPlayer
 
+var in_air_damage := false
+var previous_on_floor := false
+var is_being_slammed := false
+var waiting_for_bounce_land := false
+var upwardSlamForce: float = 10.0
+var horizontalSlamForce: float = 10.0
 func _ready():
 	if enemyMeshScene:
 		animation_player = enemyMeshScene.get_node("AnimationPlayer")
@@ -124,22 +131,50 @@ func startHealth():
 			print("Health bar not found")
 			
 
-func damageAnimation():
-	
+func damageAnimation(animationDuration):
 		var randomNum = randi_range(1, 3)
 		if randomNum == 1:
 			animation_player.play("Armature|Hurt")
-			#await get_tree().create_timer(.5).timeout
-			#animation_player.play("Armature|RESET")
+			await get_tree().create_timer(animationDuration).timeout
+			animation_player.play("Armature|RESET")
 		elif randomNum == 2:
 			animation_player.play("Armature|HurtMedium")
-			#await get_tree().create_timer(.5).timeout
-			#animation_player.play("Armature|RESET")
+			await get_tree().create_timer(animationDuration).timeout
+			animation_player.play("Armature|RESET")
 		elif randomNum == 3:
 			animation_player.play("Armature|HurtCrush")
-			#await get_tree().create_timer(.5).timeout
-			#animation_player.play("Armature|RESET")
-			
+			await get_tree().create_timer(animationDuration).timeout
+			animation_player.play("Armature|RESET")
+
+func airDamageAnimation(animationDuration, isUpper):
+	if isUpper == true:
+		in_air_damage = true
+		previous_on_floor = false
+		animation_player.play("Armature|CrushSpinningBack")
+	else:
+		in_air_damage = true
+		previous_on_floor = false
+		animation_player.play("Armature|Juggling")
+
+func grabAnimation():
+	animation_player.play("Armature|Grabbed")
+
+func slamCrushAnimation():
+
+	in_air_damage = false
+	animation_player.play("Armature|GroundBounce")
+	var tween = create_tween()
+	tween.tween_property(
+		$EnemyMesh,
+		"rotation:x",
+		0.0,
+		0.2
+	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		
+func grabReleaseAnimation():
+	animation_player.play("Armature|GrabReleased")
+	
+	
 func takeDamageEnemy(damage: float) -> void:
 		if enemyStats.isDead == false:
 
@@ -196,9 +231,96 @@ func takeGuardDamageEnemy(damage: float) -> void:
 			enemyHurtBox.monitorable = true
 			
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta):
+
+	var was_on_floor = previous_on_floor
+
 	Gravity(delta)
+
 	move_and_slide()
+
+	# =========================
+	# AIR DAMAGE ROTATION
+	# =========================
+	if in_air_damage:
+
+		var target_rotation = remap(
+			velocity.y,
+			-40.0, 40.0,
+			deg_to_rad(90),
+			deg_to_rad(-90)
+		)
+
+		$EnemyMesh.rotation.x = lerp(
+			$EnemyMesh.rotation.x,
+			target_rotation,
+			delta * 10.0
+		)
+
+	# =========================
+	# SLAM LANDING
+	# =========================
+	if is_being_slammed:
+
+		print("SLAM IMPACT")
+
+		is_being_slammed = false
+		in_air_damage = false
+		waiting_for_bounce_land = true
+
+		slamCrushAnimation()
+
+		# bounce upward
+		velocity.y = upwardSlamForce
+
+		# little backward bounce
+		velocity += -global_transform.basis.z * horizontalSlamForce
+
+		VFX.landEffect($".", GroundDustEffect, $EnemyMesh)
+
+
+	if waiting_for_bounce_land:
+
+		if is_on_floor() and !was_on_floor:
+
+			waiting_for_bounce_land = false
+
+			animation_player.play("Armature|GroundRecover")
+
+			await get_tree().create_timer(0.8).timeout
+
+			animation_player.play("Armature|RESET")
+	# =========================
+	# NORMAL AIR LANDING
+	# =========================
+	elif in_air_damage:
+
+		if is_on_floor() and !was_on_floor:
+
+			in_air_damage = false
+
+			var tween = create_tween()
+
+			tween.tween_property(
+				$EnemyMesh,
+				"rotation:x",
+				0.0,
+				0.25
+			).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+			animation_player.play("Armature|GroundBounce")
+
+			VFX.landEffect($".", GroundDustEffect, $EnemyMesh)
+
+			await get_tree().create_timer(0.15).timeout
+
+			animation_player.play("Armature|GroundRecover")
+
+			await get_tree().create_timer(0.8).timeout
+
+			animation_player.play("Armature|RESET")
+
+	previous_on_floor = is_on_floor()
 
 func Gravity(delta: float) -> void:
 	if !is_on_floor():

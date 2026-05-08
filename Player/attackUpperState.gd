@@ -59,7 +59,7 @@ func _enter() -> void:
 		animation_player.speed_scale = attackData.animationSpeedScale
 		animation_player.play(attackData.attackAnimation)
 
-	if !is_multi_hit:
+	if is_multi_hit:
 		attack_box = $"../../RootNode/AttackUpperBox2"
 		attack_box_col = $"../../RootNode/AttackUpperBox2/CollisionShape3D"
 		attack_box_debug = $"../../RootNode/AttackUpperBox2/Attack_Debug"
@@ -380,7 +380,7 @@ func hitFinisher(area):
 		attackData.enemyTargetHitStop = attackData.enemyHitstopFinisher
 	else:
 		attackData.knockback_force = attackData.knockback_force_default
-		attackData.knockback_direction = Vector3(0, 1, 0.3)
+		attackData.knockback_direction = attackData.knockback_direction_default
 		attackData.enemyTargetLength = attackData.DefaultenemyTargetLength
 		attackData.enemyTargetMagnitude = attackData.DefaultenemyTargetMagnitude
 		attackData.enemyTargetHitStop = attackData.DefaultenemyTargetHitStop
@@ -403,7 +403,8 @@ func _on_attack_box_area_entered(area):
 
 		areaParent.takeDamageEnemy(attackData.attackDamage)
 		hitFinisher(areaParent)
-		
+		rotateEnemy_to_player(agent, areaParent)
+		rotate_to_target(areaParent)
 		
 		Global.combo_hits.append({
 			"enemy": area,
@@ -433,7 +434,7 @@ func _on_attack_box_area_entered(area):
 			Upper1Sound.play()
 		
 		if enemy.has_method("damageAnimation"):
-			enemy.damageAnimation()
+			enemy.airDamageAnimation(.9, true)
 				
 		if enemy.has_node("EnemyMesh"):
 			var enemyScene = enemy.get_node("EnemyMesh")
