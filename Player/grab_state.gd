@@ -225,13 +225,12 @@ func slam_down():
 	
 
 	await get_tree().create_timer(0.3).timeout
-	grabbed_enemy.animation_player.play("Armature|GroundBounce")
 	print("2")
 	hit3Sound.play()
 
-	enemy.start_slam_sequence()
 	print("slam")
 	
+	enemy.start_slam_sequence()
 	gameJuice.hitstop(attackData.enemyTargetHitStop, [agent, enemy])
 	gameJuice.knockback(enemy, agent, attackData.knockback_force, attackData.knockback_downDirection)
 
@@ -240,20 +239,23 @@ func slam_down():
 
 	print("3")
 
-	if enemy:
-		enemy.slamCrushAnimation()
-		VFX.particleHitEffect(enemy)
-		VFX.spinEffectGround(agent, spinEffectMesh, enemy)
-
 
 	throwSoundPlay()
 	
 
 	await get_tree().create_timer(0.1).timeout
-	
+
+	if enemy:
+		#enemy.airDamageAnimation(.9, true)
+		enemy.slamCrushAnimation()
+		VFX.particleHitEffect(enemy)
+		VFX.spinEffectGround(agent, spinEffectMesh, enemy)
+
+
 	print("launch away")
 	gameJuice.knockback(enemy, agent, attackData.knockback_force + 1, attackData.knockback_direction)
 
+	enemy.in_air_damage = true
 	release_enemy()
 	
 func release_enemy():

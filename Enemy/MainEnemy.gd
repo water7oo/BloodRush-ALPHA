@@ -39,7 +39,7 @@ const GroundDustEffect = preload("res://FX/vfxWave/GroundWaveEffect1.tscn")
 var effectSpawned = false
 
 @export var enemyMeshScene: Node3D
-var animation_player: AnimationPlayer
+#var animation_player: AnimationPlayer
 
 var in_air_damage := false
 var previous_on_floor := false
@@ -49,6 +49,8 @@ var upwardSlamForce: float = 15.0
 var horizontalSlamForce: float = 20.0
 
 var is_slam_sequence := false
+
+@onready var animation_player: AnimationPlayer = $EnemyMesh/Armature/AnimationPlayer
 
 func _ready():
 	if enemyMeshScene:
@@ -248,8 +250,7 @@ func takeGuardDamageEnemy(damage: float) -> void:
 
 func start_slam_sequence():
 	is_slam_sequence = true
-	in_air_damage = true
-	waiting_for_bounce_land = false
+	in_air_damage = false
 
 	animation_player.play("Armature|GroundBounce")
 
@@ -270,7 +271,6 @@ func apply_air_rotation(delta):
 func _handle_slam_land():
 
 	is_slam_sequence = false
-	in_air_damage = false
 
 	animation_player.play("Armature|GroundRecover")
 
@@ -278,7 +278,7 @@ func _handle_slam_land():
 
 	await get_tree().create_timer(0.25).timeout
 
-	animation_player.play("Armature|CrushSpinningBack")
+	animation_player.play("Armature|RESET")
 	
 func _handle_normal_land():
 
@@ -294,66 +294,71 @@ func _handle_normal_land():
 
 	animation_player.play("Armature|GroundBounce")
 
-	await get_tree().create_timer(0.15).timeout
+	await get_tree().create_timer(2).timeout
 	animation_player.play("Armature|GroundRecover")
-	
-	
+
 func _physics_process(delta):
 
-	var was_on_floor = previous_on_floor
+	# Store floor state BEFORE movement
+	var was_on_floor = is_on_floor()
 
+	# Apply gravity
 	Gravity(delta)
 
-
 	# =========================
-	# 1. SLAM SEQUENCE (HIGHEST PRIORITY)
+	# AIR ROTATION
 	# =========================
-	if is_slam_sequence:
-
-		# still airborne during slam
+	if is_slam_sequence or in_air_damage:
 		if !is_on_floor():
 			apply_air_rotation(delta)
 
-		# just landed from slam
-		if is_on_floor() and !was_on_floor:
-			_handle_slam_land()
+	# =========================
+	# MOVE
+	# =========================
+	move_and_slide()
 
-		move_and_slide()
-		previous_on_floor = is_on_floor()
-		return
-
+	# Detect landing AFTER movement
+	var just_landed = is_on_floor() and !was_on_floor
 
 	# =========================
-	# 2. NORMAL AIR DAMAGE
+	# SLAM LANDING
+	# =========================
+	if is_slam_sequence:
+
+		if just_landed:
+			_handle_normal_land()
+
+		return
+
+	# =========================
+	# NORMAL AIR DAMAGE LANDING
 	# =========================
 	if in_air_damage:
 
-		apply_air_rotation(delta)
-
-		if is_on_floor() and !was_on_floor:
+		if just_landed:
 			_handle_normal_land()
 
-		move_and_slide()
-		previous_on_floor = is_on_floor()
 		return
 
-
-	# =========================
-	# 3. GROUND STATES
-	# =========================
-	if is_on_floor():
-
-		if enemyStats.isGuarding:
-			animation_player.play("GuardIdle")
-		else:
-			animation_player.play("Idle")
-
-	elif animation_player:
-		animation_player.play("Falling")
-
-
-	move_and_slide()
-	previous_on_floor = is_on_floor()
+	## =========================
+	## NORMAL GROUND/AIR STATES
+	## =========================
+	#if is_on_floor():
+#
+		## Reset mesh rotation smoothly
+		#$EnemyMesh.rotation.x = lerp(
+			#$EnemyMesh.rotation.x,
+			#0.0,
+			#delta * 10.0
+		#)
+#
+		#if enemyStats.isGuarding:
+			#animation_player.play("Armature|RESET")
+		#else:
+			#animation_player.play("Armature|RESET")
+#
+	#else:
+		#animation_player.play("Armature|Juggling")
 
 func Gravity(delta: float) -> void:
 	if !is_on_floor():

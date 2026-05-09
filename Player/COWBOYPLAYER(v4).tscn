@@ -32,7 +32,6 @@
 [ext_resource type="Texture2D" uid="uid://bieag6y18328y" path="res://FX/Explosion_Sheet.png" id="19_o7idq"]
 [ext_resource type="Texture2D" uid="uid://d31cga1rg0od0" path="res://FX/Sprite_FX_Dust_0009.png" id="20_4hbvs"]
 [ext_resource type="Script" uid="uid://xv42vaodptix" path="res://Scripts/States/guard_state.gd" id="21_frjtj"]
-[ext_resource type="AudioStream" uid="uid://cr7tudn7s2g83" path="res://Sounds/hit4.wav" id="23_aggol"]
 [ext_resource type="Texture2D" uid="uid://h0pqkcu5k018" path="res://FX/T_flare2.png" id="23_wtaik"]
 [ext_resource type="Texture2D" uid="uid://dburebixgi0qs" path="res://MaterialTextures/My Textures/Sprite_FX_Blast_0017.png" id="23_xsw6c"]
 [ext_resource type="Resource" uid="uid://cwhykd3syxftb" path="res://Resources/PlayerStats/PlayerAttackResources/lightAttack.tres" id="25_0sosj"]
@@ -55,12 +54,13 @@
 [ext_resource type="AudioStream" uid="uid://crpsif605pnfd" path="res://Sounds/pickupCoin2.wav" id="44_tdu7r"]
 [ext_resource type="AudioStream" uid="uid://dtobbe17go5te" path="res://Sounds/pickupCoin.wav" id="45_3pi6o"]
 [ext_resource type="Texture2D" uid="uid://c1sktcvm2d8el" path="res://FX/Sprite_FX_Blast_0010.png2.png" id="45_h8tk8"]
-[ext_resource type="AudioStream" uid="uid://cms7gbyvyntgw" path="res://Sounds/hit6.wav" id="48_0rctv"]
 [ext_resource type="AudioStream" uid="uid://dv2h2ifpcxfaw" path="res://Sounds/slash1.wav" id="48_ori5w"]
 [ext_resource type="AudioStream" uid="uid://cc5rgni3t6ar2" path="res://Sounds/jump2.wav" id="48_vkj36"]
+[ext_resource type="AudioStream" uid="uid://cbrdbfe75vcpd" path="res://Sounds/hit5.wav" id="50_mshqq"]
+[ext_resource type="AudioStream" uid="uid://bktr8lnlpytxu" path="res://Sounds/explosion.wav" id="51_4n7hm"]
 [ext_resource type="AudioStream" uid="uid://oik4gbs754dc" path="res://Sounds/heavyHit2.wav" id="51_mshqq"]
 [ext_resource type="AudioStream" uid="uid://2tp5nhpg7kee" path="res://Sounds/multiHit1.wav" id="51_wa0mo"]
-[ext_resource type="AudioStream" uid="uid://b5mfwun7w8tya" path="res://Sounds/snd_switchpull_n.wav" id="52_mshqq"]
+[ext_resource type="AudioStream" uid="uid://bih8tk6so4qxc" path="res://Sounds/death1.wav" id="52_o2rft"]
 [ext_resource type="AudioStream" uid="uid://bp61wpvxuqnmc" path="res://Sounds/multiHitFinish1.wav" id="52_ori5w"]
 [ext_resource type="AudioStream" uid="uid://b6sn7x5hdlq8h" path="res://Sounds/deadCombo1.wav" id="55_3gnjc"]
 [ext_resource type="AudioStream" uid="uid://bc01ms32t7sx5" path="res://Sounds/Throw.wav" id="55_3pi6o"]
@@ -759,12 +759,15 @@ volume_db = -10.4
 
 [node name="lightAttackSound" type="AudioStreamPlayer" parent="." unique_id=1287895694]
 process_mode = 3
-stream = ExtResource("23_aggol")
+stream = ExtResource("51_mshqq")
+volume_db = -11.143
+pitch_scale = 1.4
 
 [node name="MediumAttackSound" type="AudioStreamPlayer" parent="." unique_id=1313085057]
 process_mode = 3
-stream = ExtResource("23_aggol")
-pitch_scale = 0.76
+stream = ExtResource("51_mshqq")
+volume_db = -6.685
+pitch_scale = 0.81
 
 [node name="HeavyAttackSound" type="AudioStreamPlayer" parent="." unique_id=341554967]
 process_mode = 3
@@ -774,44 +777,42 @@ pitch_scale = 0.5
 
 [node name="UpperAttackSound" type="AudioStreamPlayer" parent="." unique_id=665712956]
 process_mode = 3
-stream = ExtResource("23_aggol")
-pitch_scale = 0.36
+stream = ExtResource("50_mshqq")
+volume_db = -3.714
 
 [node name="AirLightAttackSound" type="AudioStreamPlayer" parent="." unique_id=1842447516]
 process_mode = 3
-stream = ExtResource("48_0rctv")
+stream = ExtResource("51_mshqq")
 volume_db = -12.0
 pitch_scale = 1.11
 
 [node name="AirMediumAttackSound" type="AudioStreamPlayer" parent="." unique_id=1586881741]
 process_mode = 3
-stream = ExtResource("48_0rctv")
+stream = ExtResource("51_mshqq")
 volume_db = -12.0
 pitch_scale = 0.76
 
 [node name="AirHeavyAttackSound" type="AudioStreamPlayer" parent="." unique_id=351935253]
 process_mode = 3
-stream = ExtResource("48_0rctv")
+stream = ExtResource("51_mshqq")
 volume_db = -12.0
 pitch_scale = 0.33
 
 [node name="AirSlamAttackSound" type="AudioStreamPlayer" parent="." unique_id=306353880]
 process_mode = 3
-stream = ExtResource("51_mshqq")
+stream = ExtResource("51_4n7hm")
 volume_db = -6.738
-pitch_scale = 0.57
+pitch_scale = 0.46
 
 [node name="GrabSound1" type="AudioStreamPlayer" parent="." unique_id=1581849704]
 process_mode = 3
-stream = ExtResource("52_mshqq")
-volume_db = -10.801
-pitch_scale = 0.66
+stream = ExtResource("52_o2rft")
 
 [node name="GrabSound2" type="AudioStreamPlayer" parent="." unique_id=1784449138]
 process_mode = 3
 stream = ExtResource("55_3pi6o")
 volume_db = -7.74
-pitch_scale = 0.39
+pitch_scale = 0.7
 
 [node name="GrabSound3" type="AudioStreamPlayer" parent="." unique_id=1289898254]
 process_mode = 3

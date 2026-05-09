@@ -74,7 +74,7 @@ func _update(delta: float) -> void:
 		return
 		
 	_process_cancel_window()
-	_comboKnockBack()
+	#_comboKnockBack()
 	_apply_physics(delta)
 	_landCancel()
 	agent.move_and_slide()
@@ -114,7 +114,8 @@ func _chain_attack():
 	attackData.startup_duration = 0.0
 	attack_timer = 0.0
 	if buffered_input:
-		agent.state_machine.dispatch(attackData.next_attack_state)
+		#agent.state_machine.dispatch(attackData.next_attack_state)
+		pass
 
 func _start_attack() -> void:
 	Global.combo_timer = attackData.combo_window_duration

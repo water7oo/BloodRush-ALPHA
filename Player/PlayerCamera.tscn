@@ -33,6 +33,8 @@ process_mode = 3
 script = ExtResource("1_hwm0y")
 enabled = true
 spring_arm_pivot = NodePath("SpringArmPivot")
+joystick_sensitivity = 0.5
+controller_smoothing = 5.0
 enemyStats = ExtResource("2_qloqc")
 
 [node name="SpringArmPivot" type="Node3D" parent="." unique_id=1208215425 groups=["camera"]]

@@ -38,7 +38,7 @@ var launcher_buffered: bool = false
 
 var medium_pressed_time: float = -1.0
 var heavy_pressed_time: float = -1.0
-var launcher_window: float = 0.5
+var launcher_window: float = 0.9
 
 @onready var PlayerUI = $PlayerUI
 

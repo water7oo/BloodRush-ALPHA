@@ -9,7 +9,13 @@ class_name Camera
 @export var enabled: bool
 @export var spring_arm_pivot: Node3D
 @export var mouse_sensitivity: float = 0.005
-@export var joystick_sensitivity: float = 0.005 
+@export var joystick_sensitivity: float = 3.0
+@export var controller_smoothing: float = 8.0
+@export var controller_deadzone: float = 0.1
+@export var invert_y: bool = false
+
+var current_look_input: Vector2 = Vector2.ZERO
+
 @onready var camera = $SpringArmPivot/SpringArm3D/Margin/Camera3D
 var cam_lerp_speed: float = .005
 
@@ -27,6 +33,7 @@ var target_node: Node3D
 
 @export var enemyStats: Resource
 var isLookingAtTarget = false
+
 func _ready():
 	Global.spring_arm_pivot = $SpringArmPivot
 	Global.spring_arm = $SpringArmPivot/SpringArm3D
@@ -67,9 +74,62 @@ func _physics_process(delta):
 	followTarget(real_delta)
 
 func _process(delta: float) -> void:
+	if Global.spring_arm_pivot == null:
+		return
+	if Global.game_paused:
+		return
+	handle_controller_camera(delta)
 	pass
 		
 	
+func handle_controller_camera(delta):
+	var look_input = Input.get_vector(
+		"cam_left",
+		"cam_right",
+		"cam_up",
+		"cam_down"
+	)
+
+# Deadzone
+	if look_input.length() < controller_deadzone:
+		look_input = Vector2.ZERO
+
+	# Smooth joystick movement
+	current_look_input = current_look_input.lerp(
+		look_input,
+		controller_smoothing * delta
+	)
+
+	# Invert Y if enabled
+	var y_input = current_look_input.y
+
+	if invert_y:
+		y_input *= -1
+
+	# Horizontal rotation
+	Global.spring_arm_pivot.rotation.y -= (
+		current_look_input.x
+		* joystick_sensitivity
+		* delta
+	)
+
+	# Vertical rotation
+	var rotation_x = Global.spring_arm_pivot.rotation.x
+
+	rotation_x -= (
+		y_input
+		* joystick_sensitivity
+		* delta
+	)
+
+	# Clamp vertical angle
+	rotation_x = clamp(
+		rotation_x,
+		deg_to_rad(y_cam_rot_dist),
+		deg_to_rad(x_cam_rot_dist)
+	)
+
+	Global.spring_arm_pivot.rotation.x = rotation_x
 	
 func followTarget(delta):
 	if not enabled or not target_node:
