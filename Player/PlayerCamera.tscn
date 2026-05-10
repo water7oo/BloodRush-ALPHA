@@ -30,6 +30,7 @@ size = Vector3(1, 1, 404.59393)
 
 [node name="CameraSet" type="Node3D" unique_id=388107330 node_paths=PackedStringArray("spring_arm_pivot") groups=["camera"]]
 process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 0.975477, 0.2201016, 0, -0.2201016, 0.975477, 0, 2.8242283, 2.5394506)
 script = ExtResource("1_hwm0y")
 enabled = true
 spring_arm_pivot = NodePath("SpringArmPivot")

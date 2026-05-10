@@ -48,11 +48,10 @@ var input_queue: Array = []
 @onready var UpperSwapDebug = PlayerUI.get_node("UpperSwapDebug")
 @onready var comboCounter = PlayerUI.get_node("ComboCounter2")
 
-@onready var comboCounterSound = $ComboSound1
 
+@export var playerAudio: Node
+@onready var comboCounterSound = playerAudio.get_node('ComboSound1')
 
-@export var land1Sound: AudioStreamPlayer
-@export var landDust: GPUParticles3D
 
 enum combatType {FIGHTER, SWORD}
 @export var type: combatType = combatType.FIGHTER
@@ -130,6 +129,9 @@ func initialize_state_machine():
 func _process(delta: float) -> void:
 	updateComboSpeech()
 	modeSwitch()
+	
+	if Global.combo_timer <= 0.0:
+		comboCounterSound.pitch_scale = .6
 	pass
 			
 
@@ -173,18 +175,33 @@ func modeSwitch():
 		else:
 			attack_upper_state.attackData = load("res://Resources/PlayerStats/PlayerAttackResources/upperAttack.tres")
 
+func comboCounterSoundPlay():
+	var combo_count = Global.combo_hits.size()
+	
+	print(comboCounterSound.pitch_scale)
+
+	match combo_count:
+		1, 2, 3:
+			comboCounterSound.pitch_scale += .1
+			comboCounterSound.play()
+		4, 5, 6, 7, 8, 9:
+			comboCounterSound.pitch_scale += .1
+			comboCounterSound.play()
+		10, 11, 12, 13, 14, 15:
+			comboCounterSound.pitch_scale += .1
+			comboCounterSound.play()
+		_: 
+			if combo_count > 19:
+				comboCounterSound.pitch_scale += .1
+				comboCounterSound.play()
+				
+		
 func updateComboCounter(delta: float):
 	if Global.combo_hits.size() >= 2:
 		comboCounter.get_parent().visible = true
 		comboCounter.get_node("ComboGuage").visible = true
 		comboCounter.get_node("ComboSpeech").visible = true
 		comboCounter.get_child(0).text = "[wave apm = 0 freq = 5 connected = 1][center]" + "x" + str(Global.combo_hits.size()) + "[/center][/wave]"
-		comboCounterSound.pitch_scale = clamp(
-			1.0 + (Global.combo_hits.size() * 0.2),
-			1.0,
-			2.0
-		)
-		comboCounterSound.play()
 		if Global.isHit:
 			Global.shakeTween(comboCounter)
 	else:
@@ -198,7 +215,6 @@ func updateComboCounter(delta: float):
 		if Global.combo_timer > Global.combo_reset_time:
 			Global.combo_hits.clear()
 			Global.combo_timer = 0.0
-			comboCounterSound.pitch_scale = 1.0
 
 
 func updateComboSpeech():
@@ -223,7 +239,7 @@ func updateComboCounterInstant(count):
 		comboCounter.get_node("ComboGuage").visible = true
 		comboCounter.get_child(0).text = "[wave apm = 0 freq = 5 connected = 1][center]" + "x" + str(count) + "[/center][/wave]"
 		Global.shakeTween(comboCounter)
-		
+		comboCounterSoundPlay()
 	else:
 		comboCounter.get_child(0).visible = false
 		comboCounter.get_node("ComboSpeech").visible = false

@@ -23,9 +23,9 @@ func _enter() -> void:
 	handle_death_animation()
 	playFinisherSound()
 	
-	if EnemyMesh:
-		EnemyMeshMat = EnemyMesh.get_active_material(0)
-		onDeathMaterialSwap()
+	#if EnemyMesh:
+		#EnemyMeshMat = EnemyMesh.get_active_material(0)
+		#onDeathMaterialSwap()
 	
 	parent.enemyStats.isDead = true
 	parent.enemyStats.max_health = 0.0

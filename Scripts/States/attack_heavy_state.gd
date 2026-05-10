@@ -14,8 +14,10 @@ extends LimboState
 
 @onready var gameJuice = get_node("/root/GameJuice")
 
-@export var Heavy1Sound: AudioStreamPlayer
-@export var hit5GuardSound: AudioStreamPlayer
+@export var playerAudio: Node
+@onready var Heavy1Sound = playerAudio.get_node("HeavyAttackSound")
+@onready var hit5GuardSound = playerAudio.get_node("hit5GuardHitSound")
+
 
 const OverheadSmear = preload("res://FX/smear_effect.tscn")
 
@@ -256,7 +258,7 @@ func _on_attack_box_area_entered(area):
 		cancel_window_active = true
 
 		areaParent.takeDamageEnemy(attackData.attackDamage)
-
+		VFX.particleHitEffect(areaParent)
 		rotateEnemy_to_player(agent, areaParent)
 		rotate_to_target(areaParent)
 

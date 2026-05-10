@@ -5,7 +5,8 @@ extends LimboState
 @onready var animation_player = player.get_node("AnimationPlayer")
 @onready var armature = $"../../RootNode"
 @onready var state_machine: LimboHSM = $LimboHSM
-@export var walkingSound: AudioStreamPlayer
+@export var playerAudio: Node
+@onready var walkingSound = playerAudio.get_node("walkingSoundGrass")
 
 
 @onready var moveDust = $"../../move_dust"

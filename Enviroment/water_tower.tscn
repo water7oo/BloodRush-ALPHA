@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://dvx1o2ot77w4n"]
+
+[ext_resource type="PackedScene" uid="uid://cwdqcvgchi5l1" path="res://Enviroment/waterTower.fbx" id="1_dmesq"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_t5c4w"]
+load_path = "res://.godot/imported/texture_07.png-ab5f4a6ad655d06104ea7939a06ec496.s3tc.ctex"
+
+[sub_resource type="Shader" id="Shader_6prtx"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 1.0;
+
+void vertex() {
+	vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+	vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+	
+	vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+	
+	clip_position.xy += offset;
+	
+	POSITION = clip_position;
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qdom8"]
+render_priority = 0
+shader = SubResource("Shader_6prtx")
+shader_parameter/outline_color = Color(0.05629155, 0.05629161, 0.056291573, 1)
+shader_parameter/outline_width = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rbp1a"]
+next_pass = SubResource("ShaderMaterial_qdom8")
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = SubResource("CompressedTexture2D_t5c4w")
+roughness = 0.0
+uv1_scale = Vector3(15, 15, 15)
+uv1_triplanar_sharpness = 0.233259
+texture_filter = 0
+
+[node name="waterTower" unique_id=483968103 instance=ExtResource("1_dmesq")]
+
+[node name="Cone" parent="." index="0" unique_id=2059819022]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Cube" parent="." index="1" unique_id=352480874]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Cube_001" parent="." index="2" unique_id=867424811]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Cube_002" parent="." index="3" unique_id=980959856]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Cylinder" parent="." index="4" unique_id=1684846361]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Cylinder_001" parent="." index="5" unique_id=747440416]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Feet_003" parent="." index="6" unique_id=1261411448]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Plane" parent="." index="7" unique_id=156872849]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Plane_001" parent="." index="8" unique_id=1718913543]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Plane_002" parent="." index="9" unique_id=784957824]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Plane_003" parent="." index="10" unique_id=433934859]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Plane_004" parent="." index="11" unique_id=1309590401]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Plane_005" parent="." index="12" unique_id=413755635]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Plane_006" parent="." index="13" unique_id=1562509115]
+material_override = SubResource("StandardMaterial3D_rbp1a")
+
+[node name="Plane_007" parent="." index="14" unique_id=1472196008]
+material_override = SubResource("StandardMaterial3D_rbp1a")

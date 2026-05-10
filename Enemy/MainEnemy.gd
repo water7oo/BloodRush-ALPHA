@@ -248,6 +248,7 @@ func takeGuardDamageEnemy(damage: float) -> void:
 			enemyHurtBox.monitorable = true
 			
 
+
 func start_slam_sequence():
 	is_slam_sequence = true
 	in_air_damage = false

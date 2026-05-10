@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://b82vy41nk8qm1"]
+
+[ext_resource type="PackedScene" uid="uid://c3nsp0fmrvsq1" path="res://Enviroment/SmallBuilding1.fbx" id="1_2p68i"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2p68i"]
+load_path = "res://.godot/imported/texture_07.png-ab5f4a6ad655d06104ea7939a06ec496.s3tc.ctex"
+
+[sub_resource type="Shader" id="Shader_d08bw"]
+code = "shader_type spatial;
+render_mode cull_front, unshaded;
+
+uniform vec4 outline_color : source_color;
+uniform float outline_width = 1.0;
+
+void vertex() {
+	vec4 clip_position = PROJECTION_MATRIX * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+	vec3 clip_normal = mat3(PROJECTION_MATRIX) * (mat3(MODELVIEW_MATRIX) * NORMAL);
+	
+	vec2 offset = normalize(clip_normal.xy) / VIEWPORT_SIZE * clip_position.w * outline_width * 2.0;
+	
+	clip_position.xy += offset;
+	
+	POSITION = clip_position;
+}
+
+void fragment() {
+	ALBEDO = outline_color.rgb;
+	if (outline_color.a < 1.0) {
+		ALPHA = outline_color.a;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2a08c"]
+render_priority = 0
+shader = SubResource("Shader_d08bw")
+shader_parameter/outline_color = Color(0.05629155, 0.05629161, 0.056291573, 1)
+shader_parameter/outline_width = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ycmyq"]
+next_pass = SubResource("ShaderMaterial_2a08c")
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = SubResource("CompressedTexture2D_2p68i")
+roughness = 0.0
+uv1_scale = Vector3(15, 15, 15)
+uv1_triplanar_sharpness = 0.233259
+texture_filter = 0
+
+[node name="SmallBuilding1" unique_id=1056208296 instance=ExtResource("1_2p68i")]
+
+[node name="Cube" parent="." index="0" unique_id=384650258]
+material_override = SubResource("StandardMaterial3D_ycmyq")

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bb1xiaasibqob" path="res://Enemy/enemyDummy.fbx" id="1_ai743"]
 [ext_resource type="Shader" uid="uid://crwsrlgfy4fjb" path="res://addons/GrassDylearn/Shaders/Outline.gdshader" id="3_p2wm2"]
-[ext_resource type="Texture2D" uid="uid://7qgg4do3dwtm" path="res://Enemy/Sandbag.fbm/7467e88d.png" id="3_rlcwf"]
+[ext_resource type="Texture2D" uid="uid://cnn1lxqnmxrhl" path="res://Enemy/Sandbag.fbm/Sandbag1.png" id="4_bo421"]
 [ext_resource type="Shader" uid="uid://c8gnrj13ddg2o" path="res://FX/hitFlash.gdshader" id="4_rlcwf"]
 [ext_resource type="Script" uid="uid://cm0rl70t4u6fn" path="res://FX/flashDamage.gd" id="5_p2wm2"]
 [ext_resource type="Shader" uid="uid://bpu5grc6v8hhm" path="res://FX/flashing.gdshader" id="6_rlcwf"]
@@ -39,34 +39,34 @@ next_pass = SubResource("ShaderMaterial_3ae78")
 shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
-albedo_texture = ExtResource("3_rlcwf")
+albedo_texture = ExtResource("4_bo421")
 texture_filter = 0
 
-[node name="enemyDummy" unique_id=1048459900 instance=ExtResource("1_ai743")]
+[node name="enemyDummy" unique_id=1474343416 instance=ExtResource("1_ai743")]
 script = ExtResource("5_p2wm2")
 
-[node name="Armature" parent="." index="0" unique_id=1964443279]
+[node name="Armature" parent="." index="0" unique_id=1121285518]
 transform = Transform3D(100, 0, 0, 0, -4.3711384e-06, 99.99999, 0, -99.99999, -4.3711384e-06, 0, -8, 0)
 
-[node name="Skeleton3D" parent="Armature" index="0" unique_id=1634070880]
+[node name="Skeleton3D" parent="Armature" index="0" unique_id=125643268]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 3.5527137e-15, 0, -3.5527137e-15, 1.0000001, 0, 0, 0)
 bones/1/position = Vector3(0, -0.020000003, 2.7870248e-10)
 bones/1/rotation = Quaternion(-0.015134375, -0.9848079, 1.398158e-09, 0.17298706)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/position = Vector3(0, 0.05, 1.1823431e-15)
-bones/2/rotation = Quaternion(-0.055445917, -0.012864207, -0.0004484218, 0.9983788)
+bones/2/rotation = Quaternion(-0.05544594, -0.012864214, -0.0004484233, 0.9983788)
 bones/2/scale = Vector3(1, 1, 1)
 bones/4/position = Vector3(0, -0.020000003, 2.7870248e-10)
 bones/4/rotation = Quaternion(0.1729871, -5.296497e-09, 0.9848079, 0.015134376)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/position = Vector3(-3.2500366e-23, 0.044472713, -3.7176085e-16)
-bones/5/rotation = Quaternion(0.06497462, 0.006297049, -0.028140005, 0.9974702)
+bones/5/rotation = Quaternion(0.06497462, 0.006297049, -0.028140016, 0.9974702)
 bones/5/scale = Vector3(1, 1, 1)
 
-[node name="Sandbag" parent="Armature/Skeleton3D" index="0" unique_id=266806018 groups=["Mesh"]]
+[node name="Sandbag" parent="Armature/Skeleton3D" index="0" unique_id=1201990632 groups=["Mesh"]]
 transform = Transform3D(1.0000002, 0, 0, 0, 1.0000002, 3.5527137e-15, 0, -3.5527137e-15, 1.0000002, 0, 0, 0)
 material_overlay = SubResource("ShaderMaterial_bo421")
 surface_material_override/0 = SubResource("StandardMaterial3D_bo421")
 
-[node name="Cube" parent="." index="1" unique_id=1972813742]
+[node name="Cube" parent="." index="1" unique_id=1325236327]
 visible = false

@@ -7,10 +7,20 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fnj2k"]
 render_priority = 0
 shader = ExtResource("3_wswy5")
-shader_parameter/outline_color = Color(0.50534403, 0.5053441, 0.50534385, 1)
+shader_parameter/outline_color = Color(0.05629155, 0.05629161, 0.056291573, 1)
 shader_parameter/outline_width = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eynrt"]
+next_pass = SubResource("ShaderMaterial_fnj2k")
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("2_f3x85")
+roughness = 0.0
+uv1_scale = Vector3(15, 15, 15)
+uv1_triplanar_sharpness = 0.233259
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f3x85"]
 next_pass = SubResource("ShaderMaterial_fnj2k")
 diffuse_mode = 3
 specular_mode = 1
@@ -92,7 +102,8 @@ material_override = SubResource("StandardMaterial3D_eynrt")
 material_override = SubResource("StandardMaterial3D_eynrt")
 
 [node name="Plane" parent="." index="23" unique_id=2080690784]
-material_override = SubResource("StandardMaterial3D_eynrt")
+transform = Transform3D(4.0531165e-07, -3.4000006, -2.9723748e-07, -3.4000006, -4.0531165e-07, 0, -3.543347e-14, 2.9723748e-07, -3.4000006, -10.666096, 18.055824, -0.6656324)
+material_override = SubResource("StandardMaterial3D_f3x85")
 
 [node name="Cube_013" parent="." index="24" unique_id=1240883822]
 material_override = SubResource("StandardMaterial3D_eynrt")

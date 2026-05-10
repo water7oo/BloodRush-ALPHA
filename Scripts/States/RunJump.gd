@@ -6,8 +6,10 @@ extends LimboState
 @onready var state_machine: LimboHSM = $LimboHSM
 @onready var armature = $"../../RootNode"
 
-@export var jump1Sound: AudioStreamPlayer
-@export var land1Sound: AudioStreamPlayer
+@export var playerAudio: Node
+@onready var jump1Sound = playerAudio.get_node("Jump1Sound")
+@onready var land1Sound = playerAudio.get_node("LandSound")
+
 
 @export var moveDust: GPUParticles3D
 @export var landDust: GPUParticles3D
@@ -109,7 +111,7 @@ func player_runjump(delta: float) -> void:
 		Global.jump_timer += delta
 		Global.air_timer += delta
 		if Global.jump_timer <= 0.4:  # Short-duration jump
-			agent.velocity.y = runJumpResource.JUMP_VELOCITY  # Apply jump force
+			agent.velocity.y = runJumpResource.JUMP_VELOCITY
 			Global.target_blend_amount = 0.0
 			Global.current_blend_amount = lerp(Global.current_blend_amount, Global.target_blend_amount, Global.blend_lerp_speed * delta)
 
@@ -125,8 +127,12 @@ func player_runjump(delta: float) -> void:
 			if angle_diff < 0:
 				velocity *= 0.8
 		# Blend smoothly towards new direction
-		agent.velocity.x = lerp(agent.velocity.x, direction.x * Global.BASE_SPEED, runJumpResource.air_momentum_acceleration * delta)
-		agent.velocity.z = lerp(agent.velocity.z, direction.z * Global.BASE_SPEED, runJumpResource.air_momentum_acceleration * delta)
+		var target_velocity = (direction * velocity.length()) * .4
+
+		var t = 1.0 - exp(-runJumpResource.air_momentum_acceleration * delta)
+
+		velocity.x = lerp(velocity.x, target_velocity.x, t)
+		velocity.z = lerp(velocity.z, target_velocity.z, t)
 
 
 	if not agent.is_on_floor() and agent.velocity.y < 0:

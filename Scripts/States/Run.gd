@@ -6,7 +6,8 @@ extends LimboState
 @onready var armature = $"../../RootNode"
 @onready var dodgeDust = $"../../dodge_dust"
 
-@export var runStartSound1 : AudioStreamPlayer
+@export var playerAudio: Node
+@onready var runStartSound1 = playerAudio.get_node("runStartSound1")
 
 var sprinting = Input.is_action_pressed("move_sprint")
 var velocity = Vector3.ZERO

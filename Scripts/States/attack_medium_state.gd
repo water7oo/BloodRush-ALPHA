@@ -15,8 +15,10 @@ extends LimboState
 
 @onready var gameJuice = get_node("/root/GameJuice")
 
-@export var Medium1Sound: AudioStreamPlayer
-@export var hit5GuardSound: AudioStreamPlayer
+@export var playerAudio: Node
+@onready var Medium1Sound = playerAudio.get_node("MediumAttackSound")
+@onready var hit5GuardSound = playerAudio.get_node("hit5GuardHitSound")
+
 
 const smear = preload("res://FX/smear_effect_horizontal.tscn")
 
@@ -151,14 +153,13 @@ func _chain_attack():
 	agent.set_transition_data({"skip_startup": true})
 
 
-
 	if launcher_buffered:
 		print("medium to launcher")
-		_exit_attack_state()
 		agent.state_machine.dispatch("to_attackUpper")
+		_exit_attack_state()
 		return
 		
-	else:
+	elif buffered_heavy:
 		print("medium to heavy")
 		agent.state_machine.dispatch(attackData.next_attack_state)
 

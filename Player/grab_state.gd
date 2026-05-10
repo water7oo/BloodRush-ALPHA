@@ -12,9 +12,12 @@ extends LimboState
 
 @onready var gameJuice = get_node("/root/GameJuice")
 
-@export var hit1Sound: AudioStreamPlayer
-@export var hit2Sound: AudioStreamPlayer
-@export var hit3Sound: AudioStreamPlayer
+
+@export var playerAudio: Node
+@onready var grabSound = playerAudio.get_node("GrabSound1")
+@onready var throwSound = playerAudio.get_node("throwSound")
+@onready var slamSound = playerAudio.get_node("SlamSound1")
+
 
 
 var attack_timer: float = 0.0
@@ -138,14 +141,14 @@ func _update(delta: float) -> void:
 
 
 func throwSoundPlay():
-	if hit2Sound:
-		hit2Sound.pitch_scale = randf_range(.8, 1.1)
-		hit2Sound.play()
+	if throwSound:
+		throwSound.pitch_scale = randf_range(.8, 1.1)
+		throwSound.play()
 	
 func grabSoundPlay():
-	if hit1Sound:
-		hit1Sound.pitch_scale = randf_range(.8, 1.1)
-		hit1Sound.play()
+	if grabSound:
+		grabSound.pitch_scale = randf_range(.8, 1.1)
+		grabSound.play()
 	
 func throw_back():
 	var enemy = grabbed_enemy
@@ -226,7 +229,7 @@ func slam_down():
 
 	await get_tree().create_timer(0.3).timeout
 	print("2")
-	hit3Sound.play()
+	slamSound.play()
 
 	print("slam")
 	

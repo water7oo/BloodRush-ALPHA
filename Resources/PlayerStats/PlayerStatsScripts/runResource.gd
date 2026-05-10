@@ -4,8 +4,8 @@ extends Resource
 var current_blend_amount = 0.0
 var target_blend_amount = 0.0
 var blend_lerp_speed = 10.0  
-@export var RUN_MAX_SPEED: float = Global.MAX_SPEED + 5
-@export var RUN_BASE_SPEED: float = Global.BASE_SPEED + 5
+@export var RUN_MAX_SPEED: float = Global.MAX_SPEED + runAdditive
+@export var RUN_BASE_SPEED: float = Global.BASE_SPEED + runAdditive
 var target_speed: float = Global.MAX_SPEED
 
 @export var mouse_sensitivity: float = 0.005
@@ -18,8 +18,8 @@ var target_speed: float = Global.MAX_SPEED
 @export var runSubtractive: float = -10
 var runMultiplier: float = 1.5
 
-@export var RUN_ACCELERATION: float = Global.ACCELERATION
-@export var RUN_DECELERATION: float = Global.DECELERATION
+@export var RUN_ACCELERATION: float = Global.ACCELERATION + 2
+@export var RUN_DECELERATION: float = Global.DECELERATION - 5
 @export var RUN_BASE_ACCELERATION: float = Global.BASE_ACCELERATION
 @export var RUN_BASE_DECELERATION: float = Global.DECELERATION
 @export var RUN_BASE_DASH_ACCELERATION: float = Global.ACCELERATION 

@@ -3,10 +3,14 @@ extends LimboState
 @onready var player = $"../../RootNode/player2"
 @onready var animation_player = player.get_node("AnimationPlayer")
 @onready var armature = $"../../RootNode/Armature"
-@export var Dodge1Sound: AudioStreamPlayer
 @onready var dodgeDust = $"../../dodge_dust"
 @export var dodgeResource: Resource
 var velocity = Vector3.ZERO
+
+
+@export var playerAudio: Node
+@onready var Dodge1Sound = playerAudio.get_node("Dodge1Sound")
+
 
 
 const DustWaveEffect = preload("res://FX/vfxWave/VerticalWaveEffect1.tscn")

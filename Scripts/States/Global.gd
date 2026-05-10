@@ -77,6 +77,8 @@ var isSwordMode = false
 var isFightMode = true
 var skip_startup = false
 
+var tween: Tween
+	
 
 func shakeTween(node):
 	FollowCam.applyShake(0.1,0.1)
@@ -84,6 +86,7 @@ func shakeTween(node):
 	TweenFX.shake(node)
 	TweenFX.shake(node, 0.1, 8, strength)
 		
+
 
 func stretch_up(node: Node3D):
 	var base_scale = get_base_scale(node)

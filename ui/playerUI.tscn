@@ -343,50 +343,57 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("7_rj02x")
 
-[node name="GridContainer" type="GridContainer" parent="." unique_id=1448171992]
-visible = false
+[node name="RightFaceButtons" type="GridContainer" parent="." unique_id=1448171992]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 458.0
-offset_top = 176.0
-offset_right = 514.0
-offset_bottom = 232.0
+offset_left = 530.0
+offset_top = 251.0
+offset_right = 586.0
+offset_bottom = 307.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(3, 3)
 columns = 3
 
-[node name="TextureRect" type="TextureRect" parent="GridContainer" unique_id=236443007]
+[node name="TextureRect" type="TextureRect" parent="RightFaceButtons" unique_id=236443007]
+visible = false
 layout_mode = 2
 
-[node name="TextureRect5" type="TextureRect" parent="GridContainer" unique_id=835789036]
+[node name="Ybutton" type="TextureRect" parent="RightFaceButtons" unique_id=835789036]
+visible = false
 layout_mode = 2
 texture = ExtResource("8_wf2gy")
 
-[node name="TextureRect6" type="TextureRect" parent="GridContainer" unique_id=1431511477]
+[node name="TextureRect6" type="TextureRect" parent="RightFaceButtons" unique_id=1431511477]
+visible = false
 layout_mode = 2
 
-[node name="TextureRect7" type="TextureRect" parent="GridContainer" unique_id=605529879]
+[node name="Xbutton" type="TextureRect" parent="RightFaceButtons" unique_id=605529879]
+visible = false
 layout_mode = 2
 texture = ExtResource("9_wdvmp")
 
-[node name="TextureRect8" type="TextureRect" parent="GridContainer" unique_id=1684042569]
+[node name="TextureRect8" type="TextureRect" parent="RightFaceButtons" unique_id=1684042569]
+visible = false
 layout_mode = 2
 
-[node name="TextureRect9" type="TextureRect" parent="GridContainer" unique_id=1539157696]
+[node name="Abutton" type="TextureRect" parent="RightFaceButtons" unique_id=1539157696]
 layout_mode = 2
 texture = ExtResource("10_ix8yv")
 
-[node name="TextureRect2" type="TextureRect" parent="GridContainer" unique_id=118490951]
+[node name="TextureRect2" type="TextureRect" parent="RightFaceButtons" unique_id=118490951]
+visible = false
 layout_mode = 2
 
-[node name="TextureRect3" type="TextureRect" parent="GridContainer" unique_id=457948702]
+[node name="Bbutton" type="TextureRect" parent="RightFaceButtons" unique_id=457948702]
+visible = false
 layout_mode = 2
 texture = ExtResource("11_gu5rq")
 
-[node name="TextureRect4" type="TextureRect" parent="GridContainer" unique_id=1686026394]
+[node name="TextureRect4" type="TextureRect" parent="RightFaceButtons" unique_id=1686026394]
+visible = false
 layout_mode = 2

@@ -12,8 +12,9 @@ extends LimboState
 
 @onready var gameJuice = get_node("/root/GameJuice")
 
-@export var AirSlamAttackSound1: AudioStreamPlayer
-@export var hit5GuardSound: AudioStreamPlayer
+@export var playerAudio: Node
+@onready var AirSlamAttackSound1 = playerAudio.get_node("AirSlamAttackSound")
+@onready var hit5GuardSound = playerAudio.get_node("hit5GuardHitSound")
 
 var attack_timer: float = 0.0
 var combo_timer: float = 0.0

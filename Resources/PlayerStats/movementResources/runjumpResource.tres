@@ -4,3 +4,6 @@
 
 [resource]
 script = ExtResource("1_y02d7")
+JUMP_VELOCITY = 13.0
+air_momentum_acceleration = null
+air_momentum_deceleration = null

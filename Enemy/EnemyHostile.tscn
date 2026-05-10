@@ -490,7 +490,7 @@ deathSound = NodePath("landingSound1")
 enemyStats = ExtResource("21_i335x")
 enemyMeshScene = NodePath("EnemyMesh")
 
-[node name="EnemyMesh" parent="." unique_id=862978216 instance=ExtResource("9_rlw8d")]
+[node name="EnemyMesh" parent="." unique_id=2033290737 instance=ExtResource("9_rlw8d")]
 transform = Transform3D(0.215, 0, 0, 0, 0.215, 0, 0, 0, 0.215, 0, 1.7926223, 0)
 
 [node name="EnemyMesh2" type="MeshInstance3D" parent="." unique_id=1851762275]
@@ -797,27 +797,22 @@ bones/24/scale = Vector3(1, 1, 1)
 [node name="Cowboy_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=1709704639]
 mesh = SubResource("ArrayMesh_ffc8c")
 skin = SubResource("Skin_dknlr")
-surface_material_override/0 = ExtResource("6_jdsf8")
 
 [node name="Hat_Belt_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=584490868]
 mesh = SubResource("ArrayMesh_qaed4")
 skin = SubResource("Skin_dknlr")
-surface_material_override/0 = ExtResource("6_jdsf8")
 
 [node name="Hat_001" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=147195033]
 mesh = SubResource("ArrayMesh_ajm2o")
 skin = SubResource("Skin_dknlr")
-surface_material_override/0 = ExtResource("6_jdsf8")
 
 [node name="Hat_Belt_003" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=2105385290]
 mesh = SubResource("ArrayMesh_vdll3")
 skin = SubResource("Skin_dknlr")
-surface_material_override/0 = ExtResource("6_jdsf8")
 
 [node name="Hat_Belt_007" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=1413219516]
 mesh = SubResource("ArrayMesh_hidgf")
 skin = SubResource("Skin_dknlr")
-surface_material_override/0 = ExtResource("6_jdsf8")
 
 [node name="Hat_Belt_008" type="MeshInstance3D" parent="RootNode/Armature/Skeleton3D" unique_id=1315820499]
 material_override = ExtResource("6_jdsf8")

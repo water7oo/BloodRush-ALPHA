@@ -8,7 +8,10 @@ extends LimboState
 var velocity = Vector3.ZERO
 var is_moving: bool = false
 
-@export var GuardActivateSound: AudioStreamPlayer
+@export var playerAudio: Node
+@onready var GuardActivateSound = playerAudio.get_node("GuardActivateSound")
+
+
 @export var guardResource: Resource
 
 

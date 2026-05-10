@@ -6,8 +6,11 @@ extends LimboState
 @onready var armature = $"../../RootNode"
 @onready var state_machine: LimboHSM = $LimboHSM
 
-@export var jump1Sound: AudioStreamPlayer
-@export var land1Sound: AudioStreamPlayer
+@export var playerAudio: Node
+@onready var jump1Sound = playerAudio.get_node("Jump1Sound")
+@onready var land1Sound = playerAudio.get_node("LandSound")
+
+
 
 var velocity = Vector3.ZERO
 
@@ -83,7 +86,7 @@ func player_jump(delta: float) -> void:
 			Global.armature_rot_speed
 		)
 
-		var target_velocity = direction * jumpResource.AIR_MAX_SPEED
+		var target_velocity = direction * velocity.length()
 
 		var t = 1.0 - exp(-jumpResource.air_momentum_acceleration * delta)
 

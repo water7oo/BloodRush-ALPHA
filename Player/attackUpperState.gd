@@ -17,11 +17,12 @@ extends LimboState
 
 @onready var gameJuice = get_node("/root/GameJuice")
 
-@export var Upper1Sound: AudioStreamPlayer
-@export var hit5GuardSound: AudioStreamPlayer
+@export var playerAudio: Node
+@onready var Upper1Sound = playerAudio.get_node("UpperAttackSound")
+@onready var hit5GuardSound = playerAudio.get_node("hit5GuardHitSound")
 
-@export var multiHit1Sound: AudioStreamPlayer
-@export var multiHit1FinishSound: AudioStreamPlayer
+@onready var multiHit1Sound = playerAudio.get_node("multiHit1Sound")
+@onready var multiHit1FinishSound = playerAudio.get_node("multiHit1FinishSound")
 
 var attack_timer: float = 0.0
 var combo_timer: float = 0.0
@@ -159,11 +160,11 @@ func _comboKnockBack():
 		
 func runJumpTimers(delta: float):
 
-	jumpCancelDelay = max(jumpCancelDelay - delta, 0.0)
+	jumpCancelDelay -= delta
 	
 	
 	if jumpCancelDelay <= 0:
-		jump_cancel_timer = max(jump_cancel_timer - delta, 0.0)
+		jump_cancel_timer -= delta
 		canJumpCancel = true
 		
 
@@ -242,7 +243,7 @@ func align_with_y(xform, new_y):
 func _jumpCancel():
 	if Input.is_action_just_pressed("move_jump") && canJumpCancel == true && jumpCancelFX:
 		jumpCancelWave()
-		agent.jump_state.jumpResource.JUMP_VELOCITY += 5
+		agent.jump_state.jumpResource.JUMP_VELOCITY += 3
 		jumpCancelFX.emitting = true
 		agent.state_machine.dispatch(attackData.next_attack_state)
 	else:
@@ -404,7 +405,7 @@ func _on_attack_box_area_entered(area):
 		hitFinisher(areaParent)
 		rotateEnemy_to_player(agent, areaParent)
 		rotate_to_target(areaParent)
-		
+		VFX.particleHitEffect(areaParent)
 		Global.combo_hits.append({
 			"enemy": area,
 			"damage": attackData.attackDamage,
